@@ -6,12 +6,12 @@ tags: [assessment, education reform, region/us, level/k12, stance/critique]
 related_concepts: ["[[International Indicators of Education Systems (INES)]]", "[[Education at a Glance (EAG)]]"]
 related_theories: []
 related_persons: []
-related_facts: ["[[Coleman Report 1966]]"]
+related_facts: ["[[Coleman Report 1966]]", "[[American Attraction to Japanese Education 1980s]]"]
 sources: ["sources/Gorur_2014_Discourse.md", "sources/Downey_2016_SoE.md"]
 confidence: high
 status: draft
 created: 2026-05-01
-updated: 2026-05-04
+updated: 2026-05-07
 ---
 
 ## 背景
@@ -38,6 +38,9 @@ updated: 2026-05-04
 ### 后续推动
 Poitiers 会议紧随华盛顿会议召开，强调需要"更好、更全面的关于教育成果的信息"——这标志从传统的管理数据（入学人数、教师数量）转向对教育质量和成果数据的关注（Gorur, 2014, p.8）。
 
+### 与日本教育参照的关系
+在 1980 年代美国教育改革辩论中，*A Nation at Risk* 强化了危机语言，日本则成为最常用的比较对象之一。两者共同推动了“国际比较—国内改革”的政策沟通路径，详见 [[American Attraction to Japanese Education 1980s]]。
+
 ## 争议与评论
 
 - **危机叙事的争议**：Bottani 记录了教师协会和进步教育运动者质疑"教育质量危机"的存在（特别是在公共部门），认为这场危机被夸大以推行基于新公共管理技术的教育改革（Bottani, 2008, p.16; Gorur, 2014, p.9）
@@ -48,6 +51,8 @@ Poitiers 会议紧随华盛顿会议召开，强调需要"更好、更全面的�
 - [[International Indicators of Education Systems (INES)]] — 因为 A Nation at Risk 触发的危机感而加速推进
 - [[Education at a Glance (EAG)]] — 华盛顿和 Poitiers 会议的最终产物
 - [[Evidence-Based Education]] — 共同的"数据驱动教育改进"逻辑
+- [[American Attraction to Japanese Education 1980s]] — 危机叙事如何与日本参照共同推动改革动员
 
 ## 来源
 - [[Gorur_2014_Discourse]]
+- [[Downey_2016_SoE]]

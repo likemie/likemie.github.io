@@ -21,6 +21,19 @@ All wiki entry content must be written in **Simplified Chinese (简体中文)** 
 3. If user mentions 「专著」「(Ed.) 前言」「(Ed.) 章节」→ also read `wiki/book-schema.md`
 4. Scan `raw/` and process all files found there following vault-schema.md workflow
 
+## Wiki Entry Perspective
+
+**Entries describe the real world, not the paper.**
+
+The paper is the evidence source — not the subject. Always write from the perspective of the concept, event, person or theory itself.
+
+- ❌ 「本文研究了……作者发现……本研究结论是……」
+- ✅ 「该政策于XX年推行……其主要影响包括……学界对此存在争议……」
+
+Test: if the paper is removed, does the entry still make sense? Yes → correct. No → rewrite.
+
+**Template sections are optional.** Only write a section if the source provides relevant content. Skip empty sections entirely. Add new sections if needed.
+
 ## Non-Negotiable Rules
 These override everything else:
 - **Never** add content outside the declared insert position

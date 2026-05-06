@@ -4,7 +4,7 @@ type: fact
 subtype: policy
 tags: [Liberal Studies (Hong Kong), region/china, level/k12, curriculum-reform, 3-3-4-reform]
 related_concepts: ["[[Liberal Studies (Hong Kong)]]", "[[Policy Borrowing]]", "[[National Education in Hong Kong]]"]
-related_theories: ["[[Policy Borrowing and Lending]]", "[[World Culture Theory]]"]
+related_theories: ["[[Policy Borrowing]]", "[[World Culture Theory]]"]
 related_persons: ["[[Tung Chee-hwa]]"]
 sources: ["sources/Yan_2025_JCS.md"]
 confidence: high
@@ -77,7 +77,7 @@ updated: 2026-05-01
 ## 相关概念／理论
 
 - [[Liberal Studies (Hong Kong)]]
-- [[Policy Borrowing and Lending]]
+- [[Policy Borrowing]]
 - [[World Culture Theory]]
 
 ## 来源

@@ -1,21 +1,22 @@
 ---
-title: 动态知识与学习模型
+title: Dynamic Knowledge and Learning Model
+aliases: [动态知识与学习模型]
 type: concept
 tags: [learning-theory, knowledge, visible-learning, subject/instruction]
 related_theories: ["[[Popper's Three Worlds Theory]]"]
-related_concepts: ["[[Visible Learning]]", "[[Surface and Deep Learning]]", "[[Effect Size]]"]
+related_concepts: ["[[Visible Learning]]", "[[Surface and Deep Learning]]", "[[Effect Size]]", "[[Evidence-Based Education]]", "[[Scientism]]"]
 related_methods: ["[[Meta-analysis]]", "[[Meta-meta-analysis]]"]
 related_persons: ["[[Lars Qvortrup]]", "[[John Hattie]]", "[[Carl Bereiter]]", "[[John Biggs]]", "[[Jean Piaget]]"]
 sources: ["sources/Qvortrup_2015_Paideia.md"]
 confidence: low
 status: draft
 created: 2026-05-05
-updated: 2026-05-05
+updated: 2026-05-06
 ---
 
 ## 定义
 
-动态知识与学习模型是 [[Lars Qvortrup]] (2015) 为回应 [[Visible Learning]] 中“学习结果”概念不清而提出的概念模型。它不把知识形式理解为静态分类或等级，而是把一阶到四阶知识看作相互影响、反身递归的动态系统；教学等外部影响可以刺激这个系统，但系统也具有自身的内部动力（Qvortrup, 2015, pp.29–32）。
+Dynamic Knowledge and Learning Model 是 [[Lars Qvortrup]] (2015) 为回应 [[Visible Learning]] 中“学习结果”概念不清而提出的概念模型。它不把知识形式理解为静态分类或等级，而是把一阶到四阶知识看作相互影响、反身递归的动态系统；教学等外部影响可以刺激这个系统，但系统也具有自身的内部动力（Qvortrup, 2015, pp.29–32）。
 
 > "Pointen med denne videns- og læringsmodel er ... at den påviser, at vidensformerne ikke bare udgør en taksonomi, men et dynamisk og refleksivt samspil af videnskategorier."（Qvortrup, 2015, p.32）
 
@@ -23,7 +24,7 @@ updated: 2026-05-05
 
 - 1960s Gregory Bateson 已提出学习与沟通可区分为第一、第二、第三、第四阶学习，低阶到高阶学习的过渡通过自我反思发生（Qvortrup, 2015, p.31）。
 - 2009 [[John Hattie]] 在 *Visible Learning* 中借 [[Popper's Three Worlds Theory|Popper 三个世界]]、[[Carl Bereiter|Bereiter]]、SOLO 模型和 Bloom 修订版来说明表层、深层和概念性学习，但不同框架之间的对应关系并不清楚（Qvortrup, 2015, pp.28–30）。
-- 2015 Qvortrup 提出动态知识与学习模型，试图以 Bateson 的学习阶次替代单纯分类模型或哲学式三世界模型，并用于改进未来关于教育干预和学习结果的元分析（Qvortrup, 2015, pp.29–33）。
+- 2015 Qvortrup 提出 Dynamic Knowledge and Learning Model，试图以 Bateson 的学习阶次替代单纯分类模型或哲学式三世界模型，并用于改进未来关于教育干预和学习结果的元分析（Qvortrup, 2015, pp.29–33）。
 
 ## 核心要素
 
@@ -37,6 +38,7 @@ updated: 2026-05-05
 
 - vs [[Surface and Deep Learning]] — 表层/深层学习通常区分学习质量层次；动态知识与学习模型则把知识形式扩展为一阶到四阶，并强调知识形式之间的递归和相互刺激（Qvortrup, 2015, pp.29–32）。
 - vs [[Popper's Three Worlds Theory]] — Hattie 借 Popper 区分表层、深层和概念性知识；Qvortrup 认为这种映射与 Bloom 修订版、SOLO 模型之间关系不清，因此改采 Bateson 式动态模型（Qvortrup, 2015, p.30）。
+- vs [[Scientism]] — 动态模型并不否定量化研究，而是反对把学习结果简化为单一可测指标；它要求在证据比较前先澄清“被测量的究竟是哪一类知识”。
 
 ## 理论基础
 
@@ -48,6 +50,18 @@ updated: 2026-05-05
 
 该模型本身不是实证研究发现，而是 Qvortrup 对未来元分析和教育干预研究提出的概念要求：如果研究者要更精确地说明不同教学影响对不同学习结果的效果，就必须把学习结果区分为不同知识形式，并理解这些形式之间的动态关系（Qvortrup, 2015, pp.29, 32–33）。
 
+## 研究用途（可操作化方向）
+
+- **作为“学习结果编码框架”**：在综述或元分析中，可先把 outcome 指标按一阶至四阶知识进行编码，再比较不同干预主要作用于哪一阶知识。
+- **作为“课程与评价对齐工具”**：若课程目标强调三阶/四阶知识（如创新、批判反思），测量工具就不能仅依赖事实回忆型测验。
+- **作为“教学设计诊断镜头”**：同一课堂活动可能同时触发多阶知识生成，避免将教学策略与单一学习层次机械绑定。
+
+## 方法学限制
+
+- **边界判定困难**：三阶与四阶知识在真实课堂中的区分依赖解释者判断，编码一致性可能偏低。
+- **测量工具稀缺**：现有大规模标准化测试更容易测到一阶/二阶知识，三阶/四阶常需质性证据或复杂表现性任务支持。
+- **跨研究可比性问题**：即使都接受四阶框架，不同研究对同一学习结果的阶次归类仍可能不一致。
+
 ## 争议与批评
 
 - Qvortrup 的模型是对 [[Visible Learning]] 的内部修正：它承认 VL 的学习结果概念不够清楚，但仍维护元分析和效应量比较的基本合法性（Qvortrup, 2015, pp.27–33）。
@@ -57,6 +71,13 @@ updated: 2026-05-05
 
 - [[Visible Learning]] — 该模型直接回应 Hattie 的学习结果概念，尤其是表层、深层和概念性知识在元分析中如何被测量的问题。
 - [[Meta-analysis]] 与 [[Meta-meta-analysis]] — Qvortrup (2015) 将动态模型定位为未来元分析发展的概念条件：如果研究者只比较抽象[[Effect Size|效应量]]，就难以说明不同教学干预究竟影响哪一种知识或学习形式（Qvortrup, 2015, pp.27, 32–33）。
+- [[Evidence-Based Education]] — 为 EBE 提供“结果分类层”的补充：在“什么有效”之前，先区分“对哪种知识有效”。
+
+## 交叉阅读路径
+
+- **方法论链**：[[Effect Size]] → [[Meta-analysis]] → [[Meta-meta-analysis]] → [[Dynamic Knowledge and Learning Model]]
+- **VL 内部修正链**：[[Visible Learning]] → [[Popper's Three Worlds Theory]] → [[Dynamic Knowledge and Learning Model]]
+- **政策批判链**：[[Evidence-Based Education]] → [[Scientism]] → [[Cargo Cult Science]]
 
 ## 来源
 

@@ -6,11 +6,11 @@ related_theories: ["[[Critical Realism]]"]
 related_concepts: ["[[Effect Size]]", "[[Statistical Significance]]", "[[Confidence Interval]]", "[[Evidence-Based Education]]", "[[Visible Learning]]", "[[Publication Bias]]"]
 related_methods: ["[[Meta-meta-analysis]]", "[[Covariate Adjustment]]"]
 related_persons: ["[[Dylan Wiliam]]", "[[John Hattie]]", "[[Adrian Simpson]]", "[[Ray Pawson]]", "[[Lars Qvortrup]]"]
-sources: ["sources/Snook_2009_NZJES.md", "sources/Terhart_2011_JCS.md", "sources/Berk_2011_ER.md", "sources/Hattie_2015_SOTLP.md", "sources/Qvortrup_2015_Paideia.md", "sources/Allerup_2015_Paideia.md", "sources/Simpson_2017_JEP.md", "sources/Wecker_2016_ZfE.md", "sources/Qvortrup_2019_NordSTEP.md", "sources/Wiliam_2019_ERE.md", "sources/Wrigley_2019_ERE.md", "sources/OConnor_2020_AJLL.md", "sources/ONeill_2012_NZJES.md"]
+sources: ["sources/Snook_2009_NZJES.md", "sources/Snook_2010_NZJES.md", "sources/Terhart_2011_JCS.md", "sources/Berk_2011_ER.md", "sources/Hattie_2015_SOTLP.md", "sources/Qvortrup_2015_Paideia.md", "sources/Allerup_2015_Paideia.md", "sources/Simpson_2017_JEP.md", "sources/Wecker_2016_ZfE.md", "sources/Qvortrup_2019_NordSTEP.md", "sources/Wiliam_2019_ERE.md", "sources/Wrigley_2019_ERE.md", "sources/OConnor_2020_AJLL.md", "sources/ONeill_2012_NZJES.md"]
 confidence: medium
 status: draft
 created: 2026-05-01
-updated: 2026-05-06
+updated: 2026-05-07
 ---
 
 ## 定义
@@ -78,6 +78,16 @@ Snook et al.（2009, p.96–98）在 VL 出版同年识别了元分析在教育�
 **源研究不充分问题**
 
 EEF Toolkit 的体育参与条目仅基于三个元分析中的四个效应量（Wrigley & McCusker, 2019, pp. 121–122）。
+
+**Snook et al. (2010) — 元分析从医学到教育的移植问题**
+
+Snook et al.（2010, p.96）在回应 Hattie (2010) 时，提出了一个常被忽略的更深层问题：元分析技术起源于医学科学——医学有经过仔细界定的概念和严谨的（通常为实验性）研究设计。然而在教育领域，"被研究的变量往往概念化差，研究也经常不够严格"：
+
+> "如何为研究目的清晰区分一个'以教师为中心'和一个'以学生为中心'的课堂？在比较它们时，如何在一个嘈杂繁忙、可能有 30 多个参与者的课堂中控制所有变量？"（Snook et al., 2010, p.96）
+
+经过四十年课堂细粒度研究，Graham Nuthall（2007, p.16）得出结论：虽然有大量已发表的教育研究报告，但"在识别那些对课堂教学有值得信赖的内容的研究时，你需要非常有选择性"（Snook et al., 2010, p.97）。Snook et al. 以 Nuthall 的 *The Hidden Lives of Learners*（基于数十年新西兰课堂研究）与 Hattie 的 *Visible Learning*（基于国际元分析）的书名对比，暗示两者在认识论取向上存在本质差异（Snook et al., 2010, p.97）。
+
+这一批评的核心在于：元分析在医学中成功运作的条件（概念清晰、设计标准化、机制可分离）在教育领域经常不成立——这不是方法论执行缺陷的问题，而是方法本身与研究对象之间的基础性不匹配。
 
 ### 平均效应的误导性与因果信息的丧失
 

@@ -9,7 +9,7 @@ related_facts: ["[[Treasury Briefing on Student-Teacher Ratios (NZ 2011)]]"]
 sources: ["sources/Hattie_2010_NZJES.md"]
 status: draft
 created: 2026-05-06
-updated: 2026-05-06
+updated: 2026-05-07
 ---
 
 ## 研究问题
@@ -72,7 +72,7 @@ Hattie 详细说明了他在新西兰国家标准的参与程度：被邀加入�
 - 未回应 Snook et al. (2009) 提出的若干技术性方法论批评（如 d=0.40 的统计逻辑、效应量计算中对研究质量的处理等）
 - 对"学术批评应当针对观点而非个人"的强调可能被批评者视为回避实质性方法论问题的修辞策略
 - Alexander (2010) 在墨尔本课程研讨会上发表，当时尚未正式出版——Hattie 使用尚未正式出版的会议报告作为分析框架
-- Snook et al. (2010) 在同期 NZJES 发表了对此文的再回应 *Critic and Conscience of Society: A Reply to John Hattie*，但该文在本条目的来源范围之外
+- Snook et al. (2010) 在同期 NZJES 发表了对此文的再回应（详见 [[Argument_Snook_2010_NZJES]]）
 
 ## 来源
 

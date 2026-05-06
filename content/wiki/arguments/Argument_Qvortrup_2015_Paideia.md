@@ -3,7 +3,7 @@ title: Argument_Qvortrup_2015_Paideia
 type: argument
 citation: "Qvortrup, L. (2015). Baggrund for og diskussioner af Visible Learning med særligt henblik på lærings- og vidensbegrebet. Paideia, 9, 22–33."
 tags: [visible-learning, meta-analysis, learning-theory, knowledge, region/denmark, stance/support]
-related_concepts: ["[[Visible Learning]]", "[[Surface and Deep Learning]]", "[[动态知识与学习模型]]", "[[Effect Size]]"]
+related_concepts: ["[[Visible Learning]]", "[[Surface and Deep Learning]]", "[[Dynamic Knowledge and Learning Model]]", "[[Effect Size]]"]
 related_theories: ["[[Popper's Three Worlds Theory]]"]
 related_persons: ["[[John Hattie]]", "[[Lars Qvortrup]]", "[[John Biggs]]", "[[Carl Bereiter]]", "[[Jean Piaget]]"]
 related_methods: ["[[Meta-analysis]]", "[[Meta-meta-analysis]]"]
@@ -28,7 +28,7 @@ updated: 2026-05-05
 - [[Visible Learning]] — 论文以 Hattie (2009) 的 800+ 元分析综合为讨论对象，支持其作为实证统计教育研究转向中的代表性成果，但同时指出其因变量“学习结果”需要更清晰的概念化（Qvortrup, 2015, pp.22, 27–29）
 - [[Meta-analysis]] — 论文使用 Gene Glass (1976/2000) 对元分析的辩护来回应“苹果和橙子”或“梨和香蕉”问题：所有比较都发生在不完全相同的现象之间，关键在于透明地说明变异维度和选择适当的概括层次（Qvortrup, 2015, pp.24–26）
 - [[Surface and Deep Learning]] — Qvortrup 承认 Hattie 区分表层、深层和概念性知识，但认为 Visible Learning 的总体结果多停留在抽象学习结果层面，若要判断特定知识层次的效果，必须细读具体分析（Qvortrup, 2015, pp.27–29）
-- [[动态知识与学习模型]] — Qvortrup 在文章末尾转向 Gregory Bateson 的学习与沟通理论，将知识区分为一阶到四阶，并强调这些知识形式不是静态分类，而是动态、反身地相互作用（Qvortrup, 2015, pp.29–32）
+- [[Dynamic Knowledge and Learning Model]] — Qvortrup 在文章末尾转向 Gregory Bateson 的学习与沟通理论，将知识区分为一阶到四阶，并强调这些知识形式不是静态分类，而是动态、反身地相互作用（Qvortrup, 2015, pp.29–32）
 
 ## 研究方法
 

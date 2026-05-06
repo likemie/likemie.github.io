@@ -3,7 +3,7 @@ tags:
 - meta
 - index
 title: Wiki Index
-updated: '2026-05-06'
+updated: '2026-05-07'
 ---
 # Wiki Index
 
@@ -35,10 +35,12 @@ updated: '2026-05-06'
 
 ### Comparative Education
 
+- [[Cross-National Attraction]] — Phillips & Ochs 政策借用四阶段模型的第一阶段，Rappleye (2006) 以情境概念地图系统理论化其结构／人的双层推力与阻力和四种吸引力"火花"
 - [[Education at a Glance (EAG)]] — OECD 年度旗舰出版物，以 30 项国际教育指标描述各国教育系统，涵盖产出、投入、参与、环境四大维度
 - [[Education Indicators]] — 经目的性选择和加工的派生统计量，合并多数据源，旨在提醒决策者注意潜在问题而非诊断评估
+- [[Externalization (Schriewer)]] — Schriewer 的比较教育核心概念：教育系统将内部问题构型投射到国际参照系中的过滤过程，Rappleye (2006) 发展为双向运作（外化到国际趋势／外化到传统）
 - [[International Indicators of Education Systems (INES)]] — 1988 年 OECD 启动的国际教育指标开发项目，EAG 的前身和生产者
-- [[Policy Borrowing]] — 国家有选择地借用全球教育论述来合法化国内议程，与"世界文化理论"构成竞争解释
+- [[Policy Borrowing]] — 政策借用：国内政治考量驱动选择性参照外部教育论述来合法化议程，Steiner-Khamsi 系统框架，Phillips & Ochs 四阶段模型，Rappleye 情境概念地图，Cowen 形态变异，核心机制为外化、合法化、问题建构与选择性变异
 - [[Educational Management Organisation (EMO)]] — 参与公立学校教育政策制定与服务交付的私营部门实体，营利/非营利两种形式，Cognition Education 和 CORE Education 为新西兰最大 EMO
 - [[Network Governance in Education]] — 传统市场/科层制公立学校治理被网络与部落形式取代，Thompson (1991) 为理论框架，新西兰自 2008 年加速发展
 - [[Policy Entrepreneur]] — Mintrom (2000) 和 Ball (2012) 概念：在教育系统内外通过协作和网络化影响政策发展的行动者，John Hattie 为新西兰典型
@@ -110,7 +112,7 @@ updated: '2026-05-06'
 - [[Phenomenon-Based Learning]] — 芬兰课程语境中的现象本位学习，以复杂现象组织跨学科探究，强调学科深度、生活世界、协作和共同责任
 - [[Problem-Based Learning]] — 以问题驱动学习的教学方法，9 项元分析综合 d≈0.08–0.24，Hattie (2015) 论证其在学生缺乏表层知识时低效
 - [[Surface and Deep Learning]] — 表层学习知晓事实与内容 vs 深层学习知晓关系与连接，评估驱动表层学习是高等教育核心悖论
-- [[动态知识与学习模型]] — Qvortrup (2015) 为回应 VL 学习结果概念不清提出的四阶知识模型，强调知识形式之间的动态反身作用
+- [[Dynamic Knowledge and Learning Model]] — Qvortrup (2015) 为回应 VL 学习结果概念不清提出的四阶知识模型，强调知识形式之间的动态反身作用
 - [[Whole Language]] — 强调语言在真实完整语境中学习的读写教学哲学，Goodman 1967 年里程碑文章奠基，Hattie (2009) 将其效应量评为 d=0.06 引发争议，O'Connor (2020) 详细审查揭示 VL 评估存在方法论缺陷和先验偏见
 
 ### Learning Science & Cognitive Science
@@ -177,24 +179,23 @@ updated: '2026-05-06'
 
 - [[Refraction Framework]] — Downey & Condron (2016) 的学校与不平等折射理论：学校可沿不同维度以补偿性、加剧性或中性方式塑造不平等，强调差距在学校入学前已形成
 - [[Hofstede's Cultural Dimensions]] — 国家文化维度理论，Laursen (2015) 用其检验以英语国家研究为主的有效教学综合是否适用于丹麦
+- [[Luhmann's Systems Theory]] — 社会作为自创生沟通系统的宏大理论，严格区分社会系统与心理系统，Larsen (2019) 以盲点和结构耦合概念批判 VL
+- [[Bourdieu's Social Theory]] — 场域-习性-资本-doxa 四位一体的社会分析框架，揭示学校如何通过符号支配（再）生产社会秩序，Eacott 将其应用于学校领导力培养分析
+- [[World Culture Theory]] — 全球学校模式趋同假设：西方现代民族国家模型向全球扩散，导致课程和学校标准化，但 LS 案例揭示其解释力局限
 
 ### Management & Organisation
 
 - [[Bounded Rationality]] — Simon (1969/1996) 的有限理性理论：复杂专业任务的复杂度大于专业人员的实践能力，Qvortrup 用作专业判断的理论基础
 - [[Technical Rationality]] — Schön (1983) 的实证主义专业实践模型：工程/医学模式，手段-目的思维，价值中立；Nielsen & Klitmøller 论证其为 Hattie VL 的理论内核
 
-### Philosophy & Epistemology
-
-- [[Transactional Epistemology]] — Dewey 的知识观：实验产生的知识是关于过去行动与后果关系的记录，提供可能性而非确定性
-
 ### Political Science & Policy Studies
 
 - [[Nation Building through Education]] — 国家利用教育系统在边疆地区推行统一国族认同，Yan & Morris 将香港 LS→CSD 纳入此框架与西藏、新疆、内蒙古并置分析
-- [[Policy Borrowing and Lending]] — 教育政策跨国转移的分析框架：国内政治考量驱动借用行为，全球论述为本地议程提供合法性
 - [[Tullock's Bureaucracy Theory]] — 官僚制作为信息处理金字塔，主权者面临的核心挑战是知识问题与委托困境，Cowen 将其应用于解释 EBE 的制度韧性
 
 ### Philosophy & Epistemology
 
+- [[Transactional Epistemology]] — Dewey 的知识观：实验产生的知识是关于过去行动与后果关系的记录，提供可能性而非确定性
 - [[Campbellian Validity Framework]] — Shadish, Cook & Campbell (2002) 的实验效度理论：因果推断需通过排除内部效度威胁建立因果关系，再评估跨情境/人群/测量的外部效度，Hitchcock et al. (2015) 应用于 SCD 审查程序
 - [[Cartwright's Three-Stage Knowledge Framework]] — RCT 证据外推的三阶段模型：it-works-somewhere → capacity claims → it-will-work-for-us，揭示因果机制知识在证据外推中的关键作用
 - [[Critical Realism]] — Bhaskar 的科学哲学：区分实在/实际/经验三层本体论和开放/封闭系统，Wrigley & McCusker (2019) 用作批判 EBT 方法论的哲学框架
@@ -203,24 +204,13 @@ updated: '2026-05-06'
 - [[Popper's Three Worlds Theory]] — Karl Popper 的本体论框架：World 1 物理世界 / World 2 主观世界 / World 3 文化与科学对象（"客观地伟大的"），Rømer (2018) 论证 Hattie 通过 Bereiter 严重误读该理论
 - [[Radical Constructivism]] — von Glasersfeld (1995) 的学习理论：以唯我论为出发点，所有学习和知识都是主观建构，Rømer (2018) 论证其为 Hattie VL 的学习理论根基
 - [[Science and Technology Studies (STS)]] — 跨学科领域：科学是社会实践，核心关注知识如何被生产、动员、验证和挑战，以共同生产（co-production）和 performativity 为关键概念
-- [[Transactional Epistemology]]
 
-### Political Science & Policy Studies
-
-- [[Nation Building through Education]]
-- [[Policy Borrowing and Lending]]
-- [[Tullock's Bureaucracy Theory]]
-
-### Psychology
+### Psychology & Cognitive Development
 
 - [[hebbian-principles]] — Hebb 突触可塑性原则：经常使用的神经通路被加强，不常用的被移除，是突触修剪的理论基础
 - [[miyake-unity-diversity-framework]] — Miyake (2000) 的 EF 统一性与多样性框架：抑制、转换、更新与监控三成分既相关又各具独特功能和发展轨迹
 - [[neo-piagetian-theories]] — 修正皮亚杰模型的新皮亚杰理论群：Pascual-Leone 的双层/M-power 模型、Case 的四子域模型、Fischer 的技能理论
 - [[piagets-theory-of-cognitive-development]] — 皮亚杰的认知发展四阶段建构主义理论：感觉运动→前运算→具体运算→形式运算，Bolton & Hattie (2017) 论证其与 PFC 发育在时间上平行对应
-
-- [[Luhmann's Systems Theory]] — 社会作为自创生沟通系统的宏大理论，严格区分社会系统与心理系统，Larsen (2019) 以盲点和结构耦合概念批判 VL
-- [[Bourdieu's Social Theory]] — 场域-习性-资本-doxa 四位一体的社会分析框架，揭示学校如何通过符号支配（再）生产社会秩序，Eacott 将其应用于学校领导力培养分析
-- [[World Culture Theory]] — 全球学校模式趋同假设：西方现代民族国家模型向全球扩散，导致课程和学校标准化，但 LS 案例揭示其解释力局限
 
 ### Other
 
@@ -252,6 +242,7 @@ updated: '2026-05-06'
 #### Other
 
 - [[ECNU Declaration on Evidence-Based Research 2017]] — 华东师范大学联合 14 所大学和 32 家 CSSCI 期刊发布宣言，提出 10 条措施推进中国教育实证研究，标志中国证据本位改革的制度化里程碑（Slavin et al., 2021）
+- [[Late Qing Borrowing of Japanese Education]] — 甲午战败后清末以日本为主要参照推进新式教育体系建设，改革派与保守派在“借鉴日本教育”上形成阶段性共识并推动大规模借用
 
 ### Denmark
 
@@ -361,6 +352,7 @@ updated: '2026-05-06'
 #### Other
 
 - [[A Nation at Risk 1983]] — 美国国家教育卓越委员会发布的报告，引发全球教育质量恐慌，直接触发 OECD 教育指标体系（INES/EAG）的加速建立
+- [[American Attraction to Japanese Education 1980s]] — 1980 年代美国在危机叙事与国际比较推动下持续强化“向日本学习”参照网络，但受联邦—州—地方分权制约未形成全国统一制度移植
 - [[California Class Size Reduction 1996]] — 加州试图复制田纳西州班级缩减成功但失败，因缺乏合格教师和教室空间，成为 fidelity vs adaptation 辩论的经典案例，Wiliam (2019) 量化教师质量恶化（未认证教师 1/200→1/8）并论证试验条件在大规模推广时系统性不成立
 - [[Coleman Report 1966]] — 美国教育部委托的里程碑式教育机会平等研究（650,000+ 学生、4,000 所学校），结论为家庭背景而非学校特征是学业差距的主要驱动力，50 年后 Downey & Condron 重新评估认为 Coleman 低估了学校的补偿性作用
 - [[Best Evidence Encyclopedia (BEE)]] — 教育领域 public 清算中心，评级对象为项目，Wadhwa et al. (2024) 样本中贡献 124 个阅读、写作、早教、综合学校改革、数学等项目
@@ -458,6 +450,7 @@ updated: '2026-05-06'
 
 - [[Dietrich Benner]] — 德国教育学家，提出修正版教学三角模型和 Bildung/Erziehung 区分，Sarbiewska (2019) 以其框架解释 VL 政策影响
 - [[Niklas Luhmann]] — 德国社会学家，社会系统理论创始人，提出盲点、结构耦合、社会/心理系统区分等概念
+- [[Jurgen Schriewer]] — 德国比较教育学者，将 Luhmann 系统理论引入比较教育，提出"外化"概念和话语形成理论
 - [[Ernst von Glasersfeld]] — 德裔美籍哲学家和认知心理学家，激进建构主义创始人，其唯我论学习观被 Hattie 的 VL 全盘接受为理论基础
 - [[Wolfgang Klafki]] — 德国教育学家和 Didaktik 传统关键人物，提出以 epochal key problems 组织面向未来的课程工作
 
@@ -505,6 +498,7 @@ updated: '2026-05-06'
 
 - [[Roy Bhaskar]] — 英国哲学家，批判实在论创始人，区分三层本体论和开放/封闭系统，为 Wrigley 的 EBE 方法论批判提供哲学基础
 - [[Nancy Cartwright]] — 杜伦大学/UC San Diego 科学哲学家，CHESS 核心成员，提出 RCT 证据外推三阶段框架，与 Nick Cowen 合作研究教育 EBP 实施
+- [[David Phillips]] — 牛津大学比较教育学教授，与 Kimberly Ochs 共同提出政策借用四阶段模型和跨国吸引力结构性类型学
 
 #### Current (2000–present)
 
@@ -517,6 +511,7 @@ updated: '2026-05-06'
 - [[Julian Williams]] — 曼彻斯特大学教育研究者，关注研究-政策-实践"第三空间"混合活动设计和替代性学习结果测量，IJRME "什么有效"特刊共同编辑
 - [[Terry Wrigley]] — 诺桑比亚大学教育研究者，以批判实在论对 EBE 方法论进行三层技术解构（RCT→元分析→元-元分析），与 McCusker (2019) 合作批判 EBT"简单科学观"
 - [[Julie Nelson]] — NFER 高级研究员，专注 EIP 测量工具开发和 KMb 研究，与 Campbell 共同编辑 EIP 特刊
+- [[Kimberly Ochs]] — 比较教育学者，与 David Phillips 共同开发政策借用模型，区分政策文本与政策话语，分类四种吸引力"火花"
 - [[Paul Morris]] — UCL 比较教育教授，专攻香港课程变革政治分析、政策借用与国家安全的课程后果
 - [[Stephen Ball]] — UCL 教育学院教育社会学家，提出内生/外生私有化区分（Ball & Youdell 2008）、教育政策五重语境框架（1994）和跨国政策创业概念（2012）
 - [[Ray Pawson]] — 利兹大学社会研究方法论教授，实在论评估和实在论综合提出者，对 RCT 和元分析在教育中的应用提供系统批判
@@ -547,6 +542,7 @@ updated: '2026-05-06'
 - [[Catherine Lewis]] — 美国教育研究者，以向教育研究界系统介绍改进科学方法论著称（*Educational Researcher*, 2015）
 - [[Akira Miyake]] — 认知心理学家，执行功能统一性与多样性框架提出者（Miyake et al., 2000），识别 EF 三成分（抑制/转换/更新与监控）
 - [[Yong Zhao]] — University of Kansas 教育政策与比较教育教授，从医学引入副作用概念至教育研究，论证教育干预的效果与副作用不可分离
+- [[Gita Steiner-Khamsi]] — 哥伦比亚大学教师学院比较教育学者，政策借用与借出政治分析领军人物，强调关注转移的能动者和受益者
 
 ---
 
@@ -613,6 +609,7 @@ updated: '2026-05-06'
 - [[Argument_Nielsen_2021_NordPsych]] — 论证 Hattie 是教育理论家（非纯统计学家），追溯其行为主义谱系（Skinner→Glaser→Hattie），对 VL 反馈效应的 5 项最重元分析逐项细读审查发现 4/5 未研究同一现象
 - [[Argument_OConnor_2020_AJLL]] — 以 VL 全语言处理为案例的细读审查：揭示分类错误、不对称审查（接受 -0.65/修正 +0.65）、选择性排除（VL 唯一被修正效应量的元分析），论证先验偏见驱动数据选择
 - [[Argument_ONeill_2012_NZJES]] — 以 NZ Treasury 2011 年简报为案例，运用 Kreeft 实质谬误框架分析教育政策论述中证据被误用的机制，提出研究者有责任警惕和挑战基于实质谬误的公共政策辩论
+- [[Argument_Rappleye_2006_RCIE]] — 提出跨国吸引力情境概念地图，区分结构／人双层推力与阻力及四种吸引力"火花"，回应全球化对教育转移研究的新要求
 - [[Argument_Rømer_2018_EPT]] — 以教育哲学分析对 Hattie VL 提出五线批评：评价理论取代教育、因变量概念不清、激进建构主义消解教学、反馈集权化、误读 Popper 三个世界理论
 - [[Argument_Slavin_2002_ER]] — EBE 支持者阵营的奠基性论述：以医学类比论证教育需采用证据本位政策，提出开发-评估-推广范式和"基于研究 vs 经评估"的关键区分
 - [[Argument_Slavin_2019_EP]] — EBE 支持者阵营的纲领性论述：三条件框架（项目存量、证据审查、政府激励）和以已验证项目系统填充 RTI 三层的 RTPI 方案
@@ -627,6 +624,7 @@ updated: '2026-05-06'
 - [[Argument_Simpson_2017_JEP]] — 以农场肥料思想实验和真实研究案例，论证效应量三大系统性偏差（比较组、范围限制、测量设计）使元分析联盟表成为"研究设计操纵开放程度的等级"而非教育有效性排名
 - [[Argument_Simpson_2019_ERE]] — 以"教一个匈牙利单词"思想实验证明效应量是试验清晰度而非教育有效性的测量，系统论证 EBE 支持者的六种防御策略
 - [[Argument_Snook_2009_NZJES]] — VL 最早的系统性批判之一（2009）：从方法论缺陷、效应量任意性、社会背景排除、政策误用风险五维度审查 Hattie VL，引 Dewey 知识论为基线立场
+- [[Argument_Snook_2010_NZJES]] — 对 Hattie (2010) 回应的再回应：逐点论证 Hattie 未充分解决 2009 年提出的方法论关切，提出元分析从医学移植到教育的基础性不匹配问题
 - [[Argument_Sarbiewska_2019_JSR]] — 以 Benner 修正版教学三角为框架，分析 VL 如何影响新西兰和澳大利亚教育政策与实践，记录 PISA 2001 后的政策转向及 HITS、Gonski 2.0 等制度化采纳
 - [[Argument_Kraft_2023_ER]] — 回应 Simpson 对效应量基准的批评，以 3,426 个教育干预 RCT 效应量显示 36% 小于 0.05，主张"教育干预经常失败"才是解释政策相关性的核心基准
 - [[Argument_Brady_2023_EPR]] — 追踪 2020 年五本教育心理学经验期刊的方法趋势，发现随机实验降至 20%、非干预文章中约三分之二包含实践建议

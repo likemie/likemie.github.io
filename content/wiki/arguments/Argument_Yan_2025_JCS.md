@@ -4,7 +4,7 @@ type: argument
 citation: "Yan, K. C. A., & Morris, P. (2025). The life and death of Liberal Studies: explaining curriculum change in post-handover Hong Kong. Journal of Curriculum Studies, 57(4), 480–494."
 tags: [curriculum-change, hong-kong, liberal-studies, national-education, policy-borrowing, world-culture-theory, region/china, level/k12]
 related_concepts: ["[[Liberal Studies (Hong Kong)]]", "[[Citizenship and Social Development (Hong Kong)]]", "[[Policy Borrowing]]"]
-related_theories: ["[[Cuban's Curriculum Change Theory]]", "[[World Culture Theory]]", "[[Policy Borrowing and Lending]]"]
+related_theories: ["[[Cuban's Curriculum Change Theory]]", "[[World Culture Theory]]", "[[Policy Borrowing]]"]
 related_methods: ["[[Historical Document Analysis of Curriculum]]"]
 related_persons: []
 sources: ["sources/Yan_2025_JCS.md"]
@@ -26,7 +26,7 @@ updated: 2026-05-01
 
 - [[Cuban's Curriculum Change Theory]] — 作为分析起点。课程变革的三个外部因素：进步教育运动、冷战/国防、立法法律决定。论文将此框架扩展到香港语境，检验其解释力与局限
 - [[World Culture Theory]] — 全球学校模式趋同假设。LS 的诞生表面上支撑该理论（引用全球趋势、IBDP 课程参照），但论文认为这是表面修辞而非变革动因
-- [[Policy Borrowing and Lending]] — Steiner-Khamsi 的政策借用框架。分析港府如何"外化"改革需求，以全球化论述合法化国内议程
+- [[Policy Borrowing]] — Steiner-Khamsi 的政策借用框架。分析港府如何"外化"改革需求，以全球化论述合法化国内议程
 - **Tröhler (2023) 国家利益驱动课程变革** — 废除阶段的核心解释框架
 - **Vickers & Morris (2022) 威权国家主义与教育** — 解释中共如何通过教育确保边疆忠诚
 

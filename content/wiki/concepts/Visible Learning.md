@@ -2,15 +2,15 @@
 title: Visible Learning
 type: concept
 tags: [Visible Learning, evidence-based-education, subject/instruction, level/k12]
-related_concepts: ["[[Evidence-Based Education]]", "[[Evidence-Based Reform]]", "[[Effect Size]]", "[[Meta-analysis]]", "[[Pure Evaluation]]", "[[Cult of the Guru]]", "[[Neo-Taylorism in Educational Administration]]", "[[Policy Borrowing]]", "[[Programme Fidelity vs Adaptation]]", "[[Performativity of Measurement]]", "[[Professional Judgment]]", "[[Interpretation Community]]", "[[Structural Coupling]]", "[[Class Size]]", "[[Performance Pay]]", "[[Policy Entrepreneur]]", "[[Educational Management Organisation (EMO)]]", "[[Bildung]]", "[[Learnification]]", "[[Neuroplasticity]]", "[[Incarnation-Extension Dialectics]]", "[[Blind Spot in Observation]]", "[[Feedback]]", "[[Effective Teaching]]", "[[Side Effects in Education]]", "[[Direct Instruction]]", "[[Scientism]]", "[[Cargo Cult Science]]", "[[Global Education Reform Movement (GERM)]]", "[[Problem-Based Learning]]", "[[Surface and Deep Learning]]", "[[动态知识与学习模型]]", "[[Constructive Alignment]]", "[[The New Zealand Curriculum]]", "[[Australian Curriculum]]", "[[Material Fallacies]]"]
+related_concepts: ["[[Evidence-Based Education]]", "[[Evidence-Based Reform]]", "[[Effect Size]]", "[[Meta-analysis]]", "[[Pure Evaluation]]", "[[Cult of the Guru]]", "[[Neo-Taylorism in Educational Administration]]", "[[Policy Borrowing]]", "[[Programme Fidelity vs Adaptation]]", "[[Performativity of Measurement]]", "[[Professional Judgment]]", "[[Interpretation Community]]", "[[Structural Coupling]]", "[[Class Size]]", "[[Performance Pay]]", "[[Policy Entrepreneur]]", "[[Educational Management Organisation (EMO)]]", "[[Bildung]]", "[[Learnification]]", "[[Neuroplasticity]]", "[[Incarnation-Extension Dialectics]]", "[[Blind Spot in Observation]]", "[[Feedback]]", "[[Effective Teaching]]", "[[Side Effects in Education]]", "[[Direct Instruction]]", "[[Scientism]]", "[[Cargo Cult Science]]", "[[Global Education Reform Movement (GERM)]]", "[[Problem-Based Learning]]", "[[Surface and Deep Learning]]", "[[Dynamic Knowledge and Learning Model]]", "[[Constructive Alignment]]", "[[The New Zealand Curriculum]]", "[[Australian Curriculum]]", "[[Material Fallacies]]"]
 related_persons: ["[[John Hattie]]", "[[Thomas Aastrup Rømer]]", "[[Klaus Nielsen]]", "[[Ernst von Glasersfeld]]", "[[Carl Bereiter]]", "[[Gert Biesta]]", "[[Scott Eacott]]", "[[Lars Qvortrup]]", "[[Donald A. Schön]]", "[[Herbert A. Simon]]", "[[Ivan Snook]]", "[[Steen Nepper Larsen]]", "[[Niklas Luhmann]]", "[[John Biggs]]", "[[Dietrich Benner]]"]
 related_facts: ["[[Treasury Briefing on Student-Teacher Ratios (NZ 2011)]]", "[[New Zealand National Standards (2009)]]", "[[Visible Learning Branding and Global Influences]]"]
 related_theories: ["[[New Public Management in Education]]", "[[Technical Rationality]]", "[[Radical Constructivism]]", "[[Popper's Three Worlds Theory]]", "[[Bounded Rationality]]", "[[Luhmann's Systems Theory]]", "[[Hofstede's Cultural Dimensions]]"]
-sources: ["sources/Sarbiewska_2019_JSR.md", "sources/Snook_2009_NZJES.md", "sources/Hattie_2010_NZJES.md", "sources/Terhart_2011_JCS.md", "sources/Qvortrup_2015_Paideia.md", "sources/Fredens_2015_Paideia.md", "sources/Hattie_2015_SOTLP.md", "sources/Allerup_2015_Paideia.md", "sources/Wecker_2016_ZfE.md", "sources/ONeill_2016_Report.md", "sources/Eacott_2017_SLM.md", "sources/Bergeron_2017_MJE.md", "sources/Zhao_2017_JEC.md", "sources/Romer_2018_EPT.md", "sources/Eacott_2019_IJLE.md", "sources/Golovchin_2019_ESC.md", "sources/Larsen_2019_EducSci.md", "sources/Qvortrup_2019_NordSTEP.md", "sources/Blass_2020_JESP.md", "sources/McKnight_2020_Discourse.md", "sources/OConnor_2020_AJLL.md", "sources/Nielsen_2021_IRTP.md", "sources/Nielsen_2021_NordPsych.md", "sources/Johnson_2023_CE.md", "sources/Laursen_2015_Paideia.md", "sources/ONeill_2012_NZJES.md"]
+sources: ["sources/Sarbiewska_2019_JSR.md", "sources/Snook_2009_NZJES.md", "sources/Hattie_2010_NZJES.md", "sources/Snook_2010_NZJES.md", "sources/Terhart_2011_JCS.md", "sources/Qvortrup_2015_Paideia.md", "sources/Fredens_2015_Paideia.md", "sources/Hattie_2015_SOTLP.md", "sources/Allerup_2015_Paideia.md", "sources/Wecker_2016_ZfE.md", "sources/ONeill_2016_Report.md", "sources/Eacott_2017_SLM.md", "sources/Bergeron_2017_MJE.md", "sources/Zhao_2017_JEC.md", "sources/Romer_2018_EPT.md", "sources/Eacott_2019_IJLE.md", "sources/Golovchin_2019_ESC.md", "sources/Larsen_2019_EducSci.md", "sources/Qvortrup_2019_NordSTEP.md", "sources/Blass_2020_JESP.md", "sources/McKnight_2020_Discourse.md", "sources/OConnor_2020_AJLL.md", "sources/Nielsen_2021_IRTP.md", "sources/Nielsen_2021_NordPsych.md", "sources/Johnson_2023_CE.md", "sources/Laursen_2015_Paideia.md", "sources/ONeill_2012_NZJES.md"]
 confidence: medium
 status: draft
 created: 2026-05-02
-updated: 2026-05-06
+updated: 2026-05-07
 
 ---
 
@@ -164,13 +164,15 @@ Golovchin（2019, p.232-234）详细描述了 Hattie 元-元分析（mega-analys
 
 Qvortrup (2015) 从支持者立场为 Hattie 的元分析比较提供辩护：不同研究即便使用不同学习结果定义，仍可通过[[Effect Size|效应量]]比较相对结果，例如干预组与控制组之差，或干预结束时与基线状态之差（Qvortrup, 2015, p.27）。但这一辩护同时揭示了 VL 的概念限制：元-元分析得到的是抽象学习结果，难以说明所测量的究竟是知识与技能、社会能力、表层学习、深层学习还是概念性学习（Qvortrup, 2015, p.27）。
 
-Qvortrup 进一步指出，Hattie 本人并未掩盖这一限制：多数纳入研究的测验特别适合测量表层特征，对深层学习有一定测量能力，却很少有效测量学生从课堂经验中建构的概念表征（Qvortrup, 2015, p.29）。因此，VL 若要继续发展，需要一种更明确区分不同学习结果并解释其动态关系的[[动态知识与学习模型]]，而不是只输出跨知识层次的总平均效应（Qvortrup, 2015, pp.29–33）。
+Qvortrup 进一步指出，Hattie 本人并未掩盖这一限制：多数纳入研究的测验特别适合测量表层特征，对深层学习有一定测量能力，却很少有效测量学生从课堂经验中建构的概念表征（Qvortrup, 2015, p.29）。因此，VL 若要继续发展，需要一种更明确区分不同学习结果并解释其动态关系的[[Dynamic Knowledge and Learning Model]]，而不是只输出跨知识层次的总平均效应（Qvortrup, 2015, pp.29–33）。
 
 ## 与相关概念的区别
 
 - vs [[Evidence-Based Education]] — Visible Learning 是 EBE 运动中最具全球影响力的具体项目／品牌，EBE 是更广泛的教育政策运动
 - vs [[Evidence-Based Reform]] — Slavin 的 EBR 强调开发-评估-推广范式和政府激励机制，Visible Learning 则更侧重元分析综合和教师层面的技术执行
 - vs [[Effect Size]] — 效应量是 Visible Learning 的核心统计工具，但 Visible Learning 将效应量包装为面向教师和学校的商业产品
+- vs [[Dynamic Knowledge and Learning Model]] — VL 给出跨研究平均效果，动态模型则要求进一步区分不同知识形态上的学习结果。
+- vs [[Scientism]] — Scientism 是对 VL 的外部批判框架之一，强调其可能把“可量化”误当成“最重要”。
 
 ## 理论基础
 

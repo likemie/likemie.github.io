@@ -3,7 +3,7 @@ title: Carl Bereiter
 type: person
 tags: [Bereiter, knowledge-building, region/canada]
 related_theories: ["[[Popper's Three Worlds Theory]]"]
-related_concepts: ["[[Visible Learning]]", "[[Surface and Deep Learning]]", "[[动态知识与学习模型]]"]
+related_concepts: ["[[Visible Learning]]", "[[Surface and Deep Learning]]", "[[Dynamic Knowledge and Learning Model]]"]
 sources: ["sources/Hattie_2015_SOTLP.md", "sources/Qvortrup_2015_Paideia.md", "sources/Romer_2018_EPT.md"]
 confidence: medium
 status: draft
@@ -47,7 +47,7 @@ Bereiter 提出的概念，Hattie 引用此概念来否定传统教学观（Røm
 ## 争议与批评
 
 - Rømer (2018, p.10) 指出 Bereiter 对 Popper 的化简——将 World 3 缩减为"真理与非真理"——为 Hattie 的进一步误读打开了大门，后者最终将 World 3 的客观性完全塌缩为 World 2 的主观学习。Hattie (2015) 在此误读基础上将[[Surface and Deep Learning|表层/深层/建构性学习]]映射到 Popper 三个世界，形成 VL 的认识论框架
-- Qvortrup (2015) 从较温和的内部修正角度指出，Hattie 借 Bereiter/Popper 得到的三类知识，与 Bloom 修订版四类知识、SOLO 模型之间的对应关系并不清楚；因此需要转向[[动态知识与学习模型]]，用一阶到四阶知识说明不同知识形式之间的动态关系（Qvortrup, 2015, pp.30–32）
+- Qvortrup (2015) 从较温和的内部修正角度指出，Hattie 借 Bereiter/Popper 得到的三类知识，与 Bloom 修订版四类知识、SOLO 模型之间的对应关系并不清楚；因此需要转向[[Dynamic Knowledge and Learning Model]]，用一阶到四阶知识说明不同知识形式之间的动态关系（Qvortrup, 2015, pp.30–32）
 
 ## 来源
 

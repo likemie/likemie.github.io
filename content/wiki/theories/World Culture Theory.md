@@ -3,7 +3,7 @@ title: World Culture Theory
 type: theory
 tags: [world-culture-theory, globalization, comparative-education, curriculum-change, paradigm/globalization]
 related_concepts: ["[[Policy Borrowing]]"]
-related_theories: ["[[Policy Borrowing and Lending]]"]
+related_theories: []
 related_persons: ["[[John W. Meyer]]", "[[Francisco O. Ramirez]]"]
 related_methods: []
 sources: ["sources/Yan_2025_JCS.md"]

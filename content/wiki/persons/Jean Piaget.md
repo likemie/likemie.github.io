@@ -3,7 +3,7 @@ title: Jean Piaget
 type: person
 tags: [Piaget, paradigm/constructivist, region/switzerland]
 related_theories: ["[[piagets-theory-of-cognitive-development]]"]
-related_concepts: ["[[executive-function]]", "[[prefrontal-cortex]]", "[[动态知识与学习模型]]"]
+related_concepts: ["[[executive-function]]", "[[prefrontal-cortex]]", "[[Dynamic Knowledge and Learning Model]]"]
 sources: ["sources/Qvortrup_2015_Paideia.md", "sources/Bolton_2017_ArchPsych.md"]
 confidence: medium
 status: draft
@@ -28,7 +28,7 @@ updated: 2026-05-05
 - [[piagets-theory-of-cognitive-development]] — 认知发展的四阶段建构主义理论
 
 ## 思想发展与影响
-- Qvortrup (2015) 用 Piaget 的同化与顺应区分说明知识形式之间会相互影响：新知识不是被外部教学简单输入，而是依赖已有认知图式被吸收或重组。因此，仅列出学习层次的分类法不足以解释学习，需要[[动态知识与学习模型]]来描述知识形式之间的互动（Qvortrup, 2015, p.29）。
+- Qvortrup (2015) 用 Piaget 的同化与顺应区分说明知识形式之间会相互影响：新知识不是被外部教学简单输入，而是依赖已有认知图式被吸收或重组。因此，仅列出学习层次的分类法不足以解释学习，需要[[Dynamic Knowledge and Learning Model]]来描述知识形式之间的互动（Qvortrup, 2015, p.29）。
 - 其理论启发了教育者和研究者探索儿童认知与学习的阶段性发展的思路（Bolton & Hattie, 2017, p.1）
 - 后发展出[[neo-piagetian-theories|新皮亚杰理论]]，由 Pascual-Leone (1970)、Case (1985, 1992)、Fischer (1980) 等进一步修正和扩展，以回应理论弱点并解释阶段过渡机制（Bolton & Hattie, 2017, p.3）
 - Bolton & Hattie (2017) 将皮亚杰阶段与前额叶皮层的解剖生理发育在时间上对齐，论证阶段过渡可能是执行功能随大脑发育而发展的函数（Bolton & Hattie, 2017, p.1, 8–9）

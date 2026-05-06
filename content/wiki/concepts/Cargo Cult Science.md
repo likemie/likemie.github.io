@@ -2,13 +2,13 @@
 title: Cargo Cult Science
 type: concept
 tags: [cargo-cult-science, 伪科学, paradigm/positivist, stance/critique]
-related_concepts: ["[[Scientism]]", "[[Visible Learning]]", "[[Evidence-Based Education]]"]
+related_concepts: ["[[Scientism]]", "[[Visible Learning]]", "[[Evidence-Based Education]]", "[[Dynamic Knowledge and Learning Model]]"]
 related_persons: ["[[John Hattie]]"]
 sources: ["sources/Johnson_2023_CE.md"]
 confidence: medium
 status: draft
 created: 2026-05-04
-updated: 2026-05-04
+updated: 2026-05-06
 ---
 
 ## 定义
@@ -24,6 +24,7 @@ Cargo cult science（货物崇拜科学）是物理学家 Richard Feynman（1974
 ## 与相关概念的区别
 - vs [[Scientism]] — 科学主义是前提和土壤（过度推崇科学方法），cargo cult science 是产物（具体伪科学实践）
 - vs [[Evidence-Based Education]] — EBE 在方法论诚信缺失时会退化为 cargo cult science
+- vs [[Dynamic Knowledge and Learning Model]] — 动态模型要求先区分学习结果类型，再比较效果大小；这有助于抑制“只保留科学外观而忽视概念清晰度”的倾向。
 
 ## 实证发现
 - Johnson & Janzen (2023) 论证 Hattie 的 [[Visible Learning]] 是教育领域 cargo cult science 的典型案例：
@@ -35,3 +36,9 @@ Cargo cult science（货物崇拜科学）是物理学家 Richard Feynman（1974
 
 ## 来源
 - [[Johnson_2023_CE]]
+
+## 交叉阅读
+
+- [[Scientism]]
+- [[Visible Learning]]
+- [[Dynamic Knowledge and Learning Model]]

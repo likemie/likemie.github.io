@@ -2,8 +2,8 @@
 title: Liberal Studies (Hong Kong)
 type: concept
 tags: [Liberal Studies (Hong Kong), subject/curriculum, region/china, level/k12]
-related_concepts: []
-related_theories: ["[[Cuban's Curriculum Change Theory]]", "[[Policy Borrowing and Lending]]", "[[World Culture Theory]]"]
+related_concepts: ["[[Policy Borrowing]]"]
+related_theories: ["[[Cuban's Curriculum Change Theory]]", "[[World Culture Theory]]"]
 related_persons: ["[[Paul Morris]]", "[[Carrie Lam]]", "[[Tung Chee-hwa]]"]
 sources: ["sources/Yan_2025_JCS.md"]
 confidence: high
@@ -63,7 +63,7 @@ updated: 2026-05-01
 
 ## 理论基础
 
-- [[Policy Borrowing and Lending]] — LS 的设计参照了 IBDP 的三个要素（知识理论、延伸论文、创造行动服务），以此将自己定位为全球进步教育的体现
+- [[Policy Borrowing]] — LS 的设计参照了 IBDP 的三个要素（知识理论、延伸论文、创造行动服务），以此将自己定位为全球进步教育的体现
 - [[Cuban's Curriculum Change Theory]] — LS 的创立和废除均受政治因素驱动，但体现在 Cuban 框架的不同维度
 - [[World Culture Theory]] — LS 的全球参照表面上支撑了该理论的趋同假设
 

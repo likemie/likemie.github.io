@@ -2,7 +2,7 @@
 title: Surface and Deep Learning
 type: concept
 tags: [surface-learning, deep-learning, subject/instruction, level/higher-ed]
-related_concepts: ["[[Visible Learning]]", "[[Problem-Based Learning]]", "[[Constructive Alignment]]", "[[动态知识与学习模型]]"]
+related_concepts: ["[[Visible Learning]]", "[[Problem-Based Learning]]", "[[Constructive Alignment]]", "[[Dynamic Knowledge and Learning Model]]"]
 related_theories: ["[[Popper's Three Worlds Theory]]"]
 related_persons: ["[[John Hattie]]", "[[John Biggs]]", "[[Thomas Aastrup Rømer]]", "[[Carl Bereiter]]"]
 sources: ["sources/Qvortrup_2015_Paideia.md", "sources/Hattie_2015_SOTLP.md", "sources/Blass_2020_JESP.md", "sources/Fredens_2015_Paideia.md"]
@@ -63,7 +63,7 @@ Henk & Stahl (1985) 的元分析发现一个与表层/深层区分相关的模�
 ## 理论基础
 
 - [[Popper's Three Worlds Theory]] — Hattie (2009; 2015) 将表层/深层/建构性学习映射到 Popper 的三个世界：表层学习对应 World 1（物理事物）、深层学习对应 World 2（主观观念）、建构性理解对应 World 3（文化与科学对象）。但 [[Thomas Aastrup Rømer|Rømer]] (2018) 论证 Hattie 通过 [[Carl Bereiter|Bereiter]] (2002) 的中介严重误读了 Popper——Bereiter 已将 World 3 缩减为"真理与非真理"并排除人文学科，Hattie 进一步消除了 Bereiter 仍保留的 World 2 与 World 3 之间的关键区分。Popper 是哲学实在论者，Hattie 是主观建构主义者——两者在认识论上精确对立（Rømer, 2018, p.10-11）
-- [[动态知识与学习模型]] — Qvortrup (2015) 从支持者立场指出，Hattie 确实重视表层、深层和概念性知识的区分，但 *Visible Learning* 的总体结果主要呈现跨知识层次的抽象学习结果；多数测验特别擅长测量表层特征，对深层学习只有部分测量能力，很少有效测量学生从课堂经验中建构的概念表征（Qvortrup, 2015, pp.28–29）。因此，表层/深层区分需要被嵌入一种动态知识模型中：教学不是在某个单一层次上“制造”学习，而是刺激多种知识形式之间的相互作用（Qvortrup, 2015, pp.29–32）。
+- [[Dynamic Knowledge and Learning Model]] — Qvortrup (2015) 从支持者立场指出，Hattie 确实重视表层、深层和概念性知识的区分，但 *Visible Learning* 的总体结果主要呈现跨知识层次的抽象学习结果；多数测验特别擅长测量表层特征，对深层学习只有部分测量能力，很少有效测量学生从课堂经验中建构的概念表征（Qvortrup, 2015, pp.28–29）。因此，表层/深层区分需要被嵌入一种动态知识模型中：教学不是在某个单一层次上“制造”学习，而是刺激多种知识形式之间的相互作用（Qvortrup, 2015, pp.29–32）。
 
 ## 与相关概念的区别
 

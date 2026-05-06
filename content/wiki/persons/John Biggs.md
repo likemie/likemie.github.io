@@ -3,7 +3,7 @@ title: John Biggs
 type: person
 tags: [Biggs, paradigm/constructivist, region/australia]
 related_theories: ["[[Radical Constructivism]]"]
-related_concepts: ["[[Visible Learning]]", "[[Constructive Alignment]]", "[[Surface and Deep Learning]]", "[[动态知识与学习模型]]"]
+related_concepts: ["[[Visible Learning]]", "[[Constructive Alignment]]", "[[Surface and Deep Learning]]", "[[Dynamic Knowledge and Learning Model]]"]
 sources: ["sources/Hattie_2015_SOTLP.md", "sources/Qvortrup_2015_Paideia.md", "sources/Romer_2018_EPT.md"]
 confidence: medium
 status: draft
@@ -43,7 +43,7 @@ Hattie (2015, p.87) 将建构性对齐定位为 VL 框架的关键实施要素�
 
 - 属于 1990 年代激进建构主义运动的一部分，与 von Glasersfeld 和 Bjørgen 共享建构主义认识论前提（Rømer, 2018, p.7）
 - 建构性对齐被纳入 Hattie 的 VL 评价体系
-- Qvortrup (2015) 将 Biggs & Collis 的 SOLO 模型列为 Hattie 解释表层、深层与概念性学习时调用的框架之一，但指出 SOLO、Bloom 修订版和 Popper/Bereiter 三世界框架之间的对应关系并不清楚；这一问题推动了[[动态知识与学习模型]]的提出（Qvortrup, 2015, p.30）
+- Qvortrup (2015) 将 Biggs & Collis 的 SOLO 模型列为 Hattie 解释表层、深层与概念性学习时调用的框架之一，但指出 SOLO、Bloom 修订版和 Popper/Bereiter 三世界框架之间的对应关系并不清楚；这一问题推动了[[Dynamic Knowledge and Learning Model]]的提出（Qvortrup, 2015, p.30）
 
 ## 来源
 

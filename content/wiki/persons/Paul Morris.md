@@ -2,8 +2,8 @@
 title: Paul Morris
 type: person
 tags: [Paul Morris, curriculum-change, Hong-Kong, comparative-education, region/uk, region/china]
-related_theories: ["[[Policy Borrowing and Lending]]", "[[Cuban's Curriculum Change Theory]]"]
-related_concepts: ["[[Liberal Studies (Hong Kong)]]", "[[National Education in Hong Kong]]", "[[Policy Borrowing]]"]
+related_theories: [, "[[Cuban's Curriculum Change Theory]]"]
+related_concepts: ["[[Liberal Studies (Hong Kong)]]", "[[National Education in Hong Kong]]", ]
 related_persons: []
 sources: ["sources/Yan_2025_JCS.md"]
 confidence: high
@@ -28,7 +28,7 @@ Morris 的核心学术关切是**全球化论述如何在教育政策中被工�
 
 ## 主要贡献
 
-- [[Policy Borrowing and Lending]] — 与 Steiner-Khamsi 的政策借用框架保持一致，以香港为案例深化了对"借用"政治性的理解
+- [[Policy Borrowing]] — 与 Steiner-Khamsi 的政策借用框架保持一致，以香港为案例深化了对"借用"政治性的理解
 - [[Liberal Studies (Hong Kong)]] — 与 Yan 合作的 2025 年论文是 LS 兴衰的权威分析
 - **PISA 的政治解读** — Auld & Morris (2016) 揭示了 PISA 如何通过"翻译和说服"将复杂的教育条件转化为跨国"最佳实践"
 - **香港教育的批判性历史** — Morris & Adamson (2010) 系统梳理了香港从殖民地到回归后的课程政治

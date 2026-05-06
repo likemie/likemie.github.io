@@ -2,7 +2,7 @@
 title: Lars Qvortrup
 type: person
 tags: [Qvortrup, visible-learning, evidence-based-education, region/denmark, stance/support]
-related_concepts: ["[[Visible Learning]]", "[[Evidence-Based Education]]", "[[Professional Judgment]]", "[[Interpretation Community]]", "[[Structural Coupling]]", "[[动态知识与学习模型]]", "[[Surface and Deep Learning]]"]
+related_concepts: ["[[Visible Learning]]", "[[Evidence-Based Education]]", "[[Professional Judgment]]", "[[Interpretation Community]]", "[[Structural Coupling]]", "[[Dynamic Knowledge and Learning Model]]", "[[Surface and Deep Learning]]"]
 related_theories: ["[[Bounded Rationality]]", "[[Popper's Three Worlds Theory]]"]
 related_persons: ["[[John Hattie]]", "[[Donald A. Schön]]", "[[Herbert A. Simon]]", "[[Thomas Aastrup Rømer]]"]
 related_facts: ["[[Visible Learning Branding and Global Influences]]"]
@@ -39,7 +39,7 @@ Qvortrup 的学术立场是从 VL 支持者角度为其提供理论辩护：
 他的核心贡献包括：
 
 - **学习结果概念批判**：从 VL 支持者立场承认 Hattie 使用 achievement、student learning、study outcome 等不同词汇，且学习和学习结果不是良定义概念；效应量可比较相对效果，但会把学习结果抽象化，难以说明测量的是表层知识、深层理解还是概念性学习（Qvortrup, 2015, p.27）
-- **[[动态知识与学习模型]]**：基于 Bateson 的一阶至四阶学习理论，将知识区分为 knowing-that、knowing-how、knowing-why 和知识边界／知识视域，并强调教学影响的是一个具有内部动力的动态学习系统（Qvortrup, 2015, pp.31–32）
+- **[[Dynamic Knowledge and Learning Model]]**：基于 Bateson 的一阶至四阶学习理论，将知识区分为 knowing-that、knowing-how、knowing-why 和知识边界／知识视域，并强调教学影响的是一个具有内部动力的动态学习系统（Qvortrup, 2015, pp.31–32）
 - **解释社群分析**：使用 Fish (1980) 的[[Interpretation Community|解释社群]]概念解释丹麦 Hattie 批评现象的起源——一个由研究者、政治家和工会代表组成的社群在短期内形成了对 VL 的广泛误解（Qvortrup, 2019, p.3-5）
 - **观察透镜认识论**：以 von Foerster (1984) 和 Thyssen (2012) 为框架，论证定量与定性方法是互补的观察位置，而非相互排斥的零和游戏（Qvortrup, 2019, p.5）
 - **专业判断作为缺失环节**：综合 Simon 的[[Bounded Rationality|有限理性]]、Schön 的反思性实践和 Luhmann 的[[Structural Coupling|结构耦合]]，构建 VL 的理论辩护——教学与学习不是因果关系而是两个封闭系统之间的耦合，教师需要[[Professional Judgment|专业判断]]来整合研究知识（Qvortrup, 2019, p.6-7）
@@ -47,7 +47,7 @@ Qvortrup 的学术立场是从 VL 支持者角度为其提供理论辩护：
 ## 主要贡献
 
 - [[Argument_Qvortrup_2015_Paideia]] — VL 支持者立场讨论论文，提出动态知识与学习模型以回应学习结果概念问题
-- [[动态知识与学习模型]] — Qvortrup 为修正 VL 的学习结果概念而提出的四阶知识模型
+- [[Dynamic Knowledge and Learning Model]] — Qvortrup 为修正 VL 的学习结果概念而提出的四阶知识模型
 - [[Argument_Qvortrup_2019_NordSTEP]] — VL 支持者立场讨论论文
 - [[Professional Judgment]] — Qvortrup 提出专业判断作为 VL 中教学干预与学习成果之间的"缺失环节"
 - [[Visible Learning]] — 为 VL 批评文献提供了一篇系统的支持方回应

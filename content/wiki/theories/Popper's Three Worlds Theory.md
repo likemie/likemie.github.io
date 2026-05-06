@@ -2,7 +2,7 @@
 title: Popper's Three Worlds Theory
 type: theory
 tags: [Popper, epistemology, realism, paradigm/critical]
-related_concepts: ["[[Visible Learning]]", "[[Surface and Deep Learning]]", "[[动态知识与学习模型]]"]
+related_concepts: ["[[Visible Learning]]", "[[Surface and Deep Learning]]", "[[Dynamic Knowledge and Learning Model]]"]
 related_persons: ["[[Karl Popper]]", "[[Carl Bereiter]]", "[[John Hattie]]", "[[Lars Qvortrup]]"]
 related_theories: ["[[Radical Constructivism]]"]
 sources: ["sources/Hattie_2015_SOTLP.md", "sources/Qvortrup_2015_Paideia.md", "sources/Romer_2018_EPT.md"]
@@ -53,7 +53,7 @@ Rømer (2018, p.10-11) 系统论证 Hattie 从根本上扭曲了 Popper 的理�
 
 ### Qvortrup 的温和修正
 
-Qvortrup (2015) 并不完全拒绝 Hattie 对 Popper 的使用，而是指出 Hattie 同时把 Popper/Bereiter 的三类知识、Bloom 修订版四类知识和 Biggs & Collis 的 SOLO 模型放在一起，但三者之间的对应关系并不清楚：表层知识、深层理解、thinking strategies、factual knowledge、conceptual knowledge、procedural knowledge 和 metacognitive knowledge 如何相互映射，Hattie 没有给出充分说明（Qvortrup, 2015, p.30）。因此，Qvortrup 转向[[动态知识与学习模型]]，用 Bateson 式一阶至四阶学习来替代单纯分类式或哲学式映射（Qvortrup, 2015, pp.30–32）。
+Qvortrup (2015) 并不完全拒绝 Hattie 对 Popper 的使用，而是指出 Hattie 同时把 Popper/Bereiter 的三类知识、Bloom 修订版四类知识和 Biggs & Collis 的 SOLO 模型放在一起，但三者之间的对应关系并不清楚：表层知识、深层理解、thinking strategies、factual knowledge、conceptual knowledge、procedural knowledge 和 metacognitive knowledge 如何相互映射，Hattie 没有给出充分说明（Qvortrup, 2015, p.30）。因此，Qvortrup 转向[[Dynamic Knowledge and Learning Model]]，用 Bateson 式一阶至四阶学习来替代单纯分类式或哲学式映射（Qvortrup, 2015, pp.30–32）。
 
 ## 相关研究
 
@@ -63,7 +63,7 @@ Qvortrup (2015) 并不完全拒绝 Hattie 对 Popper 的使用，而是指出 Ha
 
 - [[Visible Learning]] — Hattie 以（被严重误读的）Popper 三个世界理论作为 VL 的认识论基础
 - [[Surface and Deep Learning]] — Hattie 将表层学习映射到 World 1、深层学习映射到 World 2、建构性理解映射到 World 3；Rømer (2018) 论证此映射严重误读了 Popper
-- [[动态知识与学习模型]] — Qvortrup (2015) 从 VL 内部指出 Popper/Bereiter、Bloom 和 SOLO 之间的知识层次对应不清，因而提出动态模型作为替代性概念化路径
+- [[Dynamic Knowledge and Learning Model]] — Qvortrup (2015) 从 VL 内部指出 Popper/Bereiter、Bloom 和 SOLO 之间的知识层次对应不清，因而提出动态模型作为替代性概念化路径
 - [[Radical Constructivism]] — 与 Popper 的科学实在论处于认识论的对立两极
 
 ## 来源
