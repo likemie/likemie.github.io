@@ -1,0 +1,20 @@
+[models]
+# 推荐快模型用 flash 提速，重模型用 pro 保障质量
+fast = "models/gemini-pro-latest"
+heavy = "models/gemini-pro-latest"
+
+[provider]
+name = "custom"
+url = "https://generativelanguage.googleapis.com/v1beta/openai/"
+timeout = 300
+fast_ctx = 1000000
+heavy_ctx = 1000000
+
+[pipeline]
+auto_approve = false
+auto_commit = true
+auto_maintain = false
+watch_debounce = 3.0
+max_concepts_per_source = 8
+ingest_parallel = false           # 必须保持 false，避免并发请求触发 429 报错
+# language = "en"
