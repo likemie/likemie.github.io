@@ -2,7 +2,7 @@
 title: Paul Morris
 type: person
 tags: [Paul Morris, curriculum-change, Hong-Kong, comparative-education, region/uk, region/china]
-related_theories: [, "[[Cuban's Curriculum Change Theory]]"]
+related_theories: [ "[[Cuban's Curriculum Change Theory]]"]
 related_concepts: ["[[Liberal Studies (Hong Kong)]]", "[[National Education in Hong Kong]]", ]
 related_persons: []
 sources: ["sources/Yan_2025_JCS.md"]
