@@ -2,7 +2,7 @@
 title: Gita Steiner-Khamsi
 type: person
 tags: [Gita-Steiner-Khamsi, comparative-education, policy-borrowing, globalization, region/us]
-related_concepts: [, "[[Cross-National Attraction]]", "[[Externalization (Schriewer)]]"]
+related_concepts: [ "[[Cross-National Attraction]]", "[[Externalization (Schriewer)]]"]
 related_theories: []
 related_persons: ["[[David Phillips]]"]
 sources: ["sources/Rappleye_2006_RCIE.md"]
