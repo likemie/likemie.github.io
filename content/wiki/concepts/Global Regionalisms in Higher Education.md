@@ -2,13 +2,13 @@
 title: Global Regionalisms in Higher Education
 type: concept
 tags: [global-regionalisms, higher-education, region/global, level/higher-ed]
-related_concepts: ["[[Geopolitics of Knowledge]]", "[[Regulatory Regionalism]]", "[[Global Education Industry (GEI)]]", "[[International Education Hubs]]"]
+related_concepts: ["[[Geopolitics of Knowledge]]", "[[Regulatory Regionalism]]", "[[Global Education Industry (GEI)]]", "[[International Education Hubs]]", "[[Regional University Alliances]]"]
 related_persons: ["[[Susan Robertson]]"]
-sources: ["sources/Parreira do Amaral(Ed.)_2022_Springer.md", "books/Parreira do Amaral(Ed.)_2022_Springer/Ch3_Parreira do Amaral_2022.md"]
+sources: ["sources/Parreira do Amaral(Ed.)_2022_Springer.md", "books/Parreira do Amaral(Ed.)_2022_Springer/Ch3_Parreira do Amaral_2022.md", "books/Parreira do Amaral(Ed.)_2022_Springer/Ch4_Amos_2022.md"]
 confidence: low
 status: draft
 created: 2026-05-07
-updated: 2026-05-07
+updated: 2026-05-08
 ---
 
 ## 定义

@@ -2,9 +2,9 @@
 title: Global Education Industry (GEI)
 type: concept
 tags: [global-education-industry, privatization, commodification, marketization, higher-education, region/global, level/higher-ed]
-related_concepts: ["[[Geopolitics of Knowledge]]", "[[Knowledge-Based Economization]]", "[[Endogenous and Exogenous Privatisation]]", "[[Educational Management Organisation (EMO)]]", "[[Global Regionalisms in Higher Education]]", "[[International Education Hubs]]", "[[Minerva University]]"]
+related_concepts: ["[[Geopolitics of Knowledge]]", "[[Knowledge-Based Economization]]", "[[Endogenous and Exogenous Privatisation]]", "[[Educational Management Organisation (EMO)]]", "[[Global Regionalisms in Higher Education]]", "[[International Education Hubs]]", "[[Minerva University]]", "[[Educational Technology Industry]]"]
 related_persons: ["[[Marcelo Parreira do Amaral]]", "[[Christiane Thompson]]", "[[Gita Steiner-Khamsi]]", "[[Stephen Ball]]"]
-sources: ["books/Parreira do Amaral(Ed.)_2022_Springer/Ch3_Parreira do Amaral_2022.md"]
+sources: ["books/Parreira do Amaral(Ed.)_2022_Springer/Ch3_Parreira do Amaral_2022.md", "books/Parreira do Amaral(Ed.)_2022_Springer/Ch4_Amos_2022.md"]
 confidence: low
 status: draft
 created: 2026-05-07
@@ -55,7 +55,17 @@ updated: 2026-05-07
 ## 争议与批评
 
 - GEI 建立在根本上为经济性质的概念基础上，当这些概念渗透教育改革时，可能导致教育目标和公共性的弱化（Parreira do Amaral, 2022, p.43）
-- 研究议程仍需更系统地审视 GEI 对不同国家和地区教育系统的不对称影响，特别是在非西方语境中的表现和后果
+### EdTech 产业的三重驱动力
+
+Amos (2022, pp.56–57) 详细分析了数字化——GEI 中最具变革性的技术维度——被推动的三重动机，只有理解这三者的同时运作才能理解 GEI 的"不可逆性"：
+
+**(1) 利润（Profit）**：EdTech 是股票市场增长最快的板块之一——Google、Apple、Microsoft 均设有大型教育部门，K-12 领域有 Sylvan Learning Systems 等提供商，高等教育领域有 Udacity、Coursera 等虚拟大学。Google 的 Jaime Casap 被称为"教育布道者"（education evangelist），在全球平台上推广教育工具。当 Google Classroom 被免费提供给学校时，获取的不是直接收入，而是下一代用户的习惯和数据（Amos, 2022, p.57）
+
+**(2) 正义与平等（Justice and Equality）**：UNESCO 推动数字化以促进包容——数字教材和格式一旦开发完成可被几乎无限复制和适配（anytime, anywhere）。对于缺乏实体校舍或合格教师的地区（如撒哈拉以南非洲的偏远村庄），数字技术是唯一可行的教育供给。但 Amos 指出，没有稳定电力和网络，"anytime, anywhere"就是空话（Amos, 2022, p.57）
+
+**(3) 教师专业发展（Professional Development）**：学习分析（learning analytics）和个性化学习（personalized learning）被宣称为改善学习质量的技术方案，同时创造了新的职业类别——数据科学家、学习设计师、教育技术开发者——也意味着教师角色从"学习设计者"到"算法执行者"的根本转变（Amos, 2022, p.57）
+
+这三重动机相互强化：利润驱动开发更多产品 → 正义叙事为这些产品提供道德合法性 → 教师专业发展需求创造持续的市场需求。结果是，即便认识到数字化的不平等效应，"去数字化"也日益不可能。
 
 ---
 
@@ -69,3 +79,4 @@ updated: 2026-05-07
 ## 来源
 
 - [[Ch3_Parreira do Amaral_2022]]
+- [[Ch4_Amos_2022]]

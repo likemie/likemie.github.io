@@ -2,24 +2,24 @@
 title: World Culture Theory
 type: theory
 tags: [world-culture-theory, globalization, comparative-education, curriculum-change, paradigm/globalization]
-related_concepts: ["[[Policy Borrowing]]", "[[Geopolitics of Knowledge]]"]
-related_theories: []
-related_persons: ["[[John W. Meyer]]", "[[Francisco O. Ramirez]]"]
+related_concepts: ["[[Policy Borrowing]]", "[[Geopolitics of Knowledge]]", "[[Membership-Creating Function of Education]]", "[[Knowledge-Based Economy]]", "[[Liberal Studies (Hong Kong)]]", "[[Replacement of LS by CSD 2021]]"]
+related_theories: ["[[Nation Building through Education]]"]
+related_persons: ["[[John W. Meyer]]", "[[Francisco O. Ramirez]]", "[[Gita Steiner-Khamsi]]", "[[Robert Cowen]]"]
 related_methods: []
-sources: ["sources/Yan_2025_JCS.md"]
+sources: ["sources/Yan_2025_JCS.md", "books/Parreira do Amaral(Ed.)_2022_Springer/Ch4_Amos_2022.md"]
 confidence: medium
 status: draft
 created: 2026-05-01
-updated: 2026-05-07
+updated: 2026-05-08
 ---
 
 ## 核心主张
 
-世界文化理论（World Culture Theory），也称世界社会理论，主张存在一种**单一的全球学校教育模式**，它作为更广泛的现代民族国家文化（西方）模式的一部分在全球扩散，导致课程和学校体系趋同。这一趋同通过**政策借用或参照**的过程加速——各国试图从 PISA 高分国家引入"最佳教育实践"。
+世界文化理论（World Culture Theory），也称世界社会理论，主张存在一种**单一的全球学校教育模式**，它作为更广泛的现代民族国家文化（西方）模式的一部分在全球扩散，导致课程和学校体系趋同。这一趋同通过[[Policy Borrowing | 政策借用]]或参照**的过程加速——各国试图从 PISA 高分国家引入"最佳教育实践"。
 
 > 该理论声称全球学校教育正在趋向标准化，其动力是"the diffusion of a more general cultural (western) model of the modern nation-state." (Meyer et al., 1997，引自 Yan & Morris, 2025, p. 482)
 
-## 理论内部结构
+## 核心命题
 
 ### 核心命题
 1. **全球扩散**：现代学校教育的形式（年龄分级、课程分类、标准化考试）在全球范围内趋同
@@ -27,7 +27,7 @@ updated: 2026-05-07
 > 例：Yan & Morris (2025, pp. 482–483) 描述的 LS 创立阶段——2004–2009 年间香港引入"跨学科探究"、"议题为本"、"独立专题探究（IES）"等全球课程元素，表面上支持了趋同假设：香港似乎在向 IBDP 式的全球课程模型靠拢。然而，Yan & Morris 警告这是"表面趋同"——一旦将废除阶段纳入分析，这一趋同叙事立即瓦解。
 2. **西方模版**：扩散的方向是从西方（尤其是美国）向世界其他国家
 
-> 例：Meyer et al. (1997) 引用的经典案例是 Social Studies（Hamilton, 1973）和 Humanities（Stenhouse, 1968）——这两种以"综合学科"替代"单一学科"的课程形式最初在美国和英国开发，随后扩散至全球。LS 在表面上支持这一叙事（参照西方 IBDP 模式），但 Yan & Morris (2025, p. 491) 揭示：LS 最终被 CSD 取代时，其"爱国守法"的核心定位更接近中共的民族国家建构逻辑，而非"西方模版"的扩散——显示了该理论的解释盲区。
+> 例：Meyer et al. (1997) 引用的经典案例是 Social Studies（Hamilton, 1973）和 Humanities（Stenhouse, 1968）——这两种以"综合学科"替代"单一学科"的课程形式最初在美国和英国开发，随后扩散至全球。LS 在表面上支持这一叙事（参照西方 IBDP 模式），但 Yan & Morris (2025, p. 491) 揭示：LS 最终被 CSD 取代时，其"爱国守法"的核心定位更接近中共的[[Nation Building through Education | 民族国家建构]]逻辑，而非"西方模版"的扩散——显示了该理论的解释盲区。
 3. **科目证据**：Social Studies（Hamilton, 1973）和 Humanities（Stenhouse, 1968）从美国扩散到全球被视为该理论的例证
 
 > 例：世界文化理论将 Social Studies 在全球的扩散解读为"西方课程模型的标准化传播"。但 Yan & Morris (2025, p. 482) 的政策借用视角提供了替代解释：各国引入 Social Studies 并非因为接受"全球文化规范"，而是在不同时期由于不同的国内政治原因选择了这一课程形式——类似形式（综合学科）可以服务于截然不同的政治目的（全球化论述 vs. 国家安全论述）。LS→CSD 的转变正是同一国家在不同时期将"综合学科"服务于相反政治目的的例子。
@@ -35,17 +35,24 @@ updated: 2026-05-07
 
 > 例：Yan & Morris (2025, p. 490) 对 LS 废除阶段的分析直接挑战了这一机制假设——CSD 的建立并非通过工业化或城市化的长期标准化过程，而是通过直接的国家强制（《国安法》提供法律框架、官媒攻击 LS、"国家安全"作为命令性理由）。世界文化理论的"非强迫性趋同"机制无法解释这种国家权力直接介入的课程变革。
 
-### 子命题：PISA 加速器
+### 大众教育的政治建构
+
+Ramirez & Boli (1987) 重构了 18 世纪欧洲民族国家建构大众教育的历史过程：民族国家基于特定地缘政治动态（连同经济与宗教系统变革），通过教育创造 [[Membership-Creating Function of Education | membership]]——建立忠诚与归属的纽带，同时也划定边界——公共教育的"普遍性"不延伸至国界之外（Amos, 2022, pp.54–55）。
+
+> 现代教育的 DNA 里编码了"内外之分"——教育让你"成为"某个国家的公民，但这一机制通过划定"谁不属于我们"来运作。这一分析为世界文化理论提供了历史基线：全球教育趋同的根源在于民族国家共享的 membership 创造功能。
+
+### PISA 加速器
 Auld & Morris (2016) 指出，PISA 等国际比较测试作为"最佳实践"的标识器，加速了政策参照和课程趋同假设。
 
 ## 发展脉络
 
 - **1980** — Ramirez & Meyer 在 *Annual Review of Sociology* 发表奠基性论文，提出比较教育是社会建构的现代世界系统
+- **1987** — Ramirez & Boli 发表 "The Political Construction of Mass Schooling"，分析 18 世纪欧洲民族国家通过教育创造 [[Membership-Creating Function of Education | membership]] 的历史过程（Amos, 2022, pp.54–55）
 - **1997** — Meyer et al. 系统阐述世界文化理论，声称全球学校教育模式正在标准化
 - **2015** — Silova & Brehm 批判性地审视该理论，质疑"从神话到模型"的再生产机制
 - **2025** — Yan & Morris 以 LS 为案例，对该理论进行检验和限定：**如果仅关注 LS 的创立（全球参照、IBDP 借用），该理论表面上成立；但将废除阶段纳入分析，则发现趋同假设难以解释国家安全的突变性介入**
 
-## 研究范式
+## 认识论立场
 
 - **认识论立场**：宏观社会学、新制度主义——关注全球层面的制度扩散和标准化
 - **常用方法**：跨国比较、政策文件分析、历时数据库
@@ -54,7 +61,7 @@ Auld & Morris (2016) 指出，PISA 等国际比较测试作为"最佳实践"的�
 
 ### 表面趋同 vs. 功能差异：全球话语的修辞性使用
 
-**争议背景**：世界文化理论将全球课程标准化（如 LS 参照 IBDP、Social Studies 的全球扩散）视为西方现代性模型的趋同证据。但 Yan & Morris (2025) 的核心批评是：LS 案例显示全球参照可以是**修辞性**的——港府引用"终身学习"和"知识经济"的全球论述，但其目的是解决国内政治问题（政府合法性、教师就业），而非真正追求全球趋同。
+**争议背景**：世界文化理论将全球课程标准化（如 LS 参照 IBDP、Social Studies 的全球扩散）视为西方现代性模型的趋同证据。但 Yan & Morris (2025) 的核心批评是：LS 案例显示全球参照可以是**修辞性**的——港府引用"终身学习"和"[[Knowledge-Based Economy]]"的全球论述，但其目的是解决国内政治问题（政府合法性、教师就业），而非真正追求全球趋同。
 
 **各方立场**：
 - **Yan & Morris (2025, p. 491)**：LS 的创立表面上支持世界文化理论（全球参照、IBDP 借用），但一旦将废除阶段纳入分析——全球论述完全消失、国家安全成为唯一逻辑——趋同假设立即崩塌。这说明创立阶段的"全球参照"是工具性的，而非真正的文化趋同。
@@ -80,7 +87,7 @@ Auld & Morris (2016) 指出，PISA 等国际比较测试作为"最佳实践"的�
 
 **各方立场**：
 - **Silova & Brehm (2015)**：批判该理论"从神话到模型"的再生产机制——它不仅描述西方模型的扩散，更在**规范性上再生产了西方中心主义**（将西方模式视为"标准"，将地方差异视为"偏离"）。
-- **Steiner-Khamsi (2012)** 和 **政策借用文献**：认为"借用"不等同于"趋同"——各国选择性地借用全球论述来合法化本地议程，而非真正实施全球标准。转移过程中发生实质性变异（morph as they move, Cowen, 2009），最终结果往往与"全球标准"相去甚远。
+- **[[Gita Steiner-Khamsi]] (2012)** 和 **政策借用文献**：认为"借用"不等同于"趋同"——各国选择性地借用全球论述来合法化本地议程，而非真正实施全球标准。转移过程中发生实质性变异（morph as they move, [[Robert Cowen]], 2009），最终结果往往与"全球标准"相去甚远。
 - **You & Morris (2016)**：提供了英国参照东亚模式来论证学校自主权改革的案例——证明借用方向并非单向（西方→非西方）。
 
 **目前状态**：单向扩散假设在经验上已难以维持。Silova & Brehm (2015) 呼吁"去殖民化比较教育"，拒绝将西方模型视为唯一的现代性参照。
@@ -95,6 +102,7 @@ Auld & Morris (2016) 指出，PISA 等国际比较测试作为"最佳实践"的�
 
 ## 相关研究
 
+- [[Argument_Amos_2022_Springer]] — Amos 援引 Ramirez & Boli (1987) 重构大众教育的政治建构过程，以此作为晚期现代教育从国家中心转向市场中心的历史对照
 - [[Argument_Yan_2025_JCS]] — 将世界文化理论应用于 LS 案例，论证该理论的局限——LS 的全球参照是工具性的，而非真正的趋同
 - Auld & Morris (2016) — PISA 如何通过翻译和说服将复杂条件转化为"最佳实践"
 
@@ -106,3 +114,4 @@ Auld & Morris (2016) 指出，PISA 等国际比较测试作为"最佳实践"的�
 ## 来源
 
 - [[Yan_2025_JCS]]
+- [[Ch4_Amos_2022]]

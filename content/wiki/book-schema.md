@@ -49,8 +49,8 @@ processed_date: YYYY-MM-DD
 ![[前言PDF文件名.pdf]]
 
 ## 已处理章节
-- [[Argument_ChapterAuthor_Year_关键词]] — 章节标题一句话
-- [[Argument_ChapterAuthor2_Year_关键词]] — 章节标题一句话
+- [[Argument_ChapterAuthor_Year_关键词]] — 章节标题及核心贡献简述
+- [[Argument_ChapterAuthor2_Year_关键词]] — 章节标题及核心贡献简述
 ```
 
 每章 sources 记录（放入 books/Author(Ed.)_Year_Publisher/，格式同论文）：
@@ -208,7 +208,7 @@ part_of: "[[作者姓_年份_出版社]]"
 简述本章核心议题。
 
 ## 本章论点
-本章对全书整体论证的贡献，一句话概括。
+本章对全书整体论证的贡献，详细说明本章主要论点、论据与结论。
 
 ## 关键引用
 - 引用内容。（p.X）

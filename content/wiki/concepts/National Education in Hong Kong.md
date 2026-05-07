@@ -2,10 +2,10 @@
 title: National Education in Hong Kong
 type: concept
 tags: [national-education, hong-kong, citizenship-education, patriotism, region/china, level/k12]
-related_concepts: ["[[Liberal Studies (Hong Kong)]]", "[[Citizenship and Social Development (Hong Kong)]]"]
+related_concepts: ["[[Liberal Studies (Hong Kong)]]", "[[Citizenship and Social Development (Hong Kong)]]", "[[Membership-Creating Function of Education]]"]
 related_theories: ["[[Nation Building through Education]]"]
 related_persons: ["[[Tung Chee-hwa]]", "[[Carrie Lam]]", "[[Xi Jinping]]"]
-sources: ["sources/Yan_2025_JCS.md"]
+sources: ["sources/Yan_2025_JCS.md", "books/Parreira do Amaral(Ed.)_2022_Springer/Ch4_Amos_2022.md"]
 confidence: high
 status: draft
 created: 2026-05-01
@@ -44,6 +44,7 @@ updated: 2026-05-01
 ## 理论基础
 
 - [[Nation Building through Education]] — 中共通过教育在边疆地区推行统一的"中华民族"认同
+- [[Membership-Creating Function of Education]] — Ramirez & Boli (1987) 揭示的更深层结构：香港国民教育的强化不是一个"例外"现象，而是现代民族国家教育系统的基础功能——通过教育划定"谁属于我们"的边界——在香港情境中的策略性强化。Amos (2022, pp.54–55) 的分析表明，公立教育自 18 世纪在欧洲诞生起，就同时编码了"普遍包容"（对公民）和"边界排斥"（对外来者）的双重逻辑。香港国民教育从 1997 年后的温和渐进到 2020 年后的强制推行，体现了 membership-creating 从"低强度运作"到"高强度运作"的切换——不是功能的改变，是强度的改变
 - **Vickers (2023)** — 习近平的民族复兴项目以"中国梦"为名，通过教育强化中央集权、消除区域文化差异
 
 ## 争议与批评

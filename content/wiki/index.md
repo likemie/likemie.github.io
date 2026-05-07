@@ -49,7 +49,9 @@
 - [[Endogenous and Exogenous Privatisation]] — Ball & Youdell (2008) 识别的两种全球公立学校私有化趋势：学校变得更像企业（内生）vs 私营部门进入学校（外生）
 - [[Geopolitical Subject]] — Moisio (2022) 的概念：从政治权力角度被装备上特定技能、行为、取向和空间心态的人形集合，在高等教育空间中被形塑以服务于全球竞争
 - [[Hub and Flow Imaginaries]] — Moisio (2022) 的概念：知识经济化中的核心空间想象类型，将世界划分为枢纽中心与边缘区域，集群、创意城市、创业城市等为其空间表述
+- [[Mondialisation]] — Weil/Supiot (2019) 基于 Decroly (1929) 恢复的替代全球化概念：以"星球的普世性"和对生命多元形式的尊重为核心，与 market-driven 的 globalisation 形成对抗，与 Escobar 的 pluriverse 并置
 - [[Spatial Sortings]] — Moisio (2022) 的概念：知识密集型资本主义系统性地将地点和人口划分为"赢家"与"输家"的过程，由公共和私人投资驱动、国家中介
+- [[Transitology]] — Cowen (1996, 2000) 的比较教育概念：国家机器、社会分层体系和政治愿景的同时性崩溃与重建，教育在其中被赋予象征性和重构性角色，Amos (2022) 用于分析晚期现代教育的市场中心转向
 
 ### Curriculum
 
@@ -65,12 +67,18 @@
 
 - [[Bildung]] — 源自德国精神科学传统的品格陶成概念，Larsen (2019) 将其复兴为对可见学习范式的批判和替代框架
 - [[Blind Spot in Observation]] — Niklas Luhmann 的观察盲点概念：每次观察都基于盲点，观察者无法看见自身，Larsen 将其应用于 VL 范式批判
+- [[Buen Vivir]] — 拉丁美洲安第斯原住民传统概念："与自然和共同体和谐共处"的"好好生活"——区别于 vivir mejor（更好生活=更多消费），Amos (2022) 将其与后人类主义并置为替代现代性教育愿景的非西方文化资源
 - [[Incarnation-Extension Dialectics]] — Larsen (2019) 提出的具身化-扩展双向运动框架，作为 VL 的替代学习理论
 - [[Cult of the Guru]]
+- [[Humosity]] — Rusten Hogness 创造、Haraway 使用的概念："腐殖性"——将人类彻底去中心化，承认人类的生死不过是物质循环中的一环（如同腐殖质），Amos (2022) 将其定位为后人类主义与超人类主义世界观分歧的精确表达
 - [[Material Fallacies]] — 逻辑学中"在理解术语的含义或用法方面的错误"（Kreeft, 2010），O'Neill 将其引入教育政策话语分析以审查证据被误用的现象
+- [[Posthumanism]] — Amos (2022) 通过 Haraway 和 Escobar 分析的后人类主义：将人类从宇宙中心彻底移开，强调人与非人之间通过 sympoiesis（共同制造）和 response-ability 的根本性相互依存，作为超人类主义的对立教育愿景
 - [[Scientism]] — 对科学方法的过度美化及在其原始范围之外轻率应用，Gasparatou/Hayek/Ross 等定义，Johnson & Janzen 将其应用于 VL 批判
+- [[SF (Haraway)]] — Haraway 的核心方法论缩写：同时代表 string figures（线绳图案）、speculative fabulation（推测性编造）、science fiction（科幻）、so far（迄今），Amos (2022) 将其定位为通过讲故事实践进行"世界制造"的后人类主义方法
+- [[Sympoiesis]] — Haraway 的核心概念："与他人一起制造"（making with），与 autopoiesis（自我制造）形成对照，强调跨物种的相互依存和伦理回应（response-ability），是后人类主义教育的核心伦理表达
 - [[Cargo Cult Science]] — Feynman (1974) 概念：看起来像科学但缺乏认识论诚信的伪科学实践，应用于 VL 批判
 - [[Critic and Conscience of Society]] — Gerald Grace 1988 年提出、后写入新西兰大学立法的概念：大学在民主社会中有独立的权力制衡角色，须基于系统公正分析"向权力说真话"，区别于仅关注学科内部的正常学术批评
+- [[Transhumanism]] — Huxley (1957) 提出、Amos (2022) 在教育语境中分析的超人类主义：以技术手段超越人类生物局限追求无限优化和增强的意识形态，是高度现代性的激进延续，与市场驱动教育模型高度兼容
 - [[Structural Coupling]] — Luhmann (1997) 系统理论概念：两个封闭、自我指涉系统之间的非因果链接，Qvortrup 用于描述教学与学习之间的关系 — Eacott 以 Callahan (1962) 为框架提出的概念，描述教育领导力领域对单一权威人物的不加批判的接受，以 Hattie 崇拜为典型案例分析其形成的三个时间条件
 - [[Epistemological Break]] — Bourdieu 认识论核心概念：科学研究必须与前科学世界的日常语言和自发理解决裂，Eacott 将其引入教育行政研究
 - [[Epistemological Vigilance]] — Bourdieu 认识论核心概念：社会科学家需持续保持对日常语言和前科学概念的批判性警觉，是终身的智识项目
@@ -83,6 +91,7 @@
 ### Educational Sociology
 
 - [[Atomisation of Knowledge and Skills]] — 测量、问责和经济竞争逻辑下，教育内容被拆成可评估、可比较、可交易的小单位
+- [[Membership-Creating Function of Education]] — Ramirez & Boli (1987) 揭示的现代教育基础功能：公立学校系统同时建立忠诚与归属的纽带（创造成员身份）和划定"谁属于我们、谁是外人"的边界，Amos (2022) 以此分析晚期现代性中该功能的弱化
 - [[New Public Management in Education]] — 过去约 30 年西方教育系统以新管理主义理念进行的改革浪潮，特征为绩效标准、产出控制、供给竞争和管理问责，与分布式领导话语并行运作构成悖论
 - [[Venture Philanthropy]] — 以"投资"而非"拨款"为核心逻辑的慈善方式，战略性、多年期、以社会/经济回报评估结果，Foundation North 为新西兰代表案例
 - [[Complexity Reduction]] — 通过减少系统中的可用选项数量使社会情境变得可预测，Biesta 将其定义为政治权力行为
@@ -92,6 +101,9 @@
 - [[Grammar School]] — 英格兰以 11-plus 考试选拔学生的公立学术中学，现有 163 所，159 所获 Ofsted 良好/优秀评级
 
 ### Educational Technology
+
+- [[Educational Technology Industry]] — Amos (2022) 分析的 EdTech 产业生态系统：以利润（Google/Apple/Microsoft/Coursera）、正义平等叙事（UNESCO anytime/anywhere）和教师专业发展三重动机推动教育的数字化、市场化和商业化，是当代 GEI 最具变革性的技术维度
+- [[Learning Analytics]] — Amos (2022) 定位为数字化三重驱动力中"教师专业发展"维度的核心技术：通过收集和分析学习数字痕迹来理解和优化学习，与个性化学习构成"测量-反馈-适应"循环，同时创造数据科学家和学习设计师等新职业类别
 
 ### Higher Education
 
@@ -179,6 +191,8 @@
 
 ### Other
 
+- [[Vergegenkunft]] — Günther Grass 自创的文学原则：Vergangenheit/Gegenwart/Zukunft（过去/现在/未来）的合成词，表达时间的非线性纠缠，Amos (2022) 以此说明教育转型中过去-现在-未来的交织
+
 —
 
 ## Theories
@@ -217,12 +231,16 @@
 - [[Campbellian Validity Framework]] — Shadish, Cook & Campbell (2002) 的实验效度理论：因果推断需通过排除内部效度威胁建立因果关系，再评估跨情境/人群/测量的外部效度，Hitchcock et al. (2015) 应用于 SCD 审查程序
 - [[Cartwright's Three-Stage Knowledge Framework]] — RCT 证据外推的三阶段模型：it-works-somewhere → capacity claims → it-will-work-for-us，揭示因果机制知识在证据外推中的关键作用
 - [[Critical Realism]] — Bhaskar 的科学哲学：区分实在/实际/经验三层本体论和开放/封闭系统，Wrigley & McCusker (2019) 用作批判 EBT 方法论的哲学框架
+- [[Autopoiesis]] — Maturana & Varela 的生命系统理论：生命系统通过自我指涉和自我生产持续维持自身，Escobar 延伸至社会转型分析，Amos (2022) 将其与 Haraway 的 sympoiesis 对照用于晚期现代性教育愿景分析
 - [[Decolonial Geopolitics of Knowledge]] — Mignolo/Dussel 的去殖民批判：西方认识论通过殖民差异稳定全球权力空间表达，主张社会科学去殖民化而非"开放"，Parreira do Amaral (2022) 将其作为新知识地缘政治的两大分析支柱之一
 - [[Goldman's Discrimination Theory of Knowledge]] — 知识要求区分真实状态与相关替代可能状态的能力，Wiliam (2019) 以此论证教育知识的局部性和临时性
 - [[Phenomenology]] — 以经验、生活世界、具身性和主体间性为核心的哲学传统；Schaffar & Wolff 用于解释芬兰 PhBL 的"现象"概念和教育意义
 - [[Popper's Three Worlds Theory]] — Karl Popper 的本体论框架：World 1 物理世界 / World 2 主观世界 / World 3 文化与科学对象（"客观地伟大的"），Rømer (2018) 论证 Hattie 通过 Bereiter 严重误读该理论
 - [[Radical Constructivism]] — von Glasersfeld (1995) 的学习理论：以唯我论为出发点，所有学习和知识都是主观建构，Rømer (2018) 论证其为 Hattie VL 的学习理论根基
+- [[Response-ability]] — Donna Haraway 的双关伦理概念：同时意味着 responsibility（责任）和 ability to respond（回应的能力），是 sympoiesis 的伦理内核——世界通过共同制造而存在，伦理因此要求发展对他者需求的敏感性和回应能力
+- [[Ubuntu]] — 非洲关系性伦理哲学："一个人之所以为人，是因为其他人"（I am because we are），Amos (2022) 将其与后人类主义并置为非西方的关系性本体论资源
 - [[Science and Technology Studies (STS)]] — 跨学科领域：科学是社会实践，核心关注知识如何被生产、动员、验证和挑战，以共同生产（co-production）和 performativity 为关键概念
+- [[Transition Design]] — Escobar (2018) 基于 Irwin (2015) 的社会变革框架：转型不是被设计的而是涌现的，以生命系统理论（autopoiesis）为本体论基础，以日常生活为设计情境，十条原则倡导基于地方的全球化联网和草根方案放大
 
 ### Psychology & Cognitive Development
 
@@ -300,6 +318,7 @@
 - [[Horizon Europe Missions]] — EU 2021–2027 年研究与创新框架的核心机制，将研究整合为针对五大社会挑战（癌症、气候、海洋、城市、食物）的使命承诺
 - [[Horizon 2020 SSH Integration]] — EU 2014–2020 年研究框架取消社会科学与人文学科独立资助渠道，将其作为横向议题嵌入所有优先领域以服务于政策证据基础
 - [[Minerva University]] — 2012/2014 年由 Ben Nelson 创立的全球性营利大学，无校园、在线教学、全球城市沉浸，以颠覆传统大学和构建可扩展商业模式为目标
+- [[Regional University Alliances]] — Amos (2022) 在晚期现代教育转型语境中关注的三类欧洲大学联盟（LERU、The GUILD、European University Alliances），在科研合作、师生流动和联合学位中运作，构成多层级地缘政治教育空间中的制度行动者
 
 ### Hong Kong
 
@@ -404,6 +423,7 @@
 - [[Promise Neighborhoods Research Consortium (PNRC)]] — 评价项目、政策和实践的 public 清算中心，不进行项目效果分层评级，未进入 Wadhwa et al. (2024) 最终一致性分析
 - [[Quantum Opportunity Program (QOP)]] — Wadhwa et al. (2024) 的清算中心评级分歧案例，包含 QOP 与 Eisenhower QOP 两个项目版本
 - [[Social Programs That Work (SPTW)]] — 多领域非营利清算中心，将教育项目纳入更宽广的社会项目证据库
+- [[Sputnik Shock 1957]] — 1957 年苏联发射人类首颗人造卫星触发美国科技信心危机，Amos (2022) 将其定位为教育与地缘政治关系的关键转折点：触发 OECD 对 STEM 教育的系统性关注，建立"教育质量→科技能力→国家竞争力"的政策逻辑链
 - [[Success for All]] — Wadhwa et al. (2024) 的清算中心评级案例，五个清算中心均无负面评价但按结果域、变体和研究纳入数量形成不同证据判断
 - [[Tennessee STAR Project 1985-1989]] — 被 Mosteller 称为"有史以来最重要的教育调查之一"的班级缩减 RCT，Wiliam (2019) 揭示其 RCT 外推的三重失败（非代表性、随机化破坏、教师质量混淆）
 - [[Theory Movement in Educational Administration]] — 1950s–1960s 以 Halpin 和 Griffiths 为代表的美国教育行政理论运动，以逻辑经验主义为科学模型，1974 年被 Greenfield 挑战
@@ -435,6 +455,13 @@
 - [[Carol Campbell]] — 多伦多大学 OISE 教育领导力教授，KNAER 系统级知识动员案例研究领导者，与 Nelson 共同编辑 EIP 特刊
 - [[Jane Knight]] — OISE/University of Toronto 跨境高等教育学者，国际教育枢纽（IEH）概念框架和三类模型（学生/人才/知识创新）提出者
 - [[Carolyn Shields]] — 加拿大教育研究者，提出以权力为调查起点的变革型领导力框架，被 Møller 采纳为超越"什么有效"议程的关键替代视角
+
+### Chile
+
+#### Contemporary (1900–2000)
+
+- [[Humberto Maturana]] — 智利生物学家和哲学家，与 Varela 共同创立 autopoiesis 理论，彻底改变了关于生命作为宏大系统的思考方式
+- [[Francisco Varela]] — 智利生物学家和神经科学家，与 Maturana 共同创立 autopoiesis 理论，提出 Ethical Know-How 和自我的非固化概念
 
 ### China
 
@@ -530,6 +557,7 @@
 
 - [[Roy Bhaskar]] — 英国哲学家，批判实在论创始人，区分三层本体论和开放/封闭系统，为 Wrigley 的 EBE 方法论批判提供哲学基础
 - [[Nancy Cartwright]] — 杜伦大学/UC San Diego 科学哲学家，CHESS 核心成员，提出 RCT 证据外推三阶段框架，与 Nick Cowen 合作研究教育 EBP 实施
+- [[Julian Huxley]] — 英国生物学家，UNESCO 首任总干事（1946–1948），1957 年在 *New Bottles for New Wine* 中首次命名 transhumanism，其身兼科学人文主义、人权倡导与优生学支持者的内在矛盾揭示了超人类主义的根本困境
 - [[David Phillips]] — 牛津大学比较教育学教授，与 Kimberly Ochs 共同提出政策借用四阶段模型和跨国吸引力结构性类型学
 
 #### Current (2000–present)
@@ -537,6 +565,7 @@
 - [[Gert Biesta]] — 当代最具影响力的教育哲学家之一，以对证据本位教育的系统性批判和教育目的论阐述著称
 - [[Bob Jessop]] — 兰卡斯特大学社会学家，文化政治经济学（CPE）创始人，将 KBE 定位为"霸权的元治理对象"，其"想象"概念被 Moisio (2022) 借用于分析 Hub and Flow 想象的构成性和履行性角色
 - [[Nick Cowen]] — 林肯大学/纽约大学政治科学家，以公共选择理论分析证据本位教育的政治经济学，解释 EBE 的官僚功能
+- [[Robert Cowen]] — 英国比较教育学者，transitology 概念和现代／晚期现代教育双轴比较模型的原创者，对教育与社会转型关系的理论化有重要影响
 - [[Gerald Grace]] — 伦敦大学教育学者，前惠灵顿维多利亚大学教育学系主任，"Critic and Conscience of Society"概念的原创者（1988），后写入新西兰大学立法
 - [[Christopher Day]] — 英国教育研究者，ISSPP 项目创始人和领导者，构建了 20+ 国的成功学校领导力跨国知识基础
 - [[Helen Gunter]] — 英国教育研究者，以教育领导力的批判性政策分析和知识政治研究著称，LE@DS 研究网络成员
@@ -574,7 +603,9 @@
 - [[Amelia Peterson]] — 哈佛大学教育研究生院，提出"什么有效 2.0"整合框架，以机制实验和网络化改进为双重支柱整合实验科学与改进科学
 - [[Maria Pampaka]] — 曼彻斯特大学教育研究者，IJRME "什么有效"特刊编辑，识别 agency 分配为核心哲学分歧，关注学习者能动性和替代性学习结果测量
 - [[Anthony Bryk]] — Carnegie Foundation 高级研究员，将改进科学引入美国教育，网络化改进社区模型的主要开发者
+- [[Arturo Escobar]] — 哥伦比亚裔美国人类学家和设计理论家，Pluriverse 和 transition design 概念提出者，被 Amos (2022) 援引为晚期现代性替代教育愿景的理论资源
 - [[Kurt Fischer]] — 新皮亚杰理论家，提出技能理论（Skill Theory），区分实际/最优发展水平，强调环境在认知发展中的作用
+- [[Donna Haraway]] — 美国女性主义科学与技术研究学者，sympoiesis、response-ability 和 SF 叙事方法论提出者，其 Staying with the Trouble (2016) 为后人类主义教育愿景提供核心思想资源
 - [[Catherine Lewis]] — 美国教育研究者，以向教育研究界系统介绍改进科学方法论著称（*Educational Researcher*, 2015）
 - [[Akira Miyake]] — 认知心理学家，执行功能统一性与多样性框架提出者（Miyake et al., 2000），识别 EF 三成分（抑制/转换/更新与监控）
 - [[Yong Zhao]] — University of Kansas 教育政策与比较教育教授，从医学引入副作用概念至教育研究，论证教育干预的效果与副作用不可分离
@@ -689,6 +720,7 @@
 - [[Argument_Parreira do Amaral_2022_Springer]] — 论文集整体论证：高等教育正经历知识地缘政治重构，三部分（想象与空间→制度与互动→主体形塑）逐层展开
 - [[Argument_Moisio_2022_Springer]] — Ch2 Sami Moisio: 论证当代知识密集型资本主义是地缘政治星座，以 Harvey 固着-流动张力、Hub and Flow 想象和空间分选为核心分析框架
 - [[Argument_Parreira do Amaral_2022_geopolitics-knowledge]] — Ch3 Marcelo Parreira do Amaral: 整合批判地缘政治学与后殖民去殖民两脉络提出新知识地缘政治，以全球区域主义和 GEI 为转型语境，IEHs 和 Minerva 为典型案例
+- [[Argument_Amos_2022_Springer]] — Ch4 S. Karin Amos: 以 Cowen transitology 和双轴模型为框架，对比超人类主义与后人类主义两种晚期现代性教育愿景，呼吁以 connectivity 和 response-ability 为组织原则的新公共教育理论
 
 ### Reports & Policy Documents
 

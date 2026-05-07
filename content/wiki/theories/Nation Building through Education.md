@@ -2,11 +2,11 @@
 title: Nation Building through Education
 type: theory
 tags: [nation-building, national-identity, citizenship-education, frontier-regions, China, paradigm/critical, region/china]
-related_concepts: ["[[National Education in Hong Kong]]"]
+related_concepts: ["[[National Education in Hong Kong]]", "[[Membership-Creating Function of Education]]"]
 related_theories: []
 related_persons: ["[[Paul Morris]]"]
 related_methods: []
-sources: ["sources/Yan_2025_JCS.md"]
+sources: ["sources/Yan_2025_JCS.md", "books/Parreira do Amaral(Ed.)_2022_Springer/Ch4_Amos_2022.md"]
 confidence: medium
 status: draft
 created: 2026-05-01
@@ -30,6 +30,16 @@ Yan & Morris (2025, p. 490) 将香港国民教育与中共在西藏、新疆、�
 3. **国家认同培养**：将"中华民族"（Chinese nation）身份构建为超越族群身份的第一身份
 4. **课程内容中央化**：减少地方课程自主权，统一核心课程（特别是历史、语文、公民教育）
 5. **教师作为国家代理人**：教师培训和资格认证中加入政治审查和爱国要求
+
+### 历史基础：教育的成员身份创造功能
+
+在国族建构的策略性操作之下，存在一个更基础的社会机制——[[Membership-Creating Function of Education]]。Ramirez & Boli (1987) 的历史分析表明：18 世纪欧洲民族国家之所以建立公立学校系统，根本原因在于教育是创造"我们是谁"的共同意识的最有效工具。教育同时完成了两件事——建立忠诚与归属的纽带，以及划定"谁属于我们、谁是外人"的边界（Amos, 2022, pp.54–55）。
+
+> 例：想象 18 世纪末的普鲁士——领土上说着不同方言、信着不同宗教的人群。官员需要的不是各自为政的村庄，而是一批认同"我是普鲁士人"、愿意缴税和参军的公民。解决方案是建立公立学校——所有孩子学同一套课程、同一段历史。这就是 membership-creating 的历史起源（Amos, 2022, pp.54–55）。
+
+Membership-creating 与国族建构的关系是：前者是**结构性的制度功能**（为什么要有公立教育），后者是**策略性的政策操作**（如何利用这个制度在边疆推行统一身份）。Yan & Morris (2025) 分析的西藏、新疆、内蒙古和香港案例，都是国家在 membership-creating 制度基础上叠加的策略性强化——在已经划定"谁是中国公民"的边界内部，进一步消除地方文化和替代性身份认同。
+
+Amos (2022, p.55) 还指出了 membership-creating 的当代回响："直到今天，围绕难民儿童、移民或所谓非法外国人的学校教育争议"——这些争议之所以棘手，正是因为现代教育的 DNA 里编码了"内外之分"。当国家通过教育系统强化"谁是公民"的边界时，这个机制的历史连续性清晰可见。
 
 ### 中国的边疆教育案例
 

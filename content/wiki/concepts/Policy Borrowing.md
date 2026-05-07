@@ -2,15 +2,15 @@
 title: Policy Borrowing
 type: concept
 tags: [policy-borrowing, policy-referencing, comparative-education, globalization, education-policy, region/global]
-related_concepts: ["[[Visible Learning]]", "[[Evidence-Based Education]]", "[[Cross-National Attraction]]", "[[Externalization (Schriewer)]]", "[[Argument_Rappleye_2006_RCIE]]", "[[American Attraction to Japanese Education 1980s]]", "[[Late Qing Borrowing of Japanese Education]]"]
+related_concepts: ["[[Visible Learning]]", "[[Evidence-Based Education]]", "[[Cross-National Attraction]]", "[[Externalization (Schriewer)]]", "[[Transitology]]", "[[Argument_Rappleye_2006_RCIE]]", "[[American Attraction to Japanese Education 1980s]]", "[[Late Qing Borrowing of Japanese Education]]"]
 related_theories: ["[[World Culture Theory]]"]
 related_persons: ["[[Gita Steiner-Khamsi]]", "[[David Phillips]]", "[[Kimberly Ochs]]", "[[Jurgen Schriewer]]", "[[Paul Morris]]", "[[John Hattie]]"]
 related_methods: []
-sources: ["sources/Rappleye_2006_RCIE.md", "sources/Golovchin_2019_ESC.md", "sources/Yan_2025_JCS.md"]
+sources: ["sources/Rappleye_2006_RCIE.md", "sources/Golovchin_2019_ESC.md", "sources/Yan_2025_JCS.md", "books/Parreira do Amaral(Ed.)_2022_Springer/Ch4_Amos_2022.md"]
 confidence: high
 status: draft
 created: 2026-05-01
-updated: 2026-05-07
+updated: 2026-05-08
 ---
 
 ## 定义
@@ -29,6 +29,7 @@ Steiner-Khamsi 进一步揭示这种关系的反直觉性——"本地问题有�
 
 ## 历史沿革
 
+- **Cowen (1996, 2000)** — 提出 [[Transitology]] 概念和双轴模型，描述教育系统在宏观社会转型中从 polis-driven（城邦驱动、教育机会平等）到 market-driven（市场驱动、内部效率与外部效能）的结构性转向。虽非直接关于政策借用方法论，但 Amos (2022, pp.53–56) 的分析表明，这一转向是政策借用成为晚期现代性中教育政策制定结构性特征的宏观条件：当市场驱动逻辑取代国家中心逻辑，国际参照和跨国话语借用成为合法化国内改革的常规手段
 - **1990s–2000s** — Steiner-Khamsi 系统化政策借用分析框架，挑战简单的"政策转移"模型；指出教育转移研究经历了"一种特殊类型的复兴"（Steiner-Khamsi, 2000, p. 157）
 - **Ochs & Phillips (2002)** — 提出跨国吸引力结构性类型学，识别六类政策焦点（指导哲学、目标、策略、赋能结构、过程、技术）和 13 种情境因素
 - **Schriewer (2003)** — 提出 [[Externalization (Schriewer)]] 概念：国家对改革的论证依赖于将内部问题构型投射到国际参照系中；后由 Rappleye (2006) 发展为双向运作（外化到国际趋势 / 外化到传统）
@@ -119,6 +120,7 @@ Rappleye (2006) 在 Phillips & Ochs 第一阶段的基础上，将跨国吸引�
 - **vs [[World Culture Theory]]** — 世界文化理论强调**趋同**（全球教育模式扩散导致标准化），是"供给端"视角；政策借用强调**差异**（借用是选择性的、服务于国内政治目的），是"需求端"视角。Yan & Morris (2025) 论证 LS 案例的全球参照用政策借用解释更贴切：创立阶段港府选择性借用 IBDP 话语服务于本地议程，而非被动接受全球规范扩散。
 - **vs 政策转移（Policy Transfer）** — 政策转移假设"最佳实践"从中立技术角度从 A 地搬运到 B 地；政策借用强调借用行为的政治性和修辞性，借用不等于实施。Steiner-Khamsi (2012) 进一步区分了"借用"（政治驱动、选择性、仪式性）与"学习"（开放、实质性交流），指出两者在实践中常常交织。
 - **vs [[Cross-National Attraction]]** — 跨国吸引力是政策借用的前置阶段（第一阶段），聚焦"为什么外国教育引起关注"和"谁在使用外国范例"；政策借用涵盖从吸引、决策、实施到内化的全过程。前者分析情境如何产生吸引力，后者追踪借用行为的完整生命周期。（Rappleye, 2006）
+- **vs [[Transitology]]** — Cowen (1996, 2000) 的转型学描述宏观历史结构层面的教育转型（从 polis-driven 到 market-driven），政策借用分析的是在这一结构条件下发生的具体政治行为。转型学提供了政策借用的宏观情境框架：当 Cowen 双轴模型的纵轴从"polis-driven → 教育机会平等"翻转为"market-driven → 内部效率与外部效能"，横轴从"国际教育关系"翻转为"国际知识竞争"，国际参照和话语借用就不再是偶尔的外交行为，而成为晚期现代性中教育政策制定的结构性特征——不是因为跨国"最佳实践"客观上更多了，而是因为去国家中心化后的教育治理更依赖全球论述来获取合法性（Amos, 2022, pp.53–56）
 
 ## 研究范式
 

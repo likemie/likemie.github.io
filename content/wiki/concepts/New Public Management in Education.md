@@ -2,14 +2,14 @@
 title: New Public Management in Education
 type: concept
 tags: [New Public Management, paradigm/neoliberal, region/global]
-related_concepts: ["[[Visible Learning]]", "[[Performativity of Measurement]]", "[[School Leadership]]", "[[Evidence-Based Education]]"]
+related_concepts: ["[[Visible Learning]]", "[[Performativity of Measurement]]", "[[School Leadership]]", "[[Evidence-Based Education]]", "[[Transitology]]"]
 related_theories: []
 related_persons: ["[[Helen Gunter]]", "[[Jorunn Møller]]"]
-sources: ["sources/Møller_2017_EERJ.md", "sources/Eacott_2011_JEAH.md", "sources/Keddie_2020_JEAH.md", "sources/Keddie_2020_IJLE.md"]
+sources: ["sources/Møller_2017_EERJ.md", "sources/Eacott_2011_JEAH.md", "sources/Keddie_2020_JEAH.md", "sources/Keddie_2020_IJLE.md", "books/Parreira do Amaral(Ed.)_2022_Springer/Ch4_Amos_2022.md"]
 confidence: medium
 status: draft
 created: 2026-05-02
-updated: 2026-05-03
+updated: 2026-05-08
 ---
 
 ## 定义
@@ -48,6 +48,8 @@ Møller（2017, p.381-382）从学校领导者的日常体验出发，描述了 
 - NPM 改革**分散了对公平问题的注意力**（Møller, 2017, p.382, citing Hall et al., 2015）
 - 管理者和学校领导者都将数据的生产和使用视为解决学校和 student 层面问题的"合法方式"（Møller, 2017, p.382, citing Sellar, 2015）
 - 结果：教育劣势问题倾向于被框定为**技术问题**，而非权力与资源分配问题
+
+- Amos (2022, p.56) 观察：NPM 的术语——效率、效能、绩效、质量保证、公私合作伙伴关系、创业教育——已"深刻嵌入我们当前的教育结构"（deeply ingrained in our current educational structures），覆盖从 K-12 到高等教育的所有层级。这一深度嵌入使得 NPM 的话语和实践被视为不言自明的前提
 
 ## 争议与批评
 
@@ -113,3 +115,4 @@ NPM 去中心化的人员配置模式使"难以配置人员的学校（如农村
 - [[Møller_2017_EERJ]]
 - [[Keddie_2020_JEAH]]
 - [[Keddie_2020_IJLE]]
+- [[Ch4_Amos_2022]]

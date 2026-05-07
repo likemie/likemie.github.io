@@ -45,7 +45,7 @@ updated: YYYY-MM-DD
 
 ```markdown
 ## 简介
-身份、国籍、时代背景、主要活跃领域一句话概述。
+身份、国籍、时代背景、主要活跃领域简述。
 
 ---
 
@@ -67,9 +67,9 @@ updated: YYYY-MM-DD
 ---
 
 ## 主要著作
-APA 格式，附每本著作的核心主张一句话：
-- Vygotsky, L. S. (1978). *Mind in society*. Harvard University Press. — 核心主张一句话
-- Vygotsky, L. S. (1986). *Thought and language*. MIT Press. — 核心主张一句话
+APA 格式，附每本著作的核心主张简述：
+- Vygotsky, L. S. (1978). *Mind in society*. Harvard University Press. — 核心主张简述
+- Vygotsky, L. S. (1986). *Thought and language*. MIT Press. — 核心主张简述
 
 ---
 

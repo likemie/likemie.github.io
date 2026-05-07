@@ -5,7 +5,7 @@ tags: [knowledge-based-economy, knowledge-economy, post-industrialism, endogenou
 related_concepts: ["[[Knowledge-Based Economization]]", "[[Geopolitics of Knowledge]]", "[[Hub and Flow Imaginaries]]", "[[Spatial Sortings]]", "[[Geopolitical Subject]]", "[[National Competitive Advantage]]"]
 related_theories: ["[[Fixity-Motion Tension]]"]
 related_persons: ["[[Sami Moisio]]"]
-sources: ["books/Parreira do Amaral(Ed.)_2022_Springer/Ch2_Moisio_2022.md"]
+sources: ["books/Parreira do Amaral(Ed.)_2022_Springer/Ch2_Moisio_2022.md", "books/Parreira do Amaral(Ed.)_2022_Springer/Ch4_Amos_2022.md"]
 confidence: medium
 status: draft
 created: 2026-05-07
@@ -40,6 +40,12 @@ KBE 的知性根源可追溯至 Friedrich List 的《政治经济学的国家系
 - **Peter Drucker（1959/1969）**：提出"知识工作者"（knowledge worker）概念（首次使用于 1959 年），开创知识管理学术领域，在 *The Age of Discontinuity*（1969）中系统阐述知识在组织和社会中的核心地位（Moisio, 2022, p.22）
 - **Daniel Bell（1973）**：在 *The Coming of Post-Industrial Society* 中强调理论知识在后工业主义中的相对重要性，揭示经济-社会界面正在发生结构性转变（Moisio, 2022, p.22）
 - **Paul Romer（1986）** 与其他"新增长理论家"：提出内生增长理论（endogenous growth theory），论证创新、学习、人力资本、创业和技术是"内生增长"的根本驱动力。在此框架中，知识和人力资本投资被视为不受有限限制的增长和利润关键资产（Moisio, 2022, p.23）
+
+### Sputnik Shock 与 OECD 的早期制度介入
+
+Amos (2022, p.56) 指出一个常被忽略的时间线：知识作为生产要素被纳入经济理论讨论远早于 1990 年代的"知识经济"政策话语。自 1950 年代末——特别是 1957 年 Sputnik Shock（苏联率先发射人造卫星）之后——OECD 便系统性地关注教育，尤其是 STEM 学科。"在福利国家即将大规模扩张的二战后的那些年里，经济与知识之间的关联已经被锻造"——远在"市场起关键作用"的论述成为主流之前（Amos, 2022, p.56）。
+
+> 例：Sputnik Shock 是理解教育和地缘政治关系的经典案例。美国对苏联航天成就的反应不是加军费，而是大规模改革科学和数学课程——因为决策者相信苏联的"知识优势"来自更优越的教育。这意味着早在 1950s 末，"知识=国家竞争力"的逻辑已经在驱动教育政策，尽管当时仍是在国家框架内运作，而非后来的市场框架。
 
 ### 1990 年代以来的政策话语化
 
@@ -98,3 +104,4 @@ KBE 的知性根源可追溯至 Friedrich List 的《政治经济学的国家系
 ## 来源
 
 - [[Ch2_Moisio_2022]]
+- [[Ch4_Amos_2022]]
