@@ -21,6 +21,7 @@
   - `wiki/persons/` — 人物
   - `wiki/methods/` — 研究方法
   - `wiki/arguments/` — 论证框架
+  - `wiki/templates/` — 条目模板（共7个，新建条目时按需读取）
 - `wiki/index.md` — 全局索引（工作流必读）
 - `wiki/book-schema.md` — 书籍处理规范
 - `vault-schema.md` — 本文件（位于根文件夹，不在 wiki/ 内）
@@ -114,58 +115,97 @@ processed_date: 2026-04-30
 
 ```
 1. 读取 vault-schema.md（规则，必读）
-2. 读取 wiki/index.md（索引，必读，体积小；注意：index.md 在 wiki/ 文件夹内）
-3. 检查用户指令或文件是否标注「专著」或「(Ed.)」：
+2. 检查用户指令或文件是否标注「专著」或「(Ed.)」：
    有标注 → 读取 wiki/book-schema.md，按书籍流程处理，不继续以下步骤
    无标注 → 继续以下论文流程
-4. 用 Python 提取 PDF 文本：
+
+3. 用 Python 提取 PDF 文本：
    python3 -c "
    import fitz  # pymupdf
    doc = fitz.open('raw/FILENAME.pdf')
    text = ''.join(page.get_text() for page in doc)
    print(text)
    "
-5. 基于「提取规范」扫描论文，列出所有可提取的条目名单（严格按各类型判断标准筛选，不符合的不建条目）
-6. 对照 index.md，逐条判断：
-   a. 已存在 → 只读取该条目文件，按以下顺序处理：
-      i.   检查各章节是否需要重构（分点 ≥ 8 条未分子主题？有重复？顺序混乱？）
-      ii.  需要重构 → 先用 str_replace 重构章节，再写入新内容
-      iii. 写入前必须先声明（不可跳过）：
-           「本条内容属于 ## [章节名] > ### [子主题名]（如有），
-             插入位置在 [前一条内容] 之后 / [后一条内容] 之前，
-             理由：[时间顺序 or 主题归属]」
-      iv.  声明完毕后，用 str_replace 精确插入该位置，不追加到末尾
-      v.   禁止在声明位置以外的地方写入
-   b. 不存在 → 按对应条目类型模板新建：
-      i.   新建时内容已超过 8 条分点的章节，直接按子主题分组写入
-      ii.  写完后检查各章节内部顺序是否符合「先主题后时间」逻辑
-      iii. 直接写入 wiki/类型/ 正式文件夹
-7. 将 PDF 从 raw/ 移至 sources/：
+4. 基于「提取规范」扫描论文，列出所有可提取的条目名单
+   （严格按各类型判断标准筛选，不符合的不列入）
+
+5. 读取 wiki/index.md（注意：index.md 在 wiki/ 文件夹内）
+6. 对照 index.md，将名单分为两组：
+   - 待更新列表：index.md 中已存在的条目
+   - 待新建列表：index.md 中不存在的条目，同时标注每个条目的类型
+     （Concept / Theory / Policy / Event / Person / Method / Argument）
+
+7. 移动 PDF 并建立文献档案：
    mv raw/FILENAME.pdf sources/FILENAME.pdf
-8. 在 sources/ 新建同名 md 文件，填入 citation、extracted_to、processed_date，嵌入 PDF
-9. 双向链接维护：
-   对本次新建或修改的每个条目，逐一检查其正文中出现的所有 wikilink：
-   a. 被链接的条目已存在 → 读取该条目，在对应章节用 str_replace 补入反向链接
-   b. 被链接的条目尚不存在 → 跳过，等该条目建立时再补
-   同时更新被链接条目的 frontmatter related_* 字段，确保双向引用完整
-10. 更新 wiki/index.md，在对应分组下添加新条目
+   在 sources/ 新建同名 md，填入 citation、extracted_to、processed_date，嵌入 PDF
+
+8. 处理待更新列表（逐条执行）：
+   读取条目文件
+   → 检查各章节是否需要重构（分点 ≥ 8 条未分子主题？有重复？顺序混乱？）
+   → 需要重构 → 先用 str_replace 重构章节，再写入新内容
+   → 写入前必须先声明（不可跳过）：
+      「本条内容属于 ## [章节名] > ### [子主题名]（如有），
+        插入位置在 [前一条内容] 之后 / [后一条内容] 之前，
+        理由：[时间顺序 or 主题归属]」
+   → 声明完毕后，用 str_replace 精确插入该位置，不追加到末尾
+   → 禁止在声明位置以外的地方写入
+
+9. 处理待新建列表（按类型逐条执行）：
+   读取该条目对应的模板文件（同类型连续处理时模板只读一次）：
+   - Concept   → wiki/templates/template-concept.md
+   - Theory    → wiki/templates/template-theory.md
+   - Policy    → wiki/templates/template-fact-policy.md
+   - Event     → wiki/templates/template-fact-event.md
+   - Person    → wiki/templates/template-person.md
+   - Method    → wiki/templates/template-method.md
+   - Argument  → wiki/templates/template-argument.md
+   → 按模板新建条目，写入 wiki/类型/ 正式文件夹
+   → 新建时内容已超过 8 条分点的章节，直接按子主题分组写入
+   → 写完后检查各章节内部顺序是否符合「先主题后时间」逻辑
+   → 完成后处理下一条
+
+10. 双向链接维护：
+    对本次新建或修改的每个条目，逐一检查其正文中出现的所有 wikilink：
+    a. 被链接的条目已存在 → 读取该条目，在对应章节用 str_replace 补入反向链接
+    b. 被链接的条目尚不存在 → 跳过，等该条目建立时再补
+    同时更新被链接条目的 frontmatter related_* 字段，确保双向引用完整
+
+11. 更新 wiki/index.md，在对应分组下添加新条目
 ```
 
 **原则：按论文内容匹配条目，按需读取。**
-具体做法：扫描论文，识别出现的概念、理论、人物、政策、方法等名称 → 在 index.md 中逐一查找是否已有对应条目 → 有则读取该条目文件进行整合，无则新建 → 未在论文中出现的条目一律不读取。
+具体做法：扫描论文，识别出现的概念、理论、人物、政策、方法等名称 → 对照 index.md 分为待更新和待新建两组 → 更新组直接读取条目文件整合，新建组按类型读取模板后新建 → 未在论文中出现的条目一律不读取。
 
 ---
 
 ## 语言与写作规范
 
-所有条目正文使用**简体中文**，frontmatter 字段名保持英文。
+**标题与 Tag（英文）：**
+- 条目 `title` 字段使用英文，如 `Project-Based Learning`、`Vygotsky`、`Hong Kong Liberal Studies 2009`
+- 所有 `tags` 使用英文，包括内容 tag 和属性 tag
+- 文件名与 title 保持一致，使用英文
+
+**正文内容（简体中文）：**
+- 正文全部使用简体中文，frontmatter 字段名保持英文
+- 专有名词、人名、期刊名保留英文，首次出现时加中文注解，如 scaffolding（脚手架）
+- 引用格式保持原文语言：(Author, year, p.X)
 
 **写作风格（强制执行）：**
 - 不得直译英文原文，须用流畅自然的中文重新表述
 - 句式遵循中文表达习惯，避免欧化长句、过度"的"字结构、直译造成的生硬表达
 - 参考标准：母语为中文的学术写作者是否会这样表达？
-- 专有名词、人名、期刊名保留英文，首次出现时加中文注解，如 scaffolding（脚手架）
-- 引用格式保持原文语言：(Author, year, p.X)
+
+**数学公式：**
+- 行内公式用单美元符号：`$d = 0.40$`
+- 独立公式块用双美元符号，放在单独段落：
+  ```
+  $$d = \frac{\sum_{i} w_i d_i}{\sum_{i} w_i}$$
+  ```
+- 需要编号或标注的公式，用 blockquote 包裹整个公式块：
+  ```
+  > **公式 (9)**：$$d = \frac{\sum_{\text{all }i} w_i d_i}{\sum_{\text{all }i} w_i}$$
+  ```
+- 公式后须附来源页码：（Author, year, p.X）
 
 ---
 
@@ -299,7 +339,7 @@ Method 容易被忽略，扫描论文时须主动识别：
 - **尽量详细** — 从论文中提取尽可能多的细节，充实每个章节；不要三言两语，能展开的尽量展开
 - **补充优先** — 新信息补充到对应章节，附来源；内容越丰富越好
 - **不删除原有内容** — 即使新论文有不同观点，保留原有内容，在争议章节标注分歧
-- **保持流畅性** — 新增内容须与上下文衔接自然，避免生硬拼接；必要时重写该段落使其连贯，但不改变原有论点
+- **保持流畅性** — 新增内容须与上下文衔接自然，避免生硬拼接；必要时可重写该段落或章节的总结句使其连贯，但不改变原有论点；重写范围限于单个段落或章节，不重写整个文件
 - **来源必须标注** — 每条新增信息附 `（Author, year, p.X）`
 
 ### 各类新信息的处理方式
@@ -383,472 +423,6 @@ Method 容易被忽略，扫描论文时须主动识别：
 
 ---
 
-## 条目类型
-
-共六种条目类型。
-
-> **Frontmatter 格式规范：**
-> - `tags` — 用方括号列表：`tags: [tag1, tag2, tag3]`
-> - `related_*` 和 `sources` — 所有值必须加引号：`related_theories: ["[[建构主义]]", "[[situated-learning]]"]`
-> - wikilink 必须包在引号内，否则 Obsidian 无法解析 frontmatter
-> - 单个值也需要引号和方括号：`related_concepts: ["[[项目式学习]]"]`
-
----
-
-### 1. 概念 Concept
-
-```yaml
----
-title: 项目式学习
-type: concept
-tags: [项目式学习, subject/curriculum, level/k12]
-related_theories: ["[[建构主义]]", "[[situated-learning]]"]
-related_persons: ["[[Dewey]]", "[[Kilpatrick]]"]
-sources: ["sources/Thomas_2000_RER.md"]
-confidence: low | medium | high
-status: draft | review | published
-created: YYYY-MM-DD
-updated: YYYY-MM-DD
----
-```
-
-
-> ⚠️ **写入规则（每次写入前必须执行）：**
-> 1. 确定新内容属于哪个 `##` 章节
-> 2. 该章节分点 ≥ 8 条 → 先按主题建 `###` 子主题，再在子主题内按时间插入
-> 3. 该章节分点 < 8 条 → 直接按时间顺序插入正确位置
-> 4. **禁止追加到末尾**，必须插入正确位置
-> 5. 声明插入位置后再用 str_replace 写入
-
-> ⚠️ **写入规则（每次写入前必须执行）：**
-> 1. 确定新内容属于哪个 `##` 章节
-> 2. 分点 ≥ 8 条 → 按主题建 `###` 子主题，组内按时间排列
-> 3. 分点 < 8 条 → 直接按时间顺序插入正确位置，禁止追加末尾
-> 4. 写入前声明：「归属章节 > 子主题 > 插入位置」，再用 str_replace 写入
-
-**页面结构：**
-```markdown
-## 定义
-核心定义，附原文引用。
-> "原文引用"（Author, year, p.X）
-
-## 概念辨析
-辨析容易混淆的概念，附来源。
-- vs [[问题式学习]] — 区别说明
-
-## 概念演变
-概念的起源与发展脉络，关键节点附来源。
-
-## 核心要素
-构成要素逐条列出，每条附来源。
-
-## 理论基础
-- [[建构主义]] — 一句话说明关系
-
-## 实证发现
-有数据或明确结论支撑的发现，每条注明来源与适用条件：
-- 发现描述，适用条件（学段、地区、样本）。（Author, year, p.X）
-
-## 争议与批评
-- 批评描述，附来源和立场。（Author, year, p.X）
-
-## 相关案例／政策
-- [[芬兰国家核心课程2016]]
-
-## 来源
-- [[Thomas_2000_RER]]
-```
-
----
-
-### 2. 理论 Theory
-
-```yaml
----
-title: 建构主义
-type: theory
-tags: [建构主义, paradigm/constructivist]
-related_concepts: ["[[项目式学习]]", "[[脚手架]]"]
-related_persons: ["[[Vygotsky]]", "[[Piaget]]", "[[Bruner]]"]
-related_methods: ["[[质性研究]]", "[[民族志]]"]
-sources: ["sources/Vygotsky_1978_HUP.md"]
-confidence: low | medium | high
-status: draft | review | published
-created: YYYY-MM-DD
-updated: YYYY-MM-DD
----
-```
-
-
-> ⚠️ **写入规则（每次写入前必须执行）：**
-> 1. 确定新内容属于哪个 `##` 章节
-> 2. 该章节分点 ≥ 8 条 → 先按主题建 `###` 子主题，再在子主题内按时间插入
-> 3. 该章节分点 < 8 条 → 直接按时间顺序插入正确位置
-> 4. **禁止追加到末尾**，必须插入正确位置
-> 5. 声明插入位置后再用 str_replace 写入
-
-> ⚠️ **写入规则（每次写入前必须执行）：**
-> 1. 确定新内容属于哪个 `##` 章节
-> 2. 分点 ≥ 8 条 → 按主题建 `###` 子主题，组内按时间排列
-> 3. 分点 < 8 条 → 直接按时间顺序插入正确位置，禁止追加末尾
-> 4. 写入前声明：「归属章节 > 子主题 > 插入位置」，再用 str_replace 写入
-
-**页面结构：**
-```markdown
-## 核心主张
-理论的基本立场，附原文引用。
-> "原文引用"（Author, year, p.X）
-
-## 核心命题
-主要命题或子理论，逐条列出并附来源。
-
-## 发展脉络
-- 1920s [[Vygotsky]] 提出社会建构主义
-- 1950s [[Piaget]] 发展认知建构主义
-
-## 认识论立场
-- 本体论与认识论立场：简述
-- 常用研究方法：[[质性研究]]、[[民族志]]
-
-## 争议与批评
-- 批评描述，附来源和立场。（Author, year, p.X）
-
-## 相关研究
-链接到以此理论为框架的论证框架条目：
-- [[Argument_Thomas_2000]] — 一句话说明如何使用此理论
-
-## 应用领域
-- [[项目式学习]] — 以建构主义为核心理论依据
-
-## 来源
-- [[Vygotsky_1978_HUP]]
-```
-
----
-
-### 3. 事实／政策／事件 Fact & Policy & Event
-
-用 `subtype` 区分，共用 `type: fact`。
-
-#### 3a. 政策 Policy
-
-```yaml
----
-title: 芬兰国家核心课程2016
-type: fact
-subtype: policy
-tags: [项目式学习, region/finland, level/k12]
-related_concepts: ["[[项目式学习]]", "[[跨学科学习]]"]
-related_theories: ["[[建构主义]]"]
-sources: ["sources/Finnish_curriculum_2016_Report.md"]
-confidence: low | medium | high
-status: draft | review | published
-created: YYYY-MM-DD
-updated: YYYY-MM-DD
----
-```
-
-> ⚠️ **写入规则（每次写入前必须执行）：**
-> 1. 确定新内容属于哪个 `##` 章节
-> 2. 分点 ≥ 8 条 → 按主题建 `###` 子主题，组内按时间排列
-> 3. 分点 < 8 条 → 直接按时间顺序插入正确位置，禁止追加末尾
-> 4. 写入前声明：「归属章节 > 子主题 > 插入位置」，再用 str_replace 写入
-
-**页面结构：**
-```markdown
-## 背景
-政策出台的社会、教育背景。
-
-## 政策文本摘要
-核心条款与目标，附原文引用。
-> "原文引用"（文件名, year, p.X）
-
-## 时间线
-- YYYY 政策提出／讨论
-- YYYY 正式颁布
-- YYYY 开始实施
-- YYYY 修订或评估
-
-## 实施情况
-涉及哪些机构、学段、学科，如何落地。
-
-## 效果与评价
-有据可查的结果，附来源。（Author, year, p.X）
-
-## 争议与评论
-- 支持或批评立场，附来源。（Author, year, p.X）
-
-## 相关概念／理论
-- [[项目式学习]]
-- [[建构主义]]
-
-## 来源
-- [[Finnish_curriculum_2016_Report]]
-```
-
-#### 3b. 事件 Event
-
-```yaml
----
-title: PISA2012数学危机
-type: fact
-subtype: event
-tags: [assessment, region/global, level/k12]
-related_concepts: ["[[国际比较评估]]"]
-related_persons: ["[[Andreas Schleicher]]"]
-sources: ["sources/OECD_2012_Report.md"]
-confidence: low | medium | high
-status: draft | review | published
-created: YYYY-MM-DD
-updated: YYYY-MM-DD
----
-```
-
-
-> ⚠️ **写入规则（每次写入前必须执行）：**
-> 1. 确定新内容属于哪个 `##` 章节
-> 2. 该章节分点 ≥ 8 条 → 先按主题建 `###` 子主题，再在子主题内按时间插入
-> 3. 该章节分点 < 8 条 → 直接按时间顺序插入正确位置
-> 4. **禁止追加到末尾**，必须插入正确位置
-> 5. 声明插入位置后再用 str_replace 写入
-
-> ⚠️ **写入规则（每次写入前必须执行）：**
-> 1. 确定新内容属于哪个 `##` 章节
-> 2. 分点 ≥ 8 条 → 按主题建 `###` 子主题，组内按时间排列
-> 3. 分点 < 8 条 → 直接按时间顺序插入正确位置，禁止追加末尾
-> 4. 写入前声明：「归属章节 > 子主题 > 插入位置」，再用 str_replace 写入
-
-**页面结构：**
-```markdown
-## 背景
-事件发生的背景。
-
-## 经过
-事件的主要经过，时间顺序呈现。
-- YYYY-MM 事件节点
-
-## 关键文件／声明
-> "原文引用"（来源, year）
-
-## 影响与后果
-对政策、学界、实践的影响，附来源。
-
-## 争议与评论
-- 不同立场的评论，附来源。（Author, year, p.X）
-
-## 相关概念／政策
-- [[国际比较评估]]
-
-## 来源
-- [[OECD_2012_Report]]
-```
-
----
-
-### 4. 人物 Person
-
-```yaml
----
-title: Vygotsky
-type: person
-tags: [Vygotsky, paradigm/constructivist, region/russia]
-related_theories: ["[[建构主义]]", "[[最近发展区]]"]
-related_concepts: ["[[脚手架]]"]
-sources: ["sources/Vygotsky_1978_HUP.md"]
-confidence: low | medium | high
-status: draft | review | published
-created: YYYY-MM-DD
-updated: YYYY-MM-DD
----
-```
-
-
-> ⚠️ **写入规则（每次写入前必须执行）：**
-> 1. 确定新内容属于哪个 `##` 章节
-> 2. 该章节分点 ≥ 8 条 → 先按主题建 `###` 子主题，再在子主题内按时间插入
-> 3. 该章节分点 < 8 条 → 直接按时间顺序插入正确位置
-> 4. **禁止追加到末尾**，必须插入正确位置
-> 5. 声明插入位置后再用 str_replace 写入
-
-> ⚠️ **写入规则（每次写入前必须执行）：**
-> 1. 确定新内容属于哪个 `##` 章节
-> 2. 分点 ≥ 8 条 → 按主题建 `###` 子主题，组内按时间排列
-> 3. 分点 < 8 条 → 直接按时间顺序插入正确位置，禁止追加末尾
-> 4. 写入前声明：「归属章节 > 子主题 > 插入位置」，再用 str_replace 写入
-
-**页面结构：**
-```markdown
-## 简介
-身份、国籍、时代背景、主要活跃领域一句话概述。
-
-## 生平与职涯
-人生轨迹、主要任职、重要活动，按时间顺序：
-- YYYY 出生于／就读于／任职于……
-- YYYY 主要事件或转折点
-- YYYY 逝世（如适用）
-
-## 主要著作
-APA 格式，附每本著作的核心主张一句话：
-- Vygotsky, L. S. (1978). *Mind in society*. Harvard University Press. — 核心主张一句话
-- Vygotsky, L. S. (1986). *Thought and language*. MIT Press. — 核心主张一句话
-
-## 核心思想
-主要理论主张，附原文引用。
-> "原文引用"（Vygotsky, year, p.X）
-
-## 主要贡献
-链接到该人物提出或发展的概念／理论：
-- [[最近发展区]] — 一句话说明
-- [[脚手架]] — 一句话说明（含后续发展者）
-
-## 思想发展与影响
-该人物思想的演变，以及对后续学者或理论的影响：
-- 影响了 [[Bruner]] 的发现学习理论
-
-## 争议与批评
-- 批评描述，附来源。（Author, year, p.X）
-
-## 来源
-- [[Vygotsky_1978_HUP]]
-```
-
----
-
-### 5. 研究方法 Method
-
-```yaml
----
-title: 民族志
-type: method
-tags: [民族志, paradigm/interpretivist]
-related_theories: ["[[建构主义]]", "[[批判理论]]"]
-sources: ["sources/Hammersley_1983_Routledge.md"]
-confidence: low | medium | high
-status: draft | review | published
-created: YYYY-MM-DD
-updated: YYYY-MM-DD
----
-```
-
-
-> ⚠️ **写入规则（每次写入前必须执行）：**
-> 1. 确定新内容属于哪个 `##` 章节
-> 2. 该章节分点 ≥ 8 条 → 先按主题建 `###` 子主题，再在子主题内按时间插入
-> 3. 该章节分点 < 8 条 → 直接按时间顺序插入正确位置
-> 4. **禁止追加到末尾**，必须插入正确位置
-> 5. 声明插入位置后再用 str_replace 写入
-
-> ⚠️ **写入规则（每次写入前必须执行）：**
-> 1. 确定新内容属于哪个 `##` 章节
-> 2. 分点 ≥ 8 条 → 按主题建 `###` 子主题，组内按时间排列
-> 3. 分点 < 8 条 → 直接按时间顺序插入正确位置，禁止追加末尾
-> 4. 写入前声明：「归属章节 > 子主题 > 插入位置」，再用 str_replace 写入
-
-**页面结构：**
-```markdown
-## 定义
-方法的核心定义，附来源。
-
-## 认识论立场
-属于哪个研究范式，为什么。
-
-## 研究程序
-如何执行，关键要素。
-
-## 适用场景
-适合回答什么类型的研究问题。
-
-## 局限性
-方法的主要限制，附来源。（Author, year, p.X）
-
-## 相关理论
-- [[建构主义]] — 一句话说明关系
-
-## 使用此方法的研究
-- [[Argument_Lave_1991]] — 一句话说明研究内容
-
-## 来源
-- [[Hammersley_1983_Routledge]]
-```
-
----
-
-### 6. 论证框架 Argument
-
-文件命名规则：
-
-| 来源类型 | 命名格式 | 示例 |
-|---------|---------|------|
-| 期刊论文 | `Argument_作者姓_年份_期刊缩写.md` | `Argument_Thomas_2000_RER.md` |
-| 论文集整体 | `Argument_Editor_Year_Publisher.md` | `Argument_Apple_2019_Routledge.md` |
-| 论文集章节 | `Argument_作者姓_年份_关键词.md` | `Argument_Biesta_2019_purpose.md` |
-| 专著整体 | `Argument_作者姓_年份_出版社.md` | `Argument_Vygotsky_1978_HUP.md` |
-| 报告 | `Argument_机构_年份_Report.md` | `Argument_OECD_2012_Report.md` |
-
-```yaml
----
-title: Argument_Thomas_2000_RER
-type: argument
-citation: "Thomas, J. W. (2000). A review of research on project-based learning. Review of Educational Research."
-tags: [项目式学习, 建构主义, level/k12]
-related_concepts: ["[[项目式学习]]"]
-related_theories: ["[[建构主义]]"]
-related_methods: ["[[准实验研究]]"]
-sources: ["sources/Thomas_2000_RER.md"]
-part_of:                # 书籍章节才填，如 "[[Argument_Apple_2019_Routledge]]"；论文留空
-status: draft | review | published
-created: YYYY-MM-DD
-updated: YYYY-MM-DD
----
-```
-
-
-> ⚠️ **写入规则（每次写入前必须执行）：**
-> 1. 确定新内容属于哪个 `##` 章节
-> 2. 该章节分点 ≥ 8 条 → 先按主题建 `###` 子主题，再在子主题内按时间插入
-> 3. 该章节分点 < 8 条 → 直接按时间顺序插入正确位置
-> 4. **禁止追加到末尾**，必须插入正确位置
-> 5. 声明插入位置后再用 str_replace 写入
-
-> ⚠️ **写入规则（每次写入前必须执行）：**
-> 1. 确定新内容属于哪个 `##` 章节
-> 2. 分点 ≥ 8 条 → 按主题建 `###` 子主题，组内按时间排列
-> 3. 分点 < 8 条 → 直接按时间顺序插入正确位置，禁止追加末尾
-> 4. 写入前声明：「归属章节 > 子主题 > 插入位置」，再用 str_replace 写入
-
-**页面结构：**
-```markdown
-## 研究问题
-论文试图回答什么问题。
-
-## 理论框架
-- [[建构主义]] — 如何运用
-
-## 研究方法
-- 方法：[[准实验研究]]
-- 样本：描述
-- 数据来源：描述
-
-## 论证结构
-1. 前提／观察
-2. 论证步骤
-3. 结论
-
-## 主要发现
-- 发现描述。（p.X）
-
-## 关键引用
-> "引用内容"（p.X）
-
-## 局限性与批评
-论文自身承认的局限，或他人批评。
-
-## 来源
-- [[Thomas_2000_RER]]
-```
-
----
-
 ## Tag 体系
 
 ### 属性 Tag
@@ -856,12 +430,10 @@ updated: YYYY-MM-DD
 - `level/` — 学段：`level/early-childhood` `level/k12` `level/higher-ed` `level/corporate`
 - `subject/` — 学科领域（见概念分组）
 - `paradigm/` — 研究范式：`paradigm/constructivist` `paradigm/behaviourist` `paradigm/interpretivist` `paradigm/critical` `paradigm/positivist`
-- `stance/` — 立场：`stance/critique` `stance/support`
 
 ### 内容 Tag
-条目名本身即为 tag，提取时自动添加。
-- 中文直接写：`项目式学习`、`建构主义`
-- 英文小写连字符：`zone-of-proximal-development`
+条目名本身即为 tag，提取时自动添加。所有内容 tag 一律使用英文小写连字符格式：
+- `project-based-learning`、`constructivism`、`zone-of-proximal-development`
 - 人名保留原拼写：`Vygotsky`、`Dewey`
 
 ---
@@ -870,6 +442,8 @@ updated: YYYY-MM-DD
 
 用户会在文件或指令中标注 **专著** 或 **(Ed.)** 来说明书籍类型，无需 AI 自行判断。
 遇到此标注时，读取 `wiki/book-schema.md` 并按对应流程处理。
+
+---
 
 ## 链接规则
 
@@ -900,8 +474,9 @@ updated: YYYY-MM-DD
 - 该条目尚未建立时，先写纯文字，等条目建立后再补链接
 
 **用链接取代重复内容：**
-- 某个概念、理论、人物在另一条目中已有详细说明 → 只写一句话 + wikilink，不重复展开
-- 例：建构主义条目里不需要再解释 ZPD 的细节，写 `[[最近发展区]]` 即可
+- **详细内容只写一次，写在最相关的条目里** — 判断标准：这段内容是在描述哪个条目的本质？就写在那个条目里。其他条目提到时，一句话概括 + wikilink，不重复展开
+- 例：ZPD 的详细机制写在 `[[最近发展区]]`，不在 `[[Vygotsky]]` 或 `[[建构主义]]` 里重复展开
+- 例：Vygotsky 的生平只写在 `[[Vygotsky]]`，理论条目里只写 `[[Vygotsky]] — 社会建构主义的奠基者`
 - 例：概念条目的「理论基础」章节只写 `[[建构主义]] — 为PBL提供认识论基础`，不展开建构主义的内容
 
 **交叉引用要双向维护（frontmatter + 正文都要）：**

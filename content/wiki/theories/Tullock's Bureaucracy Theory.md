@@ -15,7 +15,7 @@ updated: 2026-05-01
 
 ## 核心主张
 
-官僚制本质上是信息处理金字塔：信息从底层向上汇总分析，决策从顶层向下分派执行。**主权者（sovereign）**面临的不是下属自利问题，而是**知识问题**——她无法获得全景式把握，也无法提供完美指令。因此官僚制的核心挑战是：如何委托权力与资源，使得下属在没有完整监督的情况下做出与主权者意愿一致的决策。
+官僚制本质上是信息处理金字塔：信息从底层向上汇总分析，决策从顶层向下分派执行。**主权者（sovereign）面临的不是下属自利问题，而是知识问题**——她无法获得全景式把握，也无法提供完美指令。因此官僚制的核心挑战是：如何委托权力与资源，使得下属在没有完整监督的情况下做出与主权者意愿一致的决策。
 
 > "The sovereign cannot gain a synoptic grasp of all the relevant information nor provide perfectly detailed instructions for all her subordinates." (Cowen, 2019, p. 6, paraphrasing Tullock, 2005)
 

@@ -2,7 +2,7 @@
 title: World Culture Theory
 type: theory
 tags: [world-culture-theory, globalization, comparative-education, curriculum-change, paradigm/globalization]
-related_concepts: ["[[Policy Borrowing]]"]
+related_concepts: ["[[Policy Borrowing]]", "[[Geopolitics of Knowledge]]"]
 related_theories: []
 related_persons: ["[[John W. Meyer]]", "[[Francisco O. Ramirez]]"]
 related_methods: []
@@ -10,7 +10,7 @@ sources: ["sources/Yan_2025_JCS.md"]
 confidence: medium
 status: draft
 created: 2026-05-01
-updated: 2026-05-01
+updated: 2026-05-07
 ---
 
 ## 核心主张
@@ -101,6 +101,7 @@ Auld & Morris (2016) 指出，PISA 等国际比较测试作为"最佳实践"的�
 ## 应用领域
 
 - [[Liberal Studies (Hong Kong)]] — 若仅看创立期，LS 可作为世界文化理论的佐证
+- [[Geopolitics of Knowledge]] — 世界文化理论的趋同假设为分析知识地缘政治中全球教育模型的扩散和标准化提供了理论参照
 
 ## 来源
 

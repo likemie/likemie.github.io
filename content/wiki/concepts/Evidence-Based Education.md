@@ -2,14 +2,14 @@
 title: Evidence-Based Education
 type: concept
 tags: [evidence-based-education, evidence-based-practice, research-practice-gap, local-knowledge, implementation, paradigm/positivist, region/global]
-related_concepts: ["[[Value-Based Education]]", "[[Complexity Reduction]]", "[[Visible Learning]]", "[[Evidence-Based Reform]]", "[[Educational Evidence Clearinghouses]]", "[[The New Zealand Curriculum]]", "[[Australian Curriculum]]", "[[Scientism]]", "[[Cargo Cult Science]]", "[[Evidence-Informed Practice (EIP)]]", "[[Local Knowledge in Evidence-Based Policy]]", "[[Programme Fidelity vs Adaptation]]", "[[Effect Size]]", "[[Validity as Inferences]]", "[[Mechanism Experiments]]", "[[Improvement Science]]", "[[Black Box RCTs]]", "[[Cluster Randomized Trials]]", "[[Intent-to-Treat Analysis]]", "[[Single-Case Design (SCD)]]", "[[Gating Procedure]]", "[[Professional Judgment]]", "[[Interpretation Community]]", "[[Structural Coupling]]", "[[Side Effects in Education]]", "[[Evidence-Based Medicine]]", "[[Recommendations for Practice]]", "[[Intervention Research]]", "[[Non-intervention Research]]", "[[Observational and Correlational Research]]", "[[Material Fallacies]]", "[[Dynamic Knowledge and Learning Model]]"]
+related_concepts: ["[[Value-Based Education]]", "[[Complexity Reduction]]", "[[Visible Learning]]", "[[Evidence-Based Reform]]", "[[Educational Evidence Clearinghouses]]", "[[The New Zealand Curriculum]]", "[[Australian Curriculum]]", "[[Scientism]]", "[[Cargo Cult Science]]", "[[Evidence-Informed Practice (EIP)]]", "[[Local Knowledge in Evidence-Based Policy]]", "[[Programme Fidelity vs Adaptation]]", "[[Effect Size]]", "[[Validity as Inferences]]", "[[Mechanism Experiments]]", "[[Improvement Science]]", "[[Black Box RCTs]]", "[[Cluster Randomized Trials]]", "[[Intent-to-Treat Analysis]]", "[[Single-Case Design (SCD)]]", "[[Gating Procedure]]", "[[Professional Judgment]]", "[[Interpretation Community]]", "[[Structural Coupling]]", "[[Side Effects in Education]]", "[[Evidence-Based Medicine]]", "[[Recommendations for Practice]]", "[[Intervention Research]]", "[[Non-intervention Research]]", "[[Observational and Correlational Research]]", "[[Material Fallacies]]", "[[Dynamic Knowledge and Learning Model]]", "[[Moral Sidestep]]", "[[Justified Warrants]]", "[[Selective Education]]"]
 related_theories: ["[[Transactional Epistemology]]", "[[Tullock's Bureaucracy Theory]]", "[[Cartwright's Three-Stage Knowledge Framework]]", "[[Critical Realism]]", "[[Goldman's Discrimination Theory of Knowledge]]", "[[Campbellian Validity Framework]]"]
 related_persons: ["[[Gert Biesta]]", "[[Nick Cowen]]", "[[Robert Slavin]]", "[[Terry Wrigley]]", "[[Nancy Cartwright]]", "[[Gordon Tullock]]", "[[John Dewey]]", "[[Julie Nelson]]", "[[Carol Campbell]]", "[[Sean McCusker]]", "[[Roy Bhaskar]]", "[[Ray Pawson]]", "[[Gary Thomas]]", "[[Adrian Simpson]]", "[[Dylan Wiliam]]", "[[Jorunn Møller]]", "[[Amelia Peterson]]", "[[Maria Pampaka]]", "[[Julian Williams]]", "[[John Hattie]]", "[[Lucinda McKnight]]", "[[Lars Qvortrup]]", "[[Donald A. Schön]]", "[[Herbert A. Simon]]", "[[Yong Zhao]]", "[[Eddie Blass]]"]
-sources: ["sources/Sarbiewska_2019_JSR.md", "sources/Slavin_2002_ER.md", "sources/Biesta_2010_SPE.md", "sources/Berk_2011_ER.md", "sources/Terhart_2011_JCS.md", "sources/Cowen_2015_CHESS.md", "sources/Hitchcock_2015_JBE.md", "sources/Peterson_2016_IJRME.md", "sources/Pampaka_2016_IJRME.md", "sources/Møller_2017_EERJ.md", "sources/Nelson_2017_ER.md", "sources/Zhao_2017_JEC.md", "sources/Wrigley_2018_BERJ.md", "sources/Cowen_2019_ERE.md", "sources/Qvortrup_2019_NordSTEP.md", "sources/Simpson_2019_ERE.md", "sources/Slavin_2019_EP.md", "sources/Wiliam_2019_ERE.md", "sources/Wrigley_2019_ERE.md", "sources/Blass_2020_JESP.md", "sources/McKnight_2020_Discourse.md", "sources/Nielsen_2021_IRTP.md", "sources/Slavin_2021_ROE.md", "sources/Johnson_2023_CE.md", "sources/Brady_2023_EPR.md", "sources/Wadhwa_2024_RER.md", "sources/ONeill_2012_NZJES.md"]
+sources: ["sources/Sarbiewska_2019_JSR.md", "sources/Slavin_2002_ER.md", "sources/Biesta_2010_SPE.md", "sources/Berk_2011_ER.md", "sources/Terhart_2011_JCS.md", "sources/Cowen_2015_CHESS.md", "sources/Hitchcock_2015_JBE.md", "sources/Peterson_2016_IJRME.md", "sources/Pampaka_2016_IJRME.md", "sources/Møller_2017_EERJ.md", "sources/Nelson_2017_ER.md", "sources/Zhao_2017_JEC.md", "sources/Wrigley_2018_BERJ.md", "sources/Cowen_2019_ERE.md", "sources/Qvortrup_2019_NordSTEP.md", "sources/Simpson_2019_ERE.md", "sources/Slavin_2019_EP.md", "sources/Wiliam_2019_ERE.md", "sources/Wrigley_2019_ERE.md", "sources/Blass_2020_JESP.md", "sources/McKnight_2020_Discourse.md", "sources/Nielsen_2021_IRTP.md", "sources/Slavin_2021_ROE.md", "sources/Johnson_2023_CE.md", "sources/Brady_2023_EPR.md", "sources/Wadhwa_2024_RER.md", "sources/ONeill_2012_NZJES.md", "sources/Bainbridge_2022_ROE.md"]
 confidence: high
 status: draft
 created: 2026-05-01
-updated: 2026-05-06
+updated: 2026-05-07
 ---
 
 ## 定义
@@ -21,6 +21,12 @@ updated: 2026-05-06
 Slavin (2002, p. 15) 给出的定义性表述：证据本位教育政策是"依赖随机化和严格匹配实验作为政策和实践的基础"——将可复制的教育项目和有前景的实践置于严格评估之下，仅推广那些被证明有效的。
 
 Wiliam (2019) 则将 EBE 关于"什么有效"的核心问题本身判定为**错误的问题**："在教育研究中，'什么有效'通常是错误的问题，因为几乎任何事情在某个地方都有效，但没有事情在所有地方都有效。更好的问题是'在什么条件下这个干预有效？'"（Wiliam, 2019, p.11）
+
+英国教育部在 Coldwell et al.（2017）报告 *Evidence-informed teaching: an evaluation of progress in England Research* 中给出了官方定义：
+
+> "We use the term 'evidence' to mean seeking out and using: quantitative and qualitative research findings generated by external researchers; evidence reviews such as those produced by the Sutton Trust, [[EEF Teaching and Learning Toolkit|EEF]] and [[John Hattie]]; external evaluations; and/or research produced by teachers/schools that is underpinned by rigorous and systematic enquiry."（Coldwell et al., 2017, p.10, cited in Bainbridge et al., 2022, p.4）
+
+该定义明确将 Sutton Trust、[[EEF Teaching and Learning Toolkit|EEF]] 和 [[John Hattie]] 列为"approved"证据来源，同时排除了 Ofsted 报告和议会内部报告。定义还强调创新必须是"被规训的"（disciplined）——建立在"什么有效以及为什么"的已有知识之上，而非"无拘束的"发展中（Bainbridge et al., 2022, p.4）。
 
 ## 历史沿革
 
@@ -106,6 +112,20 @@ Wiliam (2019, pp.7–8) 从**教师质量的未测量变异**这一角度补充�
 - **弱版本（evidence-informed）**：证据作为信息之一，与专业判断、情境理解等并列——教育者运用专业判断来整合证据，而非被证据驱动
 
 Nelson & Campbell (2017, pp. 128–129) 明确站在 EIP 一侧。Wiliam (2019, p.2) 将教师是"技术人员还是专业人员"的问题定位为**实证问题**：如果让教师遵循专业判断而不关注研究证据，学生成就是否提高？研究证据（无论来自 RCT、系统综述还是其他研究）能否帮助改善学生成果？
+
+### 证据到政策的转化模型
+
+Bainbridge et al.（2022, p.7）综述了证据到政策（evidence-to-policy）的三种模型，按情境复杂性递增排列：
+
+- **线性模型（Linear Model）**：假设证据与政策之间存在直接连接——研究产生证据，证据直接转化为政策。这是 EBE 强版本隐含的模型，但被广泛批评为过于简化
+- **多流模型（Multiple Streams Model）**：政策决策受证据、经济因素和公众舆论三股力量的同时影响，证据只是其中一股而非唯一因素
+- **混战模型（Melee Model）**：科学证据、政治证据、经济证据和社会证据四种类型在决策过程中流动交互，政策结果是多方力量混战的产物
+
+Bainbridge et al. 认为混战模型最接近教育研究的情境，但教育的复杂性可能使任何模型都不充分——这四个竞争因素被嵌入并受既有的新自由主义审计文化话语影响（Ball, 2016），导致了对"证据本位实践"的呼声（Bainbridge et al., 2022, p.7–8）。
+
+此外，Cairney（2016）和 Parkhurst（2017）等学者已对证据到政策有广泛论述。Pellegrini & Vivanet（2021）对欧盟委员会文件的审查结论是：研究对教育政策的影响仍然有限。多项研究识别了制度障碍：Ion & Lucu（2015）强调需要使研究更可见和可转移；Newman et al.（2016）指出如果更明确政策决策应同时基于工具/技术假设和符号/价值假设，研究-政策关系将得到改善；Eurydice（2017）强调需要"知识经纪人"（knowledge brokers）促进学术界与政策制定者之间的信息流通（Bainbridge et al., 2022, p.8）。
+
+政策制定者与学术研究者工作条件的时间框架差异也是一个关键障碍：政治人物通常需要可在选前向公众清晰呈现的简单方案并希望看到短期效果，而学术研究的时间框架通常更长——从识别研究情境、撰写提案、寻求资助到执行和评估（Bainbridge et al., 2022, p.8）。近年来商业智库（think-tanks）的快速增长也与"证据本位政策"的兴起相关——智库研究可以更快产出且更符合已有观点，Harvey（2005）指出这与新自由主义将高等教育研究（通常被视为"左倾"）定位为与政府意识形态冲突有关（Bainbridge et al., 2022, p.8–9）。
 
 ### 证据到实践的转化
 
@@ -395,6 +415,21 @@ O'Neill（2012）以 NZ Treasury 2011 年简报为案例，识别了 EBE 证据�
 
 Blass（2020, p.96）从澳大利亚政策实践者的角度提出：当政策制定者采用学术研究时，须系统评估其 **方法论、情境、假设、领导力和时效性** 五个维度——仅凭"在表面上似乎适用"而采纳学术论证可能是危险的。Blass 以 COVID-19 药物快速审批后因副作用比益处更严重而被撤回作类比，论证教育政策同样需要更严格的学术研究评估框架。该框架的具体展开与 VL 在澳大利亚的误用分析详见 [[Argument_Blass_2020_JESP]]。
 
+#### 道德侧步与议会话语中的证据回避（Bainbridge et al., 2022）
+
+**争议背景**：Bainbridge et al.（2022）将 EBE 批判从认识论和方法论层面推进到议会政策制定的实际话语操作层面。即使研究证据充分且一致（如关于选择性教育无效或有害的压倒性证据），政策制定者仍可在议会辩论中系统性回避这些证据，转而使用一系列修辞工具——包括道德侧步（[[Moral Sidestep]]）、轶事、党派立场和对对立党派的攻击，以及简单的对证据不作回应（Bainbridge et al., 2022, p.25）。
+
+**核心发现**：对 2015–2019 年英国议会 11 场关于文法学校辩论的分析显示：
+
+- 尽管政府自身对"证据"的定义（Coldwell et al., 2017）要求使用量化或质性研究发现、系统综述和严格评估，议会辩论中议会内部报告和 Ofsted 评级——均非同行评议研究——才是实际上最有影响力的证据来源（Bainbridge et al., 2022, p.17–19）
+- 在 2016 年"教育与社会流动性"辩论中，19 次与非轶事证据的交换中仅 6 次真正参与了证据，6 次未参与，4 次转向攻击对立党派，5 次属于道德侧步（Bainbridge et al., 2022, p.20）
+- "好学校"话语（以 Ofsted 评级为"证据"）被系统性用于回避关于选择性教育效果的研究证据——Ofsted 评级被混同为实证研究证据，并进一步被道德化为"文法学校是好的"（Bainbridge et al., 2022, p.19, 25）
+- 讽刺的是，政府自身定义要求教师"能够通过引用 robust evidence base 和使用逻辑论证来解释其选择和实践，而不是因为他们这样做是因为 Ofsted 或部门告诉他们这样做"——但政策制定者自己在议会中正是依赖 Ofsted 而非 robust evidence base（Bainbridge et al., 2022, p.4–5）
+
+**Michael Gove 的"The Blob"论述**：时任教育大臣 Michael Gove 将教育研究界、教师工会领导人和地方当局官员描绘为偏好进步主义、不如传统教学方法的"The Blob"——这一政治论述在教育界塑造了一种二元对立（进步 vs 传统、可接受的证据 vs 不可接受的证据），进一步窄化了被视为合法的证据范围（Bainbridge et al., 2022, p.4–5）。
+
+**对 EBE 批判的补充**：Bainbridge et al. 的贡献在于从经验层面（而非仅从哲学或方法论层面）揭示了 EBE 的一个深层悖论：政府一方面要求实践者使用 robust evidence 并承诺"将政策变化与最佳研究证据对齐"（Coldwell et al., 2017, p.9），另一方面在自身政策制定中系统性地回避这些证据并以非研究来源（Ofsted 评级、轶事、党派立场）替代。这表明 EBE 的问题不仅在于其认识论或方法论——还在于其**在民主制度中的实际操作中存在结构性虚伪**（Bainbridge et al., 2022, p.25–26）。
+
 ### 综合框架
 
 #### EBE 批判的多维度框架
@@ -422,6 +457,7 @@ Biesta 说 EBE **在哲学上是错的**；Cowen 说它**在制度上被选择�
 - [[What Works Network (UK)]] — 英国 EBE 的制度载体
 - [[ResearchED]] — 2013 年 Tom Bennett 创立的教师草根 EIP 运动
 - [[Playing for Success]] — Wrigley & McCusker (2019) 揭示元-元分析程序缺陷的关键案例
+- [[Selective Schools Expansion Fund 2018]] — Bainbridge et al.（2022）揭示 EBE 在议会政策制定中被系统性回避的案例研究
 
 ### 美国
 
@@ -461,4 +497,5 @@ Biesta 说 EBE **在哲学上是错的**；Cowen 说它**在制度上被选择�
 - [[Wrigley_2019_ERE]]
 - [[Blass_2020_JESP]]
 - [[Slavin_2021_ROE]]
+- [[Bainbridge_2022_ROE]]
 - [[Brady_2023_EPR]]

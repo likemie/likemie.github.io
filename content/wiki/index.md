@@ -32,12 +32,24 @@
 - [[Education at a Glance (EAG)]] — OECD 年度旗舰出版物，以 30 项国际教育指标描述各国教育系统，涵盖产出、投入、参与、环境四大维度
 - [[Education Indicators]] — 经目的性选择和加工的派生统计量，合并多数据源，旨在提醒决策者注意潜在问题而非诊断评估
 - [[Externalization (Schriewer)]] — Schriewer 的比较教育核心概念：教育系统将内部问题构型投射到国际参照系中的过滤过程，Rappleye (2006) 发展为双向运作（外化到国际趋势／外化到传统）
+- [[Geopolitics of Knowledge]] — 高等教育被重构为知识地缘政治竞争的核心维度：创新、科学和教育成为个体、企业、国家全球战略定位的关键特征，涉及古典地缘政治向关系性空间构型的理论转变
+- [[Global Regionalisms in Higher Education]] — Robertson et al. (2016) 的概念：高等教育被整合进世界各地区大规模政治经济区域整合项目（EU、ASEAN 等），成为区域地缘政治想象的核心支柱
 - [[International Indicators of Education Systems (INES)]] — 1988 年 OECD 启动的国际教育指标开发项目，EAG 的前身和生产者
+- [[Knowledge-Based Economy]] — 知识经济：知识、创新、高等教育和研发为价值创造与全球竞争核心要素的实际存在经济形态，Sum & Jessop (2013) 定义，Moisio (2022) 追溯其从 List 经 Drucker/Bell/Romer 到 OECD/World Bank 的概念演变
+- [[Knowledge-Based Economization]] — Moisio (2018) 的概念：关注知识密集型资本主义的物质过程及其通过想象和客观化社会实践被话语建构的过程
 - [[Policy Borrowing]] — 政策借用：国内政治考量驱动选择性参照外部教育论述来合法化议程，Steiner-Khamsi 系统框架，Phillips & Ochs 四阶段模型，Rappleye 情境概念地图，Cowen 形态变异，核心机制为外化、合法化、问题建构与选择性变异
 - [[Educational Management Organisation (EMO)]] — 参与公立学校教育政策制定与服务交付的私营部门实体，营利/非营利两种形式，Cognition Education 和 CORE Education 为新西兰最大 EMO
+- [[National Competitive Advantage]] — Porter (1990) 理论：国家竞争优势通过高度本地化过程被创造，全球化反而使国家角色更重要，Moisio (2022) 将其分析为塑造 Hub and Flow 想象的关键地缘政治想象
 - [[Network Governance in Education]] — 传统市场/科层制公立学校治理被网络与部落形式取代，Thompson (1991) 为理论框架，新西兰自 2008 年加速发展
 - [[Policy Entrepreneur]] — Mintrom (2000) 和 Ball (2012) 概念：在教育系统内外通过协作和网络化影响政策发展的行动者，John Hattie 为新西兰典型
+- [[Progressive Neoliberalism]] — Nancy Fraser (2019) 概念：新自由主义经济政策与进步社会议程的话语结合，Moisio (2022) 定位为过去三十年知识经济化的主要政治推力（"硅谷世界观"），正在消退
+- [[Regulatory Regionalism]] — Jayasuriya (2010) 与 Robertson (2010) 的概念：超国家或国际组织通过指标、排名等监管机制对区域内高等教育进行间接治理的模式
+- [[Classical Geopolitics]] — Moisio (2022) 概念：以国家"硬"领土力量和势力范围为中心的传统地缘政治理解，与知识地缘政治的关系性空间构型形成对照
+- [[Economic Patriotism]] — Crouch & Le Galès (2012) 概念：国家将资源集中于冠军城市以锚定全球资本流动，将爱国情感与特定领土利益绑定的政策实践，Moisio (2022) 定位为知识经济化中国家的核心行为逻辑
 - [[Endogenous and Exogenous Privatisation]] — Ball & Youdell (2008) 识别的两种全球公立学校私有化趋势：学校变得更像企业（内生）vs 私营部门进入学校（外生）
+- [[Geopolitical Subject]] — Moisio (2022) 的概念：从政治权力角度被装备上特定技能、行为、取向和空间心态的人形集合，在高等教育空间中被形塑以服务于全球竞争
+- [[Hub and Flow Imaginaries]] — Moisio (2022) 的概念：知识经济化中的核心空间想象类型，将世界划分为枢纽中心与边缘区域，集群、创意城市、创业城市等为其空间表述
+- [[Spatial Sortings]] — Moisio (2022) 的概念：知识密集型资本主义系统性地将地点和人口划分为"赢家"与"输家"的过程，由公共和私人投资驱动、国家中介
 
 ### Curriculum
 
@@ -58,6 +70,7 @@
 - [[Material Fallacies]] — 逻辑学中"在理解术语的含义或用法方面的错误"（Kreeft, 2010），O'Neill 将其引入教育政策话语分析以审查证据被误用的现象
 - [[Scientism]] — 对科学方法的过度美化及在其原始范围之外轻率应用，Gasparatou/Hayek/Ross 等定义，Johnson & Janzen 将其应用于 VL 批判
 - [[Cargo Cult Science]] — Feynman (1974) 概念：看起来像科学但缺乏认识论诚信的伪科学实践，应用于 VL 批判
+- [[Critic and Conscience of Society]] — Gerald Grace 1988 年提出、后写入新西兰大学立法的概念：大学在民主社会中有独立的权力制衡角色，须基于系统公正分析"向权力说真话"，区别于仅关注学科内部的正常学术批评
 - [[Structural Coupling]] — Luhmann (1997) 系统理论概念：两个封闭、自我指涉系统之间的非因果链接，Qvortrup 用于描述教学与学习之间的关系 — Eacott 以 Callahan (1962) 为框架提出的概念，描述教育领导力领域对单一权威人物的不加批判的接受，以 Hattie 崇拜为典型案例分析其形成的三个时间条件
 - [[Epistemological Break]] — Bourdieu 认识论核心概念：科学研究必须与前科学世界的日常语言和自发理解决裂，Eacott 将其引入教育行政研究
 - [[Epistemological Vigilance]] — Bourdieu 认识论核心概念：社会科学家需持续保持对日常语言和前科学概念的批判性警觉，是终身的智识项目
@@ -65,6 +78,7 @@
 - [[Performativity of Measurement]] — 测量不仅是描述性行为更是制造世界的生产性行为，一旦存在即改变优先事项和行为，批判测量因此是道德事业
 - [[Pure Evaluation]] — Tanggaard, Rømer & Brinkmann (2014) 仿照"纯粹教育"提出的概念，描述被宣称在自调节系统中独立于时空运作的评价实践，Hattie 的元-元分析为其典型案例
 - [[Value-Based Education]] — Biesta 提出的教育取向：价值先于证据，教育的目的性判断从属于"我们想要达成什么"而非"什么有效"
+- [[Moral Sidestep]] — Stevens (2019) 概念：政策制定者以道德关切回避实证研究证据的话语策略，Bainbridge et al. (2022) 将其引入教育政策分析并发展为"建构型侧步"
 
 ### Educational Sociology
 
@@ -74,12 +88,16 @@
 - [[Complexity Reduction]] — 通过减少系统中的可用选项数量使社会情境变得可预测，Biesta 将其定义为政治权力行为
 - [[Global Education Reform Movement (GERM)]] — Sahlberg (2012) 术语：以新自由主义意识形态驱动的全球教育改革运动，标准化、问责、市场化、私有化为特征，Johnson & Janzen 论证 VL 在 GERM 中扮演推手角色
 - [[Sociology of Measurement]] — Woolgar 的分析框架：将测量视为技术，关注其 instrumentalism（如何被弄到运作）和 performativity（如何制造世界）
+- [[Selective Education]] — 依据学术能力考试将中学生分流至文法学校与现代中学的制度，研究证据一致表明其效果至多为中性，多数为负面
+- [[Grammar School]] — 英格兰以 11-plus 考试选拔学生的公立学术中学，现有 163 所，159 所获 Ofsted 良好/优秀评级
 
 ### Educational Technology
 
 ### Higher Education
 
+- [[Global Education Industry (GEI)]] — 教育实践、供给、研究和政策被经济理性渗透的多重过程，Verger et al. (2016) 定义，Parreira do Amaral 将其作为知识地缘政治转型的关键语境
 - [[Graduate Attributes]] — 大学认同其学生在学期间应当发展的品质、技能和理解，受高等教育市场化驱动，Wong et al. (2022) 识别 UK 四大话语
+- [[International Education Hubs]] — Knight 的概念：国家将自身定位为教育、培训、知识生产和创新活动中心的地缘政治项目，三种模型（学生／人才／知识创新枢纽）
 
 ### Instruction & Pedagogy
 
@@ -143,6 +161,7 @@
 - [[Effect Size]] — 标准化干预效果统计指标，Simpson 论证其测量试验灵敏度而非有效性，Wrigley & McCusker (2019) 展示三级聚合失真过程，Wiliam (2019) 断言元-元分析在教育政策中无任何角色并提供 11 点评估清单
 - [[Improvement Science]] — 源自组织研究（Langley et al., 2009）的教育研究替代范式，以系统视角、关注变异性、人类行动者中心和反馈循环为特征，Bryk et al. (2015) 将其引入美国教育
 - [[Intent-to-Treat Analysis]] — RCT 估计方法，按原始随机分配分析无论实际接受与否，反映干预可获得性而非实际接受效果，政策意义重大（Pampaka et al., 2016）
+- [[Justified Warrants]] — Malone & Hogan (2020) 基于 Dewey 的概念：研究应提供暂定性、可修正的担保断言而非确定性证明，Bainbridge et al. (2022) 用于评估政策论证的逻辑推进
 - [[Mechanism Experiments]] — 测试特定行为理论的小规模现场实验，Peterson (2016) 从发展经济学引入作为黑箱 RCT 的替代，以鼓励设计（Imai et al., 2013）为关键方法论工具
 - [[Parallel Monologues]] — Eacott 提出的概念，描述教育行政研究中学者各自在子领域内发表和引用但很少实质性交锋的结构性现象，主张以论证与反驳为学术工作的生成逻辑
 - [[Validity as Inferences]] — Cronbach/Messick 的效度理论：效度是推论的属性而非测试或实验的属性，验证是永无止境的过程，Wiliam (2019) 将其应用于教育 RCT 方法论批判
@@ -181,10 +200,16 @@
 - [[Bounded Rationality]] — Simon (1969/1996) 的有限理性理论：复杂专业任务的复杂度大于专业人员的实践能力，Qvortrup 用作专业判断的理论基础
 - [[Technical Rationality]] — Schön (1983) 的实证主义专业实践模型：工程/医学模式，手段-目的思维，价值中立；Nielsen & Klitmøller 论证其为 Hattie VL 的理论内核
 
+### Political Economy & Geography
+
+- [[Critical Geopolitics]] — 1990s 以来人文地理学批判转向：空间性≠领土性，地缘政治通过政治想象和话语被建构，Moisio (2022) 将其应用于知识经济化，Parreira do Amaral (2022) 将其作为新知识地缘政治的两大分析支柱之一
+- [[Fixity-Motion Tension]] — David Harvey (1985/2001) 的资本主义地缘政治核心理论：资本主义需要创造空间固着来促进资本流通，但流通又不断破坏既有空间配置，Moisio (2022) 将其应用于知识经济化分析
+
 ### Political Science & Policy Studies
 
 - [[Nation Building through Education]] — 国家利用教育系统在边疆地区推行统一国族认同，Yan & Morris 将香港 LS→CSD 纳入此框架与西藏、新疆、内蒙古并置分析
 - [[Tullock's Bureaucracy Theory]] — 官僚制作为信息处理金字塔，主权者面临的核心挑战是知识问题与委托困境，Cowen 将其应用于解释 EBE 的制度韧性
+- [[Legitimation Theory Van Leeuwen]] — Van Leeuwen (2007) 的四层次合法化框架：权威/传统、道德价值、理性/真理、奖励叙事，Bainbridge et al. 用于解释教育证据如何被政策制定者接受或排斥
 
 ### Philosophy & Epistemology
 
@@ -192,6 +217,7 @@
 - [[Campbellian Validity Framework]] — Shadish, Cook & Campbell (2002) 的实验效度理论：因果推断需通过排除内部效度威胁建立因果关系，再评估跨情境/人群/测量的外部效度，Hitchcock et al. (2015) 应用于 SCD 审查程序
 - [[Cartwright's Three-Stage Knowledge Framework]] — RCT 证据外推的三阶段模型：it-works-somewhere → capacity claims → it-will-work-for-us，揭示因果机制知识在证据外推中的关键作用
 - [[Critical Realism]] — Bhaskar 的科学哲学：区分实在/实际/经验三层本体论和开放/封闭系统，Wrigley & McCusker (2019) 用作批判 EBT 方法论的哲学框架
+- [[Decolonial Geopolitics of Knowledge]] — Mignolo/Dussel 的去殖民批判：西方认识论通过殖民差异稳定全球权力空间表达，主张社会科学去殖民化而非"开放"，Parreira do Amaral (2022) 将其作为新知识地缘政治的两大分析支柱之一
 - [[Goldman's Discrimination Theory of Knowledge]] — 知识要求区分真实状态与相关替代可能状态的能力，Wiliam (2019) 以此论证教育知识的局部性和临时性
 - [[Phenomenology]] — 以经验、生活世界、具身性和主体间性为核心的哲学传统；Schaffar & Wolff 用于解释芬兰 PhBL 的"现象"概念和教育意义
 - [[Popper's Three Worlds Theory]] — Karl Popper 的本体论框架：World 1 物理世界 / World 2 主观世界 / World 3 文化与科学对象（"客观地伟大的"），Rømer (2018) 论证 Hattie 通过 Bereiter 严重误读该理论
@@ -271,6 +297,9 @@
 - [[INES Lugano General Assembly 1991]] — INES 第二届全体大会，科学家-政策制定者权力关系的分水岭：政策制定者强行将学生成绩数据纳入 EAG
 - [[ISSPP Project]] — Christopher Day 领导、自 2002 年起 20+ 国参与的国际成功学校校长项目，最全面的跨国学校领导力案例研究，Møller 以亲历者立场提出方法论反思
 - [[OECD Improving School Leadership Project 2006]] — OECD 启动的 18+4 国参与项目，五项政策建议（吸引人才、界定职责、赋权自主、分布式领导、发展连续性），将学校领导力确立为全球教育政策优先议程
+- [[Horizon Europe Missions]] — EU 2021–2027 年研究与创新框架的核心机制，将研究整合为针对五大社会挑战（癌症、气候、海洋、城市、食物）的使命承诺
+- [[Horizon 2020 SSH Integration]] — EU 2014–2020 年研究框架取消社会科学与人文学科独立资助渠道，将其作为横向议题嵌入所有优先领域以服务于政策证据基础
+- [[Minerva University]] — 2012/2014 年由 Ben Nelson 创立的全球性营利大学，无校园、在线教学、全球城市沉浸，以颠覆传统大学和构建可扩展商业模式为目标
 
 ### Hong Kong
 
@@ -306,6 +335,7 @@
 #### Other
 
 - [[Foundation North Māori and Pasifika Education Initiative (MPEI 2009)]] — Foundation North 2009 年宣布的 USD 20M 五年投资计划，以社区提案驱动和网络识别两阶段模式改善 Māori 和 Pasifika 学生教育成果
+- [[Learning for Life Report 1989]] — Gary Hawke 1989 年发布的教育与培训报告，纳入了 Gerald Grace 提议的"critic and conscience of society"作为大学的定义特征，后被写入新西兰法律
 - [[The Scott Report 1986]] — 新西兰议会教育与科学选择委员会发布的《教学质量调查报告》，主张迫切需要教师表现测量但承认过程将"漫长而复杂"，建议设立大学研究单位开发可靠工具——从未落实
 - [[New Zealand National Standards (2009)]] — 国家党联合政府推行的国家教育标准政策，Hattie 参与技术顾问和部长顾问组，引发激烈争议
 - [[Treasury Briefing on Student-Teacher Ratios (NZ 2011)]] — 2011 年 NZ Treasury 援引 Hattie VL 证据建议增加生师比以释放资金，O'Neill 以此为案例揭示教育研究证据在政策论述中的实质谬误
@@ -329,11 +359,15 @@
 #### Curriculum Policy
 
 - [[Rose Report 2006]] — Jim Rose 领导的英国早期阅读教学独立审查，推广简单阅读观，直接导致全英强制合成语音教学
+- [[Education and Inspections Act 2006]] — 英国法律禁止新建文法学校，但允许现有 163 所文法学校继续运作
 
 #### Other
 
+- [[Selective Schools Expansion Fund 2018]] — 保守党政府 £50M 基金允许现有文法学校扩展招生，在新建禁令未修改的情况下以替代路径扩大选择性教育
 - [[EEF Teaching and Learning Toolkit]] — 英国 EEF 的元-元分析工具，以联盟表格式按成本/有效性/证据确定性排名 30+ 类干预，面临 Simpson/Wrigley 方法论批评，Wrigley & McCusker (2019) 通过体育参与案例揭示三级聚合失真
+- [[Eleven-plus Exam]] — 英国 11 岁中等教育选拔考试，决定学生进入文法学校或综合学校，研究证据一致表明其加剧不平等且不促进社会流动
 - [[Hargreaves 1996 TTA Lecture]] — David Hargreaves 在 TTA 年度讲座中将教育研究与医学进行不利比较，标志着英国 EBE 运动的政策起点
+- [[Ofsted]] — 英国教育标准办公室，其学校评级被 Bainbridge et al. 发现系统性混同为研究证据，成为"建构型道德侧步"的核心操作工具
 - [[Playing for Success]] — 英国在足球俱乐部场地设立的学习支持中心项目，Wrigley & McCusker (2019) 揭示元-元分析程序缺陷的关键案例
 - [[ResearchED]] — 2013 年 Tom Bennett 创立的以 RCT 为黄金标准的教师草根运动，获 Nick Gibb 背书，被 Wrigley 批评为以"赋权教师"之名限制方法论视野，Wrigley & McCusker (2019) 批评其推广"民间科学观"
 - [[What Works Network (UK)]] — 英国政府建立的证据清算中心网络，EEF 是教育领域的旗舰中心，标志着证据本位方法在公共政策中的复兴
@@ -399,6 +433,7 @@
 
 - [[Carl Bereiter]] — 加拿大教育理论家，知识建构理论创始人，将 Popper 三个世界理论引入教育研究，在 Popper 与 Hattie 之间扮演关键中介角色
 - [[Carol Campbell]] — 多伦多大学 OISE 教育领导力教授，KNAER 系统级知识动员案例研究领导者，与 Nelson 共同编辑 EIP 特刊
+- [[Jane Knight]] — OISE/University of Toronto 跨境高等教育学者，国际教育枢纽（IEH）概念框架和三类模型（学生/人才/知识创新）提出者
 - [[Carolyn Shields]] — 加拿大教育研究者，提出以权力为调查起点的变革型领导力框架，被 Møller 采纳为超越"什么有效"议程的关键替代视角
 
 ### China
@@ -431,6 +466,8 @@
 
 #### Current (2000–present)
 
+- [[Sami Moisio]] — 赫尔辛基大学政治地理学者，提出 Knowledge-Based Economization 和 Geopolitics of the Knowledge-Based Economy 概念，将批判地缘政治学延伸至高等教育和城市治理领域
+
 ### France
 
 #### Contemporary (1900–2000)
@@ -451,6 +488,8 @@
 
 - [[Andreas Helmke]] — 德语有效教学综合作者，Laursen 用其十项教学质量、学生前提条件和文化语境讨论检验丹麦适用性
 - [[Hilbert Meyer]] — 德语有效教学综合作者，其十项"好教学"质量与 Hattie、Helmke 一起构成 Laursen 的国际有效教学参照
+- [[Marcelo Parreira do Amaral]] — 明斯特大学比较教育教授，全球教育产业（GEI）和知识地缘政治研究者，与 Thompson 共同主编 *Geopolitical Transformations in Higher Education* (2022)
+- [[Christiane Thompson]] — 法兰克福歌德大学教育科学教授，高等教育主体化与数字化治理技术研究者，与 Parreira do Amaral 共同主编多部 GEI 著作
 
 ### Netherlands
 
@@ -496,7 +535,9 @@
 #### Current (2000–present)
 
 - [[Gert Biesta]] — 当代最具影响力的教育哲学家之一，以对证据本位教育的系统性批判和教育目的论阐述著称
+- [[Bob Jessop]] — 兰卡斯特大学社会学家，文化政治经济学（CPE）创始人，将 KBE 定位为"霸权的元治理对象"，其"想象"概念被 Moisio (2022) 借用于分析 Hub and Flow 想象的构成性和履行性角色
 - [[Nick Cowen]] — 林肯大学/纽约大学政治科学家，以公共选择理论分析证据本位教育的政治经济学，解释 EBE 的官僚功能
+- [[Gerald Grace]] — 伦敦大学教育学者，前惠灵顿维多利亚大学教育学系主任，"Critic and Conscience of Society"概念的原创者（1988），后写入新西兰大学立法
 - [[Christopher Day]] — 英国教育研究者，ISSPP 项目创始人和领导者，构建了 20+ 国的成功学校领导力跨国知识基础
 - [[Helen Gunter]] — 英国教育研究者，以教育领导力的批判性政策分析和知识政治研究著称，LE@DS 研究网络成员
 - [[Dylan Wiliam]] — UCL 教育研究院教授，教育评估和形成性评价研究者，以 Goldman 区分理论论证教育知识局部且临时，提出 EBE 批判的四个决策问题框架
@@ -523,6 +564,8 @@
 - [[Herbert A. Simon]] — 卡内基梅隆大学教授，1978 年诺贝尔经济学奖得主，有限理性理论创始人，Qvortrup 用作教学认识论基础
 - [[Jacob Cohen]] — 美国统计学家，效应量/Cohen's d 解释框架的关键人物，small/medium/large 阈值常在教育研究中被转化为实践判断工具
 - [[Ken Goodman]] — 美国教育研究者，全语言运动创始人，1967 年 Reading: A Psycholinguistic Guessing Game 奠定全语言理论基础
+- [[Walter Mignolo]] — 杜克大学文学与文化研究教授（阿根廷裔），去殖民理论奠基人，提出知识地缘政治（后殖民/去殖民脉络）、殖民差异和认识论不服从概念
+- [[Michael Porter]] — 哈佛商学院教授，竞争战略和国家竞争优势（1990）理论创始人，Moisio (2022) 将其"全球化使国家更重要"悖论分析为塑造知识经济化空间政策的关键地缘政治想象
 - [[Robert Slavin]] — 约翰霍普金斯大学教育心理学家，证据本位教育改革运动奠基人，Success for All 和 Evidence for ESSA 创始人
 - [[Grover Whitehurst]] — Bush 政府 OERI 主任 / IES 首任所长，将 RCT 确立为联邦教育研究黄金标准的关键政策执行者，制定 2002–2007 OERI 战略计划
 
@@ -546,6 +589,7 @@
 - [[Historical Document Analysis of Curriculum]] — 通过系统分析课程文件、政府政策、媒体报道和学术文献重建科目演变历程，识别课程变革的政治动力
 - [[Philosophical Analysis in Education]] — 通过概念区分、逻辑推理和哲学论证分析教育政策与实践的前提假设，为从业者提供抵抗资源
 - [[Qualitative Research]] — 不操纵自变量并使用访谈、观察等文本数据的非干预研究；Brady et al. (2023) 发现其在教育心理学经验期刊中升至 22%
+- [[Carnivalesque Analysis]] — Aydarova (2020) 基于 Bakhtin 嘉年华理论的质性方法：研究者以"小丑"角色打乱官方叙事、追踪矛盾，揭露主导话语掩盖的真相
 
 ### Quantitative
 
@@ -593,6 +637,7 @@
 - [[Argument_Golovchin_2019_ESC]] — 以变差系数检验 Hattie 效应量数据集（Vσ=56.87%），系统综述 10+ 位批评者论点，评估 VL 对俄教育政策的适用性并建议拒绝借用
 - [[Argument_Pampaka_2016_IJRME]] — IJRME 特刊导言：诊断大规模有效干预缺失与"萎靡感"，识别 agency 分配为核心哲学分歧，主张从"什么有效"转向"什么曾经有效，在哪里，如何，对谁"
 - [[Argument_Gorur_2014_Discourse]] — 以 STS 和测量社会学框架追溯 OECD 教育指标从"几乎不可能"到年度常规生产的历程，论证测量是制造世界而非描述世界的生产性行为，批判因此是道德事业
+- [[Argument_Grace_2010_NZJES]] — 以"Critic and Conscience of Society"概念原创者身份回应 Hattie (2010)，论证 Hattie 混淆了"学术领域批评者"与"社会批评者与良知"两种角色，指出 VL 排除非学校因素与该角色根本矛盾
 - [[Argument_Biesta_2010_SPE]] — 从认识论、存在论、实践论三维度识别证据本位教育的三重缺陷（知识缺陷、效力缺陷、应用缺陷），提出价值本位教育作为替代
 - [[Argument_Cowen_2019_ERE]] — 以 Tullock 官僚制理论解释 EBE 的持续影响力：RCT/系统综述作为对主权者透明的过滤机制，以牺牲一线关联性为代价
 - [[Argument_Cheung_2021_ROE]] — ECNU ROE 特刊 Editorial：以 COVID-19 疫苗试验类比教育 RCT，汇集七国八篇文章，按四项核心活动框架呈现证据本位改革全球全景
@@ -620,10 +665,13 @@
 - [[Argument_Snook_2010_NZJES]] — 对 Hattie (2010) 回应的再回应：逐点论证 Hattie 未充分解决 2009 年提出的方法论关切，提出元分析从医学移植到教育的基础性不匹配问题
 - [[Argument_Sarbiewska_2019_JSR]] — 以 Benner 修正版教学三角为框架，分析 VL 如何影响新西兰和澳大利亚教育政策与实践，记录 PISA 2001 后的政策转向及 HITS、Gonski 2.0 等制度化采纳
 - [[Argument_Kraft_2023_ER]] — 回应 Simpson 对效应量基准的批评，以 3,426 个教育干预 RCT 效应量显示 36% 小于 0.05，主张"教育干预经常失败"才是解释政策相关性的核心基准
+- [[Argument_Knudsen_2017_NordSTEP]] — Hanne Knudsen 对 John Hattie 的深度访谈，围绕 VL 的规模化翻译、可见性与学习概念、证据与理论关系、Hattie 的多重角色四主题展开
+- [[Argument_Bainbridge_2022_ROE]] — 以 SSEF 为案例研究 UK 议会如何系统性回避选择性教育研究证据，识别"建构型道德侧步"：Ofsted 评级被混同为研究证据并道德化为"好学校"话语
 - [[Argument_Brady_2023_EPR]] — 追踪 2020 年五本教育心理学经验期刊的方法趋势，发现随机实验降至 20%、非干预文章中约三分之二包含实践建议
 - [[Argument_Yan_2025_JCS]] — 以 Cuban 课程变革三因素为框架，对比分析香港通识教育科的创立（2009）与废除（2021），揭示全球化论述的工具性使用与国家安全的突变性介入
 - [[Argument_Zhao_2017_JEC]] — 从医学引入副作用概念，以直接教学、东亚教育体系、NCLB 三个案例论证教育中"什么有效可能同时有害"，提出 6 项行动建议
 - [[Argument_Hattie_2010_NZJES]] — Hattie 以第一人称反思教育学者作为"社会批评者与良知"的角色，系统回应 VL 出版后 NZ 媒体与学界的十类批评，记录 NZ National Standards 政策参与
+- [[Argument_Hattie_2017_SLM]] — Hattie 对 Eacott (2017) Cult of the Guru 论文的直接回应，援引 Popper 证伪主义和 Said 公共知识分子传统，逐条反驳 Eacott 三项主张
 - [[Argument_Hattie_2015_SOTLP]] — 将 VL 框架应用于高等教育：PBL 低效（d≈0.08）、在线 vs 面授无差异（d≈0.12）、提出六项关键发现、DIE 模型和八项教师思维框架
 - [[Argument_Hitchcock_2015_JBE]] — 澄清 WWC SCD 审查程序如何通过 Review Guide 和审查协议捕获推广性信息，描述 5-3-20 证据充分性阈值
 - [[Argument_Keddie_2020_IJLE]] — 以 Dolan 悖论框架分析 42 位澳大利亚教育利益相关者访谈，识别市场驱动的学校自主权改革的四大社会正义悖论
@@ -637,6 +685,10 @@
 - [[Argument_Schaffar_2024_CogentEdu]] — 历史与哲学综述：追溯芬兰 PhBL 的现象学、Bildung/Didaktik 和建构主义根源，并批评测量问责逻辑造成的知识碎片化
 
 ### Books
+
+- [[Argument_Parreira do Amaral_2022_Springer]] — 论文集整体论证：高等教育正经历知识地缘政治重构，三部分（想象与空间→制度与互动→主体形塑）逐层展开
+- [[Argument_Moisio_2022_Springer]] — Ch2 Sami Moisio: 论证当代知识密集型资本主义是地缘政治星座，以 Harvey 固着-流动张力、Hub and Flow 想象和空间分选为核心分析框架
+- [[Argument_Parreira do Amaral_2022_geopolitics-knowledge]] — Ch3 Marcelo Parreira do Amaral: 整合批判地缘政治学与后殖民去殖民两脉络提出新知识地缘政治，以全球区域主义和 GEI 为转型语境，IEHs 和 Minerva 为典型案例
 
 ### Reports & Policy Documents
 

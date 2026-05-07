@@ -4,12 +4,13 @@ type: person
 tags: [Scott Eacott, educational-administration, school-leadership, paradigm/critical, region/australia]
 related_theories: ["[[Bourdieu's Social Theory]]"]
 related_concepts: ["[[Parallel Monologues]]", "[[Neo-Taylorism in Educational Administration]]", "[[Cult of the Guru]]", "[[Epistemological Break]]", "[[Epistemological Vigilance]]", "[[Visible Learning]]"]
+related_arguments: ["[[Argument_Hattie_2017_SLM]]"]
 related_facts: ["[[Visible Learning Branding and Global Influences]]"]
-sources: ["sources/Eacott_2011_JEAH.md", "sources/Eacott_2015_EPT.md", "sources/Eacott_2017_SLM.md", "sources/Eacott_2019_IJLE.md"]
+sources: ["sources/Eacott_2011_JEAH.md", "sources/Eacott_2015_EPT.md", "sources/Eacott_2017_SLM.md", "sources/Hattie_2017_SLM.md", "sources/Eacott_2019_IJLE.md"]
 confidence: medium
 status: draft
 created: 2026-05-03
-updated: 2026-05-03
+updated: 2026-05-07
 ---
 
 ## 简介
@@ -58,10 +59,11 @@ Eacott 自称"从不害怕一点无耻的自我推广"，这一自我认知与�
 - Eacott 的 2017 年论文被一些批评者定性为"纯粹意见文章"和"虚构而非研究"，攻击其缺乏经验数据支持（Eacott, 2019, p.776）——Eacott 回应称他所提供的例子是其主张的经验性例证，即使他没有"收集"数据或与人交谈
 - 一位批评者向 UNSW 科研副校长投诉，认为该论文是对 John Hattie 和证据本位策略的"攻击"——大学调查后认为此事"无关紧要"，论文经过两轮同行评审后被视为适当（Eacott, 2019, p.776）
 - Eacott 承认自己的沟通技巧"可能导致了对我论证的误认"（Eacott, 2019, p.776）
-- Hattie（2017）回应称 Eacott 似乎"嘲笑严谨性、稳健性和对效果和效率的追求"，Eacott 认为这是对其论点的系统性误认（Eacott, 2019, p.777）
+- Hattie（2017）回应称 Eacott 在"嘲笑严谨性"——Eacott（2019, p.777）认为这是对其论点的系统性误认（详见 [[Cult of the Guru#争议与批评]]）
 
 ## 来源
 
 - [[Eacott_2011_JEAH]]
 - [[Eacott_2015_EPT]]
 - [[Eacott_2019_IJLE]]
+- [[Hattie_2017_SLM]]

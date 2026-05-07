@@ -4,12 +4,13 @@ type: theory
 tags: [Popper, epistemology, realism, paradigm/critical]
 related_concepts: ["[[Visible Learning]]", "[[Surface and Deep Learning]]", "[[Dynamic Knowledge and Learning Model]]"]
 related_persons: ["[[Karl Popper]]", "[[Carl Bereiter]]", "[[John Hattie]]", "[[Lars Qvortrup]]"]
+related_arguments: ["[[Argument_Hattie_2017_SLM]]"]
 related_theories: ["[[Radical Constructivism]]"]
-sources: ["sources/Hattie_2015_SOTLP.md", "sources/Qvortrup_2015_Paideia.md", "sources/Romer_2018_EPT.md"]
+sources: ["sources/Hattie_2015_SOTLP.md", "sources/Qvortrup_2015_Paideia.md", "sources/Hattie_2017_SLM.md", "sources/Romer_2018_EPT.md"]
 confidence: medium
 status: draft
 created: 2026-05-03
-updated: 2026-05-05
+updated: 2026-05-07
 ---
 
 ## 核心主张
@@ -61,7 +62,7 @@ Qvortrup (2015) 并不完全拒绝 Hattie 对 Popper 的使用，而是指出 Ha
 
 ## 应用领域
 
-- [[Visible Learning]] — Hattie 以（被严重误读的）Popper 三个世界理论作为 VL 的认识论基础
+- [[Visible Learning]] — Hattie 以（被严重误读的）Popper 三个世界理论作为 VL 的认识论基础；在回应 Eacott 的 [[Argument_Hattie_2017_SLM|Cult of the Guru 批评]]时，Hattie（2017, p.428）再度援引 Popper 证伪主义，声称 VL 包含"大胆猜想"因此"容易被证伪"——Rømer（2018）和 Johnson & Janzen（2023）指出 Popper 的 fallibilism 旨在区分科学与伪科学，而非为未经证伪的猜想提供免于批评的盾牌
 - [[Surface and Deep Learning]] — Hattie 将表层学习映射到 World 1、深层学习映射到 World 2、建构性理解映射到 World 3；Rømer (2018) 论证此映射严重误读了 Popper
 - [[Dynamic Knowledge and Learning Model]] — Qvortrup (2015) 从 VL 内部指出 Popper/Bereiter、Bloom 和 SOLO 之间的知识层次对应不清，因而提出动态模型作为替代性概念化路径
 - [[Radical Constructivism]] — 与 Popper 的科学实在论处于认识论的对立两极
@@ -70,4 +71,5 @@ Qvortrup (2015) 并不完全拒绝 Hattie 对 Popper 的使用，而是指出 Ha
 
 - [[Hattie_2015_SOTLP]]
 - [[Qvortrup_2015_Paideia]]
+- [[Hattie_2017_SLM]]
 - [[Romer_2018_EPT]]

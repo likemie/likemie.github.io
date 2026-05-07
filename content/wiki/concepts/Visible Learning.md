@@ -2,29 +2,31 @@
 title: Visible Learning
 type: concept
 tags: [Visible Learning, evidence-based-education, subject/instruction, level/k12]
-related_concepts: ["[[Evidence-Based Education]]", "[[Evidence-Based Reform]]", "[[Effect Size]]", "[[Meta-analysis]]", "[[Pure Evaluation]]", "[[Cult of the Guru]]", "[[Neo-Taylorism in Educational Administration]]", "[[Policy Borrowing]]", "[[Programme Fidelity vs Adaptation]]", "[[Performativity of Measurement]]", "[[Professional Judgment]]", "[[Interpretation Community]]", "[[Structural Coupling]]", "[[Class Size]]", "[[Performance Pay]]", "[[Policy Entrepreneur]]", "[[Educational Management Organisation (EMO)]]", "[[Bildung]]", "[[Learnification]]", "[[Neuroplasticity]]", "[[Incarnation-Extension Dialectics]]", "[[Blind Spot in Observation]]", "[[Feedback]]", "[[Effective Teaching]]", "[[Side Effects in Education]]", "[[Direct Instruction]]", "[[Scientism]]", "[[Cargo Cult Science]]", "[[Global Education Reform Movement (GERM)]]", "[[Problem-Based Learning]]", "[[Surface and Deep Learning]]", "[[Dynamic Knowledge and Learning Model]]", "[[Constructive Alignment]]", "[[The New Zealand Curriculum]]", "[[Australian Curriculum]]", "[[Material Fallacies]]"]
-related_persons: ["[[John Hattie]]", "[[Thomas Aastrup Rømer]]", "[[Klaus Nielsen]]", "[[Ernst von Glasersfeld]]", "[[Carl Bereiter]]", "[[Gert Biesta]]", "[[Scott Eacott]]", "[[Lars Qvortrup]]", "[[Donald A. Schön]]", "[[Herbert A. Simon]]", "[[Ivan Snook]]", "[[Steen Nepper Larsen]]", "[[Niklas Luhmann]]", "[[John Biggs]]", "[[Dietrich Benner]]"]
+related_concepts: ["[[Evidence-Based Education]]", "[[Evidence-Based Reform]]", "[[Effect Size]]", "[[Meta-analysis]]", "[[Pure Evaluation]]", "[[Cult of the Guru]]", "[[Neo-Taylorism in Educational Administration]]", "[[Policy Borrowing]]", "[[Programme Fidelity vs Adaptation]]", "[[Performativity of Measurement]]", "[[Professional Judgment]]", "[[Interpretation Community]]", "[[Structural Coupling]]", "[[Class Size]]", "[[Performance Pay]]", "[[Policy Entrepreneur]]", "[[Educational Management Organisation (EMO)]]", "[[Bildung]]", "[[Learnification]]", "[[Neuroplasticity]]", "[[Incarnation-Extension Dialectics]]", "[[Blind Spot in Observation]]", "[[Feedback]]", "[[Effective Teaching]]", "[[Side Effects in Education]]", "[[Direct Instruction]]", "[[Scientism]]", "[[Cargo Cult Science]]", "[[Global Education Reform Movement (GERM)]]", "[[Problem-Based Learning]]", "[[Surface and Deep Learning]]", "[[Dynamic Knowledge and Learning Model]]", "[[Constructive Alignment]]", "[[The New Zealand Curriculum]]", "[[Australian Curriculum]]", "[[Material Fallacies]]", "[[Critic and Conscience of Society]]"]
+related_persons: ["[[John Hattie]]", "[[Thomas Aastrup Rømer]]", "[[Klaus Nielsen]]", "[[Ernst von Glasersfeld]]", "[[Carl Bereiter]]", "[[Gert Biesta]]", "[[Scott Eacott]]", "[[Lars Qvortrup]]", "[[Donald A. Schön]]", "[[Herbert A. Simon]]", "[[Ivan Snook]]", "[[Steen Nepper Larsen]]", "[[Niklas Luhmann]]", "[[John Biggs]]", "[[Dietrich Benner]]", "[[Gerald Grace]]"]
 related_facts: ["[[Treasury Briefing on Student-Teacher Ratios (NZ 2011)]]", "[[New Zealand National Standards (2009)]]", "[[Visible Learning Branding and Global Influences]]"]
+related_arguments: ["[[Argument_Hattie_2017_SLM]]", "[[Argument_Knudsen_2017_NordSTEP]]", "[[Argument_Bainbridge_2022_ROE]]"]
 related_theories: ["[[New Public Management in Education]]", "[[Technical Rationality]]", "[[Radical Constructivism]]", "[[Popper's Three Worlds Theory]]", "[[Bounded Rationality]]", "[[Luhmann's Systems Theory]]", "[[Hofstede's Cultural Dimensions]]"]
-sources: ["sources/Snook_2009_NZJES.md", "sources/Hattie_2010_NZJES.md", "sources/Snook_2010_NZJES.md", "sources/Terhart_2011_JCS.md", "sources/ONeill_2012_NZJES.md", "sources/Qvortrup_2015_Paideia.md", "sources/Fredens_2015_Paideia.md", "sources/Hattie_2015_SOTLP.md", "sources/Allerup_2015_Paideia.md", "sources/Laursen_2015_Paideia.md", "sources/Wecker_2016_ZfE.md", "sources/ONeill_2016_Report.md", "sources/Eacott_2017_SLM.md", "sources/Bergeron_2017_MJE.md", "sources/Zhao_2017_JEC.md", "sources/Romer_2018_EPT.md", "sources/Eacott_2019_IJLE.md", "sources/Golovchin_2019_ESC.md", "sources/Larsen_2019_EducSci.md", "sources/Qvortrup_2019_NordSTEP.md", "sources/Sarbiewska_2019_JSR.md", "sources/Blass_2020_JESP.md", "sources/McKnight_2020_Discourse.md", "sources/OConnor_2020_AJLL.md", "sources/Nielsen_2021_IRTP.md", "sources/Nielsen_2021_NordPsych.md", "sources/Johnson_2023_CE.md"]
+sources: ["sources/Snook_2009_NZJES.md", "sources/Grace_2010_NZJES.md", "sources/Hattie_2010_NZJES.md", "sources/Snook_2010_NZJES.md", "sources/Terhart_2011_JCS.md", "sources/ONeill_2012_NZJES.md", "sources/Allerup_2015_Paideia.md", "sources/Fredens_2015_Paideia.md", "sources/Hattie_2015_SOTLP.md", "sources/Laursen_2015_Paideia.md", "sources/Qvortrup_2015_Paideia.md", "sources/ONeill_2016_Report.md", "sources/Wecker_2016_ZfE.md", "sources/Bergeron_2017_MJE.md", "sources/Eacott_2017_SLM.md", "sources/Hattie_2017_SLM.md", "sources/Knudsen_2017_NordSTEP.md", "sources/Zhao_2017_JEC.md", "sources/Romer_2018_EPT.md", "sources/Eacott_2019_IJLE.md", "sources/Golovchin_2019_ESC.md", "sources/Larsen_2019_EducSci.md", "sources/Qvortrup_2019_NordSTEP.md", "sources/Sarbiewska_2019_JSR.md", "sources/Blass_2020_JESP.md", "sources/McKnight_2020_Discourse.md", "sources/OConnor_2020_AJLL.md", "sources/Nielsen_2021_IRTP.md", "sources/Nielsen_2021_NordPsych.md", "sources/Bainbridge_2022_ROE.md", "sources/Johnson_2023_CE.md"]
 confidence: medium
 status: draft
 created: 2026-05-02
 updated: 2026-05-07
 
 ---
-
 ## 定义
 
-Visible Learning 是 [[John Hattie]] 于 2009 年出版的 *Visible Learning: A synthesis of over 800 meta-analyses relating to achievement* 中提出的教育证据综合项目，将 800 余项[[Meta-analysis|元分析]]（涵盖数万项原始研究）汇总为一份"什么有效"的排名清单，以[[Effect Size|效应量]]（effect size）为标准对 150+ 项教学干预进行排序（[[Argument_McKnight_2020_Discourse|McKnight & Whitburn, 2020]], p.32）。
+Visible Learning 是 [[John Hattie]] 于 2009 年出版的 *Visible Learning: A synthesis of over 800 meta-analyses relating to achievement* 中提出的教育证据综合项目，将 800 余项[[Meta-analysis|元分析]]（涵盖数万项原始研究）汇总为一份"什么有效"的排名清单，以[[Effect Size|效应量]]（effect size）为标准对 150+ 项教学干预进行排序（[[Argument_McKnight_2020_Discourse|McKnight & Whitburn, 2020]], p.32）。英国教育部在 Coldwell et al.（2017）报告中将 Visible Learning 列为官方认可的"approved"证据来源之一（与 [[EEF Teaching and Learning Toolkit|EEF]] 和 Sutton Trust 并列）（Bainbridge et al., 2022, p.4）。
 
 该项目后来扩展为一系列书籍、专业发展培训项目和学校改进方案，Hattie 本人将其描述为"scripted. To the word"（Hattie, in Knudsen, 2017, p.254），强调对方案的[[Programme Fidelity vs Adaptation|忠实执行]]。
+
+---
 
 ## 核心要素
 
 ### 教与学的可见性
 
-教师通过学生眼睛看学习，学生成为自身教师（self-monitoring, self-evaluation, self-assessment, self-teaching）（Hattie, 2009, p.271，引自 McKnight & Whitburn, 2020, p.40）。
+教师通过学生眼睛看学习，学生成为自身教师（self-monitoring, self-evaluation, self-assessment, self-teaching）（Hattie, 2009, p.271，引自 McKnight & Whitburn, 2020, p.40）。Hattie 援引 Graham Nuthall 的课堂观察研究——教师看不到或听不到课堂中 80% 发生的事情——因此核心思想是"从谈论教学方式转向谈论教学的 impact"（Knudsen, 2017, p.257）。Hattie 团队开发了一款 iPhone app，可在三秒内将教师课堂语言转录为文字并自动编码；7000–8000 名教师使用后发现教师说话占 70–80% 时间，但教师自认为只占 20–30%（Knudsen, 2017, pp.257–258）。
 
 ### 效应量排名与铰链点（d=0.40）
 
@@ -40,7 +42,7 @@ Hattie 的核心口号，要求教师以可见证据评估自身教学对学生�
 
 ### 学习意图与成功标准（Learning intentions & success criteria）
 
-教师须在每节课开始时将有限且可测量的学习目标写在白板上（McKnight & Whitburn, 2020, p.35）。
+教师须在每节课开始时将有限且可测量的学习目标写在白板上（McKnight & Whitburn, 2020, p.35）。Hattie 在 Knudsen（2017, p.256）访谈中承认学习意图常被误用——过于原子化和低水平——表示如果重新来过"可能只使用成功标准（success criteria）概念"。成功标准在系列课程开始时向学生展示"什么意味着成功"，建议以 10–12 周为一个周期；少于此时段则过于狭窄或导致过度测试（Knudsen, 2017, pp.256–257）。
 
 ### VL 的"第三面"——自下而上的学校实践变革
 
@@ -141,6 +143,8 @@ Hattie (2015) 将 VL 框架应用于高等教育，聚焦多个具体领域的�
 
 **Tomcho & Foels (2008)** 对 197 项大学教学活动的元分析发现：几乎所有干预都有正面效果，总体效应量为知识 d=0.57、态度 d=0.27、行为/技能 d=0.39、成绩 d=0.31——仅 10 个效应量为负且接近零（Hattie, 2015, p.80）。
 
+---
+
 ## 方法论
 
 ### 元-元分析操作步骤
@@ -166,6 +170,8 @@ Qvortrup (2015) 从支持者立场为 Hattie 的元分析比较提供辩护：�
 
 Qvortrup 进一步指出，Hattie 本人并未掩盖这一限制：多数纳入研究的测验特别适合测量表层特征，对深层学习有一定测量能力，却很少有效测量学生从课堂经验中建构的概念表征（Qvortrup, 2015, p.29）。因此，VL 若要继续发展，需要一种更明确区分不同学习结果并解释其动态关系的[[Dynamic Knowledge and Learning Model]]，而不是只输出跨知识层次的总平均效应（Qvortrup, 2015, pp.29–33）。
 
+---
+
 ## 与相关概念的区别
 
 - vs [[Evidence-Based Education]] — Visible Learning 是 EBE 运动中最具全球影响力的具体项目／品牌，EBE 是更广泛的教育政策运动
@@ -173,6 +179,8 @@ Qvortrup 进一步指出，Hattie 本人并未掩盖这一限制：多数纳入�
 - vs [[Effect Size]] — 效应量是 Visible Learning 的核心统计工具，但 Visible Learning 将效应量包装为面向教师和学校的商业产品
 - vs [[Dynamic Knowledge and Learning Model]] — VL 给出跨研究平均效果，动态模型则要求进一步区分不同知识形态上的学习结果。
 - vs [[Scientism]] — Scientism 是对 VL 的外部批判框架之一，强调其可能把"可量化"误当成"最重要"。
+
+---
 
 ## 理论基础
 
@@ -182,6 +190,8 @@ Qvortrup 进一步指出，Hattie 本人并未掩盖这一限制：多数纳入�
 - 与更进步的教育哲学语言结合（如"学习必须被学习者分享、承诺和理解"），使其难以抵制（Hattie, 2009, p.23，引自 McKnight & Whitburn, 2020, p.34）
 - [[Radical Constructivism]] — [[Thomas Aastrup Rømer|Rømer]] (2018) 论证 VL 的学习理论根基是 [[Ernst von Glasersfeld|von Glasersfeld]] 的激进建构主义（唯我论前提），Hattie 完全接受建构主义学习观但试图在其上添加"教师中心的教学"，导致教学概念的双重瓦解（Rømer, 2018, p.7-8）
 - [[Popper's Three Worlds Theory]] — Hattie 声称以 Popper 的三个世界理论为认识论基础，用以区分表层、深层与概念性知识；Qvortrup (2015, p.30) 认为这一框架与 Bloom 修订版四层知识和 Biggs & Collis 的 SOLO 模型之间对应关系不清，因此需要更一致的知识与学习分类。Rømer (2018, p.10-11) 则进一步论证 Hattie 通过 [[Carl Bereiter|Bereiter]] 的中介严重误读了 Popper，将 World 3 的客观文化对象化简为 World 2 的主观认知
+
+---
 
 ## 历史沿革
 
@@ -209,12 +219,16 @@ VL 品牌的传播依赖于 ACEL（澳大利亚教育领导力委员会）、Cog
 
 VL 品牌对学术批评表现出显著的免疫力——Hattie（2017）对 Eacott 的回应被期刊两天内接收发表，而 Eacott 原论文经历数月多轮评审（[[Argument_Eacott_2019_IJLE|Eacott, 2019]], p.777）。Hattie 本人已在某种程度上与 VL 保持距离，表示如果重新来过会避免"结果的暴政"（[[Argument_McKnight_2020_Discourse|McKnight & Whitburn, 2020]], p.35）。一线教育者通过私人邮件而非公开辩论表达对 VL 霸权的不满（Eacott, 2019, p.776）。详见 [[Visible Learning Branding and Global Influences]]。
 
+---
+
 ## 实证发现
 
 - Hattie 声称教师成为自身教学的学习者、学生成为自身教师时，对学生学习产生最大效应（Hattie, 2009, p.271）
 - [[Argument_Laursen_2015_Paideia|Laursen (2015)]] 比较国际研究综合与丹麦 SFI 证据后发现，Hattie 强调的若干核心有效教学质量在丹麦研究中得到支持：清晰一致的课堂管理、清晰目标、高要求和良好社会环境均与更好学生结果相关；弱社会背景学生尤其依赖教师明确领导和清晰目标（Laursen, 2015, pp.37–38）。
 - Knudsen（2017）发现教师和学者普遍对表达对 Visible Learning 的怀疑感到犹豫，服从是霸权性的且被视为专业性的标志（[[Argument_McKnight_2020_Discourse|McKnight & Whitburn, 2020]], p.34）
 - 已有方法论批评聚焦于元分析的数学、过程或效度（[[Argument_Snook_2009_NZJES|Snook et al., 2009]]; [[Argument_Terhart_2011_JCS|Terhart, 2011]]; [[Argument_Wecker_2016_ZfE|Wecker, Vogel, & Hetmanek, 2016]]），但对文化政治维度的批评相对缺乏（McKnight & Whitburn, 2020, p.32-33）
+
+---
 
 ## 争议与批评
 
@@ -959,7 +973,7 @@ McKnight & Whitburn（2020）从文化政治视角提出七点系统批评：
 
 **"大师崇拜"的分析框架**：Eacott 以 Callahan（1962）*Education and the Cult of Efficiency* 为历史框架，识别了使"大师崇拜"成为可能的三个历史条件（详见 [[Cult of the Guru]]）：(1) 时间条件——NAPLAN/PISA/TIMSS 数据引发成绩下降担忧，管理修辞围绕理性/控制逻辑凝聚；(2) 桥梁——Robinson et al.（2008）向教育行政社区引入效应量语言但仍缺操作细节；(3) 填补——Hattie 提供了"用行政语言说话"的数据（Eacott, 2017, p.414-419）。
 
-**Hattie 回应的不充分性**：Eacott（2019, p.777-779）详细分析 Hattie（2017）的回应，指出其系统性误认了 Eacott 的核心论证——将其批评曲解为"嘲笑严谨性"，而实际批评针对的是"对单一主叙事的不加批判的接受"（Eacott, 2019, p.776）。Hattie 以 ACEL 网站列出其他讲者为由否认"大师崇拜"的存在——Eacott 指出这回避了核心问题。
+**Hattie 回应的不充分性**：Hattie（2017）以 Popper 证伪主义为旗帜否认"大师崇拜"的存在，但其回应在两天内被接收发表（Eacott 原论文经历数月多轮评审），Eacott 被编辑拒绝发表再回应。详见 [[Cult of the Guru#争议与批评]]。
 
 **编辑决策的体制含义**：Eacott 被 *School Leadership & Management* 编辑拒绝发表对 Hattie 回应的再回应。Eacott 认为这一决策本身"说明了该领域学术工作的逻辑中对对话和辩论的低优先级"（Eacott, 2019, p.778）。
 
@@ -1004,6 +1018,12 @@ Johnson & Janzen 将 Feynman（1974）的 [[Cargo Cult Science]] 概念应用于
 
 **整体定性**：Johnson & Janzen 将 VL 定性为"a product that exists in the marketized world of educational gurus and magic bullet fads. This is far from the tradition of careful experimentation and peer review"（p.35）。VL 是"a dubious mishmash of research of unknown quality, statistical juggling, and the author's self-assured opinion"（p.30）。
 
+### 非学校因素的排除：Grace (2010) 的批评
+
+[[Gerald Grace]]——"[[Critic and Conscience of Society]]"概念的原作者——在回应 Hattie (2010) 时指出，VL 刻意将非学校因素排除在分析范围之外，这与其声称的"critic and conscience of society"角色存在根本矛盾（Grace, 2010, p.90）。Hattie 在 VL 前言中明确表示："许多社会学家会不高兴非学校因素没有被放在所有主张的最前面，但我注意到这'不是因为他们不重要，实际上它们可能比书中讨论的许多问题更重要。只是我没有把这些主题纳入我的轨道'"（Hattie, 2009, pp.viii–xi，引自 Grace, 2010, p.90–91）。
+
+Grace 的核心论点是：这种排除产生了一个"还原主义和天真的观点"——认为仅靠改变教育安排就能解决教育成就不平等——这使政治家和政策制定者得以回避更根本的社会和经济不平等问题（Grace, 2010, p.91）。Grace 以 [[Basil Bernstein]] 的 *Education Cannot Compensate for Society*（1970）和 Roy Nash（2003）的工作为对照，说明真正的教育学术批评应当将非学校因素置于分析的核心（Grace, 2010, p.91）。
+
 ### 总结性批评
 
 - [[Argument_McKnight_2020_Discourse|McKnight & Whitburn]] 指出 Hattie 的统计学术研究本身和对教师的有用提醒值得肯定，但 VL 的论述转移了对教育中平等问题的关注（McKnight & Whitburn, 2020, p.42）
@@ -1025,6 +1045,8 @@ Johnson & Janzen 将 Feynman（1974）的 [[Cargo Cult Science]] 概念应用于
 
 **Qvortrup 辩护的局限**：批评者可能指出 Qvortrup 本人是 VL 丹麦译本导言的合著者——作为 VL 的直接推广者，其立场影响分析的独立性。此外，Qvortrup 的辩护将 VL 从其自身更简化的操作实践中分离出来——VL 的实际培训要求"五人中仅一人通过"认证、禁止教师分享自身经验（Knudsen, 2017），这与专业判断框架中的反思性实践理念直接矛盾。然而，Qvortrup 的贡献在于提供了迄今为止最系统的 VL 理论辩护——将 VL 从一种"什么有效"的技术工具重新概念化为支持教师反思性判断的概率知识基础。
 
+---
+
 ## 相关研究与案例
 
 - [[Tomorrow's Schools Reforms (NZ 1989)]] — 创造了私营 EMO 进入新西兰公立教育服务市场的条件，Cognition Education 直接起源于此改革
@@ -1039,22 +1061,27 @@ Johnson & Janzen 将 Feynman（1974）的 [[Cargo Cult Science]] 概念应用于
 - [[Australian Curriculum]] — 2012 年 ACARA 批准，三维度课程框架，以 VL 为首要研究参考
 - [[Gonski Reforms]] — Gonski 2.0（2018）以个体进步衡量成功学习，呼应 VL 的可见学习成果理念
 
+---
+
 ## 来源
 
 - [[Snook_2009_NZJES]]
+- [[Grace_2010_NZJES]]
 - [[Hattie_2010_NZJES]]
 - [[Snook_2010_NZJES]]
 - [[Terhart_2011_JCS]]
 - [[ONeill_2012_NZJES]]
-- [[Qvortrup_2015_Paideia]]
+- [[Allerup_2015_Paideia]]
 - [[Fredens_2015_Paideia]]
 - [[Hattie_2015_SOTLP]]
-- [[Allerup_2015_Paideia]]
 - [[Laursen_2015_Paideia]]
-- [[Wecker_2016_ZfE]]
+- [[Qvortrup_2015_Paideia]]
 - [[ONeill_2016_Report]]
-- [[Eacott_2017_SLM]]
+- [[Wecker_2016_ZfE]]
 - [[Bergeron_2017_MJE]]
+- [[Eacott_2017_SLM]]
+- [[Hattie_2017_SLM]]
+- [[Knudsen_2017_NordSTEP]]
 - [[Zhao_2017_JEC]]
 - [[Romer_2018_EPT]]
 - [[Eacott_2019_IJLE]]
@@ -1067,5 +1094,6 @@ Johnson & Janzen 将 Feynman（1974）的 [[Cargo Cult Science]] 概念应用于
 - [[OConnor_2020_AJLL]]
 - [[Nielsen_2021_IRTP]]
 - [[Nielsen_2021_NordPsych]]
+- [[Bainbridge_2022_ROE]]
 - [[Johnson_2023_CE]]
 - [[ONeill_2012_NZJES]]

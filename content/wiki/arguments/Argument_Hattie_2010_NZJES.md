@@ -3,10 +3,10 @@ title: Argument_Hattie_2010_NZJES
 type: argument
 citation: "Hattie, J. (2010). On being a 'critic and conscience of society': The role of the education academic in public debates. New Zealand Journal of Educational Studies, 45(1), 85–96."
 tags: [Visible Learning, evidence-based-education, stance/support, region/new-zealand]
-related_concepts: ["[[Visible Learning]]", "[[Effect Size]]", "[[Class Size]]", "[[Performance Pay]]", "[[Argument_Snook_2009_NZJES]]", "[[Argument_Snook_2010_NZJES]]"]
-related_persons: ["[[John Hattie]]"]
+related_concepts: ["[[Visible Learning]]", "[[Effect Size]]", "[[Class Size]]", "[[Performance Pay]]", "[[Critic and Conscience of Society]]", "[[Argument_Snook_2009_NZJES]]", "[[Argument_Snook_2010_NZJES]]", "[[Argument_Grace_2010_NZJES]]"]
+related_persons: ["[[John Hattie]]", "[[Gerald Grace]]"]
 related_facts: ["[[Treasury Briefing on Student-Teacher Ratios (NZ 2011)]]"]
-sources: ["sources/Snook_2009_NZJES.md", "sources/Hattie_2010_NZJES.md", "sources/Snook_2010_NZJES.md"]
+sources: ["sources/Snook_2009_NZJES.md", "sources/Hattie_2010_NZJES.md", "sources/Grace_2010_NZJES.md", "sources/Snook_2010_NZJES.md"]
 status: draft
 created: 2026-05-06
 updated: 2026-05-07
@@ -73,6 +73,7 @@ Hattie 详细说明了他在新西兰国家标准的参与程度：被邀加入�
 - 对"学术批评应当针对观点而非个人"的强调可能被批评者视为回避实质性方法论问题的修辞策略
 - Alexander (2010) 在墨尔本课程研讨会上发表，当时尚未正式出版——Hattie 使用尚未正式出版的会议报告作为分析框架
 - Snook et al. (2010) 在同期 NZJES 发表了对此文的再回应（详见 [[Argument_Snook_2010_NZJES]]）
+- [[Gerald Grace]]（2010）在同一卷 NZJES（Vol. 45, No. 2）发表评论文章，以该概念原创者的身份批评 Hattie 混淆了"学术领域的批评者"与"社会的批评者与良知"两种不同角色（详见 [[Argument_Grace_2010_NZJES]]）
 
 ## 来源
 

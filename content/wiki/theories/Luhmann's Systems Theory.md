@@ -2,13 +2,13 @@
 title: Luhmann's Systems Theory
 type: theory
 tags: [Luhmann, paradigm/systems-theory]
-related_concepts: ["[[Blind Spot in Observation]]", "[[Structural Coupling]]", "[[Visible Learning]]"]
+related_concepts: ["[[Blind Spot in Observation]]", "[[Structural Coupling]]", "[[Visible Learning]]", "[[Knowledge-Based Economization]]"]
 related_persons: ["[[Niklas Luhmann]]", "[[Steen Nepper Larsen]]"]
 sources: ["sources/Larsen_2019_EducSci.md"]
 confidence: medium
 status: draft
 created: 2026-05-04
-updated: 2026-05-04
+updated: 2026-05-07
 ---
 
 ## 核心主张
@@ -53,6 +53,7 @@ Larsen (2019) 的论文中涉及的系统理论关键命题：
 
 - [[Visible Learning]] — Larsen 以 Luhmann 的盲点和系统区分概念论证 VL 范式的根本性限制
 - 教育治理分析 — 社会系统与心理系统的不可通约性解释了为何教育政策（社会沟通）与课堂实际学习（心理过程）之间总是存在鸿沟
+- [[Knowledge-Based Economization]] — Moisio (2018) 的概念与系统理论共享对知识密集型资本主义的话语建构与物质实践双重关注，可用于分析经济想象如何通过沟通系统被客观化
 
 ## 来源
 

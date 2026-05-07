@@ -2,11 +2,12 @@
 title: John Hattie
 type: person
 tags: [John Hattie, evidence-based-education, paradigm/positivist, region/new-zealand, region/australia]
-related_theories: [["[[Evidence-Based Education]]"], ["[[Technical Rationality]]"], ["[[Radical Constructivism]]"], ["[[Popper's Three Worlds Theory]]"], ["[[Luhmann's Systems Theory]]"]]
-related_concepts: ["[[Visible Learning]]", "[[Effect Size]]", "[[Meta-analysis]]", "[[Evidence-Based Reform]]", "[[Policy Borrowing]]", "[[Cult of the Guru]]", "[[Neo-Taylorism in Educational Administration]]", "[[Pure Evaluation]]", "[[Policy Entrepreneur]]", "[[Educational Management Organisation (EMO)]]", "[[Network Governance in Education]]", "[[Learnification]]", "[[Bildung]]", "[[Blind Spot in Observation]]", "[[Problem-Based Learning]]", "[[Surface and Deep Learning]]", "[[Constructive Alignment]]", "[[Dynamic Knowledge and Learning Model]]"]
-related_persons: ["[[Thomas Aastrup Rømer]]", "[[Ernst von Glasersfeld]]", "[[Carl Bereiter]]", "[[Lars Qvortrup]]", "[[Steen Nepper Larsen]]", "[[Yong Zhao]]"]
+related_theories: ["[[Evidence-Based Education]]", "[[Technical Rationality]]", "[[Radical Constructivism]]", "[[Popper's Three Worlds Theory]]", "[[Luhmann's Systems Theory]]"]
+related_concepts: ["[[Visible Learning]]", "[[Effect Size]]", "[[Meta-analysis]]", "[[Evidence-Based Reform]]", "[[Policy Borrowing]]", "[[Cult of the Guru]]", "[[Neo-Taylorism in Educational Administration]]", "[[Pure Evaluation]]", "[[Policy Entrepreneur]]", "[[Educational Management Organisation (EMO)]]", "[[Network Governance in Education]]", "[[Learnification]]", "[[Bildung]]", "[[Blind Spot in Observation]]", "[[Problem-Based Learning]]", "[[Surface and Deep Learning]]", "[[Constructive Alignment]]", "[[Dynamic Knowledge and Learning Model]]", "[[Critic and Conscience of Society]]"]
+related_persons: ["[[Thomas Aastrup Rømer]]", "[[Ernst von Glasersfeld]]", "[[Carl Bereiter]]", "[[Lars Qvortrup]]", "[[Steen Nepper Larsen]]", "[[Yong Zhao]]", "[[Gerald Grace]]"]
+related_arguments: ["[[Argument_Hattie_2017_SLM]]", "[[Argument_Bainbridge_2022_ROE]]"]
 related_facts: ["[[New Zealand National Standards (2009)]]", "[[Visible Learning Branding and Global Influences]]"]
-sources: ["sources/Snook_2009_NZJES.md", "sources/Hattie_2010_NZJES.md", "sources/Snook_2010_NZJES.md", "sources/Terhart_2011_JCS.md", "sources/ONeill_2012_NZJES.md", "sources/Hattie_2015_SOTLP.md", "sources/Allerup_2015_Paideia.md", "sources/Fredens_2015_Paideia.md", "sources/Laursen_2015_Paideia.md", "sources/Qvortrup_2015_Paideia.md", "sources/ONeill_2016_Report.md", "sources/Wecker_2016_ZfE.md", "sources/Bergeron_2017_MJE.md", "sources/Eacott_2017_SLM.md", "sources/Zhao_2017_JEC.md", "sources/Romer_2018_EPT.md", "sources/Eacott_2019_IJLE.md", "sources/Golovchin_2019_ESC.md", "sources/Larsen_2019_EducSci.md", "sources/Qvortrup_2019_NordSTEP.md", "sources/Sarbiewska_2019_JSR.md", "sources/Blass_2020_JESP.md", "sources/McKnight_2020_Discourse.md", "sources/OConnor_2020_AJLL.md", "sources/Nielsen_2021_IRTP.md", "sources/Nielsen_2021_NordPsych.md", "sources/Johnson_2023_CE.md"]
+sources: ["sources/Snook_2009_NZJES.md", "sources/Grace_2010_NZJES.md", "sources/Hattie_2010_NZJES.md", "sources/Snook_2010_NZJES.md", "sources/Terhart_2011_JCS.md", "sources/ONeill_2012_NZJES.md", "sources/Allerup_2015_Paideia.md", "sources/Fredens_2015_Paideia.md", "sources/Hattie_2015_SOTLP.md", "sources/Laursen_2015_Paideia.md", "sources/Qvortrup_2015_Paideia.md", "sources/ONeill_2016_Report.md", "sources/Wecker_2016_ZfE.md", "sources/Bergeron_2017_MJE.md", "sources/Eacott_2017_SLM.md", "sources/Hattie_2017_SLM.md", "sources/Knudsen_2017_NordSTEP.md", "sources/Zhao_2017_JEC.md", "sources/Romer_2018_EPT.md", "sources/Eacott_2019_IJLE.md", "sources/Golovchin_2019_ESC.md", "sources/Larsen_2019_EducSci.md", "sources/Qvortrup_2019_NordSTEP.md", "sources/Sarbiewska_2019_JSR.md", "sources/Blass_2020_JESP.md", "sources/McKnight_2020_Discourse.md", "sources/OConnor_2020_AJLL.md", "sources/Nielsen_2021_IRTP.md", "sources/Nielsen_2021_NordPsych.md", "sources/Bainbridge_2022_ROE.md", "sources/Johnson_2023_CE.md"]
 confidence: medium
 status: draft
 created: 2026-05-02
@@ -15,11 +16,13 @@ updated: 2026-05-07
 
 ## 简介
 
-John Hattie 是新西兰教育统计学家，现任墨尔本大学教育研究所（Melbourne Graduate School of Education）教授。他以 2009 年出版的 *Visible Learning: A synthesis of over 800 meta-analyses relating to achievement* 闻名全球，该书将 800 余项元分析综合为一份教学干预效应量排名，成为全球教育畅销书。Hattie 自我定位为"我是统计学家，不是理论家"（Hattie, in Knudsen, 2017, p.253，引自 McKnight & Whitburn, 2020, p.32）。
+John Hattie 是新西兰教育统计学家，现任墨尔本大学教育研究所（Melbourne Graduate School of Education）教授。他以 2009 年出版的 *Visible Learning: A synthesis of over 800 meta-analyses relating to achievement* 闻名全球，该书将 800 余项元分析综合为一份教学干预效应量排名，成为全球教育畅销书。Hattie 自我定位为"我是测量人员，我是统计学家，我不是理论家"（Knudsen, 2017, p.254, 259）。英国教育部在 Coldwell et al.（2017）报告中将 Hattie 的 Visible Learning 列为官方认可的"approved"证据来源之一（与 [[EEF Teaching and Learning Toolkit|EEF]] 和 Sutton Trust 并列）（Bainbridge et al., 2022, p.4）。
 
 Visible Learning 已在至少 23 个国家被采用（Knudsen, 2017），Hattie 本人也因此成为教育界的国际名人，被澳大利亚广播公司电视系列片 *Revolution School*（2017）描绘为公共教育的拯救者（McKnight & Whitburn, 2020, p.32）。Hattie 同时担任澳大利亚教学与学校领导力研究院（AITSL）主席，其工作已深度嵌入澳大利亚教师和校长的国家专业标准、年度绩效评估和持续认证体系（Eacott, 2017, p.421）。
 
 Hattie 的职业生涯横跨多个领域：多年从事教学和教师的实证研究、诊断、评估和反馈（Terhart, 2011, p.426）。他与 Timperley（2007）合作发表了关于反馈效应的高影响力元分析。Visible Learning 实验室（奥克兰大学）提供付费的教师继续教育和培训项目，包括对学生的持续测试和结果反馈（Terhart, 2011, p.426）。他是新西兰政府的重要顾问，但"作为科学家和政治顾问，他在新西兰相当有争议"（Terhart, 2011, p.426）。
+
+---
 
 ## 生平与职涯
 
@@ -50,6 +53,8 @@ Hattie 的职业生涯横跨多个领域：多年从事教学和教师的实证�
 
 [[Argument_ONeill_2016_Report|O'Neill et al.（2016, pp.viii–ix）]] 总结："Hattie's now global social networking approach might reasonably be described as a seamless fabrication of his public-good, not-for-profit and for-profit policy entrepreneurship and advocacy."
 
+---
+
 ## 主要著作
 
 - Hattie, J. (2009). *Visible learning: A synthesis of over 800 meta-analyses relating to achievement*. Routledge. — 奠基性著作，以效应量排名 150+ 教学干预
@@ -59,6 +64,8 @@ Hattie 的职业生涯横跨多个领域：多年从事教学和教师的实证�
 - Hattie, J., Masters, D., & Birch, K. (2016). *Visible learning into action: International case studies of impact*. Routledge. — 汇编 Visible Learning 实施案例，展示"影响"的证据
 - Hattie, J. (2017). *Vidimoe obuchenie* [Visible Learning]. Moscow: Natsional'noe obrazovanie. 496 p. — 俄文译本，引发俄教育界广泛讨论（Golovchin, 2019, p.232）
 
+---
+
 ## 核心思想
 
 - **可见的教与学**："当教师成为自身教学的学习者、学生成为自身教师时，对学生学习产生最大效应"（Hattie, 2009, p.271，引自 McKnight & Whitburn, 2020, p.40）
@@ -67,7 +74,12 @@ Hattie 的职业生涯横跨多个领域：多年从事教学和教师的实证�
 - 主张学习必须是"被学习者分享、承诺和理解的"（Hattie, 2009, p.23），以进步教育哲学的语言包装实证主义议程（[[Argument_McKnight_2020_Discourse|McKnight & Whitburn, 2020]], p.34）
 - **"Know thy impact"**：教师须以可见证据评估自身教学对学生成绩的影响——这成为 Visible Learning 的标志性口号（Hattie, Masters, & Birch, 2016, p.3）
 - **学习结果的多重含义**：Qvortrup (2015) 指出 Hattie 同时使用 achievement、student achievement、learning、student learning、study outcome 和 school achievement 等词汇，且学习结果在 *Visible Learning* 中并非单一良定义概念；这不妨碍通过效应量比较相对效果，却意味着 VL 的总效应量很难说明测量的是表层知识、深层理解、社会能力还是概念性学习（[[Argument_Qvortrup_2015_Paideia|Qvortrup, 2015]], p.27）
-- **忠实执行**：强调对方案的一丝不苟的遵循——"它是脚本化的。逐字逐句"（Hattie, in Knudsen, 2017, p.254，引自 McKnight & Whitburn, 2020, p.38）。在培训中，Hattie 称五人中仅一人通过认证，因为教师被禁止谈论自己的故事和课堂经验（Knudsen, 2017, p.254，引自 [[Argument_McKnight_2020_Discourse|McKnight & Whitburn, 2020]], p.38）
+- **忠实执行**：强调对方案的一丝不苟的遵循——"它是脚本化的。逐字逐句。你永远不会知道它是脚本化的，而这是成功的一部分"（Knudsen, 2017, p.254）。Hattie 从咖啡连锁店授权经营模式中获取灵感——核心关注质量控制和法律合同（Knudsen, 2017, p.254）。在培训中，Hattie 称五人中仅一人通过认证，因为"几乎每个教师都想站起来讲自己的故事、轶事和课堂。我们不允许这样"（Knudsen, 2017, p.254）
+- **证据与理论的关系**：在 Knudsen（2017, p.259）的访谈中，Hattie 明确反对丹麦 VL 序言中"教育终于变得 evidence-based 可以摆脱理论"的说法——"证据不意味着不应该有理论……证据是被解释的；证据通过镜头解释，那个镜头就是理论。理论是主导的"。他承认 VL"在理论方面相当缺乏"，但强调"我当然有非常强的教学模式"（Knudsen, 2017, pp.258–259）。他将证据定义为"被争夺的"（contested），不同人（教师、学生、同伴、家长、学校领导）根据自身视角做出不同解释；证据也可以与经验相关——"教师广泛的、经验性的证据也是合法的证据"（Knudsen, 2017, p.259）
+- **"Know thy impact" vs "evidence-based"**：Hattie 表示从一开始就不喜欢"evidence-based"这个词——"因为它暗示背后没有思考"。他将论述从"evidence-based"转向"know thy impact"，认为后者更接近原初的丹麦教育理念——关注对学生的 impact（Knudsen, 2017, p.256）
+- **翻译的单向概念**：Hattie 将翻译理解为"我说什么→测试教师是否按我的意思理解了→如果没理解就是我们错了"——这种单向模型与教育研究中强调双向对话的翻译概念形成对比（Knudsen, 2017, pp.254–255）
+
+---
 
 ## 主要贡献
 
@@ -75,6 +87,8 @@ Hattie 的职业生涯横跨多个领域：多年从事教学和教师的实证�
 - 将效应量方法推广为教师和学校层面的操作性工具，推动了全球"什么有效"运动的课堂落地
 - [[Meta-analysis]] — 将元-元分析（meta-meta-analysis）技术大规模应用于教育研究证据综合
 - **专家教师（Expert Teacher）的 16 项原型属性**：Hattie 识别了区分专家教师与经验教师和新手教师的关键特征（[[Argument_Sarbiewska_2019_JSR|Sarbiewska, 2019]], p.126）：专家教师对其工作采取问题解决立场（problem-solving stance）；精通创造最优课堂学习氛围；对课堂情境有多维度复杂感知；更善于监控学生问题和评估其理解与进步水平；提供更相关、有用的反馈；对学生有高度尊重；对教学充满热情；让学生参与学习并帮助发展其自我调节、学习技能、自我效能和自尊（Hattie, 2003, cited in Sarbiewska, 2019, p.126）
+
+---
 
 ## 思想发展与影响
 
@@ -95,6 +109,8 @@ Hattie 的职业生涯横跨多个领域：多年从事教学和教师的实证�
 从新西兰奥克兰大学起步，之后转到墨尔本大学，Visible Learning 从一本学术著作演变为覆盖出版、教师培训、学校认证、政策标准制定和衍生品牌的全球性商业—政策复合体（详见 [[Visible Learning Branding and Global Influences]]）。
 
 Hattie 本人已在某种程度上与其研究的某些运用方式保持距离，表示如果重新来过会避免"结果的暴政"（Hattie, in Knudsen, 2017，引自 [[Argument_McKnight_2020_Discourse|McKnight & Whitburn, 2020]], p.35），但 VL 作为一种与更广泛社会和政治力量纠缠的现象已不完全受其控制。
+
+---
 
 ## 争议与批评
 
@@ -139,6 +155,16 @@ Snook, Clark, Harker, O'Neill, & O'Neill (2010) 发表再回应（详见 [[Argum
 
 **论战的核心分歧**：双方在第一原则上一致（学术批评应聚焦观点而非人身攻击；Dewey 实用主义知识观——证据不提供行动规则，只为明智问题解决提供假设），但在以下问题上根本分歧：(1) 是否可能将质量参差不齐的元分析纳入同一综合而不引入不可容忍的偏差；(2) 平均效应量是否掩盖了特定群体和条件下的重要差异；(3) 在缺乏本地研究验证时，是否应从主要为美国的研究推广政策建议；(4) 学者参与政策制定时，asTTle 等商业利益是否构成利益冲突。Terhart（2011, p.435）评论这场争论实质上是"自下而上的学校改革者反对技术官僚的、行政驱动的、中央集权的新自由主义策略"。
 
+### Grace 的介入 (2010)
+
+在 Hattie (2010) 和 Snook et al. (2010) 的论战之后，[[Gerald Grace]]——"[[Critic and Conscience of Society]]"概念的原作者和新西兰大学立法中该条款的推动者——在同一卷 NZJES（Vol. 45, No. 2）发表评论，质疑 Hattie 是否真正理解了该概念的含义（[[Argument_Grace_2010_NZJES|Grace, 2010]], p.90）。
+
+Grace 的核心论点是：Hattie 混淆了两种不同的学术角色（Grace, 2010, p.90）：
+- **学术领域的批评者**：在学科内部对研究质量和方法进行技术性批判——这属于正常学术工作范畴。Hattie 在 *Visible Learning* 中批评评估、教学和学习领域的现有研究质量，正属于这一角色
+- **社会的批评者与良知**：必须将非学校因素纳入所有教育成就差异的分析——因为这些因素"代表社会"
+
+Grace 指出，Hattie 明确将非学校因素排除在 VL 的分析范围之外（Hattie, 2009, pp.viii–ix），这与他声称的"critic and conscience of society"角色存在根本矛盾。Grace 以 [[Basil Bernstein]] 的 *Education Cannot Compensate for Society*（1970）和 Roy Nash 的 *Social Class and Education in New Zealand*（2003）为例，说明真正的"critic and conscience of society"应将非学校因素置于分析的核心（Grace, 2010, p.91）。Grace 呼吁 Hattie 写一本续作，详细讨论非学校因素对教育成就的影响——唯有如此，他才能合法地声称自己履行了该角色（Grace, 2010, p.91）。
+
 ### 方法论批评
 
 - **Terhart (2011)** — VL 最早的学术书评之一：识别元-元分析的信息损失与稳定性/变异性双重困境；批评教学理论内容空洞（Popper 误用、[[Bildung]] 缺失）；从 Foucault 视角定性可见性为"精致的支配形式"。结论："很明显 Hattie 事实上没有找到圣杯"（详见 [[Argument_Terhart_2011_JCS]]、[[Visible Learning#Terhart (2011)]])
@@ -172,7 +198,7 @@ Snook, Clark, Harker, O'Neill, & O'Neill (2010) 发表再回应（详见 [[Argum
 
 - Hattie (2010) 以新西兰《教育法》赋予学者的"critic and conscience of society"法定角色为其公共参与的伦理基础，并制定三条自我约束原则：（1）仅在专业领域内发言；（2）基于自身的阅读和对研究的解读；（3）始终以展示尊重和谨慎来提升专业（详见 [[Argument_Hattie_2010_NZJES]]）
 - 承认"很少有人对其提出质疑"（Hattie, Masters, & Birch, 2016，引自 McKnight & Whitburn, 2020, p.33）
-- 针对 Eacott (2017)，Hattie（2017）在 *School Leadership & Management* 发表回应"Educators are not uncritical believers of a cult figure"
+- 针对 Eacott (2017)，Hattie（2017）发表回应"Educators are not uncritical believers of a cult figure"，援引 Popper 和 Said 为学术批评传统，逐条反驳 Eacott 的三项主张（详见 [[Argument_Hattie_2017_SLM]]、[[Cult of the Guru#争议与批评]]）
 - 声称 VL 由持续的元分析过程支撑以识别潜在的可证伪性（McKnight & Whitburn, 2020, p.41）
 - 在回应方法论批评时承认"错误"但坚持"它们均未减少支撑 VL 信息的故事的影响"（Hattie, n.d.，引自 O'Connor, 2020, p.141-142）
 
@@ -185,22 +211,27 @@ Snook, Clark, Harker, O'Neill, & O'Neill (2010) 发表再回应（详见 [[Argum
 
 Larsen 与 Hattie 于 2018 年在哥本哈根进行了关于"教育的目的"的公开对话（Hattie & Larsen, 2019, unpublished; 引自 Larsen, 2019, Ref.10）。
 
+---
+
 ## 来源
 
 - [[Snook_2009_NZJES]]
+- [[Grace_2010_NZJES]]
 - [[Hattie_2010_NZJES]]
 - [[Snook_2010_NZJES]]
 - [[Terhart_2011_JCS]]
 - [[ONeill_2012_NZJES]]
-- [[Hattie_2015_SOTLP]]
 - [[Allerup_2015_Paideia]]
 - [[Fredens_2015_Paideia]]
+- [[Hattie_2015_SOTLP]]
 - [[Laursen_2015_Paideia]]
 - [[Qvortrup_2015_Paideia]]
 - [[ONeill_2016_Report]]
 - [[Wecker_2016_ZfE]]
 - [[Bergeron_2017_MJE]]
 - [[Eacott_2017_SLM]]
+- [[Hattie_2017_SLM]]
+- [[Knudsen_2017_NordSTEP]]
 - [[Zhao_2017_JEC]]
 - [[Romer_2018_EPT]]
 - [[Eacott_2019_IJLE]]
@@ -213,4 +244,6 @@ Larsen 与 Hattie 于 2018 年在哥本哈根进行了关于"教育的目的"的
 - [[OConnor_2020_AJLL]]
 - [[Nielsen_2021_IRTP]]
 - [[Nielsen_2021_NordPsych]]
+- [[Bainbridge_2022_ROE]]
 - [[Johnson_2023_CE]]
+

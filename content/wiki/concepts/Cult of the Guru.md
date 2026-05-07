@@ -5,12 +5,13 @@ tags: [Cult of the Guru, school-leadership, educational-administration, paradigm
 related_concepts: ["[[Neo-Taylorism in Educational Administration]]", "[[Visible Learning]]", "[[School Leadership]]"]
 related_persons: ["[[Scott Eacott]]", "[[John Hattie]]"]
 related_theories: ["[[Bourdieu's Social Theory]]"]
+related_arguments: ["[[Argument_Eacott_2017_SLM]]", "[[Argument_Hattie_2017_SLM]]"]
 related_facts: ["[[Visible Learning Branding and Global Influences]]"]
-sources: ["sources/Eacott_2017_SLM.md", "sources/Eacott_2019_IJLE.md", "sources/Johnson_2023_CE.md"]
+sources: ["sources/Eacott_2017_SLM.md", "sources/Hattie_2017_SLM.md", "sources/Eacott_2019_IJLE.md", "sources/Johnson_2023_CE.md"]
 confidence: medium
 status: draft
 created: 2026-05-03
-updated: 2026-05-03
+updated: 2026-05-07
 ---
 
 ## 定义
@@ -76,8 +77,31 @@ Eacott（2017, p.414-419）识别了使大师崇拜成为可能的三个相互�
 
 ## 争议与批评
 
-- Hattie（2017）在回应中否认"大师崇拜"的存在，以 ACEL 网站列出了许多其他讲者、论文和批评者为证——Eacott 指出这回避了核心问题：尽管存在对 Hattie 方法的实质性批评，"其工作仍被政治家和协会引用时仿佛是不容置疑的事实"（Eacott, 2019, p.777）
+### Hattie（2017）的直接回应
+
+Hattie（2017）在同一期刊发表题为"Educators are not uncritical believers of a cult figure"的回应，从四个层面为自身辩护：
+
+**（1）援引学术批评传统。** Hattie 以 Said（1993）的公共知识分子角色和新西兰《教育法》的"critic and conscience of society"条款为学术批评的伦理基础，主张"每个范式或猜想都应被测试至毁灭，其作者、追随者和使用者应当面对公共问责"（Hattie, 2017, p.427-428）。Hattie 声称他将 Snook et al.（2009）——"最好的批评之一"——用作自身课程的教学文本，以此论证自己欢迎批评（p.428）。
+
+**（2）以 Popper 证伪主义定位 VL。** Hattie 声称 Popper（1959）的证伪主义是其方法论的核心哲学基础——VL 包含许多"大胆猜想"，因此"容易被证伪"。他列举了一系列声称"尚未被任何批评者证伪"的核心猜想：通过学生眼睛看学习、学生成为自身教师、成功标准的价值、"Know thy impact"的前提、关系与信任的角色、给予与接收反馈的力量、学科语境下学习策略的焦点、使学校成为邀请性场所、关注学生学习生活（Hattie, 2017, p.428）。
+
+**（3）否认"大师崇拜"的存在。** Hattie 以 ACEL 网站列出了许多其他讲者、论文和批评者为证据，逐条回应 Eacott 的三项主张：（a）针对 Eacott 主张 Hattie 的工作因满足泰勒主义效率追求而获得接受——Hattie 反驳 Eacott 在"嘲笑严谨性和稳健性"（p.428-429）；（b）针对 Eacott 主张 VL 数据吸引行政人员——Hattie 坚持元分析综合的严谨性，声称 VL 的核心思想被教师和学校领导欢迎（p.429）；（c）针对 Eacott 主张学校领导力已屈服于大师崇拜——Hattie 称"Eacott 不必担心；有很多批评我工作的人；有很多部门官员和政客使用我之外的来源；有教师和学校领导选择 VL 之外的信息"（p.430）。
+
+**（4）将教师实践智慧作为最终检验标准。** Hattie（2017, p.430）在结论中声称："如果实施这些想法没有改善学生学习生活的证据，教育者会迅速抛弃它们。教育者不是不加批判的大师崇拜信徒。"
+
+### Eacott（2019）对 Hattie 回应的再分析
+
+Eacott（2019）分析 Hattie（2017）的回应，指出其系统性误认了 Eacott 的核心论证——将其批评曲解为"嘲笑严谨性"，而实际批评针对的是"对单一主叙事的不加批判的接受"（Eacott, 2019, p.776）。
+
+- Hattie 的回应在**两天内**被接收发表，而 Eacott 原论文经历了"数月和多轮评审"（Eacott, 2019, p.777）
+- Hattie 以 ACEL 网站列出其他讲者为由否认"大师崇拜"的存在——Eacott 指出这回避了核心问题：尽管存在对 Hattie 方法的实质性批评，"其工作仍被政治家和协会引用时仿佛是不容置疑的事实"（Eacott, 2019, p.777）
+- Eacott 被 *School Leadership & Management* 编辑拒绝发表对 Hattie 回应的再回应——Eacott 认为这一决策"说明了该领域学术工作的逻辑中对对话和辩论的低优先级"（Eacott, 2019, p.778）
 - Eacott 强调其批评"不是对 Hattie 个人的攻击，甚至不是对其工作的攻击，而是对使大师崛起成为可能的条件的论证"（Eacott, 2017, p.413）
+
+### Hattie 回应的逻辑问题
+
+- Hattie 声称 VL 的核心猜想"未被任何批评者证伪"——但 Snook et al.（2009）、Rømer（2018）、Larsen（2019）和多位批评者已深入质疑其认识论前提。Hattie 以 Popper 的证伪主义为哲学旗帜，但 Popper 的 fallibilism 旨在区分科学与伪科学——Johnson & Janzen（2023, p.35）指出"Popper 当然不意味着科学由做出完全没有根据的主张供他人反驳构成"
+- Hattie 将"有五个人通过了认证"和"教师被禁止在培训中分享自身经验"的实践与"教育者不是不加批判的信徒"的主张并列——Eacott（2019）指出这种并列本身揭示了 VL 论述中的内在矛盾
 
 ## 相关案例／政策
 
@@ -92,5 +116,6 @@ Johnson & Janzen（2023）补充了大师崇拜的经济维度：截至论文写
 ## 来源
 
 - [[Eacott_2017_SLM]]
+- [[Hattie_2017_SLM]]
 - [[Eacott_2019_IJLE]]
 - [[Johnson_2023_CE]]

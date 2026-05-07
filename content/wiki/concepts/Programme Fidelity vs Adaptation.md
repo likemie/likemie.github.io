@@ -2,10 +2,11 @@
 title: Programme Fidelity vs Adaptation
 type: concept
 tags: [evidence-based-education, implementation, programme-fidelity, adaptation, level/k12]
-related_concepts: ["[[Evidence-Based Education]]", "[[Local Knowledge in Evidence-Based Policy]]"]
+related_concepts: ["[[Evidence-Based Education]]", "[[Local Knowledge in Evidence-Based Policy]]", "[[Visible Learning]]"]
 related_theories: ["[[Cartwright's Three-Stage Knowledge Framework]]"]
-related_persons: ["[[Nancy Cartwright]]", "[[Nick Cowen]]", "[[Dylan Wiliam]]"]
-sources: ["sources/Cowen_2015_CHESS.md", "sources/Wiliam_2019_ERE.md"]
+related_persons: ["[[Nancy Cartwright]]", "[[Nick Cowen]]", "[[Dylan Wiliam]]", "[[John Hattie]]"]
+related_arguments: ["[[Argument_Knudsen_2017_NordSTEP]]"]
+sources: ["sources/Cowen_2015_CHESS.md", "sources/Knudsen_2017_NordSTEP.md", "sources/Wiliam_2019_ERE.md"]
 confidence: medium
 status: draft
 created: 2026-05-01
