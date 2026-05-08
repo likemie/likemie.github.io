@@ -14,8 +14,10 @@ books/
 
 整合完成后建立 sources 记录：
 ```
-sources/
-  作者姓_年份_出版社.md      ← sources 记录（永久保留）
+books/
+  作者姓_年份_出版社/
+    BookName.epub
+    作者姓_年份_出版社.md      ← sources 记录（永久保留，放在书籍文件夹内）
 
 wiki/arguments/
   Argument_作者姓_年份_出版社.md  ← 全书论证框架
@@ -101,23 +103,28 @@ epub 全程保留在 `books/` 文件夹，用 Obsidian Epub Reader 插件本地�
    - 从各章概览中提炼全书研究问题、理论框架、论证结构、主要发现、关键引用、局限性
    - 用 str_replace 在「各章概览」之前写入正式章节
    - 「各章概览」保留在最后，作为原始章节记录
-4. 新建 sources 记录（sources/作者姓_年份_出版社.md）：
+4. 新建 sources 记录（books/作者姓_年份_出版社/作者姓_年份_出版社.md）：
    - citation（APA）
    - extracted_to（所有提取条目的完整列表 + Argument 链接）
    - processed_date
    - 嵌入以下 HTML 代码块（路径替换为实际文件路径）：
      ```html
-     <div id="epub-viewer" style="width:100%; height:600px; border:1px solid var(--color-border);"></div>
+     <div id="epub-viewer" style="width:100%;height:600px;border:1px solid #ccc;"></div>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/epub.js/0.3.93/epub.min.js"></script>
-     <script>
-       var book = ePub("/books/作者姓_年份_出版社/BookName.epub");
-       var rendition = book.renderTo("epub-viewer", {
+     <script src="/epub-loader.js"></script>
+     <script>loadEpub("epub-viewer", "/books/作者姓_年份_出版社/BookName.epub");</script>
+     ```
+     前提：需在 Quartz 的 `static/epub-loader.js` 放入以下代码（一次性设置，所有 epub 共用）：
+     ```javascript
+     function loadEpub(containerId, epubPath) {
+       var book = ePub(epubPath);
+       var rendition = book.renderTo(containerId, {
          width: "100%",
          height: 600,
          spread: "none"
        });
        rendition.display();
-     </script>
+     }
      ```
      注意：Obsidian 本地不渲染此 HTML，本地阅读用 Epub Reader 插件直接打开 epub；网页端 Quartz 会正常渲染
 5. 更新 wiki/index.md，将 📖 改为 ✅
