@@ -3,7 +3,7 @@ title: Self-Authorship
 type: concept
 tags: [self-authorship, higher-education, student-development, goal-orientation]
 related_concepts: ["[[Goal-Controlled Mode]]", "[[Intuition-Dependent Mode]]"]
-related_persons: ["[[Yajun Zheng]]"]
+related_persons: ["[[Yajun Zheng]]", "[[Marcia Baxter Magolda]]"]
 sources: ["[[郑_2023_上海三联书店]]"]
 confidence: low
 status: draft

@@ -2,14 +2,14 @@
 title: Goal-Controlled Mode
 type: concept
 tags: [goal-controlled-mode, higher-education, cultural-capital, region/china, level/higher-ed]
-related_concepts: ["[[Intuition-Dependent Mode]]", "[[Cultural Barrier in Higher Education]]", "[[Habitus]]", "[[Cultural Capital]]", "[[Field (Bourdieu)]]", "[[Academic and Social Integration]]", "[[Student Engagement]]", "[[Symbolic Boundary]]"]
+related_concepts: ["[[Intuition-Dependent Mode]]", "[[Cultural Barrier in Higher Education]]", "[[Habitus]]", "[[Cultural Capital]]", "[[Field (Bourdieu)]]", "[[Academic and Social Integration]]", "[[Student Engagement]]", "[[Symbolic Boundary]]", "[[Self-Authorship]]", "[[The Shock of the Elite]]"]
 related_theories: ["[[Bourdieu's Social Theory]]", "[[Culture as Toolkit]]", "[[Dual-Process Model of Culture in Action]]", "[[Rational Action Theory in Education]]"]
-related_persons: ["[[Yajun Zheng]]", "[[Max Weber]]", "[[Ann Swidler]]"]
+related_persons: ["[[Yajun Zheng]]", "[[Max Weber]]", "[[Ann Swidler]]", "[[Marcia Baxter Magolda]]"]
 sources: ["[[郑_2023_上海三联书店]]"]
-confidence: low
+confidence: medium
 status: draft
 created: 2026-05-08
-updated: 2026-05-08T15
+updated: 2026-05-08
 ---
 
 ## 定义
@@ -147,6 +147,7 @@ updated: 2026-05-08T15
 - [[Dual-Process Model of Culture in Action]] — Vaisey（2009）的双过程模型为理解目标掌控模式提供了整合框架：该模式既包含**深层内化**的价值观驱动（优势阶层家庭教育中内化的"成功叙事"和生涯目标意识），也包含**浅层内化**的工具箱能力（灵活使用信息、人脉和制度知识为特定出路做准备）（郑雅君，2023）
 - [[Academic and Social Integration]] + [[Student Engagement]] — 对应**投入过程**：目标掌控模式下的投入是**策略性而非弥散性**的——学生并非不投入，而是有方向地选择与目标出路匹配的教育性实践活动（如保研者重点投入学术竞赛和师生互动，求职者重点投入实习和职业社交）（郑雅君，2023）
 - [[Rational Action Theory in Education]] — 作为对话方：目标掌控模式看似符合 Breen & Goldthorpe（1997）的理性行动模型（手段-目的计算），但郑雅君（2023）强调这一"理性计算"能力本身是阶层习性的产物——哪些目的值得追求、如何评估不同路径的风险-收益，均由文化工具箱和深层价值观共同塑造，而非纯粹的个人理性选择
+- [[Self-Authorship]]（[[Marcia Baxter Magolda]]）— 作为概念建构的理论灵感之一："目标掌控"中的"掌控"一词即含有自我主导性理论所指涉的意涵——个体根据内在声音和核心价值观（而非外部权威或他人期望）来主导认知发展、自我认同和人际关系。"目标掌控者"在三个维度上均表现出较高水平的自我主导性：认知上基于自我选择的目标做出决策（"我一直坚信就是所有东西都是'我想'最重要"），自我认同上形成内在整合的自我感（知道"我想成为什么样的人"），人际关系上批判性地看待同辈常规而不为大众风潮所动（郑雅君，2023）
 
 ---
 

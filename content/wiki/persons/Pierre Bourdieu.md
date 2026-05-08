@@ -3,8 +3,8 @@ title: Pierre Bourdieu
 type: person
 tags: [Pierre Bourdieu, sociology, paradigm/critical, region/france]
 related_theories: [["[[Bourdieu's Social Theory]]"]]
-related_concepts: ["[[School Leadership]]", "[[New Public Management in Education]]", "[[Habitus]]", "[[Cultural Capital]]", "[[Field (Bourdieu)]]", "[[Goal-Controlled Mode]]", "[[Intuition-Dependent Mode]]", "[[Cultural Barrier in Higher Education]]"]
-sources: ["sources/Eacott_2011_JEAH.md"]
+related_concepts: ["[[School Leadership]]", "[[New Public Management in Education]]", "[[Habitus]]", "[[Cultural Capital]]", "[[Field (Bourdieu)]]", "[[Goal-Controlled Mode]]", "[[Intuition-Dependent Mode]]", "[[Cultural Barrier in Higher Education]]", "[[The Shock of the Elite]]"]
+sources: ["sources/Eacott_2011_JEAH.md", "[[郑_2023_上海三联书店]]"]
 confidence: medium
 status: draft
 created: 2026-05-02
@@ -39,6 +39,7 @@ Bourdieu 对学校的基本立场：学校通过将社会分裂自然化——"�
 ## 主要著作
 
 - Bourdieu, P. (1977). *Outline of a Theory of Practice*. Cambridge: Polity Press. — 提出实践理论的基本框架，系统阐述习性概念
+- Bourdieu, P. & Passeron, J.-C. (1979). *The Inheritors: French Students and Their Relation to Culture*. University of Chicago Press. — 基于 1960 年代法国大学生调查，揭示高等教育如何系统性地偏袒文化资本丰厚的阶层。区分了"考试能手"（exam hounds）和"浅薄涉猎者"（dilettantes）两类学生——前者"除考试外忘掉了一切"，后者"与工作保持着一种很神秘化的关系"（郑雅君，2023，引 Bourdieu & Passeron, 1979）
 - Bourdieu, P. (1990). *The Logic of Practice*. Cambridge: Polity Press. — 进一步发展和完善实践理论
 - Bourdieu, P. (1996). *On Television*. New York: The New Press. — 分析新闻场域对其他场域的渗透
 - Bourdieu, P. (1997). *State Nobility*. Cambridge: Polity Press. — 以场域理论分析法国精英学校与国家权力的关系
@@ -53,7 +54,8 @@ Bourdieu 对学校的基本立场：学校通过将社会分裂自然化——"�
 - Blackmore（2010）以 Bourdieu 框架诊断教育场域自主性的系统性丧失
 - Eacott（2011）将 Bourdieu 的社会理论系统应用于学校领导力培养分析，论证"替代性领导习性"的必要性——提出学校领导力培养应从"组织问题解决"转向"教育问题提出与争辩"
 - Gunter & Forrester（2010）运用 Bourdieu 的"实践逻辑"分析教育改革
-- 郑雅君（2023）将 Bourdieu 的实践理论（习性、场域、文化资本）系统应用于中国精英大学生毕业出路分化的微观过程分析，原创性地提出目标掌控模式与直觉依赖模式的双模式框架，论证了文化障碍如何通过阶层习性在大学场域中制造不平等
+- 郑雅君（2023）将 Bourdieu 的实践理论（习性、场域、文化资本）系统应用于中国精英大学生毕业出路分化的微观过程分析。其目标掌控模式与直觉依赖模式的双模式框架直接受《继承人》中"考试能手"与"浅薄涉猎者"两类学生区分的启发——郑雅君将 Bourdieu & Passeron 对 1960 年代法国大学生的观察延伸至 21 世纪中国精英大学，论证了文化障碍如何通过阶层习性在大学场域中制造出路分化
+- [[The Shock of the Elite]]（Reay, Crozier & Clayton, 2009）概念的核心理论基础来自 Bourdieu 的习性滞后（habitus hysteresis）、习性错置（habitus dislocation）和习性分裂（habitus divided against itself）三个概念——精英休克就是习性滞后在主观体验层面的表征（郑雅君，2023）
 
 ## 争议与批评
 

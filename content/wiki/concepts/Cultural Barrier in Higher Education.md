@@ -2,7 +2,7 @@
 title: Cultural Barrier in Higher Education
 type: concept
 tags: [cultural-barrier, higher-education, inequality, cultural-capital, region/china, level/higher-ed]
-related_concepts: ["[[Goal-Controlled Mode]]", "[[Intuition-Dependent Mode]]", "[[Habitus]]", "[[Cultural Capital]]", "[[Field (Bourdieu)]]"]
+related_concepts: ["[[Goal-Controlled Mode]]", "[[Intuition-Dependent Mode]]", "[[Habitus]]", "[[Cultural Capital]]", "[[Field (Bourdieu)]]", "[[The Shock of the Elite]]"]
 related_theories: ["[[Bourdieu's Social Theory]]"]
 related_persons: ["[[Yajun Zheng]]", "[[Pierre Bourdieu]]"]
 sources: ["[[郑_2023_上海三联书店]]"]
@@ -46,6 +46,16 @@ updated: 2026-05-08
 ## 相关案例
 
 - 中国双一流高校中，来自农村和贫困地区的学生面对着与城市中产阶级同学截然不同的文化参照系：他们可能对出国留学的申请程序、教授的推荐信文化、实习的经济成本和人脉积累方式毫无概念，而这些问题在他们的家庭和原初社交圈中几乎无人能够解答（郑雅君，2023）
+
+### 社交融入的文化语码障碍
+
+郑雅君（2023）在第4章详细记录了弱势学生进入大学后经历的"社交融入困难阶段"：
+
+**"语言包"比喻（大成）**：大成（甘肃→北方大学）以"处理器难以识别语码"来描述社交中经历的尴尬。"并不是说你不够幽默，而是一时间你没有办法把它转化成他们熟悉的那套话语讲出来"。他将适应大学社交环境比作"重新下载安装语言包"——这个新的语言包需要包含校园热门话题、网络流行语、本地常识等（郑雅君，2023）。
+
+**面试中的文化误判（冰倩）**：冰倩（南方大学，湖南农村）在社团面试中被问"你会关注我们的公众号吗"，她回答"应该不会"——后来才意识到这种回答是社交上的失误。"其实后来我才知道很多人也都不会，去了才有人手把手教的。从来没有人告诉过我这些……"这种因不掌握默认文化规则而导致的面试屡次失败，使她逐步失去自信乃至陷入抑郁（郑雅君，2023）。
+
+**模式性疏离（牛铭）**：牛铭大一时尝试融入多个学生组织，但"都一个学期、半个学期，然后就默默没有了"——"算是没有真正地融入进去"（郑雅君，2023）。
 
 ---
 

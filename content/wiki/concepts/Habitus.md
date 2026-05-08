@@ -2,7 +2,7 @@
 title: Habitus
 type: concept
 tags: [habitus, Bourdieu, social-theory, cultural-sociology, paradigm/critical, region/france]
-related_concepts: ["[[Cultural Capital]]", "[[Field (Bourdieu)]]", "[[Goal-Controlled Mode]]", "[[Intuition-Dependent Mode]]", "[[Cultural Barrier in Higher Education]]"]
+related_concepts: ["[[Cultural Capital]]", "[[Field (Bourdieu)]]", "[[Goal-Controlled Mode]]", "[[Intuition-Dependent Mode]]", "[[Cultural Barrier in Higher Education]]", "[[The Shock of the Elite]]"]
 related_theories: ["[[Bourdieu's Social Theory]]", "[[Culture as Toolkit]]"]
 related_persons: ["[[Pierre Bourdieu]]", "[[Yajun Zheng]]"]
 sources: ["sources/Eacott_2011_JEAH.md", "sources/Eacott_2015_EPT.md", "[[郑_2023_上海三联书店]]"]
@@ -61,6 +61,19 @@ Eacott（2011）将习性描述为"通过暴露于特定经验而体现的一套
 习性错置（habitus dislocation）描述的是习性进入一个与自身不配合的场域时产生的如同"鱼离了水"的感觉（郑雅君，2023，引 Bourdieu & Wacquant, 1992）。在 Reay 等人（2009）的研究中，这表现为英国工人阶级学生进入精英大学后的"精英休克"（the shock of the elite）体验。
 
 习性分裂（a habitus divided against itself）则是更严重的情形——个体需要不断调和自身与新场域之间的矛盾，同时维持与旧有场域的联系和发展新的倾向，由此"产生一种习性分裂的体验"（郑雅君，2023，引 Bourdieu, 1999, p.511）。郑雅君的被访者昌盛（甘肃偏僻农村考入南方大学）的体验是典型例证：大二陷入"非常低迷的状态，可以说稍微有点抑郁。每次出门我都会有一种恐惧，就是害怕与其他人交流"——自我认同的撕裂使得他不再清楚自己是谁，更不用说树立目标（郑雅君，2023）。
+
+### 习性转换：大学作为再社会化场域
+
+习性虽然持久，但并非一成不变。郑雅君（2023）第4章援引布迪厄实践理论指出，习性"作为一种可转换的持久倾向系统，会不断地调和自身与场域之间的矛盾，一方面需要维持与旧系统的连贯性，另一方面也可能发展新的倾向以适应新的环境"（郑雅君，2023，引 Bourdieu, 2012）。Stevens 等人（2008）将高等教育的这重面向描述为一个如同"育婴室"的文化性/社会性过程——学生在其中接受集中的再社会化，认知图式、文化修养、品位甚至价值观都可能发生微妙转换（郑雅君，2023，引 Stevens, Armstrong & Arum, 2008）。
+
+第4章的转变者案例呈现了习性转换的经验过程：
+
+- **文化移入促成意义感重组**：通过与导师密切交往、参与学术项目和讲座，梓桐逐渐移入了导师所秉持的学者价值图式——"作为学者，首先立足于自己的学科，在自己深耕的领域有所建树"。这种移入使他在大二大三期间完成了从"跳出农门"的朴素愿望到"为往圣继绝学"的志业转变，实现了[[Goal-Controlled Mode]]式的生涯规划（郑雅君，2023）
+- **行动策略的充实化**：从直觉依赖到目标掌控的转变伴随着文化工具箱中行动策略的充实——不仅开始有意识地选择"我要的是什么"，还增加了对"我该怎样做"的策略性概念（郑雅君，2023）
+
+郑雅君（2023）估计，大约半数直觉依赖者在高年级或读研后（至少部分）完成了这一习性转换。但转换面临时间成本的代价——"自己的经历以及所处环境的限制，导致自己对一些问题的认识，会比别人晚个一两年这种感觉，但其实晚一两年就差别很大"（禹海，郑雅君，2023）。
+
+值得指出的是，郑雅君（2023）将习性分析与 [[Marcia Baxter Magolda]] 的[[Self-Authorship|自我主导性]]理论进行了创造性结合：自我主导性作为个体能力，解释了"目标掌控"所需要的认知和认同成熟度；习性作为阶层化的倾向系统，则揭示了这种看似个人能力的"自我主导"实际上深受阶层条件的形塑——优势阶层的高中教育环境（鼓励独立思考、个性发展）本身就是培养自我主导性的训练场（郑雅君，2023）。
 
 ### 校长领导力的习性分裂
 

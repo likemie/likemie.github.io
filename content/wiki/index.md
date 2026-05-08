@@ -119,8 +119,10 @@
 - [[Graduate Attributes]] — 大学认同其学生在学期间应当发展的品质、技能和理解，受高等教育市场化驱动，Wong et al. (2022) 识别 UK 四大话语
 - [[Intuition-Dependent Mode]] — 郑雅君 (2023) 提出的大学生活组织实践图式：缺乏清晰规划、凭直觉被动应对大学选择，在低阶层大学生中更为普遍
 - [[International Education Hubs]] — Knight 的概念：国家将自身定位为教育、培训、知识生产和创新活动中心的地缘政治项目，三种模型（学生／人才／知识创新枢纽）
+- [[The Shock of the Elite]] — Reay, Crozier & Clayton (2009) 的概念：弱势背景学生进入精英大学后经历的剧烈文化冲击与自我认同撕裂，郑雅君 (2023) 作为直觉依赖模式激化的关键机制
 - [[Self-Authorship]] — Baxter Magolda 的概念：个体根据内在声音和核心价值观主导认知发展、自我认同和人际关系，郑雅君 (2023) 作为目标掌控模式的理论灵感之一
 - [[Student Engagement]] — George Kuh (1991) 的概念：学生向学校教育性实践活动中投入的时间精力越多越可能产出积极教育结果，与 Astin 学生涉入理论异曲同工，郑雅君 (2023) 作为"投入过程"的理论基础
+- [[Employability]] — Phillip Brown 的概念：知识经济时代就业力建立在比较排序之上，毕业证书只是敲门砖，需通过经历管理展示个人品质，郑雅君 (2023) 作为社会性投入分析的理论基础
 - [[Symbolic Boundary]] — Lamont 的概念：通过赋予行为、品味和价值观以道德涵义在自我与他者之间划分"我们"与"他们"，郑雅君 (2023) 揭示两种模式间互相区隔的道德话语
 
 ### Instruction & Pedagogy
@@ -622,6 +624,7 @@
 
 - [[Amelia Peterson]] — 哈佛大学教育研究生院，提出"什么有效 2.0"整合框架，以机制实验和网络化改进为双重支柱整合实验科学与改进科学
 - [[Maria Pampaka]] — 曼彻斯特大学教育研究者，IJRME "什么有效"特刊编辑，识别 agency 分配为核心哲学分歧，关注学习者能动性和替代性学习结果测量
+- [[Marcia Baxter Magolda]] — 迈阿密大学教育心理学家，自我主导性（self-authorship）理论创始人，郑雅君 (2023) 以之作为目标掌控模式的理论灵感之一
 - [[Anthony Bryk]] — Carnegie Foundation 高级研究员，将改进科学引入美国教育，网络化改进社区模型的主要开发者
 - [[Arturo Escobar]] — 哥伦比亚裔美国人类学家和设计理论家，Pluriverse 和 transition design 概念提出者，被 Amos (2022) 援引为晚期现代性替代教育愿景的理论资源
 - [[Kurt Fischer]] — 新皮亚杰理论家，提出技能理论（Skill Theory），区分实际/最优发展水平，强调环境在认知发展中的作用

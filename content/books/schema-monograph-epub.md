@@ -111,7 +111,7 @@ epub 全程保留在 `books/` 文件夹，用 Obsidian Epub Reader 插件本地�
      ```html
      <div id="epub-viewer" style="width:100%;height:600px;border:1px solid #ccc;"></div>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/epub.js/0.3.93/epub.min.js"></script>
-     <script src="/epub-loader.js"></script>
+     <script src="/static/epub-loader.js"></script>
      <script>loadEpub("epub-viewer", "/books/作者姓_年份_出版社/BookName.epub");</script>
      ```
      前提：需在 Quartz 的 `static/epub-loader.js` 放入以下代码（一次性设置，所有 epub 共用）：
