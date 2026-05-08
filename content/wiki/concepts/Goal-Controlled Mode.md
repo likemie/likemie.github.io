@@ -2,7 +2,7 @@
 title: Goal-Controlled Mode
 type: concept
 tags: [goal-controlled-mode, higher-education, cultural-capital, region/china, level/higher-ed]
-related_concepts: ["[[Intuition-Dependent Mode]]", "[[Cultural Barrier in Higher Education]]", "[[Habitus]]", "[[Cultural Capital]]", "[[Field (Bourdieu)]]", "[[Academic and Social Integration]]", "[[Student Engagement]]", "[[Symbolic Boundary]]", "[[Self-Authorship]]", "[[The Shock of the Elite]]"]
+related_concepts: ["[[Intuition-Dependent Mode]]", "[[Cultural Barrier in Higher Education]]", "[[Habitus]]", "[[Cultural Capital]]", "[[Field (Bourdieu)]]", "[[Academic and Social Integration]]", "[[Student Engagement]]", "[[Academic Engagement]]", "[[Social Engagement]]", "[[Symbolic Boundary]]", "[[Self-Authorship]]", "[[The Shock of the Elite]]"]
 related_theories: ["[[Bourdieu's Social Theory]]", "[[Culture as Toolkit]]", "[[Dual-Process Model of Culture in Action]]", "[[Rational Action Theory in Education]]"]
 related_persons: ["[[Yajun Zheng]]", "[[Max Weber]]", "[[Ann Swidler]]", "[[Marcia Baxter Magolda]]"]
 sources: ["[[郑_2023_上海三联书店]]"]
@@ -83,6 +83,8 @@ updated: 2026-05-08
 
 ## 学业投入：学以致"用"的策略
 
+关于学业投入的一般理论定义、操作化及与 Tinto 学业融入的关系，详见 [[Academic Engagement]]。以下聚焦目标掌控模式下学业投入的独特特征。
+
 目标掌控者对待学业成绩的核心态度是：重视但不盲目追求，根据成绩之于生涯目标的"用处"来决定投入程度（郑雅君，2023）。
 
 ### 成绩的功能性看待
@@ -108,6 +110,8 @@ updated: 2026-05-08
 ---
 
 ## 社会性投入：锚定职业目标的关键环节
+
+关于社会性投入的一般理论定义、与 [[Employability|就业力]] 和 [[Economy of Experience|履历经济学]] 的关联，详见 [[Social Engagement]]。以下聚焦目标掌控模式下社会性投入的独特机制。
 
 目标掌控者不仅重视学业，更将社会性投入视为自我探寻和职业锚定的核心机制（郑雅君，2023）。
 

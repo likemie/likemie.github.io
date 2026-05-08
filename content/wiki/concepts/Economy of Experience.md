@@ -2,7 +2,7 @@
 title: Economy of Experience
 type: concept
 tags: [economy-of-experience, employability, higher-education, cultural-capital, level/higher-ed]
-related_concepts: ["[[Credential Inflation]]", "[[Cultural Capital]]"]
+related_concepts: ["[[Credential Inflation]]", "[[Cultural Capital]]", "[[Social Engagement]]", "[[Goal-Controlled Mode]]"]
 related_theories: []
 related_persons: ["[[Phillip Brown]]"]
 sources: ["[[郑_2023_上海三联书店]]"]
@@ -37,7 +37,7 @@ updated: 2026-05-08
 
 ## 在郑雅君（2023）中的应用
 
-第4章将 Brown 的就业力概念作为分析社会性投入重要性的理论基础：在知识经济和高等教育大众化时代，毕业证书只是敲门砖，"求职者还需要对自己的过往经历、个人品质、甚至性格和自我认同进行一系列管理和展现，才能获得雇主的青睐"（郑雅君，2023，引 Brown & Hesketh, 2003; 2004）。
+第4章将 Brown 的就业力概念作为分析 [[Social Engagement|社会性投入]] 重要性的理论基础：在知识经济和高等教育大众化时代，毕业证书只是敲门砖，"求职者还需要对自己的过往经历、个人品质、甚至性格和自我认同进行一系列管理和展现，才能获得雇主的青睐"（郑雅君，2023，引 Brown & Hesketh, 2003; 2004）。
 
 钦凯（南方大学化学系）是履历经济学逻辑的生动体现。他明确区分了求职竞争的"硬"条件和"软"条件——"一半看人的基本条件……一半就靠演绎"。这种"演绎"能力——情商、印象管理、转化率——在社会交往中日积月累地锻造："当你说话比较有意思的时候，就越来越多的人愿意跟你聊天；当你转化率特别高的时候，很容易话语权又到你这儿来"（钦凯，郑雅君，2023）。他手持多个顶级咨询公司入职邀请，最终选择了"既有钱，又有趣"的工作（郑雅君，2023）。
 

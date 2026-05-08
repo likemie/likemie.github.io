@@ -2,7 +2,7 @@
 title: Employability
 type: concept
 tags: [employability, higher-education, knowledge-economy, graduate-employment, level/higher-ed]
-related_concepts: ["[[Economy of Experience]]", "[[Credential Inflation]]", "[[Goal-Controlled Mode]]"]
+related_concepts: ["[[Economy of Experience]]", "[[Credential Inflation]]", "[[Goal-Controlled Mode]]", "[[Social Engagement]]", "[[Academic Engagement]]"]
 related_persons: ["[[Phillip Brown]]", "[[Yajun Zheng]]"]
 sources: ["[[郑_2023_上海三联书店]]"]
 confidence: low
@@ -31,7 +31,7 @@ updated: 2026-05-08
 
 郑雅君（2023）在第 4 章援引 Brown 的就业力概念，作为分析大学生社会性投入重要性的理论依据。她指出，Brown 近二十年前的诊断在今天的中国仍然适用——"毕业生需要精心打造自己的简历，不仅展示自己在大学的学业表现，更重要的是通过恰当的履历来展示自己的素质和品质"（郑雅君，2023）。
 
-就业力的相对性逻辑解释了为何社会性投入至关重要：在精英大学的就业竞争中，学生在校期间的社会性投入（实习、学生工作、国际交流、社会实践）比学业投入对就业力的比较性排序更具决定性。这同时也解释了阶层差异的再生产机制——优势家庭的学生拥有更多经济和文化资源来投资和包装课余经历，在就业力竞争中占据结构性优势（郑雅君，2023）。
+就业力的相对性逻辑解释了为何 [[Social Engagement|社会性投入]] 至关重要：在精英大学的就业竞争中，学生在校期间的社会性投入（实习、学生工作、国际交流、社会实践）比 [[Academic Engagement|学业投入]] 对就业力的比较性排序更具决定性。这同时也解释了阶层差异的再生产机制——优势家庭的学生拥有更多经济和文化资源来投资和包装课余经历，在就业力竞争中占据结构性优势（郑雅君，2023）。
 
 钦凯（南方大学化学系）是就业力管理的典型案例：他将求职竞争力拆分为"硬"条件（学历、业务素养）和"软"条件（"演绎"——情商、印象管理、转化率），认为后者是决定性的。他的社交圈（多结交年长商界精英）和广泛兴趣（健身教练级、养殖热带鱼）均成为就业力管理的有机组成部分（郑雅君，2023）。
 

@@ -2,7 +2,7 @@
 title: Student Engagement
 type: concept
 tags: [student-engagement, higher-education, level/higher-ed]
-related_concepts: ["[[Academic and Social Integration]]", "[[Goal-Controlled Mode]]", "[[Intuition-Dependent Mode]]"]
+related_concepts: ["[[Academic and Social Integration]]", "[[Student Involvement (Astin, 1984)]]", "[[Academic Engagement]]", "[[Social Engagement]]", "[[Goal-Controlled Mode]]", "[[Intuition-Dependent Mode]]"]
 related_persons: ["[[George Kuh]]", "[[Alexander Astin]]"]
 sources: ["[[郑_2023_上海三联书店]]"]
 confidence: medium
@@ -25,11 +25,7 @@ updated: 2026-05-08
 
 ### 与 Astin 学生涉入理论（Student Involvement）
 
-Kuh 的学生投入理论与 Alexander Astin（1984）的学生涉入（student involvement）理论"异曲同工"（郑雅君，2023）：
-
-- **共同核心**：学校是对学生发挥关键影响力的环境，学生参与其中的程度越深，越可能获得正向影响
-- **Astin（1984）**：提出学生涉入概念，意指"学生在学习过程中所投入的生理和心理能量的数量和质量"。Astin 提出五条涉入公理（postulates）：（1）涉入意味着对不同对象（课程、活动、人际）的能量投入；（2）涉入是一个连续统，随时间和对象而变化；（3）涉入兼具量与质的特征；（4）学习和发展成果与涉入的质量成正比；（5）教育实践的有效性取决于其能否激发学生的涉入（郑雅君，2023，引 Astin, 1984, 1993）
-- **Kuh（1991）**：在学生涉入基础上发展出学生投入概念，更侧重**可观察的行为性投入**和**学校的制度性支持**——不仅关注学生做了什么，也关注学校如何通过课程设计、课外活动和服务体系来推动学生投入（郑雅君，2023，引 Kuh, 1991; Kuh, Schuh & Whitt, 1991）
+Kuh 的学生投入理论与 Alexander Astin（1984）的 [[Student Involvement (Astin, 1984)|学生涉入理论]]"异曲同工"——两者都以"学生参与教育环境的程度决定其教育成果"为核心假设，但 Kuh 更侧重可观察的行为性投入和学校的制度性支持（郑雅君，2023，引 Kuh, 1991; Kuh, Schuh & Whitt, 1991）。Astin 理论的详细内容（五条涉入公理、与 Kuh 的差异、在郑雅君研究中的应用）见 [[Student Involvement (Astin, 1984)]]
 
 ### 与 Tinto 融入理论的关系
 
@@ -60,7 +56,7 @@ Kuh 的投入理论与 Tinto 的 [[Academic and Social Integration]] 理论一�
 
 （郑雅君，2023）
 
-问卷提供投入"量"的指标，访谈通过叙述的连贯性和方向性判断投入的"质"——即投入是否具有明确的策略性方向。二者构成量-质三角互证（郑雅君，2023）。
+问卷提供投入"量"的指标，访谈通过叙述的连贯性和方向性判断投入的"质"——即投入是否具有明确的策略性方向。二者构成量-质三角互证（郑雅君，2023）。各维度的详细理论定义与操作化讨论见 [[Academic Engagement]] 和 [[Social Engagement]]。
 
 ## 争议与批评
 

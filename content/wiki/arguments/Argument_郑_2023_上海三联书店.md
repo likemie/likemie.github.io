@@ -4,7 +4,7 @@ type: argument
 subtype: monograph
 citation: "郑雅君 (2023). 金榜题名之后：大学生出路分化之谜. 上海三联书店."
 tags: [higher-education, social-stratification, cultural-capital, region/china, level/higher-ed]
-related_concepts: ["[[Goal-Controlled Mode]]", "[[Intuition-Dependent Mode]]", "[[Cultural Barrier in Higher Education]]", "[[Economy of Experience]]", "[[Credential Inflation]]", "[[Habitus]]", "[[Cultural Capital]]", "[[Field (Bourdieu)]]", "[[Academic and Social Integration]]", "[[Student Engagement]]", "[[Symbolic Boundary]]", "[[Self-Authorship]]", "[[Employability]]", "[[The Shock of the Elite]]"]
+related_concepts: ["[[Goal-Controlled Mode]]", "[[Intuition-Dependent Mode]]", "[[Cultural Barrier in Higher Education]]", "[[Economy of Experience]]", "[[Credential Inflation]]", "[[Habitus]]", "[[Cultural Capital]]", "[[Field (Bourdieu)]]", "[[Academic and Social Integration]]", "[[Student Engagement]]", "[[Student Involvement (Astin, 1984)]]", "[[Academic Engagement]]", "[[Social Engagement]]", "[[Symbolic Boundary]]", "[[Self-Authorship]]", "[[Employability]]", "[[The Shock of the Elite]]"]
 related_theories: ["[[Bourdieu's Social Theory]]", "[[Culture as Toolkit]]", "[[Dual Elite Career Paths]]", "[[Rational Action Theory in Education]]", "[[Dual-Process Model of Culture in Action]]"]
 related_methods: ["[[Constructivist Grounded Theory]]", "[[In-depth Interview]]", "[[Case Study]]"]
 related_persons: ["[[Yajun Zheng]]", "[[Pierre Bourdieu]]", "[[Max Weber]]", "[[Ann Swidler]]", "[[Marcia Baxter Magolda]]"]

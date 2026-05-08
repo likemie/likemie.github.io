@@ -2,7 +2,7 @@
 title: Intuition-Dependent Mode
 type: concept
 tags: [intuition-dependent-mode, higher-education, cultural-capital, region/china, level/higher-ed]
-related_concepts: ["[[Goal-Controlled Mode]]", "[[Cultural Barrier in Higher Education]]", "[[Habitus]]", "[[Cultural Capital]]", "[[Field (Bourdieu)]]", "[[Academic and Social Integration]]", "[[Student Engagement]]", "[[Symbolic Boundary]]", "[[The Shock of the Elite]]", "[[Self-Authorship]]"]
+related_concepts: ["[[Goal-Controlled Mode]]", "[[Cultural Barrier in Higher Education]]", "[[Habitus]]", "[[Cultural Capital]]", "[[Field (Bourdieu)]]", "[[Academic and Social Integration]]", "[[Student Engagement]]", "[[Academic Engagement]]", "[[Social Engagement]]", "[[Symbolic Boundary]]", "[[The Shock of the Elite]]", "[[Self-Authorship]]"]
 related_theories: ["[[Bourdieu's Social Theory]]", "[[Culture as Toolkit]]", "[[Dual-Process Model of Culture in Action]]", "[[Rational Action Theory in Education]]"]
 related_persons: ["[[Yajun Zheng]]", "[[Max Weber]]", "[[Ann Swidler]]", "[[Marcia Baxter Magolda]]"]
 sources: ["[[郑_2023_上海三联书店]]"]
@@ -102,6 +102,8 @@ Reay 等人（2009）的"精英休克"概念在郑雅君的访谈中获得了丰
 
 ## 学业投入："绩点无用论"背后的优等生惯性
 
+关于学业投入的一般理论定义和操作化，详见 [[Academic Engagement]]。以下聚焦直觉依赖模式下学业投入的独特特征。
+
 许多直觉依赖者在进入大学后，首先在学业竞争中败下阵来——讽刺的是，学习曾经是他们骄傲的全部来源（郑雅君，2023）。
 
 ### "绩点无用论"误区
@@ -129,6 +131,8 @@ Reay 等人（2009）的"精英休克"概念在郑雅君的访谈中获得了丰
 ---
 
 ## 社会性投入：被习惯性忽略的宝藏
+
+关于社会性投入的一般理论定义、与 [[Cultural Barrier in Higher Education|文化障碍]] 的关联，详见 [[Social Engagement]]。以下聚焦直觉依赖模式下社会性投入的独特机制与障碍。
 
 如果说目标掌控者会不假思索地多在社会性方面投入，直觉依赖者则往往不假思索地尽量少投入（郑雅君，2023）。
 

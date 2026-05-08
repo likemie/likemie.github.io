@@ -111,6 +111,7 @@
 ### Higher Education
 
 - [[Academic and Social Integration]] — Vincent Tinto (1993) 的学生发展理论：大学生须经分离-转折-习得三阶段融入大学学术与社交环境，郑雅君 (2023) 作为"投入过程"的理论基础
+- [[Academic Engagement]] — 学业投入：学生向学术性教育活动投入的时间精力，Tinto 学业融入与 Kuh 学生投入的交叉维度，郑雅君 (2023) 作为"投入过程"的两大分析轴之一
 - [[Credential Inflation]] — Randall Collins (1979) 的概念：大学文凭作为交换职业地位的通货在市场上发生萎缩，中国扩招后从 84.8 万（1999）升至 753.3 万毕业生（2018）
 - [[Cultural Barrier in Higher Education]] — 郑雅君 (2023) 的概念：因不具备精英大学中默认掌握的文化知识和文化技能而造成的无形障碍，不利于低阶层大学生获取向上流动机会和主观自我认同
 - [[Economy of Experience]] — Phillip Brown 的概念：大学生需将课余生活精细投资管理以打造为简历加分的"履历资本"，郑雅君 (2023) 用于分析中国精英大学就业竞争
@@ -121,7 +122,9 @@
 - [[International Education Hubs]] — Knight 的概念：国家将自身定位为教育、培训、知识生产和创新活动中心的地缘政治项目，三种模型（学生／人才／知识创新枢纽）
 - [[The Shock of the Elite]] — Reay, Crozier & Clayton (2009) 的概念：弱势背景学生进入精英大学后经历的剧烈文化冲击与自我认同撕裂，郑雅君 (2023) 作为直觉依赖模式激化的关键机制
 - [[Self-Authorship]] — Baxter Magolda 的概念：个体根据内在声音和核心价值观主导认知发展、自我认同和人际关系，郑雅君 (2023) 作为目标掌控模式的理论灵感之一
+- [[Social Engagement]] — 社会性投入：学生向人际互动、课外活动和职业探索投入的时间精力，与学业投入并列作为 Zheng "投入过程"的两大分析轴
 - [[Student Engagement]] — George Kuh (1991) 的概念：学生向学校教育性实践活动中投入的时间精力越多越可能产出积极教育结果，与 Astin 学生涉入理论异曲同工，郑雅君 (2023) 作为"投入过程"的理论基础
+- [[Student Involvement (Astin, 1984)]] — Alexander Astin (1984) 的概念：学生投入的生理和心理能量的数量和质量，五条涉入公理为 Kuh 学生投入理论的前身
 - [[Employability]] — Phillip Brown 的概念：知识经济时代就业力建立在比较排序之上，毕业证书只是敲门砖，需通过经历管理展示个人品质，郑雅君 (2023) 作为社会性投入分析的理论基础
 - [[Symbolic Boundary]] — Lamont 的概念：通过赋予行为、品味和价值观以道德涵义在自我与他者之间划分"我们"与"他们"，郑雅君 (2023) 揭示两种模式间互相区隔的道德话语
 
