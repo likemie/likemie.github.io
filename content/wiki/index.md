@@ -90,6 +90,9 @@
 
 ### Educational Sociology
 
+- [[Cultural Capital]] — Pierre Bourdieu 的核心概念：个体通过家庭社会化获得的、在特定场域中具有交换价值的文化资源，三种形态（具身化/客体化/制度化），郑雅君 (2023) 分析其如何通过习性转化为大学场域中的竞争优势
+- [[Field (Bourdieu)]] — Pierre Bourdieu 的核心概念：具有相对自主性和自身游戏规则的社会空间，郑雅君 (2023) 将中国精英大学分析为一个布迪厄式场域，Eacott (2011) 诊断教育场域自主性的削弱
+- [[Habitus]] — Pierre Bourdieu 的核心概念：通过长期暴露于特定社会经验而具身化的行为倾向系统，郑雅君 (2023) 以之解释两种上大学模式的阶层根源，Eacott (2011) 揭示校长习性在多重场域交叉中的分裂
 - [[Atomisation of Knowledge and Skills]] — 测量、问责和经济竞争逻辑下，教育内容被拆成可评估、可比较、可交易的小单位
 - [[Membership-Creating Function of Education]] — Ramirez & Boli (1987) 揭示的现代教育基础功能：公立学校系统同时建立忠诚与归属的纽带（创造成员身份）和划定"谁属于我们、谁是外人"的边界，Amos (2022) 以此分析晚期现代性中该功能的弱化
 - [[New Public Management in Education]] — 过去约 30 年西方教育系统以新管理主义理念进行的改革浪潮，特征为绩效标准、产出控制、供给竞争和管理问责，与分布式领导话语并行运作构成悖论
@@ -107,9 +110,16 @@
 
 ### Higher Education
 
+- [[Academic and Social Integration]] — Vincent Tinto (1993) 的学生发展理论：大学生须经分离-转折-习得三阶段融入大学学术与社交环境，郑雅君 (2023) 作为"投入过程"的理论基础
+- [[Credential Inflation]] — Randall Collins (1979) 的概念：大学文凭作为交换职业地位的通货在市场上发生萎缩，中国扩招后从 84.8 万（1999）升至 753.3 万毕业生（2018）
+- [[Cultural Barrier in Higher Education]] — 郑雅君 (2023) 的概念：因不具备精英大学中默认掌握的文化知识和文化技能而造成的无形障碍，不利于低阶层大学生获取向上流动机会和主观自我认同
+- [[Economy of Experience]] — Phillip Brown 的概念：大学生需将课余生活精细投资管理以打造为简历加分的"履历资本"，郑雅君 (2023) 用于分析中国精英大学就业竞争
 - [[Global Education Industry (GEI)]] — 教育实践、供给、研究和政策被经济理性渗透的多重过程，Verger et al. (2016) 定义，Parreira do Amaral 将其作为知识地缘政治转型的关键语境
+- [[Goal-Controlled Mode]] — 郑雅君 (2023) 提出的大学生活组织实践图式：早期确立生涯目标，策略性地利用大学资源为毕业出路做准备，根植于优势阶层习性
 - [[Graduate Attributes]] — 大学认同其学生在学期间应当发展的品质、技能和理解，受高等教育市场化驱动，Wong et al. (2022) 识别 UK 四大话语
+- [[Intuition-Dependent Mode]] — 郑雅君 (2023) 提出的大学生活组织实践图式：缺乏清晰规划、凭直觉被动应对大学选择，在低阶层大学生中更为普遍
 - [[International Education Hubs]] — Knight 的概念：国家将自身定位为教育、培训、知识生产和创新活动中心的地缘政治项目，三种模型（学生／人才／知识创新枢纽）
+- [[Student Engagement]] — George Kuh (1991) 的概念：学生向学校教育性实践活动中投入的时间精力越多越可能产出积极教育结果，与 Astin 学生涉入理论异曲同工，郑雅君 (2023) 作为"投入过程"的理论基础
 
 ### Instruction & Pedagogy
 
@@ -203,9 +213,12 @@
 
 ### Sociology of Education
 
+- [[Culture as Toolkit]] — Ann Swidler (1986) 的文化社会学理论：文化不仅定义价值观更是提供行动策略所需的"工具"，郑雅君 (2023) 用于分析大学生活组织图式的阶层差异
+- [[Dual-Process Model of Culture in Action]] — Stephen Vaisey (2009) 的理论：调和文化工具箱与价值观驱动两种范式，论证二者在不同意识层次上并存，郑雅君 (2023) 作为"价值选择过程"的理论基础
 - [[Refraction Framework]] — Downey & Condron (2016) 的学校与不平等折射理论：学校可沿不同维度以补偿性、加剧性或中性方式塑造不平等，强调差距在学校入学前已形成
 - [[Hofstede's Cultural Dimensions]] — 国家文化维度理论，Laursen (2015) 用其检验以英语国家研究为主的有效教学综合是否适用于丹麦
 - [[Luhmann's Systems Theory]] — 社会作为自创生沟通系统的宏大理论，严格区分社会系统与心理系统，Larsen (2019) 以盲点和结构耦合概念批判 VL
+- [[Rational Action Theory in Education]] — Breen & Goldthorpe (1997) 的教育分层理论：以相对风险规避机制解释阶层间教育选择的系统性差异，揭示家庭背景的次属效应，郑雅君 (2023) 作为"价值选择过程"的理论对话方
 - [[Bourdieu's Social Theory]] — 场域-习性-资本-doxa 四位一体的社会分析框架，揭示学校如何通过符号支配（再）生产社会秩序，Eacott 将其应用于学校领导力培养分析
 - [[World Culture Theory]] — 全球学校模式趋同假设：西方现代民族国家模型向全球扩散，导致课程和学校标准化，但 LS 案例揭示其解释力局限
 
@@ -221,6 +234,7 @@
 
 ### Political Science & Policy Studies
 
+- [[Dual Elite Career Paths]] — Andrew Walder 的后社会主义精英流动理论：政治管理精英（党员身份）与专业技术精英（大学学历）为两条分立路径，郑雅君 (2023) 用于分析中国名校毕业生出路选择
 - [[Nation Building through Education]] — 国家利用教育系统在边疆地区推行统一国族认同，Yan & Morris 将香港 LS→CSD 纳入此框架与西藏、新疆、内蒙古并置分析
 - [[Tullock's Bureaucracy Theory]] — 官僚制作为信息处理金字塔，主权者面临的核心挑战是知识问题与委托困境，Cowen 将其应用于解释 EBE 的制度韧性
 - [[Legitimation Theory Van Leeuwen]] — Van Leeuwen (2007) 的四层次合法化框架：权威/传统、道德价值、理性/真理、奖励叙事，Bainbridge et al. 用于解释教育证据如何被政策制定者接受或排斥
@@ -278,8 +292,10 @@
 
 #### Other
 
+- [[China College Graduate Employment Reform 1986-1997]] — 从统包统分到双向选择的高校毕业生就业市场化改革，1986 提出→1989 批准→1994 并轨试点→1997 全国实施
 - [[ECNU Declaration on Evidence-Based Research 2017]] — 华东师范大学联合 14 所大学和 32 家 CSSCI 期刊发布宣言，提出 10 条措施推进中国教育实证研究，标志中国证据本位改革的制度化里程碑（Slavin et al., 2021）
-- [[Late Qing Borrowing of Japanese Education]] — 甲午战败后清末以日本为主要参照推进新式教育体系建设，改革派与保守派在"借鉴日本教育"上形成阶段性共识并推动大规模借用
+- [[Late Qing Borrowing of Japanese Education]] — 甲午战败后清末以日本为主要参照推进新式教育体系建设
+- [[Recommendation-Based Graduate Admission System]] — 1980s 中期至今的推免研究生制度：以累积学分为依据免试直升，985 院校覆盖率可达 40%+，郑雅君 (2023) 分析其对不同阶层学生的隐性要求差异，改革派与保守派在"借鉴日本教育"上形成阶段性共识并推动大规模借用
 
 ### Denmark
 
@@ -476,6 +492,7 @@
 - [[Alan C. K. Cheung]] — 香港中文大学教育研究者，与 Slavin 合作进行大规模随机实验和证据本位改革国际比较研究，BEiB 中文网络（海外华人版）建设者，与谢晨共同编辑 ECNU ROE 证据本位改革特刊
 - [[Chen Xie]] — 谢晨，华东师范大学国际与比较教育研究所研究员，ECNU ROE 证据本位改革特刊通讯编辑，中美教育技术实验比较研究
 - [[Tengteng Zhuang]] — 庄腾腾，北京师范大学教育研究者，系统整理中国教育实证研究文献计量数据（CNKI ~5000 篇，Slavin et al., 2021）
+- [[Yajun Zheng]] — 郑雅君，复旦大学高等教育研究所，原创性提出目标掌控模式／直觉依赖模式双模式框架和高等教育文化障碍概念，专著《金榜题名之后》(2023)（CNKI ~5000 篇，Slavin et al., 2021）
 
 ### Denmark
 
@@ -510,6 +527,7 @@
 - [[Jurgen Schriewer]] — 德国比较教育学者，将 Luhmann 系统理论引入比较教育，提出"外化"概念和话语形成理论
 - [[Ernst von Glasersfeld]] — 德裔美籍哲学家和认知心理学家，激进建构主义创始人，其唯我论学习观被 Hattie 的 VL 全盘接受为理论基础
 - [[Wolfgang Klafki]] — 德国教育学家和 Didaktik 传统关键人物，提出以 epochal key problems 组织面向未来的课程工作
+- [[Max Weber]] — 德国社会学家，诠释社会学和行动理论创始人，工具理性与价值理性的经典区分，郑雅君 (2023) 以之作为全书认识论锚点和文化社会学讨论起点
 
 #### Current (2000–present)
 
@@ -608,6 +626,7 @@
 - [[Donna Haraway]] — 美国女性主义科学与技术研究学者，sympoiesis、response-ability 和 SF 叙事方法论提出者，其 Staying with the Trouble (2016) 为后人类主义教育愿景提供核心思想资源
 - [[Catherine Lewis]] — 美国教育研究者，以向教育研究界系统介绍改进科学方法论著称（*Educational Researcher*, 2015）
 - [[Akira Miyake]] — 认知心理学家，执行功能统一性与多样性框架提出者（Miyake et al., 2000），识别 EF 三成分（抑制/转换/更新与监控）
+- [[Ann Swidler]] — 美国文化社会学家，文化工具箱理论（1986）创始人，区分稳定/不稳定生活状态中文化与行动的不同关系，郑雅君 (2023) 的核心理论支柱之一
 - [[Yong Zhao]] — University of Kansas 教育政策与比较教育教授，从医学引入副作用概念至教育研究，论证教育干预的效果与副作用不可分离
 - [[Gita Steiner-Khamsi]] — 哥伦比亚大学教师学院比较教育学者，政策借用与借出政治分析领军人物，强调关注转移的能动者和受益者
 
@@ -618,9 +637,12 @@
 ### Qualitative
 
 - [[Historical Document Analysis of Curriculum]] — 通过系统分析课程文件、政府政策、媒体报道和学术文献重建科目演变历程，识别课程变革的政治动力
+- [[In-depth Interview]] — 半结构式质性资料收集方法：以"深入事实内部"和渐进式聚焦为原则，通过了解个人生活史获得对被访者行动意义的"同感解释"，郑雅君 (2023) 以此为核心资料收集方法（62 人，累计 150+ 万字转录）
 - [[Philosophical Analysis in Education]] — 通过概念区分、逻辑推理和哲学论证分析教育政策与实践的前提假设，为从业者提供抵抗资源
 - [[Qualitative Research]] — 不操纵自变量并使用访谈、观察等文本数据的非干预研究；Brady et al. (2023) 发现其在教育心理学经验期刊中升至 22%
 - [[Carnivalesque Analysis]] — Aydarova (2020) 基于 Bakhtin 嘉年华理论的质性方法：研究者以"小丑"角色打乱官方叙事、追踪矛盾，揭露主导话语掩盖的真相
+- [[Case Study]] — 质性研究设计：以跟踪式个案为分析单位，通过目的抽样与理论抽样选取典型案例，结合类别系列分解策略优化可外推性，郑雅君 (2023) 用于中国精英大学学生出路分化研究
+- [[Constructivist Grounded Theory]] — Kathy Charmaz (2006) 在经典扎根理论基础上发展的建构主义变体：意义由被研究者与研究者共同建构，郑雅君 (2023) 以此方法论产出了目标掌控模式／直觉依赖模式的类型学发现
 
 ### Quantitative
 
@@ -721,6 +743,7 @@
 - [[Argument_Moisio_2022_Springer]] — Ch2 Sami Moisio: 论证当代知识密集型资本主义是地缘政治星座，以 Harvey 固着-流动张力、Hub and Flow 想象和空间分选为核心分析框架
 - [[Argument_Parreira do Amaral_2022_geopolitics-knowledge]] — Ch3 Marcelo Parreira do Amaral: 整合批判地缘政治学与后殖民去殖民两脉络提出新知识地缘政治，以全球区域主义和 GEI 为转型语境，IEHs 和 Minerva 为典型案例
 - [[Argument_Amos_2022_Springer]] — Ch4 S. Karin Amos: 以 Cowen transitology 和双轴模型为框架，对比超人类主义与后人类主义两种晚期现代性教育愿景，呼吁以 connectivity 和 response-ability 为组织原则的新公共教育理论
+- 📖 [[Argument_郑_2023_上海三联书店]] — 郑雅君：以布迪厄实践理论和 Swidler 文化工具箱为框架，基于 62 名中国两所顶尖大学毕业生跟踪访谈，提出目标掌控模式／直觉依赖模式双模式框架，揭示文化障碍如何在精英大学中制造出路分化
 
 ### Reports & Policy Documents
 

@@ -2,13 +2,14 @@
 title: Bourdieu's Social Theory
 type: theory
 tags: [Bourdieu, field-theory, habitus, paradigm/critical, region/france]
-related_concepts: ["[[School Leadership]]", "[[New Public Management in Education]]", "[[Performativity of Measurement]]", "[[Epistemological Break]]", "[[Epistemological Vigilance]]"]
-related_persons: ["[[Pierre Bourdieu]]", "[[Gaston Bachelard]]"]
-sources: ["sources/Eacott_2011_JEAH.md", "sources/Eacott_2015_EPT.md"]
+related_concepts: ["[[School Leadership]]", "[[New Public Management in Education]]", "[[Performativity of Measurement]]", "[[Epistemological Break]]", "[[Epistemological Vigilance]]", "[[Habitus]]", "[[Cultural Capital]]", "[[Field (Bourdieu)]]", "[[Goal-Controlled Mode]]", "[[Intuition-Dependent Mode]]", "[[Cultural Barrier in Higher Education]]", "[[Academic and Social Integration]]", "[[Student Engagement]]"]
+related_theories: ["[[Rational Action Theory in Education]]", "[[Dual-Process Model of Culture in Action]]", "[[Culture as Toolkit]]"]
+related_persons: ["[[Pierre Bourdieu]]", "[[Gaston Bachelard]]", "[[Yajun Zheng]]"]
+sources: ["sources/Eacott_2011_JEAH.md", "sources/Eacott_2015_EPT.md", "books/郑_2023_上海三联书店/郑_2023_上海三联书店.md"]
 confidence: medium
 status: draft
 created: 2026-05-02
-updated: 2026-05-02
+updated: 2026-05-08
 ---
 
 ## 核心主张
@@ -35,7 +36,7 @@ Bourdieu, Chamboredon & Passeron（1968/1991）在 *The Craft of Sociology: Epis
 
 ### 场域（Field）
 
-场域是一个**相对自主的社会世界**，其属性有助于其随时间再生产的（Eacott, 2011, p.48）。
+详见 [[Field (Bourdieu)]]。场域是一个**相对自主的社会世界**，其属性有助于其随时间再生产的（Eacott, 2011, p.48）。
 
 - 场域是**持续斗争的场所**——斗争的赢家是那些拥有在场域中被视为最有价值的资源或"资本"的人
 - 场域的**自主性**体现为它生成自身价值和成就标志的方式
@@ -46,7 +47,7 @@ Bourdieu, Chamboredon & Passeron（1968/1991）在 *The Craft of Sociology: Epis
 
 ### 习性（Habitus）
 
-习性是**通过暴露于特定经验而体现的一套行为倾向系统**（Eacott, 2011, p.49）。
+详见 [[Habitus]]。习性是**通过暴露于特定经验而体现的一套行为倾向系统**（Eacott, 2011, p.49）。
 
 - 习性**仅在实践中显现且仅存在于实践中**
 - 习性由个体的社会位置和"玩游戏"的生活史所塑造——"渴望校长职位的人通过其作为渴望者的位置及其玩教育游戏的生活史，被倾向于按照游戏规则和内部真理叙事行事"（Eacott, 2011, p.45）
@@ -67,7 +68,7 @@ Doxa 是场域中被视为**理所当然的正统或常识**——"某些知识�
 
 ### 资本（Capital）
 
-资本是在场域中被视为**最有价值的资源**（Eacott, 2011, p.48）。
+详见 [[Cultural Capital]]。资本是在场域中被视为**最有价值的资源**（Eacott, 2011, p.48）。
 
 - 资本的形式和定义随场域变化而变化——在学校领导力中，资本日益**以经济语言被定义**
 - 学校领导者倾向于"通过获取资本来维持和推进学校/个体的相对位置"——但由于资本的定义日益由经济和政治场域设定，这进一步巩固了外部场域的支配（Eacott, 2011, p.50-51）
@@ -100,11 +101,15 @@ Doxa 是场域中被视为**理所当然的正统或常识**——"某些知识�
 
 - [[Argument_Eacott_2011_JEAH]] — 以 Bourdieu 场域/习性/doxa 框架分析 NSW 校长培养，论证"替代性领导习性"的必要性
 - [[Argument_Eacott_2015_EPT]] — 以 Bourdieu 认识论预备（断裂、警觉、前建构对象）论证教育行政研究需重新审视其智识凝视的知识生产条件
+- [[Argument_郑_2023_上海三联书店]] — 郑雅君以 Bourdieu 实践理论（习性、场域、文化资本）和 Swidler 文化工具箱为核心框架，基于 62 名中国精英大学毕业生跟踪访谈，分析阶层习性如何塑造两种上大学模式及其出路后果
 
 ## 应用领域
 
 - [[School Leadership]] — Bourdieu 框架揭示校长位于多重场域交叉点的结构性困境（"双重绑定"）
 - [[New Public Management in Education]] — Bourdieu 框架解释 NPM 如何通过 doxa 和资本定义的转换渗透教育场域
+- [[Goal-Controlled Mode]] — 郑雅君 (2023) 以习性概念为核心，揭示中国精英大学中优势阶层学生如何通过内化的文化图式策略性地组织大学生活
+- [[Intuition-Dependent Mode]] — 郑雅君 (2023) 以习性概念解释低阶层学生在大学中的被动实践模式
+- [[Cultural Barrier in Higher Education]] — 郑雅君 (2023) 以文化资本概念分析中国一流大学中因隐性文化技能缺失而造成的无形障碍
 
 ## 来源
 

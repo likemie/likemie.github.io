@@ -115,9 +115,11 @@ processed_date: 2026-04-30
 
 ```
 1. 读取 vault-schema.md（规则，必读）
-2. 检查用户指令或文件是否标注「专著」或「(Ed.)」：
-   有标注 → 读取 wiki/book-schema.md，按书籍流程处理，不继续以下步骤
-   无标注 → 继续以下论文流程
+2. 检查触发条件：
+   看到「(Ed.)」标注 → 读取 books/schema-edited-volume.md，按论文集流程处理，不继续以下步骤
+   看到「专著」标注 → 读取 books/schema-monograph-pdf.md，按专著 PDF 流程处理，不继续以下步骤
+   文件为 .epub 格式 → 读取 books/schema-monograph-epub.md，按专著 epub 流程处理，不继续以下步骤
+   以上均无 → 继续以下论文流程
 
 3. 用 Python 提取 PDF 文本：
    python3 -c "
@@ -141,6 +143,11 @@ processed_date: 2026-04-30
 
 8. 处理待更新列表（逐条执行）：
    读取条目文件
+   → 检查格式是否符合当前规范，不符合则顺带更新：
+      - 章节之间是否有 `---` 分割线，没有则补上
+      - 时间线类章节事件 ≥ 8 条但尚未用 callout 分期，则重构为 callout
+      - 有具体数字的关键数据是否已用 `[!info]` callout 高亮，没有则补上
+      - 原文引用是否已用 blockquote 格式，没有则补上
    → 检查各章节是否需要重构（分点 ≥ 8 条未分子主题？有重复？顺序混乱？）
    → 需要重构 → 先用 str_replace 重构章节，再写入新内容
    → 写入前必须先声明（不可跳过）：
@@ -440,8 +447,13 @@ Method 容易被忽略，扫描论文时须主动识别：
 
 ## 书籍处理
 
-用户会在文件或指令中标注 **专著** 或 **(Ed.)** 来说明书籍类型，无需 AI 自行判断。
-遇到此标注时，读取 `wiki/book-schema.md` 并按对应流程处理。
+看到以下标识或格式时，读取对应 schema 文件，不继续论文流程：
+
+| 触发条件 | 读取文件 |
+|---------|---------|
+| 用户标注「(Ed.)」 | `books/schema-edited-volume.md` |
+| 用户标注「专著」 | `books/schema-monograph-pdf.md` |
+| 文件为 `.epub` 格式 | `books/schema-monograph-epub.md` |
 
 ---
 

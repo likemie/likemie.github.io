@@ -3,12 +3,12 @@ title: Pierre Bourdieu
 type: person
 tags: [Pierre Bourdieu, sociology, paradigm/critical, region/france]
 related_theories: [["[[Bourdieu's Social Theory]]"]]
-related_concepts: ["[[School Leadership]]", "[[New Public Management in Education]]"]
+related_concepts: ["[[School Leadership]]", "[[New Public Management in Education]]", "[[Habitus]]", "[[Cultural Capital]]", "[[Field (Bourdieu)]]", "[[Goal-Controlled Mode]]", "[[Intuition-Dependent Mode]]", "[[Cultural Barrier in Higher Education]]"]
 sources: ["sources/Eacott_2011_JEAH.md"]
 confidence: medium
 status: draft
 created: 2026-05-02
-updated: 2026-05-02
+updated: 2026-05-08
 ---
 
 ## 简介
@@ -31,7 +31,9 @@ Bourdieu 对学校的基本立场：学校通过将社会分裂自然化——"�
 ## 主要贡献
 
 - [[Bourdieu's Social Theory]] — 场域-习性-资本-doxa 四位一体的社会分析框架，超越主观主义与客观主义的二元对立
-- **文化资本（Cultural Capital）** 概念——解释教育如何不是中立的精英选拔机制，而是文化资本的再生产机制（在 Eacott 论文中未详述，是 Bourdieu 更广泛的理论贡献）
+- [[Habitus]] — 具身化的行为倾向系统，连接社会结构与个体实践的中枢概念
+- [[Cultural Capital]] — 揭示教育如何不是中立的精英选拔机制，而是文化资本的再生产机制
+- [[Field (Bourdieu)]] — 界定具有相对自主性和自身游戏规则的社会空间，为分析特定社会领域提供方法论工具
 - **反思性社会学（Reflexive Sociology）**——研究者必须反思自身在场域中的位置和利益，以避免"将社会世界自然化"
 
 ## 主要著作
@@ -51,6 +53,7 @@ Bourdieu 对学校的基本立场：学校通过将社会分裂自然化——"�
 - Blackmore（2010）以 Bourdieu 框架诊断教育场域自主性的系统性丧失
 - Eacott（2011）将 Bourdieu 的社会理论系统应用于学校领导力培养分析，论证"替代性领导习性"的必要性——提出学校领导力培养应从"组织问题解决"转向"教育问题提出与争辩"
 - Gunter & Forrester（2010）运用 Bourdieu 的"实践逻辑"分析教育改革
+- 郑雅君（2023）将 Bourdieu 的实践理论（习性、场域、文化资本）系统应用于中国精英大学生毕业出路分化的微观过程分析，原创性地提出目标掌控模式与直觉依赖模式的双模式框架，论证了文化障碍如何通过阶层习性在大学场域中制造不平等
 
 ## 争议与批评
 
