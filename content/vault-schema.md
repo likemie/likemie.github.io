@@ -503,3 +503,18 @@ frontmatter 层面：
 - 例：新建 `[[Vygotsky]]` 条目，须去 `[[建构主义]]` 的「发展脉络」章节确认已有 `[[Vygotsky]]` 链接
 - 反向链接放在最相关的章节，用 str_replace 插入，不重写整个条目
 - 若反向条目尚不存在，记录在当前条目的正文中，等该条目建立后补链接
+---
+
+## Quartz 渲染注意事项
+
+写入 md 文件时，以下符号会导致 Quartz 构建失败或渲染异常，必须避免：
+
+**颜色值**：`#ccc` 等以 `#` 开头的颜色值会被 Obsidian 误解析为 wikilink → 改用 `rgb(204,204,204)` 等 rgb 格式
+
+**内联 script 引号**：script 标签内的引号会被 Quartz 转义为 `&quot;` 导致 JS 语法错误 → 改用 `data-` 属性传参，所有逻辑移至外部 js 文件
+
+**`&` 符号**：内联 script 中的 `&` 会被 Quartz 转义为 `&amp;` → 所有含 `&` 的逻辑移至外部 js 文件
+
+**`$` 符号**：HTML 属性或内联 script 中的 `$` 可能被 Quartz 的 LaTeX 插件误判为数学公式 → 避免在 HTML 内容中使用
+
+**DOI 及 URL 中的特殊字符**：md 文件中的 DOI 链接（如 `https://doi.org/10.1080/03057925`）里含有的 `/` 或其他字符，若被 Quartz 误判为标签或路径，会导致该文件构建失败 → 将含特殊字符的 URL 放在 frontmatter 的 `doi:` 字段或用反引号包裹，不直接暴露在正文中；或将该文件夹加入 `quartz.config.ts` 的 `ignorePatterns`

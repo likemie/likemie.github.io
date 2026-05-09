@@ -8,7 +8,7 @@
 - apublish_date: 2018-07-18
 - source: Compare: A Journal of Comparative and International Education
 - keywords: 成人学生；高等教育；中国；文化资本；面子
-- summary: 在中国国家增长和高等教育投资扩大的背景下，越来越多的成人学生寻求进入大学接受教育。鉴于当代中国社会经济和政治领域，尤其是高等教育部门发生的深刻变化，本研究探讨中国成人大学生的经历，并提出一个看似简单的问题：这些学生为何在毕业离校时没有接受高等教育，却选择在成年后重返大学。文章基于对20名中国成人大学生的传记式访谈，考察其进入高等教育背后的抱负、动机与困境。研究重新审视布迪厄关于“继承性”和“获得性”文化资本的观点，并结合中国文化中的“面子”概念，指出家庭和社会网络是影响成人学生高等教育取向的决定性因素。
+- summary: 在中国国家增长和高等教育投资扩大的背景下，越来越多的成人学生寻求进入大学接受教育。鉴于当代中国社会经济和政治领域，尤其是高等教育部门发生的深刻变化，本研究探讨中国成人大学生的经历，并提出一个看似简单的问题:这些学生为何在毕业离校时没有接受高等教育，却选择在成年后重返大学。文章基于对20名中国成人大学生的传记式访谈，考察其进入高等教育背后的抱负、动机与困境。研究重新审视布迪厄关于“继承性”和“获得性”文化资本的观点，并结合中国文化中的“面子”概念，指出家庭和社会网络是影响成人学生高等教育取向的决定性因素。
 - tag: 高等教育，终身学习
 - fujian: 10.1080_03057925.2018.1490999.pdf
 - isbn: 
@@ -26,7 +26,7 @@
 ## 文献002
 - type: 期刊论文
 - area: 印度尼西亚
-- title: 后苏哈托时代印度尼西亚多元文化教育的政治：一项关于华人少数群体的研究
+- title: 后苏哈托时代印度尼西亚多元文化教育的政治:一项关于华人少数群体的研究
 - author: Tracey Yani Harjatanaya，Chang-Yau Hoon
 - author_mark: Tracey Yani Harjatanaya¹，Chang-Yau Hoon²
 - author_info: 1.牛津大学教育系    2.文莱达鲁萨兰大学高级研究中心
@@ -82,7 +82,7 @@
 - author_info: 1.韩国外国语大学教育学院教师教育项目    2.首尔市立大学教育研究生院    3.明尼苏达大学组织领导、政策与发展系比较与国际发展教育专业
 - apublish_date: 2018-09-17
 - source: Compare: A Journal of Comparative and International Education
-- keywords: 留学；职业认同；国际职业；“超越即时影响：全球参与中的留学”项目
+- keywords: 留学；职业认同；国际职业；“超越即时影响:全球参与中的留学”项目
 - summary: 本研究以职业认同发展为理论视角，探讨美国留学参与者回国后如何作出教育和职业选择。基于SAGE项目的37次个人访谈，研究发现留学参与者发展了自身职业认同，并据此作出与教育和职业路径相关的决策。他们对自我、目标以及进一步教育和未来职业兴趣形成了清晰理解，这有助于他们选择自己希望进入并认为最适合的工作环境。在许多情况下，他们选择了具有国际取向的职业。此外，基于对自身以及目的地国家具体情境经历的更深入理解，参与者形成了重视公共利益和社区影响的工作价值观。研究结果表明，有必要结合相关理论理解留学经历的意义以及学习如何发生。
 - tag: 高等教育，国际教育，高校就业
 - fujian: 10.1080_03057925.2018.1502608.pdf
@@ -101,7 +101,7 @@
 ## 文献005
 - type: 期刊论文
 - area: 埃及
-- title: 教师学习团队中的协作互动与自我导向探索：基于维果茨基理论分析的中等收入国家案例研究
+- title: 教师学习团队中的协作互动与自我导向探索:基于维果茨基理论分析的中等收入国家案例研究
 - author: Eleanore Hargreaves，Dalia Elhawary
 - author_mark: Eleanore Hargreaves¹，Dalia Elhawary²
 - author_info: 1.伦敦大学学院教育学院课程、教学法与评价系    2.亚历山大大学课程与教学系
@@ -151,7 +151,7 @@
 ## 文献007
 - type: 期刊论文
 - area: 尼日利亚
-- title: 尼日利亚北部小学完成与升学障碍：来自非正规学校干预的证据
+- title: 尼日利亚北部小学完成与升学障碍:来自非正规学校干预的证据
 - author: Masooda Bano
 - author_mark: Masooda Bano¹
 - author_info: 1.牛津大学国际发展系与布雷齐诺斯学院发展研究专业
@@ -176,7 +176,7 @@
 ## 文献008
 - type: 期刊论文
 - area: 丹麦，肯尼亚
-- title: 专业认同中的时刻与运动：丹麦和肯尼亚教师教育中专业身份的形成与成为教师
+- title: 专业认同中的时刻与运动:丹麦和肯尼亚教师教育中专业身份的形成与成为教师
 - author: Kari Kragh Blume Dahl
 - author_mark: Kari Kragh Blume Dahl¹
 - author_info: 1.奥胡斯大学丹麦教育学院
@@ -228,7 +228,7 @@
 ## 文献010
 - type: 期刊论文
 - area: 综合
-- title: 社会背景对教育获得与教育成就影响的跨国差异：绝对不平等、相对不平等与教育制度的作用
+- title: 社会背景对教育获得与教育成就影响的跨国差异:绝对不平等、相对不平等与教育制度的作用
 - author: Jan Paul Heisig，Benjamin Elbers，Heike Solga
 - author_mark: Jan Paul Heisig¹，Benjamin Elbers²，Heike Solga³
 - author_info: 1.WZB柏林社会科学中心健康与社会不平等研究组    2.哥伦比亚大学社会学系    3.柏林自由大学；WZB柏林社会科学中心技能形成与劳动力市场系
@@ -303,7 +303,7 @@
 ## 文献013
 - type: 期刊论文
 - area: 西班牙
-- title: 过度教育、技能与社会背景：父母教育对西班牙过度教育的影响
+- title: 过度教育、技能与社会背景:父母教育对西班牙过度教育的影响
 - author: Queralt Capsada-Munsech
 - author_mark: Queralt Capsada-Munsech¹
 - author_info: 1.杜伦大学社会学系
@@ -328,7 +328,7 @@
 ## 文献014
 - type: 期刊论文
 - area: 综合
-- title: 跨国描绘过度教育与技能过剩的挑战：基于PIAAC的批判性方法
+- title: 跨国描绘过度教育与技能过剩的挑战:基于PIAAC的批判性方法
 - author: Alvaro Choi，Juan Guio，Josep-Oriol Escardibul
 - author_mark: Alvaro Choi¹，Juan Guio²，Josep-Oriol Escardibul³
 - author_info: 1.巴塞罗那大学经济学系    2.哥伦比亚中央大学经济学系    3.巴塞罗那大学经济学系；巴塞罗那经济研究所
@@ -353,7 +353,7 @@
 ## 文献015
 - type: 期刊论文
 - area: 综合
-- title: 劳动力市场制度与“人岗匹配”的挑战：来自28个工业化国家关于劳动力市场制度与最优技能匹配关系的证据
+- title: 劳动力市场制度与“人岗匹配”的挑战:来自28个工业化国家关于劳动力市场制度与最优技能匹配关系的证据
 - author: Marie-Christine Fregin，Mark Levels，Rolf van der Velden
 - author_mark: Marie-Christine Fregin¹，Mark Levels¹，Rolf van der Velden¹
 - author_info: 1.马斯特里赫特大学教育与劳动力市场研究中心
@@ -378,7 +378,7 @@
 ## 文献016
 - type: 期刊论文
 - area: 智利
-- title: 新兴国家的劳动力市场错配：智利案例
+- title: 新兴国家的劳动力市场错配:智利案例
 - author: María-Paola Sevilla，Mauricio Farías
 - author_mark: María-Paola Sevilla¹，Mauricio Farías²
 - author_info: 1.阿尔韦托·乌尔塔多大学教育学院学校政策与发展系    2.Impulso-Tek基金会
@@ -403,14 +403,14 @@
 ## 文献017
 - type: 期刊论文
 - area: 缅甸
-- title: 教育的第三张面孔：超越冲突与后冲突社会中的好/坏二元划分
+- title: 教育的第三张面孔:超越冲突与后冲突社会中的好/坏二元划分
 - author: Rosalie Metro
 - author_mark: Rosalie Metro¹
 - author_info: 1.密苏里大学哥伦比亚分校学习、教学与课程系
 - apublish_date: 2019-08-29
 - source: Compare: A Journal of Comparative and International Education
 - keywords: 冲突社会；后冲突社会；和平建设；历史教育；课程
-- summary: 本文重新审视一个具有影响力的观点，即冲突和后冲突社会中的教育具有“两张面孔”：它既可能助长暴力，也可能支持和平建设。Metro认为，这种二元区分虽有价值但并不完整，因为教育常常以更暧昧和矛盾的方式发挥作用。基于作者在受缅甸冲突影响社群中开展历史教育和课程工作的经验，文章提出教育的“第三张面孔”：教育可能同时产生有害和建设性影响，具体取决于知识、身份、记忆和权力如何在实践中被协商。文章尤其关注历史教学，因为它可能再生产排他性民族叙事并加深怨恨，也可能为对话、承认与和解创造空间。文章主张，研究者和实践者不应仅追问教育对和平是“好”还是“坏”，而应考察具体情境、行动者、课程和课堂过程如何塑造冲突动态。总体而言，本文为和平建设和比较教育研究提供了理解教育在分裂社会中复杂作用的更细致框架。
+- summary: 本文重新审视一个具有影响力的观点，即冲突和后冲突社会中的教育具有“两张面孔”:它既可能助长暴力，也可能支持和平建设。Metro认为，这种二元区分虽有价值但并不完整，因为教育常常以更暧昧和矛盾的方式发挥作用。基于作者在受缅甸冲突影响社群中开展历史教育和课程工作的经验，文章提出教育的“第三张面孔”:教育可能同时产生有害和建设性影响，具体取决于知识、身份、记忆和权力如何在实践中被协商。文章尤其关注历史教学，因为它可能再生产排他性民族叙事并加深怨恨，也可能为对话、承认与和解创造空间。文章主张，研究者和实践者不应仅追问教育对和平是“好”还是“坏”，而应考察具体情境、行动者、课程和课堂过程如何塑造冲突动态。总体而言，本文为和平建设和比较教育研究提供了理解教育在分裂社会中复杂作用的更细致框架。
 - tag: 课程，全球治理，基础教育
 - fujian: 10.1080_03057925.2019.1657317.pdf
 - isbn: 
@@ -429,7 +429,7 @@
 ## 文献018
 - type: 期刊论文
 - area: 澳大利亚，芬兰，日本，韩国
-- title: PISA的另一面：澳大利亚、芬兰、日本和韩国教育跨国吸引的审视
+- title: PISA的另一面:澳大利亚、芬兰、日本和韩国教育跨国吸引的审视
 - author: Edward Rock Davis，Rachel Wilson，Bronwen Dalton
 - author_mark: Edward Rock Davis¹，Rachel Wilson¹，Bronwen Dalton¹
 - author_info: 1.悉尼大学教育与社会工作学院
@@ -454,7 +454,7 @@
 ## 文献019
 - type: 期刊论文
 - area: 加纳
-- title: 促进学生成功：评估加纳高中音乐与舞蹈教育的教育成效
+- title: 促进学生成功:评估加纳高中音乐与舞蹈教育的教育成效
 - author: Jennifer L. Petrie
 - author_mark: Jennifer L. Petrie¹
 - author_info: 1.匹兹堡大学工商管理学院
@@ -479,7 +479,7 @@
 ## 文献020
 - type: 期刊论文
 - area: 哈萨克斯坦，吉尔吉斯斯坦，塔吉克斯坦
-- title: 中亚教育研究：哈萨克斯坦、吉尔吉斯斯坦和塔吉克斯坦的方法论与伦理困境
+- title: 中亚教育研究:哈萨克斯坦、吉尔吉斯斯坦和塔吉克斯坦的方法论与伦理困境
 - author: Dilrabo Jonbekova
 - author_mark: Dilrabo Jonbekova¹
 - author_info: 1.纳扎尔巴耶夫大学教育研究生院
@@ -504,7 +504,7 @@
 ## 文献021
 - type: 期刊论文
 - area: 中国，澳大利亚
-- title: 在两种体系之间学习：一名中国学生在中澳衔接项目中的反思性叙事
+- title: 在两种体系之间学习:一名中国学生在中澳衔接项目中的反思性叙事
 - author: Kun Dai
 - author_mark: Kun Dai¹
 - author_info: 1.昆士兰大学教育学院
@@ -529,7 +529,7 @@
 ## 文献022
 - type: 期刊论文
 - area: 英国，瑞典
-- title: 学校教育中的参与平等与走向日常化：英格兰和瑞典难民教育政策与实践比较
+- title: 学校教育中的参与平等与走向日常化:英格兰和瑞典难民教育政策与实践比较
 - author: Joanna McIntyre，Sinikka Neuhaus，Katarina Blennow
 - author_mark: Joanna McIntyre¹，Sinikka Neuhaus²，Katarina Blennow²
 - author_info: 1.诺丁汉大学教育学院    2.隆德大学教育科学系
@@ -554,7 +554,7 @@
 ## 文献023
 - type: 期刊论文
 - area: 中国
-- title: 知识本位与学生中心之争中的素质教育：中国课程改革的争议
+- title: 知识本位与学生中心之争中的素质教育:中国课程改革的争议
 - author: Guopeng Fu
 - author_mark: Guopeng Fu¹
 - author_info: 1.华东师范大学教师教育学院
@@ -579,7 +579,7 @@
 ## 文献024
 - type: 期刊论文
 - area: 中国香港
-- title: 香港青少年的未来公民参与：抗议活动算不算？
+- title: 香港青少年的未来公民参与:抗议活动算不算？
 - author: Xiaoxue Kuang，Kerry Kennedy
 - author_mark: Xiaoxue Kuang¹，Kerry Kennedy²
 - author_info: 1.东莞理工学院师范学院；香港教育大学    2.香港教育大学；约翰内斯堡大学教育学院
@@ -631,7 +631,7 @@
 ## 文献026
 - type: 期刊论文
 - area: 南非，巴西
-- title: 高等教育国际化中的殖民遗产：南非与巴西的种族正义和地缘政治补偿
+- title: 高等教育国际化中的殖民遗产:南非与巴西的种族正义和地缘政治补偿
 - author: Upenyu S. Majee，Susanne B. Ress
 - author_mark: Upenyu S. Majee¹，Susanne B. Ress²
 - author_info: 1.威斯康星大学麦迪逊分校教育学院教育政策研究系    2.柏林洪堡大学教育学院比较与国际教育中心
@@ -656,7 +656,7 @@
 ## 文献027
 - type: 期刊论文
 - area: 印度
-- title: 前进一步，后退两步：印度农村家庭、学前教育与小学教育之间的过渡
+- title: 前进一步，后退两步:印度农村家庭、学前教育与小学教育之间的过渡
 - author: Benjamin Alcott，Manjistha Banerji，Suman Bhattacharjea，Mansi Nanda，Purnima Ramanujan
 - author_mark: Benjamin Alcott¹，Manjistha Banerji²，Suman Bhattacharjea³，Mansi Nanda³，Purnima Ramanujan³
 - author_info: 1.剑桥大学教育学院    2.国家应用经济研究委员会    3.ASER中心
@@ -681,7 +681,7 @@
 ## 文献028
 - type: 期刊论文
 - area: 综合
-- title: 职业教育中的平等与多样性：六个欧洲国家培训者与受训者态度的跨文化比较
+- title: 职业教育中的平等与多样性:六个欧洲国家培训者与受训者态度的跨文化比较
 - author: Margret Fine-Davis，Daniel Faas
 - author_mark: Margret Fine-Davis¹，Daniel Faas¹
 - author_info: 1.都柏林圣三一学院社会学系
@@ -731,7 +731,7 @@
 ## 文献030
 - type: 期刊论文
 - area: 孟加拉国
-- title: 考试的仪式化：反思孟加拉国高风险英语语言测试
+- title: 考试的仪式化:反思孟加拉国高风险英语语言测试
 - author: Md. Maksud Ali，M. Obaidul Hamid，Ian Hardy
 - author_mark: Md. Maksud Ali¹，M. Obaidul Hamid²，Ian Hardy²
 - author_info: 1.昆士兰大学教育学院；吉大港国际伊斯兰大学英语语言文学系    2.昆士兰大学教育学院
@@ -763,7 +763,7 @@
 - apublish_date: 2018-11-26
 - source: Compare: A Journal of Comparative and International Education
 - keywords: 新管理主义；全球大学排名；人文社会科学；科研评价；中国
-- summary: 本文探讨全球排名活动中所包含的科研卓越评价对中国人文社会科学学者的影响，这种评价是新管理主义特征性的控制策略。研究结合关键事件技术和基于互联网的话语分析，利用大众媒体文本和社交媒体讨论作为资料。分析识别出中国建设世界一流大学的愿景在复杂社会政治背景中可能给人文社会科学学者造成的三大困境：第一，高度集中的体制限制学者决定研究主题和发表渠道的自主权；第二，学者需要同时回应民族主义利益并进行国际发表，因而处于冲突之中；第三，意识形态正确性具有高度重要性。这些发现促使我们反思大学排名作为大学治理方式对许多情境中人文社会科学学者产生的深远影响。
+- summary: 本文探讨全球排名活动中所包含的科研卓越评价对中国人文社会科学学者的影响，这种评价是新管理主义特征性的控制策略。研究结合关键事件技术和基于互联网的话语分析，利用大众媒体文本和社交媒体讨论作为资料。分析识别出中国建设世界一流大学的愿景在复杂社会政治背景中可能给人文社会科学学者造成的三大困境:第一，高度集中的体制限制学者决定研究主题和发表渠道的自主权；第二，学者需要同时回应民族主义利益并进行国际发表，因而处于冲突之中；第三，意识形态正确性具有高度重要性。这些发现促使我们反思大学排名作为大学治理方式对许多情境中人文社会科学学者产生的深远影响。
 - tag: 高等教育，教育评价，教育管理
 - fujian: 10.1080_03057925.2018.1538770.pdf
 - isbn: 
@@ -781,14 +781,14 @@
 ## 文献032
 - type: 期刊论文
 - area: 摩尔多瓦
-- title: 国际高等教育奖学金后“回馈”祖国：比较摩尔多瓦国内与海外校友对参与社会和经济变革的认知
+- title: 国际高等教育奖学金后“回馈”祖国:比较摩尔多瓦国内与海外校友对参与社会和经济变革的认知
 - author: Anne C. Campbell
 - author_mark: Anne C. Campbell¹
 - author_info: 1.明德大学蒙特雷国际研究学院国际政策与管理研究生院
 - apublish_date: 2018-11-28
 - source: Compare: A Journal of Comparative and International Education
 - keywords: 国际学生流动；高等教育；人力资本发展；社会和经济发展；摩尔多瓦；东欧
-- summary: 本质性研究比较已返回摩尔多瓦居住的国际奖学金校友与海外校友，探讨接受西方高等教育的毕业生如何看待自己对祖国社会和经济发展的贡献。结果表明，居住国家会影响个体对祖国贡献的认知：校友认为居住在摩尔多瓦的人更能有效创造变革，而居住海外会削弱其影响力。值得注意的是，一些毕业生将日常生活中应对摩尔多瓦艰难处境等同于为国家发展作贡献。此外，文章提出“循环流动”，即在摩尔多瓦开展短期参与，可能是从海外推动变革的有前景路径。最后，受访者报告称，流动决策十分艰难，因为他们会考虑除“回馈”愿望之外的多重因素。研究结果为理解国际高等教育，尤其是奖学金项目在促进中低收入国家发展方面的长期效能提供了细致见解。
+- summary: 本质性研究比较已返回摩尔多瓦居住的国际奖学金校友与海外校友，探讨接受西方高等教育的毕业生如何看待自己对祖国社会和经济发展的贡献。结果表明，居住国家会影响个体对祖国贡献的认知:校友认为居住在摩尔多瓦的人更能有效创造变革，而居住海外会削弱其影响力。值得注意的是，一些毕业生将日常生活中应对摩尔多瓦艰难处境等同于为国家发展作贡献。此外，文章提出“循环流动”，即在摩尔多瓦开展短期参与，可能是从海外推动变革的有前景路径。最后，受访者报告称，流动决策十分艰难，因为他们会考虑除“回馈”愿望之外的多重因素。研究结果为理解国际高等教育，尤其是奖学金项目在促进中低收入国家发展方面的长期效能提供了细致见解。
 - tag: 高等教育，国际教育，战略人才
 - fujian: 10.1080_03057925.2018.1540925.pdf
 - isbn: 
@@ -806,7 +806,7 @@
 ## 文献033
 - type: 期刊论文
 - area: 澳大利亚，新西兰，美国
-- title: 幼儿的公民身份成员资格与参与：澳大利亚、新西兰和美国早期儿童课程话语比较
+- title: 幼儿的公民身份成员资格与参与:澳大利亚、新西兰和美国早期儿童课程话语比较
 - author: Louise Gwenneth Phillips，Jenny Ritchie，Jennifer Keys Adair
 - author_mark: Louise Gwenneth Phillips¹，Jenny Ritchie²，Jennifer Keys Adair³
 - author_info: 1.昆士兰大学教育学院    2.惠灵顿维多利亚大学教育学院    3.德克萨斯大学奥斯汀分校教育学院
@@ -833,7 +833,7 @@
 ## 文献034
 - type: 期刊论文
 - area: 综合
-- title: 全纳教育：超越系统的思考
+- title: 全纳教育:超越系统的思考
 - author: Anna Robinson-Pant
 - author_mark: Anna Robinson-Pant¹
 - author_info: 1.东安格利亚大学教育与终身学习学院
@@ -858,7 +858,7 @@
 ## 文献035
 - type: 期刊论文
 - area: 厄立特里亚
-- title: 教师国家：在厄立特里亚及其他地区教育与军事化融合中穿行
+- title: 教师国家:在厄立特里亚及其他地区教育与军事化融合中穿行
 - author: Jennifer Riggan
 - author_mark: Jennifer Riggan¹
 - author_info: 1.阿卡迪亚大学历史与政治研究系
@@ -883,7 +883,7 @@
 ## 文献036
 - type: 期刊论文
 - area: 泰国
-- title: 存在、适应与发展满意度：泰国高等教育体系中外籍教师的综述
+- title: 存在、适应与发展满意度:泰国高等教育体系中外籍教师的综述
 - author: James Burford，Ganon Koompraphant，Worrawan Jirathanapiwat
 - author_mark: James Burford¹，Ganon Koompraphant²，Worrawan Jirathanapiwat²
 - author_info: 1.法政大学学习科学与教育学院；拉筹伯大学研究教育与发展部    2.法政大学学习科学与教育学院
@@ -908,7 +908,7 @@
 ## 文献037
 - type: 期刊论文
 - area: 综合
-- title: 教育与国际发展中种族主义的抹除：重读“全球学习危机”
+- title: 教育与国际发展中种族主义的抹除:重读“全球学习危机”
 - author: Arathi Sriprakash，Leon Tikly，Sharon Walker
 - author_mark: Arathi Sriprakash¹，Leon Tikly²，Sharon Walker¹
 - author_info: 1.剑桥大学教育学院    2.布里斯托大学教育学院
@@ -1008,7 +1008,7 @@
 ## 文献041
 - type: 期刊论文
 - area: 英国，东亚
-- title: “新东方主义”：教育政策借鉴与东亚表征
+- title: “新东方主义”:教育政策借鉴与东亚表征
 - author: Yun You
 - author_mark: Yun You¹
 - author_info: 1.华东师范大学教育学部
@@ -1033,14 +1033,14 @@
 ## 文献042
 - type: 期刊论文
 - area: 综合
-- title: “国际学校教育”的持续增长与发展：“过渡阶段”概念
+- title: “国际学校教育”的持续增长与发展:“过渡阶段”概念
 - author: Tristan Bunnell
 - author_mark: Tristan Bunnell¹
 - author_info: 1.巴斯大学
 - apublish_date: 2020-01-13
 - source: Compare: A Journal of Comparative and International Education
 - keywords: 国际学校教育；国际学校；过渡阶段；教育市场化；国际课程
-- summary: 本文考察国际学校教育的快速且持续扩张，并认为该领域已进入一个独特的“过渡阶段”。国际学校教育不再只是主要服务外籍人士或全球流动家庭的小型领域，而是日益成为一个大型、市场导向的部门，服务于寻求英语授课、国际课程和通往海外高等教育路径的本地中产阶层和精英家庭。Bunnell指出，这种增长改变了该领域的性质：国际学校不再仅由流动性、跨文化理想或非国家化教育使命来界定，也受到家长需求、私人投资、竞争定位以及本地对全球优势的追求所塑造。因此，文章呼吁以更批判的方式理解国际学校教育，将其视为一种正在变化的社会和教育现象。其主要贡献在于说明，国际学校教育的扩张不仅是数量增长，也是该部门目的、服务对象、所有权和身份的质性转变。
+- summary: 本文考察国际学校教育的快速且持续扩张，并认为该领域已进入一个独特的“过渡阶段”。国际学校教育不再只是主要服务外籍人士或全球流动家庭的小型领域，而是日益成为一个大型、市场导向的部门，服务于寻求英语授课、国际课程和通往海外高等教育路径的本地中产阶层和精英家庭。Bunnell指出，这种增长改变了该领域的性质:国际学校不再仅由流动性、跨文化理想或非国家化教育使命来界定，也受到家长需求、私人投资、竞争定位以及本地对全球优势的追求所塑造。因此，文章呼吁以更批判的方式理解国际学校教育，将其视为一种正在变化的社会和教育现象。其主要贡献在于说明，国际学校教育的扩张不仅是数量增长，也是该部门目的、服务对象、所有权和身份的质性转变。
 - tag: 国际教育，民办教育，高等教育
 - fujian: 10.1080_03057925.2020.1712890.pdf
 - isbn: 
@@ -1060,7 +1060,7 @@
 ## 文献043
 - type: 期刊论文
 - area: 芬兰，挪威，瑞典
-- title: 北欧基础教育的流动图景：通过教育专家叙事探讨不断变化的国际影响
+- title: 北欧基础教育的流动图景:通过教育专家叙事探讨不断变化的国际影响
 - author: Petteri Hansen，Tommi Wallenius，Sara Juvonen，Janne Varjo
 - author_mark: Petteri Hansen¹，Tommi Wallenius¹，Sara Juvonen¹，Janne Varjo¹
 - author_info: 1.赫尔辛基大学教育科学学院
@@ -1085,7 +1085,7 @@
 ## 文献044
 - type: 期刊论文
 - area: 尼泊尔
-- title: 质询质量：尼泊尔的少数族群语言、教育与能力想象
+- title: 质询质量:尼泊尔的少数族群语言、教育与能力想象
 - author: Uma Pradhan
 - author_mark: Uma Pradhan¹
 - author_info: 1.牛津大学利弗休姆早期职业研究员
@@ -1110,7 +1110,7 @@
 ## 文献045
 - type: 期刊论文
 - area: 综合
-- title: 青少年对学业高成就学生的社会感知：一项国家与性别比较研究
+- title: 青少年对学业高成就学生的社会感知:一项国家与性别比较研究
 - author: Hyerim Oh，Margaret Sutherland，Niamh Stack，Maria del Mar Badia Martín，Sheyla Blumen，Quoc Anh-Thu Nguyen，Catherine Wormald，Julie Maakrun，Albert Ziegler
 - author_mark: Hyerim Oh¹，Margaret Sutherland²，Niamh Stack³，Maria del Mar Badia Martín⁴，Sheyla Blumen⁵，Quoc Anh-Thu Nguyen⁶，Catherine Wormald⁷，Julie Maakrun⁸，Albert Ziegler¹
 - author_info: 1.埃尔朗根-纽伦堡大学教育心理学与卓越研究系    2.格拉斯哥大学教育学院    3.格拉斯哥大学心理学院    4.巴塞罗那自治大学基础、发展与教育心理学系    5.秘鲁天主教大学心理学系    6.希尔德加德-冯-宾根-安格尔小学    7.伍伦贡大学教育学院    8.澳大利亚圣母大学教育学院
@@ -1135,7 +1135,7 @@
 ## 文献046
 - type: 期刊论文
 - area: 中国澳门
-- title: 外国的月亮更圆：中国学者对国际化的认知
+- title: 外国的月亮更圆:中国学者对国际化的认知
 - author: Yan Wang，Min-Chuan Sung，Keang-Ieng Peggy Vong
 - author_mark: Yan Wang¹，Min-Chuan Sung¹，Keang-Ieng Peggy Vong¹
 - author_info: 1.澳门大学教育学院
@@ -1160,7 +1160,7 @@
 ## 文献047
 - type: 期刊论文
 - area: 加纳
-- title: 教师教育中的存在与生成：加纳一所教育学院中师范生的学习自由
+- title: 教师教育中的存在与生成:加纳一所教育学院中师范生的学习自由
 - author: Alison Buckler
 - author_mark: Alison Buckler¹
 - author_info: 1.开放大学福祉、教育与语言研究学院
@@ -1185,7 +1185,7 @@
 ## 文献048
 - type: 期刊论文
 - area: 哥伦比亚
-- title: 哥伦比亚全球公民教育的兴起：来自既有教育政策的经验
+- title: 哥伦比亚全球公民教育的兴起:来自既有教育政策的经验
 - author: Jana De Poorter，Nicolás Aguilar-Forero
 - author_mark: Jana De Poorter¹，Nicolás Aguilar-Forero²
 - author_info: 1.阿姆斯特丹大学社会科学研究生院    2.安第斯大学教育学院
@@ -1210,7 +1210,7 @@
 ## 文献049
 - type: 期刊论文
 - area: 柬埔寨
-- title: 柬埔寨非政府组织基于权利路径的变革性学习：一项多尺度分析
+- title: 柬埔寨非政府组织基于权利路径的变革性学习:一项多尺度分析
 - author: Rikio Kimura
 - author_mark: Rikio Kimura¹
 - author_info: 1.立命馆亚洲太平洋大学亚太研究学院
@@ -1235,7 +1235,7 @@
 ## 文献050
 - type: 期刊论文
 - area: 加拿大，俄罗斯
-- title: 相似但不同：蒙特利尔和莫斯科青少年学生的社会关系与成就动机
+- title: 相似但不同:蒙特利尔和莫斯科青少年学生的社会关系与成就动机
 - author: Olga Bakadorova，Frances Hoferichter，Diana Raufelder
 - author_mark: Olga Bakadorova¹，Frances Hoferichter¹，Diana Raufelder¹
 - author_info: 1.格赖夫斯瓦尔德大学学校教育系
@@ -1286,7 +1286,7 @@
 ## 文献052
 - type: 期刊论文
 - area: 南非
-- title: 南非学生从农村背景进入并贯穿高等教育的过渡：协商误认
+- title: 南非学生从农村背景进入并贯穿高等教育的过渡:协商误认
 - author: Emmanuel M. Mgqwashu，Sue Timmis，Thea de Wet，Nkosinathi Emmanuel Madondo
 - author_mark: Emmanuel M. Mgqwashu¹，Sue Timmis²，Thea de Wet³，Nkosinathi Emmanuel Madondo⁴
 - author_info: 1.西北大学教学与学习中心、学院教学与学习支持部门    2.布里斯托大学教育学院知识、文化与社会中心    3.约翰内斯堡大学人文学院学术技术中心    4.罗德大学教育学院
@@ -1311,7 +1311,7 @@
 ## 文献053
 - type: 期刊论文
 - area: 南非
-- title: “你必须改变，课程却保持不变”：南非高等教育中的去殖民性与课程正义
+- title: “你必须改变，课程却保持不变”:南非高等教育中的去殖民性与课程正义
 - author: Kibashini Naidoo，Sheila Trahar，Lisa Lucas，Patricia Muhuro，Gina Wisker
 - author_mark: Kibashini Naidoo¹，Sheila Trahar²，Lisa Lucas²，Patricia Muhuro³，Gina Wisker⁴
 - author_info: 1.约翰内斯堡大学学术人员发展中心    2.布里斯托大学教育学院    3.福特海尔大学教学与学习中心    4.布莱顿大学学习与教学中心
@@ -1336,7 +1336,7 @@
 ## 文献054
 - type: 期刊论文
 - area: 综合
-- title: 探索全球化高等教育中的农村性与族群性：博士研究论文中的意识形态、交叉性与叙事
+- title: 探索全球化高等教育中的农村性与族群性:博士研究论文中的意识形态、交叉性与叙事
 - author: Catherine Montgomery
 - author_mark: Catherine Montgomery¹
 - author_info: 1.杜伦大学教育学院
@@ -1361,7 +1361,7 @@
 ## 文献055
 - type: 期刊论文
 - area: 格鲁吉亚，哈萨克斯坦
-- title: 集中化大学招生背景下的农村劣势：格鲁吉亚与哈萨克斯坦的多案例研究
+- title: 集中化大学招生背景下的农村劣势:格鲁吉亚与哈萨克斯坦的多案例研究
 - author: Maia Chankseliani，Sophia Gorgodze，Simon Janashia，Kairat Kurakbayev
 - author_mark: Maia Chankseliani¹，Sophia Gorgodze²，Simon Janashia³，Kairat Kurakbayev⁴
 - author_info: 1.牛津大学教育系    2.伊利亚国立大学商业、技术与教育学院及国家评估与考试中心    3.高加索大学高加索教育学院    4.哥伦比亚大学教师学院
@@ -1411,7 +1411,7 @@
 ## 文献057
 - type: 期刊论文
 - area: 澳大利亚
-- title: 感知到的社区对澳大利亚农村学生高等教育决策的影响：探究社区、学校与家庭
+- title: 感知到的社区对澳大利亚农村学生高等教育决策的影响:探究社区、学校与家庭
 - author: Krystle Turner
 - author_mark: Krystle Turner¹
 - author_info: 1.昆士兰科技大学创意产业学院
@@ -1436,7 +1436,7 @@
 ## 文献058
 - type: 期刊论文
 - area: 智利
-- title: 被遗忘之地的不确定未来：智利农村情境中的教育政策与学生主体性研究
+- title: 被遗忘之地的不确定未来:智利农村情境中的教育政策与学生主体性研究
 - author: Juan de Dios Oyarzún
 - author_mark: Juan de Dios Oyarzún¹
 - author_info: 1.智利天主教大学教育正义高级研究中心
@@ -1468,7 +1468,7 @@
 - apublish_date: 2020-03-25
 - source: Compare: A Journal of Comparative and International Education
 - keywords: 公共教育改革；私人教育竞争；影子教育；韩国；教育公平；学校化社会
-- summary: 本文考察当代学校教育体系中公共教育改革与私人教育竞争之间的张力。作者主要聚焦韩国，认为有效且公平的公共教育扩张并未减少私人教育投入，反而强化了家庭对私人补习和其他“影子教育”服务的需求。韩国被呈现为一个特别具有启示性的案例，因为它兼具强有力、集中化且表现相对较高的公共学校体系，以及极高水平的家庭私人教育支出。文章指出，这一表面矛盾并不只是政策失败，而是“学校化社会”的结构性特征；在这种社会中，教育已成为社会流动、地位竞争和人生机会的核心。通过简要比较韩国与美国，作者进一步认为，公共供给与私人优势追求之间的互动可能是不同教育体系中的更广泛模式。总体而言，文章表明教育改革者面临一个悖论：旨在促进公平和改进公共学校教育的政策，也可能产生新的私人竞争和社会分层形式。
+- summary: 本文考察当代学校教育体系中公共教育改革与私人教育竞争之间的张力。作者主要聚焦韩国，认为有效且公平的公共教育扩张并未减少私人教育投入，反而强化了家庭对私人补习和其他“影子教育”服务的需求。韩国被呈现为一个特别具有启示性的案例，因为它兼具强有力、集中化且表现相对较高的公共学校体系，以及极高水平的家庭私人教育支出。文章指出，这一表面矛盾并不只是政策失败，而是“学校化社会”的结构性特征；在这种社会中，教育已成为社会流动、地位竞争和人生机会的核心。通过简要比较韩国与美国，作者进一步认为，公共供给与私人优势追求之间的互动可能是不同教育体系中的更广泛模式。总体而言，文章表明教育改革者面临一个悖论:旨在促进公平和改进公共学校教育的政策，也可能产生新的私人竞争和社会分层形式。
 - tag: 基础教育，教育财政，教育管理
 - fujian: 10.1080_03057925.2020.1733797.pdf
 - isbn: 
@@ -1513,7 +1513,7 @@
 ## 文献061
 - type: 期刊论文
 - area: 韩国，朝鲜
-- title: 新时代的旧叙事：韩国社会研究教科书中朝鲜与统一的表征
+- title: 新时代的旧叙事:韩国社会研究教科书中朝鲜与统一的表征
 - author: Yeji Kim
 - author_mark: Yeji Kim¹
 - author_info: 1.哥伦比亚大学教师学院社会研究教育系
@@ -1588,7 +1588,7 @@
 ## 文献064
 - type: 期刊论文
 - area: 厄瓜多尔，巴拉圭
-- title: PISA发展版在厄瓜多尔和巴拉圭的吸引力：全球归属仪式的理论化与应用
+- title: PISA发展版在厄瓜多尔和巴拉圭的吸引力:全球归属仪式的理论化与应用
 - author: Camilla Addey
 - author_mark: Camilla Addey¹
 - author_info: 1.哥伦比亚大学教师学院国际与跨文化研究系
@@ -1613,14 +1613,14 @@
 ## 文献065
 - type: 期刊论文
 - area: 哥伦比亚
-- title: 论跨文化性与去殖民性：巴卡塔学校中的智者与政府对土著知识的保护
+- title: 论跨文化性与去殖民性:巴卡塔学校中的智者与政府对土著知识的保护
 - author: Pedro Pineda，Jorge Celis，Lina Rangel
 - author_mark: Pedro Pineda¹，Jorge Celis²，Lina Rangel³
 - author_info: 1.卡塞尔大学国际高等教育研究中心    2.哥伦比亚国立大学社会学系高中与高等教育研究组    3.独立研究者
 - apublish_date: 2019-03-18
 - source: Compare: A Journal of Comparative and International Education
 - keywords: 土著知识；后殖民主义；学校治理；身份；教育政策；文化多样性
-- summary: 土著群体的教育议程与学校教育扩张之间存在张力。作者采用民族志方法，分析一项旨在特大城市中保护土著知识的教育项目。该项目推动由社区本土教育顾问“apoyo pedagógico”开展日常活动，并由“sabedor”（智者）进行监督。该项目似乎能够：（1）运用跨文化性概念，使混血儿童和土著儿童都学会认识彼此被殖民主义遮蔽的文化遗产；（2）解决双语教师不足这一核心问题；（3）预防农村地区民族教育教师培训项目中常见的基础技能薄弱问题。本土语言得到了保护，但仍需加强语言、计算、艺术、营养、伦理和政治参与课程的共同设计。作者最后反思了旨在保护濒危土著文化的项目所需的制度稳定性。
+- summary: 土著群体的教育议程与学校教育扩张之间存在张力。作者采用民族志方法，分析一项旨在特大城市中保护土著知识的教育项目。该项目推动由社区本土教育顾问“apoyo pedagógico”开展日常活动，并由“sabedor”（智者）进行监督。该项目似乎能够:（1）运用跨文化性概念，使混血儿童和土著儿童都学会认识彼此被殖民主义遮蔽的文化遗产；（2）解决双语教师不足这一核心问题；（3）预防农村地区民族教育教师培训项目中常见的基础技能薄弱问题。本土语言得到了保护，但仍需加强语言、计算、艺术、营养、伦理和政治参与课程的共同设计。作者最后反思了旨在保护濒危土著文化的项目所需的制度稳定性。
 - tag: 民族教育，课程，教育管理
 - fujian: 10.1080_03057925.2019.1585758.pdf
 - isbn: 
@@ -1638,7 +1638,7 @@
 ## 文献066
 - type: 期刊论文
 - area: 南非
-- title: 南非低收入农村青年向城市大学迁移：机会与不平等
+- title: 南非低收入农村青年向城市大学迁移:机会与不平等
 - author: Melanie Walker，Mikateko Mathebula
 - author_mark: Melanie Walker¹，Mikateko Mathebula¹
 - author_info: 1.自由州大学高等教育与人类发展南非研究讲席研究项目
@@ -1690,7 +1690,7 @@
 ## 文献068
 - type: 期刊论文
 - area: 综合
-- title: 教育领导、行政与管理国际知识基础图谱：一种地形学视角
+- title: 教育领导、行政与管理国际知识基础图谱:一种地形学视角
 - author: Meng Tian，Stephan Gerhard Huber
 - author_mark: Meng Tian¹，Stephan Gerhard Huber²
 - author_info: 1.巴斯大学教育系    2.楚格师范大学教育管理与经济研究所
@@ -1715,7 +1715,7 @@
 ## 文献069
 - type: 期刊论文
 - area: 尼泊尔
-- title: 尼泊尔教育治理：弱政府、捐助者伙伴关系与标准化评估
+- title: 尼泊尔教育治理:弱政府、捐助者伙伴关系与标准化评估
 - author: Kapil Dev Regmi
 - author_mark: Kapil Dev Regmi¹
 - author_info: 1.不列颠哥伦比亚大学教育研究系
@@ -1740,7 +1740,7 @@
 ## 文献070
 - type: 期刊论文
 - area: 综合
-- title: 全球流动的不平等：国际学生大学教育意义中的社会经济分层
+- title: 全球流动的不平等:国际学生大学教育意义中的社会经济分层
 - author: Chris R. Glass，Bernhard Streitwieser，Anita Gopal
 - author_mark: Chris R. Glass¹，Bernhard Streitwieser²，Anita Gopal³
 - author_info: 1.老道明大学教育基础与领导系    2.乔治华盛顿大学教育与人类发展研究生院    3.马里兰大学帕克分校
@@ -1790,7 +1790,7 @@
 ## 文献072
 - type: 期刊论文
 - area: 埃塞俄比亚
-- title: 埃塞俄比亚教师教育中预期课程与达成课程之间的知识差距：识别未来发展的挑战
+- title: 埃塞俄比亚教师教育中预期课程与达成课程之间的知识差距:识别未来发展的挑战
 - author: Mekbib Alemu，Vanessa Kind，Mesfin Basheh，Kassa Michael，Mulugeta Atnafu，Per Kind，Taha Rajab
 - author_mark: Mekbib Alemu¹，Vanessa Kind²，Mesfin Basheh¹，Kassa Michael¹，Mulugeta Atnafu¹，Per Kind²，Taha Rajab²
 - author_info: 1.亚的斯亚贝巴大学自然科学学院    2.杜伦大学教育学院
@@ -1822,7 +1822,7 @@
 - apublish_date: 2019-04-26
 - source: Compare: A Journal of Comparative and International Education
 - keywords: 女性领导者；非正式网络；性别与领导；高等教育领导
-- summary: 本文采用定性横向比较案例研究方法，探讨中亚高校女性领导者的经历，以识别她们在职位转换和履职过程中面临的挑战、挑战来源以及女性领导者经历中的差异。研究结果与其他国家既有研究基本一致，但该地区女性经历具有一个独特特征：不同于其他情境中的女性，中亚女性必须处理多套相互矛盾的性别期待。研究还表明，非正式权力网络的某些运作规则可能为女性晋升制造障碍。现有西方理论难以解释阻碍女性发展的非正式交换网络动态。本文的贡献在于为分析学术界女性领导力引入了新的理论视角。
+- summary: 本文采用定性横向比较案例研究方法，探讨中亚高校女性领导者的经历，以识别她们在职位转换和履职过程中面临的挑战、挑战来源以及女性领导者经历中的差异。研究结果与其他国家既有研究基本一致，但该地区女性经历具有一个独特特征:不同于其他情境中的女性，中亚女性必须处理多套相互矛盾的性别期待。研究还表明，非正式权力网络的某些运作规则可能为女性晋升制造障碍。现有西方理论难以解释阻碍女性发展的非正式交换网络动态。本文的贡献在于为分析学术界女性领导力引入了新的理论视角。
 - tag: 高等教育，教育管理，战略人才
 - fujian: 10.1080_03057925.2019.1599820.pdf
 - isbn: 
@@ -1840,7 +1840,7 @@
 ## 文献074
 - type: 期刊论文
 - area: 中东
-- title: 特殊教育需要与全球中产阶级：在中东地方、国家和全球公民身份之间穿行
+- title: 特殊教育需要与全球中产阶级:在中东地方、国家和全球公民身份之间穿行
 - author: Dina Kiwan
 - author_mark: Dina Kiwan¹
 - author_info: 1.伯明翰大学教育与社会正义系
@@ -1865,7 +1865,7 @@
 ## 文献075
 - type: 期刊论文
 - area: 综合
-- title: 教育中的规模化与“系统思维”：来自英国援助专业人员的反思
+- title: 教育中的规模化与“系统思维”:来自英国援助专业人员的反思
 - author: Emma Gibbs，Charlotte Jones，Jess Atkinson，Ian Attfield，Rona Bronwin，Rachel Hinton，Amy Potter，Laura Savage
 - author_mark: Emma Gibbs¹，Charlotte Jones¹，Jess Atkinson²，Ian Attfield²，Rona Bronwin²，Rachel Hinton²，Amy Potter²，Laura Savage²
 - author_info: 1.教育发展信托    2.国际发展部
@@ -1891,7 +1891,7 @@
 ## 文献076
 - type: 期刊论文
 - area: 综合
-- title: 国家政策中高等教育学生的建构：一项跨欧洲比较
+- title: 国家政策中高等教育学生的建构:一项跨欧洲比较
 - author: Rachel Brooks
 - author_mark: Rachel Brooks¹
 - author_info: 1.萨里大学社会学系
@@ -1916,7 +1916,7 @@
 ## 文献077
 - type: 期刊论文
 - area: 巴林，卡塔尔
-- title: 购买、销售与外包教育改革：海湾地区的全球教育产业与“政策借鉴”
+- title: 购买、销售与外包教育改革:海湾地区的全球教育产业与“政策借鉴”
 - author: Maryam Mohamed，Paul Morris
 - author_mark: Maryam Mohamed¹，Paul Morris¹
 - author_info: 1.伦敦大学学院教育学院
@@ -1941,7 +1941,7 @@
 ## 文献078
 - type: 期刊论文
 - area: 越南，泰国，马来西亚
-- title: 越南、泰国和马来西亚三所国际大学讲师的专业身份：工作中的多语专业人员
+- title: 越南、泰国和马来西亚三所国际大学讲师的专业身份:工作中的多语专业人员
 - author: Jane Evison，Lucy Bailey，Pimsiri Taylor，Tida Tubpun
 - author_mark: Jane Evison¹，Lucy Bailey²，Pimsiri Taylor³，Tida Tubpun⁴
 - author_info: 1.诺丁汉大学教育学院    2.巴林大学巴林教师学院    3.法政大学语言学院    4.法政大学学习科学与教育学院
@@ -1966,14 +1966,14 @@
 ## 文献079
 - type: 期刊论文
 - area: 芬兰，韩国，美国
-- title: 芬兰、韩国和美国成人学习与教育政策环境的变化：对解决成人学习与教育参与不平等的启示
+- title: 芬兰、韩国和美国成人学习与教育政策环境的变化:对解决成人学习与教育参与不平等的启示
 - author: Jeongwoo Lee，Richard Desjardins
 - author_mark: Jeongwoo Lee¹，Richard Desjardins²
 - author_info: 1.釜山国立大学教育系    2.加州大学洛杉矶分校教育系
 - apublish_date: 2019-05-20
 - source: Compare: A Journal of Comparative and International Education
 - keywords: 成人学习与教育；参与不平等；政策变化；政策环境
-- summary: 本文通过文献综述，探讨成人学习与教育政策及相关过程的变化，以及这些变化发生的背景，以提炼关于成人学习与教育参与不平等分布的比较性见解。文章重点分析芬兰、韩国和美国成人学习与教育中的政治优先事项、政治—行政指导方针以及组织和行政维度。尽管研究识别出各国差异，但若干趋同现象同样重要：成人学习与教育被优先视为支持市场驱动政策的手段，即增强全球化市场中的竞争力；各国通过立法努力回应劳动力市场对技能型和胜任型劳动力发展的需求；成人学习与教育相关的组织和行政结构趋向分权；公共资助的成人学习与教育呈下降趋势。
+- summary: 本文通过文献综述，探讨成人学习与教育政策及相关过程的变化，以及这些变化发生的背景，以提炼关于成人学习与教育参与不平等分布的比较性见解。文章重点分析芬兰、韩国和美国成人学习与教育中的政治优先事项、政治—行政指导方针以及组织和行政维度。尽管研究识别出各国差异，但若干趋同现象同样重要:成人学习与教育被优先视为支持市场驱动政策的手段，即增强全球化市场中的竞争力；各国通过立法努力回应劳动力市场对技能型和胜任型劳动力发展的需求；成人学习与教育相关的组织和行政结构趋向分权；公共资助的成人学习与教育呈下降趋势。
 - tag: 终身学习，教育管理，国际教育
 - fujian: 10.1080_03057925.2019.1610356.pdf
 - isbn: 
@@ -2016,7 +2016,7 @@
 ## 文献081
 - type: 期刊论文
 - area: 韩国，英国，中国香港
-- title: 韩国、英格兰和香港教育服务外包：一种话语制度主义分析
+- title: 韩国、英格兰和香港教育服务外包:一种话语制度主义分析
 - author: Agnieszka Bates，Tae-Hee Choi，Yong Kim
 - author_mark: Agnieszka Bates¹，Tae-Hee Choi²，Yong Kim³
 - author_info: 1.东英吉利大学教育与终身学习学院    2.香港教育大学教育政策与领导系    3.清州教育大学初等教育系
@@ -2041,7 +2041,7 @@
 ## 文献082
 - type: 期刊论文
 - area: 综合
-- title: 多元文化教育研究现状：一项内容分析
+- title: 多元文化教育研究现状:一项内容分析
 - author: Huseyin Uzunboylu，Ozge Altay
 - author_mark: Huseyin Uzunboylu¹，Ozge Altay²
 - author_info: 1.近东大学开放与远程教育学院    2.近东大学教育科学研究所课程与教学系
@@ -2066,7 +2066,7 @@
 ## 文献083
 - type: 期刊论文
 - area: 法国，荷兰，德国
-- title: 德国博士候选人进入外国高等教育系统的轨迹：法国与荷兰的比较研究
+- title: 德国博士候选人进入外国高等教育系统的轨迹:法国与荷兰的比较研究
 - author: Gregor Schäfer，Yasmin El Dali
 - author_mark: Gregor Schäfer¹，Yasmin El Dali¹
 - author_info: 1.锡根大学社会科学系
@@ -2092,7 +2092,7 @@
 ## 文献084
 - type: 期刊论文
 - area: 秘鲁，厄瓜多尔
-- title: 克丘亚语中的教师、教材与正字法选择：跨越数十年比较秘鲁和厄瓜多尔的双语跨文化教育
+- title: 克丘亚语中的教师、教材与正字法选择:跨越数十年比较秘鲁和厄瓜多尔的双语跨文化教育
 - author: Nicholas Limerick，Nancy H. Hornberger
 - author_mark: Nicholas Limerick¹，Nancy H. Hornberger²
 - author_info: 1.哥伦比亚大学教师学院人类学与教育及国际与比较教育项目    2.宾夕法尼亚大学教育研究生院教育语言学系
@@ -2117,7 +2117,7 @@
 ## 文献085
 - type: 期刊论文
 - area: 柬埔寨
-- title: 柬埔寨学生考试作弊：何时、如何以及为何发生
+- title: 柬埔寨学生考试作弊:何时、如何以及为何发生
 - author: Mitsuko Maeda
 - author_mark: Mitsuko Maeda¹
 - author_info: 1.大阪女学院大学国际与英语跨学科研究系
@@ -2142,7 +2142,7 @@
 ## 文献086
 - type: 期刊论文
 - area: 乌干达，墨西哥
-- title: 全球教育政策与地方现实：来自乌干达和墨西哥的洞见
+- title: 全球教育政策与地方现实:来自乌干达和墨西哥的洞见
 - author: Rosanne Elisabeth Tromp，Simone Datzberger
 - author_mark: Rosanne Elisabeth Tromp¹，Simone Datzberger²
 - author_info: 1.阿姆斯特丹自由大学法学院宪法与行政法系    2.伦敦大学学院教育学院教育与国际发展中心
@@ -2167,7 +2167,7 @@
 ## 文献087
 - type: 期刊论文
 - area: 综合
-- title: 冲突与和平交汇处的教育：1975—2017年非洲和平协议中教育条款的纳入与框定
+- title: 冲突与和平交汇处的教育:1975—2017年非洲和平协议中教育条款的纳入与框定
 - author: Emily Dunlop，Elisabeth King
 - author_mark: Emily Dunlop¹，Elisabeth King¹
 - author_info: 1.纽约大学应用统计、社会科学与人文学系
@@ -2192,7 +2192,7 @@
 ## 文献088
 - type: 期刊论文
 - area: 韩国
-- title: 理解全球政策窗口：韩国自由学期制考察
+- title: 理解全球政策窗口:韩国自由学期制考察
 - author: Chanwoong Baek
 - author_mark: Chanwoong Baek¹
 - author_info: 1.哥伦比亚大学教师学院国际与跨文化研究系
@@ -2217,7 +2217,7 @@
 ## 文献089
 - type: 期刊论文
 - area: 沙特阿拉伯
-- title: 促进人的发展的教育：沙特公立教育的能力视角
+- title: 促进人的发展的教育:沙特公立教育的能力视角
 - author: Saad Algraini
 - author_mark: Saad Algraini¹
 - author_info: 1.弗林德斯大学社会与政策研究学院
@@ -2242,7 +2242,7 @@
 ## 文献090
 - type: 期刊论文
 - area: 综合
-- title: 分段式奖励：可持续发展教育中的生命政治差异化
+- title: 分段式奖励:可持续发展教育中的生命政治差异化
 - author: Beniamin Knutsson
 - author_mark: Beniamin Knutsson¹
 - author_info: 1.哥德堡大学教育学、课程与专业研究系
@@ -2267,7 +2267,7 @@
 ## 文献091
 - type: 期刊论文
 - area: 中国
-- title: 初中中国历史教材中的意识形态与政治：比较21世纪出版的两个版本
+- title: 初中中国历史教材中的意识形态与政治:比较21世纪出版的两个版本
 - author: Shuqin Xu
 - author_mark: Shuqin Xu¹
 - author_info: 1.中山大学公共行政研究中心与政治与公共事务管理学院
@@ -2294,7 +2294,7 @@
 ## 文献092
 - type: 期刊论文
 - area: 乌克兰
-- title: 让我为你写博士论文：博士学位欺诈的微观成本收益分析
+- title: 让我为你写博士论文:博士学位欺诈的微观成本收益分析
 - author: Ararat L. Osipian
 - author_mark: Ararat L. Osipian¹
 - author_info: 1.威斯康星大学麦迪逊分校政治学系；国际教育研究所
@@ -2319,7 +2319,7 @@
 ## 文献093
 - type: 期刊论文
 - area: 综合
-- title: 跨37国及跨时间比较青少年阅读成就不平等：结果与机会
+- title: 跨37国及跨时间比较青少年阅读成就不平等:结果与机会
 - author: Anna Gromada，Gwyther Rees，Yekaterina Chzhen
 - author_mark: Anna Gromada¹，Gwyther Rees¹，Yekaterina Chzhen¹
 - author_info: 1.联合国儿童基金会因诺琴蒂研究办公室
@@ -2344,7 +2344,7 @@
 ## 文献094
 - type: 期刊论文
 - area: 巴基斯坦
-- title: 去殖民教学法与英语文学研究：巴基斯坦语境中的问题
+- title: 去殖民教学法与英语文学研究:巴基斯坦语境中的问题
 - author: Asma Mansoor，Muneera Bano
 - author_mark: Asma Mansoor¹，Muneera Bano²
 - author_info: 1.国际伊斯兰大学英语系    2.斯威本科技大学科学、工程与技术学院
@@ -2369,14 +2369,14 @@
 ## 文献095
 - type: 期刊论文
 - area: 中国，英国，墨西哥，西班牙
-- title: 在中国、英格兰、墨西哥和西班牙开展面向青年人的社会教育：不同情境下价值教育的相似路径
+- title: 在中国、英格兰、墨西哥和西班牙开展面向青年人的社会教育:不同情境下价值教育的相似路径
 - author: Eleanor Brown，Daibo Chen，Ian Davies，Angel Urbina Garcia，Isabel Munguia Godinez
 - author_mark: Eleanor Brown¹，Daibo Chen²，Ian Davies³，Angel Urbina Garcia⁴，Isabel Munguia Godinez³
 - author_info: 1.约克大学德文特学院教育系    2.华东政法大学马克思主义学院    3.约克大学教育系    4.赫尔大学艺术、文化与教育学院教育与社会科学学院
 - apublish_date: 2019-08-05
 - source: Compare: A Journal of Comparative and International Education
 - keywords: 价值教育；中国；英格兰；墨西哥；西班牙
-- summary: 本文首先讨论价值与价值教育的一般性质和意义，并进一步说明其在中国、英格兰、墨西哥和西班牙的具体含义，随后介绍用于分析适用于道德教育、公民教育和品格教育的官方政策的方法。研究发现，各国文件在五个与价值相关的主题上具有相似性：正义与法治、和谐与宽容、多样性与非歧视、国际理解以及平等。这些主题强调理解和认知，但对实施问题及主导价值和情境相关考量的优先地位关注有限。作者指出，各国都试图培养具有个人责任感的公民，同时还需要进一步研究教育者在实践中如何解读这些文件。
+- summary: 本文首先讨论价值与价值教育的一般性质和意义，并进一步说明其在中国、英格兰、墨西哥和西班牙的具体含义，随后介绍用于分析适用于道德教育、公民教育和品格教育的官方政策的方法。研究发现，各国文件在五个与价值相关的主题上具有相似性:正义与法治、和谐与宽容、多样性与非歧视、国际理解以及平等。这些主题强调理解和认知，但对实施问题及主导价值和情境相关考量的优先地位关注有限。作者指出，各国都试图培养具有个人责任感的公民，同时还需要进一步研究教育者在实践中如何解读这些文件。
 - tag: 道德教育，课程，国际教育
 - fujian: 10.1080_03057925.2019.1647513.pdf
 - isbn: 
@@ -2394,14 +2394,14 @@
 ## 文献096
 - type: 期刊论文
 - area: 刚果民主共和国
-- title: 不情愿的国家代表：教师对所经历暴力的感知（刚果民主共和国）
+- title: 不情愿的国家代表:教师对所经历暴力的感知（刚果民主共和国）
 - author: Cyril Owen Brandt
 - author_mark: Cyril Owen Brandt¹
 - author_info: 1.安特卫普大学发展政策研究所
 - apublish_date: 2019-08-07
 - source: Compare: A Journal of Comparative and International Education
 - keywords: 暴力；教师；教育；冲突；刚果民主共和国；国内流离失所
-- summary: 作者在刚果民主共和国东南部开展的质性研究表明，教师将自己所经历的暴力与其作为国家代表的角色联系起来。有三个因素引发民兵的不信任：识字能力、手机和流动性。据报告，民兵认为教师利用这些要素与军方合作。因此，本文将这些要素理解为国家性的象征，并展示了一个整体能力薄弱的国家如何通过国家形象对教师日常生活产生重要意义。由此，文章对那些在受冲突影响情境中以正常化和韧性为框架来理解教师重新部署的路径进行了批判性审视。由于教师无法摆脱其与国家的关联，他们生活在与曾经转而攻击他们且可能再次如此的人群之间令人不安的近距离关系中。由于冲突原因未得到解决，教师成为国家体系中不情愿的代表，而他们自身也在该体系中受到结构性忽视。
+- summary: 作者在刚果民主共和国东南部开展的质性研究表明，教师将自己所经历的暴力与其作为国家代表的角色联系起来。有三个因素引发民兵的不信任:识字能力、手机和流动性。据报告，民兵认为教师利用这些要素与军方合作。因此，本文将这些要素理解为国家性的象征，并展示了一个整体能力薄弱的国家如何通过国家形象对教师日常生活产生重要意义。由此，文章对那些在受冲突影响情境中以正常化和韧性为框架来理解教师重新部署的路径进行了批判性审视。由于教师无法摆脱其与国家的关联，他们生活在与曾经转而攻击他们且可能再次如此的人群之间令人不安的近距离关系中。由于冲突原因未得到解决，教师成为国家体系中不情愿的代表，而他们自身也在该体系中受到结构性忽视。
 - tag: 教师教育，全球治理，校园安全
 - fujian: 10.1080_03057925.2019.1649593.pdf
 - isbn: 
@@ -2419,7 +2419,7 @@
 ## 文献097
 - type: 期刊论文
 - area: 南非
-- title: 质询公共善与私人善的二分法：“黑人税”作为高等教育公共善
+- title: 质询公共善与私人善的二分法:“黑人税”作为高等教育公共善
 - author: Samuel N. Fongwa
 - author_mark: Samuel N. Fongwa¹
 - author_info: 1.人文科学研究委员会教育与技能发展部；威特沃特斯兰德大学教育与劳动研究中心
@@ -2444,7 +2444,7 @@
 ## 文献098
 - type: 期刊论文
 - area: 美国，日本
-- title: 留学与知识外交：提升对东道国、东道地区和世界的认知与连接
+- title: 留学与知识外交:提升对东道国、东道地区和世界的认知与连接
 - author: Sarah R. Asada
 - author_mark: Sarah R. Asada¹
 - author_info: 1.共立女子大学国际学部
@@ -2469,14 +2469,14 @@
 ## 文献099
 - type: 期刊论文
 - area: 中国
-- title: 教育中社会正义的概念化：道家视角
+- title: 教育中社会正义的概念化:道家视角
 - author: Charlene Tan
 - author_mark: Charlene Tan¹
 - author_info: 1.南洋理工大学国立教育学院政策与领导研究系
 - apublish_date: 2019-09-03
 - source: Compare: A Journal of Comparative and International Education
 - keywords: 道家；新自由主义；关系正义；社会正义；成道
-- summary: 针对非西方传统中关于社会正义哲学论述不足的研究空白，本文从道家视角概念化教育中的社会正义。文章借助中国经典《道德经》论证，道家通过强调作为“道”（成道）的正义而与关系正义相契合。作为成道的关系正义包含三个基本特征：摒弃一切形式的剥削和支配；依靠谦逊有礼的领导；并通过无为、无名和无欲来平衡自我与他人的需求和利益。文章进一步结合学校教育的新自由主义条件强调其关键教育启示。作者认为，从道家观点看，具有社会正义的学校反对产生并延续社会不公的分化、测量、竞争和个人主义，转而支持批判性对话、关联与和谐。
+- summary: 针对非西方传统中关于社会正义哲学论述不足的研究空白，本文从道家视角概念化教育中的社会正义。文章借助中国经典《道德经》论证，道家通过强调作为“道”（成道）的正义而与关系正义相契合。作为成道的关系正义包含三个基本特征:摒弃一切形式的剥削和支配；依靠谦逊有礼的领导；并通过无为、无名和无欲来平衡自我与他人的需求和利益。文章进一步结合学校教育的新自由主义条件强调其关键教育启示。作者认为，从道家观点看，具有社会正义的学校反对产生并延续社会不公的分化、测量、竞争和个人主义，转而支持批判性对话、关联与和谐。
 - tag: 道德教育，教育管理，国际教育
 - fujian: 10.1080_03057925.2019.1660144.pdf
 - isbn: 
@@ -2595,7 +2595,7 @@
 ## 文献104
 - type: 期刊论文
 - area: 阿富汗
-- title: 探索成人识字促进者的潜力：阿富汗赫拉特的一项民族志研究
+- title: 探索成人识字促进者的潜力:阿富汗赫拉特的一项民族志研究
 - author: Mohammad Naeim Maleki，Alan Rogers，Fariha Maleki
 - author_mark: Mohammad Naeim Maleki¹，Alan Rogers²，Fariha Maleki³
 - author_info: 1.赫拉特大学文学与人文学院英语文学系    2.东英吉利大学教育与终身学习学院    3.Eshraq大学文学与语言学院英语文学系
@@ -2645,7 +2645,7 @@
 ## 文献106
 - type: 期刊论文
 - area: 中国
-- title: 中国教师的想象：比较中国教育与其他教育体系的优劣
+- title: 中国教师的想象:比较中国教育与其他教育体系的优劣
 - author: Xi Wang，Ting Wang
 - author_mark: Xi Wang¹，Ting Wang²
 - author_info: 1.北京师范大学教育学部    2.北京师范大学教育学部
@@ -2670,14 +2670,14 @@
 ## 文献107
 - type: 期刊论文
 - area: 综合
-- title: 创业教育、制度与学生创业：一项跨国分析
+- title: 创业教育、制度与学生创业:一项跨国分析
 - author: Abu H. Ayob
 - author_mark: Abu H. Ayob¹
 - author_info: 1.马来西亚国立大学经济与管理学院
 - apublish_date: 2019-10-04
 - source: Compare: A Journal of Comparative and International Education
 - keywords: 创业教育；学生创业；制度理论；创业文化；营商便利度
-- summary: 尽管创业教育对学生创业行为的影响已有充分记录，但创业教育与学生创业相互作用所处的制度情境仍被忽视。理解这一情境十分关键，因为学生初创企业的普遍程度由大学内部和外部环境的多种因素共同决定。基于制度理论，本研究考察创业教育对学生创业率的影响，特别关注正式制度和非正式制度如何调节这一关系。通过分析2014年和2016年67个国家的样本，研究发现高水平创业教育和创业文化是促进学生创业的因素。此外，本研究揭示了两个重要发现：一是创业教育只有在高水平而非基础水平上开展时才会对学生产生影响；二是非正式制度对学生创业的影响强于正式制度。
+- summary: 尽管创业教育对学生创业行为的影响已有充分记录，但创业教育与学生创业相互作用所处的制度情境仍被忽视。理解这一情境十分关键，因为学生初创企业的普遍程度由大学内部和外部环境的多种因素共同决定。基于制度理论，本研究考察创业教育对学生创业率的影响，特别关注正式制度和非正式制度如何调节这一关系。通过分析2014年和2016年67个国家的样本，研究发现高水平创业教育和创业文化是促进学生创业的因素。此外，本研究揭示了两个重要发现:一是创业教育只有在高水平而非基础水平上开展时才会对学生产生影响；二是非正式制度对学生创业的影响强于正式制度。
 - tag: 创业教育，高等教育，国际教育
 - fujian: 10.1080_03057925.2019.1673701.pdf
 - isbn: 
@@ -2695,7 +2695,7 @@
 ## 文献108
 - type: 期刊论文
 - area: 中国香港
-- title: 国际学生在香港跨国学习中的身份协商：语言的作用
+- title: 国际学生在香港跨国学习中的身份协商:语言的作用
 - author: Chit Cheung Matthew Sung
 - author_mark: Chit Cheung Matthew Sung¹
 - author_info: 1.香港城市大学英语系
@@ -2722,7 +2722,7 @@
 ## 文献109
 - type: 期刊论文
 - area: 中国
-- title: “生活在平行世界中”：中国两所大学教师教育者学术发表经历研究
+- title: “生活在平行世界中”:中国两所大学教师教育者学术发表经历研究
 - author: Rui Yuan
 - author_mark: Rui Yuan¹
 - author_info: 1.香港教育大学英语语言教育系
@@ -2747,7 +2747,7 @@
 ## 文献110
 - type: 期刊论文
 - area: 津巴布韦
-- title: 农村非洲中等教育的人类发展与认知：津巴布韦案例研究
+- title: 农村非洲中等教育的人类发展与认知:津巴布韦案例研究
 - author: Patience Mukwambo
 - author_mark: Patience Mukwambo¹
 - author_info: 1.自由州大学南非研究讲席高等教育与人类发展研究小组
@@ -2772,14 +2772,14 @@
 ## 文献111
 - type: 期刊论文
 - area: 中国
-- title: “这是加分项而非必需项”：中国主流学校教师对补充性英语教育中宣传性教育理念影响的看法
+- title: “这是加分项而非必需项”:中国主流学校教师对补充性英语教育中宣传性教育理念影响的看法
 - author: Jiahui Luo，Karen Forbes
 - author_mark: Jiahui Luo¹，Karen Forbes¹
 - author_info: 1.剑桥大学教育学院
 - apublish_date: 2019-10-24
 - source: Compare: A Journal of Comparative and International Education
 - keywords: 补充教育；影子教育；英语教育；教育理念；主流学校教育
-- summary: 近年来补充教育迅速兴起，在中国媒体景观中带来了引人注目的现象：包括教学法和教学理想在内的教育理念被广泛营销，并日益被用作衡量教育“质量”的基准。本研究探讨中国为小学生提供补充性英语教育的公司如何宣传教育理念，并考察主流学校教师如何看待这些理念对主流学校教育的影响。研究首先通过调查10家领先补充性英语教育公司的网站绘制教育理念图谱，随后访谈6名主流学校教师。研究构建了一个图式化范式，用以概括被宣传的教育理念，显示中国英语教育正朝着更具互动性和实践性的方向自下而上发展。访谈结果识别出其对主流学校教育影响的三个关键层面：制度层面，包括加速教学改革；人际层面，如加剧教师与家长之间的紧张关系；以及个体对语言教育的看法层面。
+- summary: 近年来补充教育迅速兴起，在中国媒体景观中带来了引人注目的现象:包括教学法和教学理想在内的教育理念被广泛营销，并日益被用作衡量教育“质量”的基准。本研究探讨中国为小学生提供补充性英语教育的公司如何宣传教育理念，并考察主流学校教师如何看待这些理念对主流学校教育的影响。研究首先通过调查10家领先补充性英语教育公司的网站绘制教育理念图谱，随后访谈6名主流学校教师。研究构建了一个图式化范式，用以概括被宣传的教育理念，显示中国英语教育正朝着更具互动性和实践性的方向自下而上发展。访谈结果识别出其对主流学校教育影响的三个关键层面:制度层面，包括加速教学改革；人际层面，如加剧教师与家长之间的紧张关系；以及个体对语言教育的看法层面。
 - tag: 校外教育，语言教育，基础教育
 - fujian: 10.1080_03057925.2019.1681937.pdf
 - isbn: 
@@ -2797,7 +2797,7 @@
 ## 文献112
 - type: 期刊论文
 - area: 美国，瑞士
-- title: 职业教育教师培养的重点：美国与瑞士职业教育教师教育比较
+- title: 职业教育教师培养的重点:美国与瑞士职业教育教师教育比较
 - author: Anna Keller，Chris Zirkle，Antje Barabasch
 - author_mark: Anna Keller¹，Chris Zirkle²，Antje Barabasch¹
 - author_info: 1.瑞士联邦职业教育与培训研究所研究与发展部    2.俄亥俄州立大学教育研究系
@@ -2822,7 +2822,7 @@
 ## 文献113
 - type: 期刊论文
 - area: 埃塞俄比亚
-- title: 塑造教师：影响埃塞俄比亚教师实施全面性教育政策的因素
+- title: 塑造教师:影响埃塞俄比亚教师实施全面性教育政策的因素
 - author: Marielle L. J. Le Mat，Esther A. J. Miedema，Siyane A. Amentie，Hülya Kosar-Altinyelken
 - author_mark: Marielle L. J. Le Mat¹，Esther A. J. Miedema²，Siyane A. Amentie³，Hülya Kosar-Altinyelken¹
 - author_info: 1.阿姆斯特丹大学儿童发展与教育系    2.阿姆斯特丹大学阿姆斯特丹社会科学研究所    3.亚的斯亚贝巴大学比较与国际教育系
@@ -2847,7 +2847,7 @@
 ## 文献114
 - type: 期刊论文
 - area: 津巴布韦
-- title: 高等教育国际化与国家发展：津巴布韦案例
+- title: 高等教育国际化与国家发展:津巴布韦案例
 - author: Simon McGrath，Juliet Thondhlana，Evelyn Garwe
 - author_mark: Simon McGrath¹，Juliet Thondhlana²，Evelyn Garwe³
 - author_info: 1.诺丁汉大学教育学院；西开普大学教育学院    2.诺丁汉大学教育学院    3.津巴布韦高等教育委员会
@@ -2872,7 +2872,7 @@
 ## 文献115
 - type: 期刊论文
 - area: 加拿大，中国
-- title: 加拿大私立中学中的中国国际学生：成为灵活公民？
+- title: 加拿大私立中学中的中国国际学生:成为灵活公民？
 - author: Xi Wu，Paul Tarc
 - author_mark: Xi Wu¹，Paul Tarc²
 - author_info: 1.华东师范大学教育学部    2.西安大略大学教育学院
@@ -2897,7 +2897,7 @@
 ## 文献116
 - type: 期刊论文
 - area: 中国
-- title: 全球化高等教育部门的可通约化：大学排名如何在中国充当世界一流地位的资质凭证
+- title: 全球化高等教育部门的可通约化:大学排名如何在中国充当世界一流地位的资质凭证
 - author: Ryan M. Allen
 - author_mark: Ryan M. Allen¹
 - author_info: 1.查普曼大学唐娜·福特·阿塔拉教育研究学院
@@ -2924,7 +2924,7 @@
 ## 文献117
 - type: 期刊论文
 - area: 中国香港
-- title: 身份、公民参与与公民身份学习：香港大学生的经验
+- title: 身份、公民参与与公民身份学习:香港大学生的经验
 - author: Suyan Pan
 - author_mark: Suyan Pan¹
 - author_info: 1.香港教育大学博文及社会科学学院社会科学系
@@ -2999,7 +2999,7 @@
 ## 文献120
 - type: 期刊论文
 - area: 玻利维亚
-- title: 与地方社区共同发展契合情境的和平教育倡议：来自玻利维亚的经验
+- title: 与地方社区共同发展契合情境的和平教育倡议:来自玻利维亚的经验
 - author: Phill Gittins
 - author_mark: Phill Gittins¹
 - author_info: 1.超越战争世界教育部
@@ -3024,7 +3024,7 @@
 ## 文献121
 - type: 期刊论文
 - area: 综合
-- title: 科学权威与国际组织合法性：全球教育治理中的经合组织、联合国教科文组织和世界银行
+- title: 科学权威与国际组织合法性:全球教育治理中的经合组织、联合国教科文组织和世界银行
 - author: Mike Zapp
 - author_mark: Mike Zapp¹
 - author_info: 1.卢森堡大学教育与社会研究所；约翰斯·霍普金斯大学当代德国研究所
@@ -3049,7 +3049,7 @@
 ## 文献122
 - type: 期刊论文
 - area: 沙特阿拉伯
-- title: 沙特中产阶级的学前教育策略：动员资本、协商文化任意性与预期变革
+- title: 沙特中产阶级的学前教育策略:动员资本、协商文化任意性与预期变革
 - author: Maryam J. Alharthi，Yann Lebeau
 - author_mark: Maryam J. Alharthi¹，Yann Lebeau²
 - author_info: 1.塔伊巴大学儿童研究系    2.东英吉利大学教育与终身学习学院
