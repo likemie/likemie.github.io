@@ -9,23 +9,22 @@ export const sharedPageComponents: SharedLayout = {
     Component.Comments({
       provider: "giscus",
       options: {
-        repo: "likemie/vault-notes",
-        repoId: "R_kgDOSVkrBw",
+        repo: "likemie/likemie.github.io",
+        repoId: "R_kgDOSVn4zg",
         category: "Announcements",
-        categoryId: "DIC_kwDOSVkrB84C9qZT",
+        categoryId: "DIC_kwDOSVn4zs4C9qeb",
         mapping: "pathname",
         strict: "0",
         reactionsEnabled: "1",
         inputPosition: "bottom",
         theme: "preferred_color_scheme",
         lang: "zh-CN",
-        loading: "lazy",
       },
     }),
   ],
   footer: Component.Footer({
     links: {
-      GitHub: "https://github.com/likemie/vault-notes",
+      GitHub: "https://github.com/likemie/likemie.github.io",
     },
   }),
 }
@@ -63,7 +62,7 @@ export const defaultContentPageLayout: PageLayout = {
   ],
 }
 
-// components for pages that display lists of pages (e.g. tags or folders)
+// components for pages that display lists of pages  (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
   beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
   left: [
