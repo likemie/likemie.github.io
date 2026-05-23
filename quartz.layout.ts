@@ -5,11 +5,27 @@ import * as Component from "./quartz/components"
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
-  afterBody: [],
+  afterBody: [
+    Component.Comments({
+      provider: "giscus",
+      options: {
+        repo: "likemie/vault-notes",
+        repoId: "R_kgDOSVkrBw",
+        category: "Announcements",
+        categoryId: "DIC_kwDOSVkrB84C9qZT",
+        mapping: "pathname",
+        strict: "0",
+        reactionsEnabled: "1",
+        inputPosition: "bottom",
+        theme: "preferred_color_scheme",
+        lang: "zh-CN",
+        loading: "lazy",
+      },
+    }),
+  ],
   footer: Component.Footer({
     links: {
-      GitHub: "https://github.com/jackyzha0/quartz",
-      "Discord Community": "https://discord.gg/cRFFHYye7t",
+      GitHub: "https://github.com/likemie/vault-notes",
     },
   }),
 }
@@ -47,7 +63,7 @@ export const defaultContentPageLayout: PageLayout = {
   ],
 }
 
-// components for pages that display lists of pages  (e.g. tags or folders)
+// components for pages that display lists of pages (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
   beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
   left: [
