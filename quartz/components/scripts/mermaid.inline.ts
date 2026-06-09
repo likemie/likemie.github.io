@@ -219,22 +219,19 @@ document.addEventListener("nav", async () => {
       {} as Record<(typeof cssVars)[number], string>,
     )
 
+    const darkMode = document.documentElement.getAttribute("saved-theme") === "dark"
     mermaid.initialize({
       startOnLoad: false,
       securityLevel: "loose",
-      theme: "base",
+      theme: darkMode ? "dark" : "base",
       themeVariables: {
         fontFamily: computedStyleMap["--codeFont"],
         primaryColor: computedStyleMap["--light"],
-        primaryTextColor: computedStyleMap["--dark"],
+        primaryTextColor: computedStyleMap["--darkgray"],
         primaryBorderColor: computedStyleMap["--tertiary"],
         lineColor: computedStyleMap["--darkgray"],
         secondaryColor: computedStyleMap["--secondary"],
         tertiaryColor: computedStyleMap["--tertiary"],
-        textColor: computedStyleMap["--dark"],
-        darkTextColor: computedStyleMap["--dark"],
-        nodeTextColor: computedStyleMap["--dark"],
-        mainBkg: computedStyleMap["--light"],
         clusterBkg: computedStyleMap["--light"],
         edgeLabelBackground: computedStyleMap["--highlight"],
       },
