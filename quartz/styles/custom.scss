@@ -62,6 +62,53 @@ article {
   --callout-icon: var(--callout-icon-quote);
 }
 
+.callout[data-callout="logic-map"] {
+  overflow-x: hidden;
+}
+
+.callout[data-callout="logic-map"] .callout-content {
+  display: block;
+  overflow-x: auto;
+  padding-bottom: 0.75rem;
+}
+
+.callout[data-callout="logic-map"] .mermaid {
+  box-sizing: border-box;
+  width: max-content;
+  min-width: 780px;
+  max-width: none;
+  margin: 0.4rem auto 0.2rem;
+  padding: 1.2rem;
+  border: 1px solid rgba(85, 107, 47, 0.2);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--background-primary) 94%, white 6%);
+}
+
+.callout[data-callout="logic-map"] .mermaid svg {
+  display: block;
+  max-width: none;
+  max-height: none;
+  height: auto;
+}
+
+.callout[data-callout="logic-map"] .mermaid text,
+.callout[data-callout="logic-map"] .mermaid tspan,
+.callout[data-callout="logic-map"] .mermaid .nodeLabel,
+.callout[data-callout="logic-map"] .mermaid .edgeLabel,
+.callout[data-callout="logic-map"] .mermaid .label {
+  color: #263238 !important;
+  fill: #263238 !important;
+}
+
+.callout[data-callout="logic-map"] .mermaid .edgePath path,
+.callout[data-callout="logic-map"] .mermaid marker path {
+  stroke: #5f6f52 !important;
+}
+
+.callout[data-callout="logic-map"] .mermaid .edgeLabel {
+  background: color-mix(in srgb, var(--background-primary) 90%, white 10%) !important;
+}
+
 :root[saved-theme="dark"] .callout[data-callout="timeline"] {
   background: color-mix(in srgb, var(--background-primary) 88%, rgb(72, 95, 145) 12%);
   border-color: rgba(72, 95, 145, 0.32);
