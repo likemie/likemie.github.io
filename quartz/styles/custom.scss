@@ -62,6 +62,10 @@ article {
   --callout-icon: var(--callout-icon-quote);
 }
 
+article .callout[data-callout] {
+  --color: rgb(var(--callout-color, 68, 138, 255));
+}
+
 article .callout {
   margin: 1.1rem 0 1.45rem;
   padding: 0.75rem 1rem 0.85rem;
@@ -118,6 +122,28 @@ article li > .callout {
 
 article li:has(> .callout) {
   margin-bottom: 1rem;
+}
+
+article .callout[data-callout="boundary"],
+article .callout[data-callout="tension"] {
+  background: color-mix(in srgb, var(--background-primary) 92%, rgb(var(--callout-color)) 8%);
+  border: 1px solid rgba(var(--callout-color), 0.2);
+  border-left: 4px solid rgb(var(--callout-color));
+  outline: 0;
+  box-shadow: none;
+}
+
+article .callout[data-callout="boundary"] > .callout-title,
+article .callout[data-callout="tension"] > .callout-title {
+  padding-bottom: 0.35rem;
+  color: rgb(var(--callout-color));
+}
+
+article .callout[data-callout="boundary"] > .callout-title .callout-title-inner,
+article .callout[data-callout="boundary"] > .callout-title .callout-title-inner p,
+article .callout[data-callout="tension"] > .callout-title .callout-title-inner,
+article .callout[data-callout="tension"] > .callout-title .callout-title-inner p {
+  color: rgb(var(--callout-color));
 }
 
 .callout[data-callout="logic-map"] {
