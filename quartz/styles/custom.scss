@@ -62,53 +62,6 @@ article {
   --callout-icon: var(--callout-icon-quote);
 }
 
-article .callout {
-  margin: 1rem 0 1.25rem;
-  padding: 0;
-}
-
-article .callout > .callout-title {
-  align-items: flex-start;
-  gap: 0.55rem;
-  padding: 0.85rem 1rem 0.75rem;
-  border-bottom: 1px solid rgba(var(--callout-color, 143, 159, 169), 0.18);
-  line-height: 1.45;
-}
-
-article .callout > .callout-title .callout-icon,
-article .callout > .callout-title .fold-callout-icon {
-  margin-top: 0.22em;
-}
-
-article .callout > .callout-title .callout-title-inner {
-  min-width: 0;
-}
-
-article .callout > .callout-title .callout-title-inner,
-article .callout > .callout-title .callout-title-inner p {
-  line-height: 1.45;
-}
-
-article .callout > .callout-content {
-  padding: 0.85rem 1rem 1rem;
-}
-
-article .callout > .callout-content > :first-child {
-  margin-top: 0;
-}
-
-article .callout > .callout-content > :last-child {
-  margin-bottom: 0;
-}
-
-article .callout + .callout,
-article .callout + p,
-article .callout + h2,
-article .callout + h3,
-article .callout + h4 {
-  margin-top: 1.25rem;
-}
-
 .callout[data-callout="logic-map"] {
   overflow-x: hidden;
 }
