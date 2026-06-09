@@ -63,16 +63,16 @@ article {
 }
 
 article .callout {
-  margin: 1.1rem 0 1.45rem;
-  padding: 0.75rem 1rem 0.85rem;
+  margin: 1rem 0 1.25rem;
+  padding: 0;
 }
 
 article .callout > .callout-title {
   align-items: flex-start;
-  gap: 0.5rem;
-  padding: 0 0 0.45rem;
-  border-bottom: 0;
-  line-height: 1.38;
+  gap: 0.55rem;
+  padding: 0.85rem 1rem 0.75rem;
+  border-bottom: 1px solid rgba(var(--callout-color, 143, 159, 169), 0.18);
+  line-height: 1.45;
 }
 
 article .callout > .callout-title .callout-icon,
@@ -86,12 +86,11 @@ article .callout > .callout-title .callout-title-inner {
 
 article .callout > .callout-title .callout-title-inner,
 article .callout > .callout-title .callout-title-inner p {
-  line-height: 1.38;
+  line-height: 1.45;
 }
 
 article .callout > .callout-content {
-  padding: 0.2rem 0 0;
-  line-height: 1.68;
+  padding: 0.85rem 1rem 1rem;
 }
 
 article .callout > .callout-content > :first-child {
@@ -104,20 +103,10 @@ article .callout > .callout-content > :last-child {
 
 article .callout + .callout,
 article .callout + p,
-article .callout + ol,
-article .callout + ul,
 article .callout + h2,
 article .callout + h3,
 article .callout + h4 {
-  margin-top: 1.45rem;
-}
-
-article li > .callout {
-  margin: 0.85rem 0 1.25rem;
-}
-
-article li:has(> .callout) {
-  margin-bottom: 1rem;
+  margin-top: 1.25rem;
 }
 
 .callout[data-callout="logic-map"] {
