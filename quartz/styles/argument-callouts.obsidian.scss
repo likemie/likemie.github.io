@@ -1,0 +1,1279 @@
+/* ═══════════════════════════════════════════════════════════
+   Argument Callout System — v2
+   Enable: Settings → Appearance → CSS snippets → argument-callouts
+   ═══════════════════════════════════════════════════════════
+
+   Shadow scale (三档，统一以 callout 自身色调着色)
+     light  : 0  4px 12px rgba(var(--callout-color), 0.06)
+     medium : 0  8px 20px rgba(var(--callout-color), 0.09)
+     heavy  : 0 14px 30px rgba(var(--callout-color), 0.13)
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── 全局 ─────────────────────────────────────────────── */
+.callout {
+  border-radius: 10px;
+}
+
+.callout .callout-content {
+  line-height: 1.65;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   NAVIGATION & META
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── argument-map ────────────────────────────────────── */
+.callout[data-callout="argument-map"] {
+  --callout-color: 20, 126, 121;
+  --callout-icon: lucide-route;
+  background:
+    radial-gradient(circle at top right, rgba(20, 126, 121, 0.22), transparent 42%),
+    linear-gradient(135deg, rgba(20, 126, 121, 0.14), rgba(20, 126, 121, 0.035) 48%),
+    var(--background-primary);
+  border: 1px solid rgba(20, 126, 121, 0.24);
+  border-left: 6px solid rgb(20, 126, 121);
+  box-shadow: 0 14px 30px rgba(20, 126, 121, 0.13);
+}
+
+.callout[data-callout="argument-map"] > .callout-title {
+  letter-spacing: 0.02em;
+}
+
+.callout[data-callout="argument-map"] > .callout-title .callout-title-inner::before {
+  content: "MAP";
+  display: inline-block;
+  margin-right: 0.55rem;
+  padding: 0.08rem 0.38rem;
+  border-radius: 999px;
+  background: rgba(20, 126, 121, 0.18);
+  color: rgb(20, 126, 121);
+  font-size: 0.7em;
+  font-weight: 700;
+}
+
+/* ─── reading-lens ────────────────────────────────────── */
+.callout[data-callout="reading-lens"] {
+  --callout-color: 61, 115, 180;
+  --callout-icon: lucide-scan-search;
+  background: linear-gradient(90deg, rgba(61, 115, 180, 0.13), rgba(61, 115, 180, 0.035));
+  border-left-width: 5px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   ARGUMENT STRUCTURE — 论证骨架
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── question（研究问题 — 大号 ? 水印） ──────────────── */
+.callout[data-callout="question"] {
+  --callout-color: 88, 96, 180;
+  --callout-icon: lucide-help-circle;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(88, 96, 180, 0.12), rgba(88, 96, 180, 0.03)),
+    var(--background-primary);
+  border: 1px solid rgba(88, 96, 180, 0.22);
+  border-left: 6px solid rgb(88, 96, 180);
+  box-shadow: 0 8px 20px rgba(88, 96, 180, 0.09);
+}
+
+.callout[data-callout="question"]::after {
+  content: "?";
+  position: absolute;
+  top: -1rem;
+  right: 0.6rem;
+  color: rgba(88, 96, 180, 0.08);
+  font-size: 7.5rem;
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.callout[data-callout="question"] > .callout-title,
+.callout[data-callout="question"] > .callout-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── step（论证步骤 — 箭头纹 + STEP 角标） ─────────── */
+.callout[data-callout="step"] {
+  --callout-color: 175, 105, 55;
+  --callout-icon: lucide-chevron-right-circle;
+  position: relative;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(
+      72deg,
+      transparent 0px, transparent 18px,
+      rgba(175, 105, 55, 0.05) 18px, rgba(175, 105, 55, 0.05) 19px
+    ),
+    repeating-linear-gradient(
+      -72deg,
+      transparent 0px, transparent 28px,
+      rgba(175, 105, 55, 0.03) 28px, rgba(175, 105, 55, 0.03) 29px
+    ),
+    linear-gradient(135deg, rgba(175, 105, 55, 0.11), rgba(175, 105, 55, 0.025)),
+    var(--background-primary);
+  border: 1px solid rgba(175, 105, 55, 0.24);
+  border-left: 7px solid rgb(175, 105, 55);
+  box-shadow: 0 8px 20px rgba(175, 105, 55, 0.09);
+}
+
+.callout[data-callout="step"] > .callout-title .callout-title-inner::before {
+  content: "STEP";
+  display: inline-block;
+  margin-right: 0.5rem;
+  padding: 0.06rem 0.36rem;
+  border-radius: 4px;
+  background: rgba(175, 105, 55, 0.16);
+  color: rgb(175, 105, 55);
+  font-size: 0.68em;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  vertical-align: 0.05em;
+}
+
+/* ─── logic-map（论证图 — 电路节点点阵） ──────────────── */
+.callout[data-callout="logic-map"] {
+  --callout-color: 85, 107, 47;
+  --callout-icon: lucide-git-branch;
+  background:
+    radial-gradient(circle, rgba(85, 107, 47, 0.16) 1.3px, transparent 1.3px),
+    linear-gradient(135deg, rgba(85, 107, 47, 0.09), rgba(85, 107, 47, 0.02)),
+    var(--background-primary);
+  background-size: 22px 22px, auto, auto;
+  background-position: 4px 4px, 0 0, 0 0;
+  border: 1px solid rgba(85, 107, 47, 0.24);
+  border-left: 6px solid rgb(85, 107, 47);
+  box-shadow: 0 8px 20px rgba(85, 107, 47, 0.09);
+}
+
+.callout[data-callout="logic-map"] .callout-content {
+  overflow-x: auto;
+}
+
+.callout[data-callout="logic-map"] .mermaid {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.callout[data-callout="logic-map"] .mermaid svg {
+  max-height: 260px;
+}
+
+/* ─── line-a（靛蓝点阵）+ line-b（玫红网格） ─────────── */
+/* 相邻时通过 :has() 拼合成一个视觉单元 */
+.callout[data-callout="line-a"],
+.callout[data-callout="line-b"],
+.callout[data-callout="line-c"],
+.callout[data-callout="line-d"],
+.callout[data-callout="line-e"] {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(var(--callout-color), 0.24);
+  border-left: 6px solid rgb(var(--callout-color));
+  box-shadow: 0 8px 20px rgba(var(--callout-color), 0.09);
+}
+
+/* 自动字母计数器（阅读模式）*/
+.markdown-preview-view {
+  counter-reset: line-item;
+}
+
+.callout[data-callout="line-a"] {
+  --callout-color: 88, 96, 180;
+  --callout-icon: lucide-circle-equal;
+  background:
+    radial-gradient(circle, rgba(88, 96, 180, 0.11) 1.2px, transparent 1.8px),
+    linear-gradient(135deg, rgba(88, 96, 180, 0.09), rgba(88, 96, 180, 0.025)),
+    var(--background-primary);
+  background-size: 18px 18px, auto, auto;
+  counter-increment: line-item;
+}
+
+.callout[data-callout="line-b"] {
+  --callout-color: 164, 74, 102;
+  --callout-icon: lucide-arrow-down-up;
+  background:
+    linear-gradient(90deg,  rgba(164, 74, 102, 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(164, 74, 102, 0.06) 1px, transparent 1px),
+    linear-gradient(135deg, rgba(164, 74, 102, 0.09), rgba(164, 74, 102, 0.02)),
+    var(--background-primary);
+  background-size: 28px 100%, 100% 18px, auto, auto;
+}
+
+/* 手动字母变体 line-c / d / e（同 line-a 样式，固定字母标签）*/
+.callout[data-callout="line-c"],
+.callout[data-callout="line-d"],
+.callout[data-callout="line-e"] {
+  --callout-color: 88, 96, 180;
+  --callout-icon: lucide-circle-equal;
+  background:
+    radial-gradient(circle, rgba(88, 96, 180, 0.11) 1.2px, transparent 1.8px),
+    linear-gradient(135deg, rgba(88, 96, 180, 0.09), rgba(88, 96, 180, 0.025)),
+    var(--background-primary);
+  background-size: 18px 18px, auto, auto;
+}
+
+/* 相邻拼合 */
+.callout[data-callout="line-a"]:has(+ .callout[data-callout="line-b"]),
+.callout[data-callout="line-c"]:has(+ .callout[data-callout="line-b"]),
+.callout[data-callout="line-d"]:has(+ .callout[data-callout="line-b"]),
+.callout[data-callout="line-e"]:has(+ .callout[data-callout="line-b"]) {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-color: rgba(88, 96, 180, 0.10);
+  margin-bottom: 2px;
+}
+
+.callout[data-callout="line-a"] + .callout[data-callout="line-b"],
+.callout[data-callout="line-c"] + .callout[data-callout="line-b"],
+.callout[data-callout="line-d"] + .callout[data-callout="line-b"],
+.callout[data-callout="line-e"] + .callout[data-callout="line-b"] {
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-top-color: rgba(164, 74, 102, 0.10);
+}
+
+/* 大号字母水印 */
+.callout[data-callout="line-a"]::after,
+.callout[data-callout="line-b"]::after {
+  position: absolute;
+  top: -0.8rem;
+  right: 0.75rem;
+  color: rgba(var(--callout-color), 0.09);
+  font-size: 5rem;
+  font-weight: 900;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.callout[data-callout="line-a"]::after { content: counter(line-item, upper-alpha); }
+.callout[data-callout="line-b"]::after { content: "\2937"; font-size: 3.8rem; }
+.callout[data-callout="line-c"]::after { content: "C"; }
+.callout[data-callout="line-d"]::after { content: "D"; }
+.callout[data-callout="line-e"]::after { content: "E"; }
+
+.callout[data-callout="line-a"] > .callout-title,
+.callout[data-callout="line-a"] > .callout-content,
+.callout[data-callout="line-b"] > .callout-title,
+.callout[data-callout="line-b"] > .callout-content,
+.callout[data-callout="line-c"] > .callout-title,
+.callout[data-callout="line-c"] > .callout-content,
+.callout[data-callout="line-d"] > .callout-title,
+.callout[data-callout="line-d"] > .callout-content,
+.callout[data-callout="line-e"] > .callout-title,
+.callout[data-callout="line-e"] > .callout-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* A / B 角标 */
+.callout[data-callout="line-a"] > .callout-title .callout-title-inner::before,
+.callout[data-callout="line-b"] > .callout-title .callout-title-inner::before,
+.callout[data-callout="line-c"] > .callout-title .callout-title-inner::before,
+.callout[data-callout="line-d"] > .callout-title .callout-title-inner::before,
+.callout[data-callout="line-e"] > .callout-title .callout-title-inner::before {
+  display: inline-block;
+  margin-right: 0.55rem;
+  padding: 0.08rem 0.42rem;
+  border-radius: 6px;
+  background: rgba(var(--callout-color), 0.16);
+  color: rgb(var(--callout-color));
+  font-size: 0.72em;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.callout[data-callout="line-a"] > .callout-title .callout-title-inner::before { content: counter(line-item, upper-alpha); }
+.callout[data-callout="line-b"] > .callout-title .callout-title-inner::before { content: "—"; }
+.callout[data-callout="line-c"] > .callout-title .callout-title-inner::before { content: "C"; }
+.callout[data-callout="line-d"] > .callout-title .callout-title-inner::before { content: "D"; }
+.callout[data-callout="line-e"] > .callout-title .callout-title-inner::before { content: "E"; }
+
+/* line-a / line-b 内表格修复
+   overflow:hidden 会裁剪宽表格；在 callout-content 层设横向滚动容器 */
+.callout[data-callout="line-a"] > .callout-content,
+.callout[data-callout="line-b"] > .callout-content,
+.callout[data-callout="line-c"] > .callout-content,
+.callout[data-callout="line-d"] > .callout-content,
+.callout[data-callout="line-e"] > .callout-content {
+  overflow-x: auto;
+}
+
+.callout[data-callout="line-a"] table,
+.callout[data-callout="line-b"] table,
+.callout[data-callout="line-c"] table,
+.callout[data-callout="line-d"] table,
+.callout[data-callout="line-e"] table {
+  display: table;
+  width: 100%;
+  min-width: 360px;
+  margin-block: 0.5rem 0.2rem;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.callout[data-callout="line-a"] th,
+.callout[data-callout="line-b"] th,
+.callout[data-callout="line-c"] th,
+.callout[data-callout="line-d"] th,
+.callout[data-callout="line-e"] th {
+  background: rgba(var(--callout-color), 0.14);
+  font-weight: 700;
+}
+
+.callout[data-callout="line-a"] th,
+.callout[data-callout="line-a"] td,
+.callout[data-callout="line-b"] th,
+.callout[data-callout="line-b"] td,
+.callout[data-callout="line-c"] th,
+.callout[data-callout="line-c"] td,
+.callout[data-callout="line-d"] th,
+.callout[data-callout="line-d"] td,
+.callout[data-callout="line-e"] th,
+.callout[data-callout="line-e"] td {
+  border-color: rgba(var(--callout-color), 0.18);
+  vertical-align: top;
+  line-height: 1.65;
+}
+
+/* line-b 内嵌 tension 继承父色 */
+.callout[data-callout="line-b"] .callout[data-callout="tension"] {
+  --callout-color: 164, 74, 102;
+  background:
+    linear-gradient(90deg, rgba(164, 74, 102, 0.13), rgba(164, 74, 102, 0.03)),
+    var(--background-primary);
+  border: 1px solid rgba(164, 74, 102, 0.22);
+  border-left: 5px solid rgb(164, 74, 102);
+  border-right: 5px solid rgba(164, 74, 102, 0.35);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   ANALYTICAL FRAMEWORK — 理论与方法
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── framework-table（理论框架 — 扇形辐射纹） ──────── */
+.callout[data-callout="framework-table"] {
+  --callout-color: 82, 145, 214;
+  --callout-icon: lucide-telescope;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 18% 0%, rgba(82, 145, 214, 0.17), transparent 46%),
+    linear-gradient(180deg, rgba(82, 145, 214, 0.09), rgba(82, 145, 214, 0.02)),
+    var(--background-primary);
+  border: 1px solid rgba(82, 145, 214, 0.24);
+  border-left: 6px double rgb(82, 145, 214);
+  box-shadow:
+    inset 0 1px 0 rgba(82, 145, 214, 0.14),
+    0 8px 20px rgba(82, 145, 214, 0.09);
+}
+
+.callout[data-callout="framework-table"]::before {
+  content: "";
+  position: absolute;
+  top: -24px;
+  right: -24px;
+  width: 150px;
+  height: 150px;
+  background: conic-gradient(
+    from 195deg,
+    rgba(82, 145, 214, 0.06) 0deg,  transparent 12deg,
+    rgba(82, 145, 214, 0.06) 24deg, transparent 36deg,
+    rgba(82, 145, 214, 0.06) 48deg, transparent 60deg,
+    rgba(82, 145, 214, 0.06) 72deg, transparent 84deg,
+    rgba(82, 145, 214, 0.06) 96deg, transparent 108deg
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.callout[data-callout="framework-table"] > .callout-title,
+.callout[data-callout="framework-table"] > .callout-content {
+  position: relative;
+  z-index: 1;
+}
+
+.callout[data-callout="framework-table"] table {
+  display: table;
+  width: 100%;
+  margin-block: 0.55rem 0.2rem;
+  border-collapse: separate;
+  border-spacing: 0 0.38rem;
+}
+
+.callout[data-callout="framework-table"] th {
+  display: none;
+}
+
+.callout[data-callout="framework-table"] td {
+  border: 1px solid rgba(82, 145, 214, 0.16);
+  background: color-mix(in srgb, var(--background-primary) 90%, rgb(82, 145, 214) 10%);
+  vertical-align: top;
+  line-height: 1.65;
+}
+
+.callout[data-callout="framework-table"] td:first-child {
+  width: 12rem;
+  border-right: 0;
+  border-radius: 9px 0 0 9px;
+  color: rgb(82, 145, 214);
+  font-weight: 700;
+}
+
+.callout[data-callout="framework-table"] td:last-child {
+  border-left: 0;
+  border-radius: 0 9px 9px 0;
+}
+
+.callout[data-callout="framework-table"] td:first-child strong { font-size: 1.03em; }
+.callout[data-callout="framework-table"] td:last-child strong  { color: rgb(82, 145, 214); }
+
+/* ─── method-panel（研究方法 — 青绿） ───────────────── */
+.callout[data-callout="method-panel"] {
+  --callout-color: 26, 142, 166;
+  --callout-icon: lucide-flask-conical;
+  background:
+    linear-gradient(135deg, rgba(26, 142, 166, 0.12), rgba(26, 142, 166, 0.03)),
+    var(--background-primary);
+  border: 1px solid rgba(26, 142, 166, 0.25);
+  border-left: 6px solid rgb(26, 142, 166);
+  box-shadow: 0 8px 20px rgba(26, 142, 166, 0.09);
+}
+
+/* ─── sample-panel（样本 — 鼠尾草绿） ──────────────── */
+.callout[data-callout="sample-panel"] {
+  --callout-color: 86, 132, 102;
+  --callout-icon: lucide-users-round;
+  background:
+    linear-gradient(135deg, rgba(86, 132, 102, 0.12), rgba(86, 132, 102, 0.03)),
+    var(--background-primary);
+  border: 1px solid rgba(86, 132, 102, 0.25);
+  border-left: 6px solid rgb(86, 132, 102);
+  box-shadow: 0 8px 20px rgba(86, 132, 102, 0.09);
+}
+
+/* method-panel + sample-panel 共用表格 */
+.callout[data-callout="method-panel"] table,
+.callout[data-callout="sample-panel"] table {
+  display: table;
+  width: 100%;
+  margin-block: 0.5rem 0.2rem;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.callout[data-callout="method-panel"] th,
+.callout[data-callout="sample-panel"] th {
+  background: rgba(var(--callout-color), 0.14);
+  font-weight: 700;
+}
+
+.callout[data-callout="method-panel"] th,
+.callout[data-callout="method-panel"] td,
+.callout[data-callout="sample-panel"] th,
+.callout[data-callout="sample-panel"] td {
+  border-color: rgba(var(--callout-color), 0.18);
+  vertical-align: top;
+  line-height: 1.65;
+}
+
+.callout[data-callout="method-panel"] td:first-child,
+.callout[data-callout="sample-panel"] td:first-child {
+  width: 10rem;
+  font-weight: 650;
+  color: rgb(var(--callout-color));
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   EVIDENCE & TENSION — 证据与张力
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── tension（张力 — 鱼骨纹双向对角） ─────────────── */
+.callout[data-callout="tension"] {
+  --callout-color: 190, 95, 45;
+  --callout-icon: lucide-split;
+  background:
+    repeating-linear-gradient(
+       45deg,
+      rgba(190, 95, 45, 0.055) 0px, rgba(190, 95, 45, 0.055) 5px,
+      transparent 5px, transparent 14px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(190, 95, 45, 0.035) 0px, rgba(190, 95, 45, 0.035) 5px,
+      transparent 5px, transparent 14px
+    ),
+    linear-gradient(90deg, rgba(190, 95, 45, 0.11), transparent 55%),
+    var(--background-primary);
+  border: 1px solid rgba(190, 95, 45, 0.24);
+  border-left: 5px solid rgb(190, 95, 45);
+  border-right: 5px solid rgba(190, 95, 45, 0.40);
+  box-shadow: 0 8px 20px rgba(190, 95, 45, 0.09);
+}
+
+/* ─── boundary（边界 — 斜条纹 + 虚框） ─────────────── */
+.callout[data-callout="boundary"] {
+  --callout-color: 34, 139, 94;
+  --callout-icon: lucide-box-select;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(34, 139, 94, 0.08) 0, rgba(34, 139, 94, 0.08) 8px,
+      rgba(34, 139, 94, 0.03) 8px, rgba(34, 139, 94, 0.03) 16px
+    );
+  border: 1px solid rgba(34, 139, 94, 0.23);
+  outline: 1px dashed rgba(34, 139, 94, 0.38);
+  outline-offset: -6px;
+  box-shadow: 0 4px 12px rgba(34, 139, 94, 0.06);
+}
+
+/* ─── voice（声音 — 水平波纹） ───────────────────────── */
+.callout[data-callout="voice"] {
+  --callout-color: 178, 74, 96;
+  --callout-icon: lucide-message-circle;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0px, transparent 22px,
+      rgba(178, 74, 96, 0.04) 22px, rgba(178, 74, 96, 0.04) 23px
+    ),
+    linear-gradient(90deg, rgba(178, 74, 96, 0.11), rgba(178, 74, 96, 0.025)),
+    var(--background-primary);
+  border: 1px solid rgba(178, 74, 96, 0.20);
+  border-left: 5px solid rgb(178, 74, 96);
+  box-shadow: 0 8px 20px rgba(178, 74, 96, 0.09);
+}
+
+.callout[data-callout="voice"] .callout-content {
+  font-size: 1.01em;
+  line-height: 1.72;
+}
+
+/* ─── evidence-grid / -a / -b ─────────────────────────── */
+.callout[data-callout="evidence-grid"] {
+  --callout-color: 66, 120, 150;
+  --callout-icon: lucide-layout-grid;
+  background:
+    linear-gradient(180deg, rgba(66, 120, 150, 0.11), rgba(66, 120, 150, 0.03)),
+    var(--background-primary);
+  border: 1px solid rgba(66, 120, 150, 0.22);
+  box-shadow: 0 8px 20px rgba(66, 120, 150, 0.09);
+}
+
+.callout[data-callout="evidence-grid-a"] {
+  --callout-color: 66, 120, 150;
+  --callout-icon: lucide-layout-grid;
+}
+
+.callout[data-callout="evidence-grid-b"] {
+  --callout-color: 112, 106, 164;
+  --callout-icon: lucide-layout-grid;
+}
+
+.callout[data-callout="evidence-grid-a"],
+.callout[data-callout="evidence-grid-b"] {
+  background:
+    linear-gradient(180deg, rgba(var(--callout-color), 0.11), rgba(var(--callout-color), 0.03)),
+    var(--background-primary);
+  border: 1px solid rgba(var(--callout-color), 0.22);
+  box-shadow: 0 8px 20px rgba(var(--callout-color), 0.09);
+}
+
+.callout[data-callout="evidence-grid"]   .callout-content > ul,
+.callout[data-callout="evidence-grid-a"] .callout-content > ul,
+.callout[data-callout="evidence-grid-b"] .callout-content > ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+  padding-inline-start: 0;
+  margin-block: 0.75rem 0.25rem;
+  list-style: none;
+}
+
+.callout[data-callout="evidence-grid"]   .callout-content > ul > li,
+.callout[data-callout="evidence-grid-a"] .callout-content > ul > li,
+.callout[data-callout="evidence-grid-b"] .callout-content > ul > li {
+  margin: 0;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid rgba(var(--callout-color), 0.2);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--background-primary) 86%, rgb(var(--callout-color)) 14%);
+  box-shadow: 0 4px 12px rgba(var(--callout-color), 0.06);
+  line-height: 1.65;
+}
+
+.callout[data-callout="evidence-grid"]   .callout-content > ul > li:last-child:nth-child(3),
+.callout[data-callout="evidence-grid-a"] .callout-content > ul > li:last-child:nth-child(3),
+.callout[data-callout="evidence-grid-b"] .callout-content > ul > li:last-child:nth-child(3) {
+  grid-column: 1 / -1;
+}
+
+.callout[data-callout="evidence-grid"]   .callout-content > ul > li strong:first-child,
+.callout[data-callout="evidence-grid-a"] .callout-content > ul > li strong:first-child,
+.callout[data-callout="evidence-grid-b"] .callout-content > ul > li strong:first-child {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: rgb(var(--callout-color));
+}
+
+.callout[data-callout="evidence-grid"] table {
+  display: table;
+  width: 100%;
+  margin-block: 0.45rem;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.callout[data-callout="evidence-grid"] th {
+  background: rgba(66, 120, 150, 0.14);
+  font-weight: 650;
+}
+
+.callout[data-callout="evidence-grid"] th,
+.callout[data-callout="evidence-grid"] td {
+  border-color: rgba(66, 120, 150, 0.18);
+  vertical-align: top;
+  line-height: 1.65;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   SYNTHESIS & FINDINGS — 综合与发现
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── contrast-table（对照 — 对角线纹 + 顶部重边） ──── */
+.callout[data-callout="contrast-table"] {
+  --callout-color: 72, 82, 96;
+  --callout-icon: lucide-columns-3;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(var(--background-primary), var(--background-primary)) padding-box,
+    linear-gradient(
+      90deg,
+      rgba(95, 114, 133, 0.85),
+      rgba(95, 114, 133, 0.2) 24%,
+      rgba(95, 114, 133, 0.2) 76%,
+      rgba(95, 114, 133, 0.85)
+    ) border-box;
+  border: 1px solid transparent;
+  border-top-width: 10px;
+  box-shadow: 0 14px 30px rgba(72, 82, 96, 0.13);
+}
+
+.callout[data-callout="contrast-table"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    135deg,
+    transparent 0px, transparent 30px,
+    rgba(72, 82, 96, 0.018) 30px, rgba(72, 82, 96, 0.018) 31px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.callout[data-callout="contrast-table"] > .callout-title,
+.callout[data-callout="contrast-table"] > .callout-content {
+  position: relative;
+  z-index: 1;
+}
+
+.callout[data-callout="contrast-table"] > .callout-title {
+  font-size: 1.05em;
+  letter-spacing: 0.01em;
+}
+
+.callout[data-callout="contrast-table"] > .callout-title .callout-title-inner::before {
+  content: "CONTRAST";
+  display: inline-block;
+  margin-right: 0.55rem;
+  padding: 0.08rem 0.42rem;
+  border-radius: 6px;
+  background: rgba(95, 114, 133, 0.18);
+  color: rgb(126, 137, 150);
+  font-size: 0.7em;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.callout[data-callout="contrast-table"] table {
+  display: table;
+  width: 100%;
+  margin-block: 0.55rem 0.2rem;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.callout[data-callout="contrast-table"] th,
+.callout[data-callout="contrast-table"] td {
+  vertical-align: top;
+  border-color: rgba(126, 137, 150, 0.12);
+  line-height: 1.65;
+}
+
+.callout[data-callout="contrast-table"] th {
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.callout[data-callout="contrast-table"] th:nth-child(1),
+.callout[data-callout="contrast-table"] td:nth-child(1) {
+  width: 9rem;
+  background: transparent;
+  color: rgb(126, 137, 150);
+  font-weight: 700;
+}
+
+.callout[data-callout="contrast-table"] td:nth-child(1) strong { color: rgb(150, 161, 174); }
+
+.callout[data-callout="contrast-table"] th:nth-child(2),
+.callout[data-callout="contrast-table"] td:nth-child(2) { background: rgba(181, 139, 69, 0.1); }
+
+.callout[data-callout="contrast-table"] th:nth-child(3),
+.callout[data-callout="contrast-table"] td:nth-child(3) { background: rgba(159, 100, 117, 0.1); }
+
+.callout[data-callout="contrast-table"] th:nth-child(2) { color: #c0954a; }
+.callout[data-callout="contrast-table"] th:nth-child(3) { color: #bd788d; }
+
+/* ─── stat-cards（数据卡 — 横向刻度线） ─────────────── */
+.callout[data-callout="stat-cards"] {
+  --callout-color: 72, 132, 112;
+  --callout-icon: lucide-bar-chart-3;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0px, transparent 24px,
+      rgba(72, 132, 112, 0.04) 24px, rgba(72, 132, 112, 0.04) 25px
+    ),
+    linear-gradient(135deg, rgba(72, 132, 112, 0.10), rgba(72, 132, 112, 0.025)),
+    var(--background-primary);
+  border: 1px solid rgba(72, 132, 112, 0.22);
+  border-left: 6px solid rgb(72, 132, 112);
+  box-shadow: 0 8px 20px rgba(72, 132, 112, 0.09);
+}
+
+.callout[data-callout="stat-cards"] .callout-content > ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.7rem;
+  padding-inline-start: 0;
+  margin-block: 0.65rem 0.25rem;
+  list-style: none;
+}
+
+.callout[data-callout="stat-cards"] .callout-content > ul > li {
+  margin: 0;
+  padding: 1rem 1rem 0.8rem;
+  border: 1px solid rgba(72, 132, 112, 0.18);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--background-primary) 88%, rgb(72, 132, 112) 12%);
+  box-shadow: 0 4px 12px rgba(72, 132, 112, 0.06);
+  line-height: 1.55;
+}
+
+/* 数字：infographic 风格 — 超大、紧字距、等宽数字、极粗 */
+.callout[data-callout="stat-cards"] .callout-content > ul > li strong:first-child {
+  display: block;
+  margin-bottom: 0.15rem;
+  color: rgb(72, 132, 112);
+  font-size: 1.2em;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── finding-cards（核心发现 — 暖铜 + 星芒角） ──────── */
+/* 从金色 (202,154,47) 改为暖铜 (192,108,56) */
+.callout[data-callout="finding-cards"] {
+  --callout-color: 192, 108, 56;
+  --callout-icon: lucide-award;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(192, 108, 56, 0.12), rgba(192, 108, 56, 0.025)),
+    var(--background-primary);
+  border: 1px solid rgba(192, 108, 56, 0.22);
+  border-left: 6px solid rgb(192, 108, 56);
+  box-shadow: 0 8px 20px rgba(192, 108, 56, 0.09);
+}
+
+.callout[data-callout="finding-cards"]::before {
+  content: "";
+  position: absolute;
+  top: -32px;
+  right: -32px;
+  width: 130px;
+  height: 130px;
+  background: conic-gradient(
+    rgba(192, 108, 56, 0.09)  0deg, transparent  15deg,
+    rgba(192, 108, 56, 0.09) 30deg, transparent  45deg,
+    rgba(192, 108, 56, 0.09) 60deg, transparent  75deg,
+    rgba(192, 108, 56, 0.09) 90deg, transparent 105deg,
+    rgba(192, 108, 56, 0.09) 120deg, transparent 135deg,
+    rgba(192, 108, 56, 0.09) 150deg, transparent 165deg,
+    rgba(192, 108, 56, 0.09) 180deg, transparent 195deg,
+    rgba(192, 108, 56, 0.09) 210deg, transparent 225deg,
+    rgba(192, 108, 56, 0.09) 240deg, transparent 255deg,
+    rgba(192, 108, 56, 0.09) 270deg, transparent 285deg,
+    rgba(192, 108, 56, 0.09) 300deg, transparent 315deg,
+    rgba(192, 108, 56, 0.09) 330deg, transparent 345deg,
+    rgba(192, 108, 56, 0.09) 360deg
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.callout[data-callout="finding-cards"] > .callout-title,
+.callout[data-callout="finding-cards"] > .callout-content {
+  position: relative;
+  z-index: 1;
+}
+
+.callout[data-callout="finding-cards"] .callout-content > ol,
+.callout[data-callout="finding-cards"] .callout-content > ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  padding-inline-start: 0;
+  margin-block: 0.7rem 0.25rem;
+  list-style: none;
+  counter-reset: finding;
+}
+
+.callout[data-callout="finding-cards"] .callout-content > ol > li,
+.callout[data-callout="finding-cards"] .callout-content > ul > li {
+  counter-increment: finding;
+  margin: 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(192, 108, 56, 0.18);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--background-primary) 88%, rgb(192, 108, 56) 12%);
+  line-height: 1.65;
+}
+
+.callout[data-callout="finding-cards"] .callout-content > ol > li:nth-child(3):last-child,
+.callout[data-callout="finding-cards"] .callout-content > ul > li:nth-child(3):last-child {
+  grid-column: 1 / -1;
+  background:
+    linear-gradient(135deg, rgba(192, 108, 56, 0.16), rgba(192, 108, 56, 0.055)),
+    var(--background-primary);
+  box-shadow: 0 8px 20px rgba(192, 108, 56, 0.09);
+}
+
+.callout[data-callout="finding-cards"] .callout-content > ol > li:nth-child(n + 5),
+.callout[data-callout="finding-cards"] .callout-content > ul > li:nth-child(n + 5) {
+  grid-column: 1 / -1;
+  border-style: dashed;
+  opacity: 0.72;
+}
+
+.callout[data-callout="finding-cards"] .callout-content > ol > li::before,
+.callout[data-callout="finding-cards"] .callout-content > ul > li::before {
+  content: counter(finding);
+  display: inline-grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-right: 0.45rem;
+  border-radius: 999px;
+  background: rgba(192, 108, 56, 0.2);
+  color: rgb(155, 82, 32);
+  font-size: 0.82em;
+  font-weight: 800;
+}
+
+.callout[data-callout="finding-cards"] .callout-content > ol > li strong:first-child,
+.callout[data-callout="finding-cards"] .callout-content > ul > li strong:first-child {
+  display: inline-block;
+  margin-bottom: 0.28rem;
+  color: rgb(155, 82, 32);
+}
+
+@media (max-width: 640px) {
+  .callout[data-callout="finding-cards"] .callout-content > ol,
+  .callout[data-callout="finding-cards"] .callout-content > ul {
+    grid-template-columns: 1fr;
+  }
+
+  .callout[data-callout="finding-cards"] .callout-content > ol > li:nth-child(3):last-child,
+  .callout[data-callout="finding-cards"] .callout-content > ul > li:nth-child(3):last-child {
+    grid-column: auto;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   CITATION — 关键引用
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── citation-card（引用 — 大号开引号水印） ──────────── */
+.callout[data-callout="citation-card"] {
+  --callout-color: 96, 113, 128;
+  --callout-icon: lucide-quote;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(96, 113, 128, 0.10), rgba(96, 113, 128, 0.025)),
+    var(--background-primary);
+  border: 1px solid rgba(96, 113, 128, 0.18);
+  border-left: 5px solid rgb(96, 113, 128);
+  box-shadow: 0 4px 12px rgba(96, 113, 128, 0.06);
+}
+
+.callout[data-callout="citation-card"]::before {
+  content: "\201C";
+  position: absolute;
+  top: -1.6rem;
+  left: 0.4rem;
+  color: rgba(96, 113, 128, 0.09);
+  font-size: 8rem;
+  font-weight: 900;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.callout[data-callout="citation-card"] > .callout-title,
+.callout[data-callout="citation-card"] > .callout-content {
+  position: relative;
+  z-index: 1;
+}
+
+.callout[data-callout="citation-card"] .callout-content p:first-child {
+  font-size: 1.03em;
+  line-height: 1.75;
+}
+
+.callout[data-callout="citation-card"] .callout-content p:last-child {
+  color: var(--text-muted);
+  font-size: 0.94em;
+  padding-left: 0.9rem;
+  border-left: 2px solid rgba(96, 113, 128, 0.28);
+  line-height: 1.65;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   SEPARATORS — 分割线
+   两种语义：
+     模块间   hr:has(+ h2) — ## 章节之间
+     步骤间   hr:has(+ h3) — ### 论证步骤之间
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── 默认 / 模块间（## 之前） ───────────────────────
+   全幅暖灰渐变线，两端淡出，上下留足呼吸 */
+.markdown-rendered hr {
+  border: none;
+  height: 1px;
+  margin: 2.8rem 0;
+  background: linear-gradient(
+    90deg,
+    transparent  0%,
+    rgba(155, 140, 125, 0.18)  8%,
+    rgba(155, 140, 125, 0.44) 28%,
+    rgba(155, 140, 125, 0.44) 72%,
+    rgba(155, 140, 125, 0.18) 92%,
+    transparent 100%
+  );
+}
+
+/* ─── 论证步骤间（### 之前） ─────────────────────────
+   居中短虚线 + 两端小圆点，暗示"流程延续"而非"章节切割" */
+.markdown-rendered hr:has(+ h3) {
+  position: relative;
+  height: 0;
+  width: 44%;
+  margin: 1.9rem auto;
+  background: none;
+  border: none;
+  border-top: 1.5px dashed rgba(140, 130, 118, 0.33);
+}
+
+.markdown-rendered hr:has(+ h3)::before,
+.markdown-rendered hr:has(+ h3)::after {
+  content: "";
+  position: absolute;
+  top: -3.5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(140, 130, 118, 0.40);
+}
+
+.markdown-rendered hr:has(+ h3)::before { left:  -3px; }
+.markdown-rendered hr:has(+ h3)::after  { right: -3px; }
+
+
+/* ═══════════════════════════════════════════════════════════
+   TYPOGRAPHY POLISH — 字体层次
+   策略：不换全局字体（避免影响 wikilink）；
+         用 letter-spacing / font-weight / font-variant 建立层次；
+         只对两类特殊内容替换字族：
+           数字  → tabular-nums（等宽数字，系统字体已支持）
+           英文引文 → Georgia 衬线（citation-card 原文段，无链接风险）
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── 全局 callout 抗锯齿 ─────────────────────────── */
+.callout {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── callout 标题层 — 轻微字距拉开 ─────────────────
+   中文字间加 0.04em 字距，提升可读性；
+   wikilink 继承后也只是字距略宽，无视觉问题 */
+.callout > .callout-title .callout-title-inner {
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+/* 带自定义 badge 前缀的 callout 标题字距恢复正常（badge 自己有 letter-spacing） */
+.callout[data-callout="argument-map"]    > .callout-title .callout-title-inner,
+.callout[data-callout="contrast-table"]  > .callout-title .callout-title-inner,
+.callout[data-callout="line-a"]          > .callout-title .callout-title-inner,
+.callout[data-callout="line-b"]          > .callout-title .callout-title-inner,
+.callout[data-callout="step"]            > .callout-title .callout-title-inner {
+  letter-spacing: 0.025em;
+}
+
+/* ─── 所有 callout 内容区 — 内核特性 ────────────────
+   kern: 字偶距；liga: 合字；calt: 上下文替换 */
+.callout .callout-content {
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+}
+
+/* ─── 表头 — 小字距 + 轻量大写质感 ──────────────────
+   不用 font-variant-caps 避免影响中文；只加字距 */
+.callout th {
+  letter-spacing: 0.03em;
+}
+
+/* ─── finding-cards 序号 + 数字表格对齐 ─────────────
+   计数器已是 font-weight: 800；加 tabular-nums 保持对齐 */
+.callout[data-callout="finding-cards"] .callout-content > ol > li::before,
+.callout[data-callout="finding-cards"] .callout-content > ul > li::before {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── citation-card 英文原文 — 衬线斜体引文感 ────────
+   仅作用于最后一段（英文原文），几乎不含 wikilink；
+   即使含有，Georgia 支持全部拉丁字符，链接正常显示 */
+.callout[data-callout="citation-card"] .callout-content p:last-child {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-size: 0.93em;
+  letter-spacing: 0.01em;
+}
+
+/* ─── framework-table 工具名列 — 轻字距提升专名识别 ── */
+.callout[data-callout="framework-table"] td:first-child {
+  letter-spacing: 0.015em;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   CONCEPT TIMELINE — 概念演变时间线
+   用途：概念条目发展脉络，垂直时间轴可视化
+   颜色：slate-indigo rgb(72, 95, 145)
+   格式：- **YYYY** 或 **YYYY–YYYY**：正文说明
+         bold 首段自动渲染为年份徽章（chip）
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── 容器 ────────────────────────────────────────── */
+.callout[data-callout="timeline"] {
+  --callout-color: 72, 95, 145;
+  --callout-icon: lucide-history;
+  background: color-mix(in srgb, var(--background-primary) 94%, rgb(72, 95, 145) 6%);
+  border: 1px solid rgba(72, 95, 145, 0.22);
+  border-left: 3.5px solid rgb(72, 95, 145);
+  border-radius: 10px;
+  padding: 0.85rem 1.1rem 0.7rem;
+}
+
+/* ─── 标题行 ─────────────────────────────────────── */
+.callout[data-callout="timeline"] > .callout-title {
+  color: rgb(72, 95, 145);
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid rgba(72, 95, 145, 0.18);
+  margin-bottom: 0.55rem;
+}
+
+/* ─── 列表：去掉默认缩进，建立轨道坐标系 ──────────── */
+.callout[data-callout="timeline"] .callout-content ul {
+  list-style: none;
+  padding-left: 2.2rem;
+  margin: 0.3rem 0 0;
+  position: relative;
+}
+
+/* 垂直时间线轨道 — 两端渐隐 */
+.callout[data-callout="timeline"] .callout-content ul::before {
+  content: "";
+  position: absolute;
+  left: 0.65rem;
+  top: 0.6rem;
+  bottom: 0.6rem;
+  width: 2px;
+  border-radius: 1px;
+  background: linear-gradient(
+    to bottom,
+    rgba(72, 95, 145, 0)    0%,
+    rgba(72, 95, 145, 0.50) 12%,
+    rgba(72, 95, 145, 0.50) 88%,
+    rgba(72, 95, 145, 0)   100%
+  );
+}
+
+/* ─── 节点条目 ───────────────────────────────────── */
+.callout[data-callout="timeline"] .callout-content ul > li {
+  position: relative;
+  padding: 0.38rem 0.6rem 0.38rem 0.5rem;
+  margin-bottom: 0.08rem;
+  border-radius: 6px;
+  line-height: 1.72;
+  transition: background 0.14s ease;
+}
+
+.callout[data-callout="timeline"] .callout-content ul > li:hover {
+  background: color-mix(in srgb, var(--background-primary) 88%, rgb(72, 95, 145) 12%);
+}
+
+/* 节点圆点 — 与轨道线垂直对齐 */
+.callout[data-callout="timeline"] .callout-content ul > li::before {
+  content: "";
+  position: absolute;
+  left: -1.59rem;
+  top: 0.78rem;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgb(72, 95, 145);
+  box-shadow:
+    0 0 0 2.5px color-mix(in srgb, var(--background-primary) 78%, rgb(72, 95, 145) 22%),
+    0 0 0 4.5px rgba(72, 95, 145, 0.10);
+  z-index: 1;
+}
+
+/* ─── 年份徽章 — li 内首个 strong ───────────────────
+   适配格式：- **1978–1979**：正文
+   **1980s**：正文 */
+.callout[data-callout="timeline"] .callout-content ul > li > strong:first-child {
+  display: inline-block;
+  padding: 0.06em 0.48em 0.09em;
+  margin-right: 0.35em;
+  border-radius: 4px;
+  background: rgb(72, 95, 145);
+  color: #fff;
+  font-size: 0.79em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  vertical-align: middle;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+/* ─── 暗模式微调 ─────────────────────────────────── */
+.theme-dark .callout[data-callout="timeline"] {
+  background: color-mix(in srgb, var(--background-primary) 88%, rgb(72, 95, 145) 12%);
+  border-color: rgba(72, 95, 145, 0.32);
+}
+
+.theme-dark .callout[data-callout="timeline"] .callout-content ul > li::before {
+  box-shadow:
+    0 0 0 2.5px color-mix(in srgb, var(--background-primary) 70%, rgb(72, 95, 145) 30%),
+    0 0 0 4.5px rgba(72, 95, 145, 0.18);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   [!phase]  历史阶段叙事块
+   ═══════════════════════════════════════════════════════════ */
+.callout[data-callout="phase"] {
+  --callout-color: 155, 103, 44;
+  --callout-icon: lucide-calendar;
+  background: color-mix(in srgb, var(--background-primary) 94%, rgb(155, 103, 44) 6%);
+  border: 1px solid rgba(155, 103, 44, 0.22);
+  border-left: 3.5px solid rgb(155, 103, 44);
+  border-radius: 10px;
+  padding: 0.85rem 1.1rem 0.9rem;
+}
+
+.callout[data-callout="phase"] > .callout-title {
+  color: rgb(155, 103, 44);
+  font-weight: 700;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid rgba(155, 103, 44, 0.18);
+  margin-bottom: 0.6rem;
+}
+
+.callout[data-callout="phase"] > .callout-content {
+  line-height: 1.75;
+}
+
+.theme-dark .callout[data-callout="phase"] {
+  background: color-mix(in srgb, var(--background-primary) 88%, rgb(155, 103, 44) 12%);
+  border-color: rgba(155, 103, 44, 0.32);
+}
+
+/* ─── quad-grid（四格网格卡片）─────────────────────────── */
+.callout[data-callout="quad-grid"] {
+  --callout-color: 56, 135, 115;
+  --callout-icon: lucide-grid-2x2;
+  background:
+    linear-gradient(135deg, rgba(56, 135, 115, 0.07), rgba(56, 135, 115, 0.02)),
+    var(--background-primary);
+  border: 1px solid rgba(56, 135, 115, 0.22);
+  border-left: 5px solid rgb(56, 135, 115);
+}
+
+.callout[data-callout="quad-grid"] > .callout-content > ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  padding: 0.3rem 0 0.1rem;
+  list-style: none;
+  margin: 0;
+}
+
+.callout[data-callout="quad-grid"] > .callout-content > ul > li {
+  background: rgba(56, 135, 115, 0.08);
+  border: 1px solid rgba(56, 135, 115, 0.18);
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem 0.55rem;
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* 每格第一段（含标题行）粗体部分 */
+.callout[data-callout="quad-grid"] > .callout-content > ul > li p:first-child strong {
+  display: block;
+  color: rgb(56, 135, 115);
+  font-size: 0.87em;
+  font-weight: 750;
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.01em;
+}
+
+/* 正文段 */
+.callout[data-callout="quad-grid"] > .callout-content > ul > li p:last-child {
+  font-size: 0.88em;
+  opacity: 0.82;
+  margin: 0;
+}

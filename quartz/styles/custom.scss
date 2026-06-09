@@ -1,3 +1,79 @@
 @use "./base.scss";
+@use "./argument-callouts.obsidian.scss";
 
 // put your custom CSS here!
+
+:root {
+  --background-primary: var(--light);
+  --background-secondary: var(--lightgray);
+  --background-modifier-border: var(--lightgray);
+  --text-normal: var(--darkgray);
+  --text-muted: var(--gray);
+}
+
+article {
+  counter-reset: line-item;
+}
+
+.callout[data-callout="argument-map"],
+.callout[data-callout="logic-map"] {
+  --callout-icon: var(--callout-icon-info);
+}
+
+.callout[data-callout="reading-lens"],
+.callout[data-callout="framework-table"],
+.callout[data-callout="method-panel"],
+.callout[data-callout="evidence-grid"],
+.callout[data-callout="evidence-grid-a"],
+.callout[data-callout="evidence-grid-b"],
+.callout[data-callout="stat-cards"] {
+  --callout-icon: var(--callout-icon-abstract);
+}
+
+.callout[data-callout="step"],
+.callout[data-callout="line-a"],
+.callout[data-callout="line-b"],
+.callout[data-callout="line-c"],
+.callout[data-callout="line-d"],
+.callout[data-callout="line-e"],
+.callout[data-callout="timeline"],
+.callout[data-callout="phase"],
+.callout[data-callout="quad-grid"] {
+  --callout-icon: var(--callout-icon-example);
+}
+
+.callout[data-callout="question"] {
+  --callout-icon: var(--callout-icon-question);
+}
+
+.callout[data-callout="sample-panel"],
+.callout[data-callout="voice"] {
+  --callout-icon: var(--callout-icon-tip);
+}
+
+.callout[data-callout="tension"],
+.callout[data-callout="boundary"],
+.callout[data-callout="contrast-table"],
+.callout[data-callout="finding-cards"] {
+  --callout-icon: var(--callout-icon-warning);
+}
+
+.callout[data-callout="citation-card"] {
+  --callout-icon: var(--callout-icon-quote);
+}
+
+:root[saved-theme="dark"] .callout[data-callout="timeline"] {
+  background: color-mix(in srgb, var(--background-primary) 88%, rgb(72, 95, 145) 12%);
+  border-color: rgba(72, 95, 145, 0.32);
+}
+
+:root[saved-theme="dark"] .callout[data-callout="timeline"] .callout-content ul > li::before {
+  box-shadow:
+    0 0 0 2.5px color-mix(in srgb, var(--background-primary) 70%, rgb(72, 95, 145) 30%),
+    0 0 0 4.5px rgba(72, 95, 145, 0.18);
+}
+
+:root[saved-theme="dark"] .callout[data-callout="phase"] {
+  background: color-mix(in srgb, var(--background-primary) 88%, rgb(155, 103, 44) 12%);
+  border-color: rgba(155, 103, 44, 0.32);
+}
