@@ -1,7 +1,7 @@
 @use "./base.scss";
+@use "./argument-callouts.obsidian.scss";
 
-// Quartz publish styles. Keep this independent from Obsidian-only snippets so
-// the static site stays readable and predictable.
+// put your custom CSS here!
 
 :root {
   --background-primary: var(--light);
@@ -15,27 +15,68 @@ article {
   counter-reset: line-item;
 }
 
+.callout[data-callout="argument-map"],
+.callout[data-callout="logic-map"] {
+  --callout-icon: var(--callout-icon-info);
+}
+
+.callout[data-callout="reading-lens"],
+.callout[data-callout="framework-table"],
+.callout[data-callout="method-panel"],
+.callout[data-callout="evidence-grid"],
+.callout[data-callout="evidence-grid-a"],
+.callout[data-callout="evidence-grid-b"],
+.callout[data-callout="stat-cards"] {
+  --callout-icon: var(--callout-icon-abstract);
+}
+
+.callout[data-callout="step"],
+.callout[data-callout="line-a"],
+.callout[data-callout="line-b"],
+.callout[data-callout="line-c"],
+.callout[data-callout="line-d"],
+.callout[data-callout="line-e"],
+.callout[data-callout="timeline"],
+.callout[data-callout="phase"],
+.callout[data-callout="quad-grid"] {
+  --callout-icon: var(--callout-icon-example);
+}
+
+.callout[data-callout="question"] {
+  --callout-icon: var(--callout-icon-question);
+}
+
+.callout[data-callout="sample-panel"],
+.callout[data-callout="voice"] {
+  --callout-icon: var(--callout-icon-tip);
+}
+
+.callout[data-callout="tension"],
+.callout[data-callout="boundary"],
+.callout[data-callout="contrast-table"],
+.callout[data-callout="finding-cards"] {
+  --callout-icon: var(--callout-icon-warning);
+}
+
+.callout[data-callout="citation-card"] {
+  --callout-icon: var(--callout-icon-quote);
+}
+
 article .callout[data-callout] {
-  --callout-color: 68, 138, 255;
-  --color: rgb(var(--callout-color));
-  --border: rgba(var(--callout-color), 0.26);
-  --bg: color-mix(in srgb, var(--background-primary) 92%, rgb(var(--callout-color)) 8%);
-  margin: 1.15rem 0 1.5rem;
-  padding: 0.85rem 1rem 0.95rem;
-  border: 1px solid var(--border);
-  border-left: 4px solid rgb(var(--callout-color));
-  border-radius: 8px;
-  background: var(--bg);
-  box-shadow: none;
-  outline: 0;
+  --color: rgb(var(--callout-color, 68, 138, 255));
+}
+
+article .callout {
+  margin: 1.1rem 0 1.45rem;
+  padding: 0.75rem 1rem 0.85rem;
 }
 
 article .callout > .callout-title {
   align-items: flex-start;
-  gap: 0.55rem;
+  gap: 0.5rem;
   padding: 0 0 0.45rem;
-  color: rgb(var(--callout-color));
-  line-height: 1.4;
+  border-bottom: 0;
+  line-height: 1.38;
 }
 
 article .callout > .callout-title .callout-icon,
@@ -49,15 +90,12 @@ article .callout > .callout-title .callout-title-inner {
 
 article .callout > .callout-title .callout-title-inner,
 article .callout > .callout-title .callout-title-inner p {
-  color: rgb(var(--callout-color));
-  line-height: 1.4;
+  line-height: 1.38;
 }
 
 article .callout > .callout-content {
-  display: block;
-  padding: 0.15rem 0 0;
+  padding: 0.2rem 0 0;
   line-height: 1.68;
-  overflow: visible;
 }
 
 article .callout > .callout-content > :first-child {
@@ -75,7 +113,7 @@ article .callout + ul,
 article .callout + h2,
 article .callout + h3,
 article .callout + h4 {
-  margin-top: 1.5rem;
+  margin-top: 1.45rem;
 }
 
 article li > .callout {
@@ -86,70 +124,26 @@ article li:has(> .callout) {
   margin-bottom: 1rem;
 }
 
-.callout[data-callout="argument-map"],
-.callout[data-callout="logic-map"] {
-  --callout-color: 20, 126, 121;
-  --callout-icon: var(--callout-icon-info);
+article .callout[data-callout="boundary"],
+article .callout[data-callout="tension"] {
+  background: color-mix(in srgb, var(--background-primary) 92%, rgb(var(--callout-color)) 8%);
+  border: 1px solid rgba(var(--callout-color), 0.2);
+  border-left: 4px solid rgb(var(--callout-color));
+  outline: 0;
+  box-shadow: none;
 }
 
-.callout[data-callout="reading-lens"] {
-  --callout-color: 61, 115, 180;
-  --callout-icon: var(--callout-icon-abstract);
+article .callout[data-callout="boundary"] > .callout-title,
+article .callout[data-callout="tension"] > .callout-title {
+  padding-bottom: 0.35rem;
+  color: rgb(var(--callout-color));
 }
 
-.callout[data-callout="question"],
-.callout[data-callout="line-a"],
-.callout[data-callout="line-c"],
-.callout[data-callout="line-d"],
-.callout[data-callout="line-e"] {
-  --callout-color: 88, 96, 180;
-  --callout-icon: var(--callout-icon-question);
-}
-
-.callout[data-callout="step"],
-.callout[data-callout="timeline"],
-.callout[data-callout="phase"] {
-  --callout-color: 175, 105, 55;
-  --callout-icon: var(--callout-icon-example);
-}
-
-.callout[data-callout="line-b"],
-.callout[data-callout="voice"] {
-  --callout-color: 178, 74, 96;
-  --callout-icon: var(--callout-icon-tip);
-}
-
-.callout[data-callout="framework-table"],
-.callout[data-callout="method-panel"],
-.callout[data-callout="evidence-grid"],
-.callout[data-callout="evidence-grid-a"],
-.callout[data-callout="evidence-grid-b"] {
-  --callout-color: 82, 145, 214;
-  --callout-icon: var(--callout-icon-abstract);
-}
-
-.callout[data-callout="sample-panel"],
-.callout[data-callout="quad-grid"] {
-  --callout-color: 86, 132, 102;
-  --callout-icon: var(--callout-icon-tip);
-}
-
-.callout[data-callout="tension"],
-.callout[data-callout="boundary"],
-.callout[data-callout="contrast-table"],
-.callout[data-callout="finding-cards"] {
-  --callout-color: 190, 95, 45;
-  --callout-icon: var(--callout-icon-warning);
-}
-
-.callout[data-callout="stat-cards"] {
-  --callout-color: 72, 132, 112;
-  --callout-icon: var(--callout-icon-abstract);
-}
-
-.callout[data-callout="citation-card"] {
-  --callout-color: 96, 113, 128;
-  --callout-icon: var(--callout-icon-quote);
+article .callout[data-callout="boundary"] > .callout-title .callout-title-inner,
+article .callout[data-callout="boundary"] > .callout-title .callout-title-inner p,
+article .callout[data-callout="tension"] > .callout-title .callout-title-inner,
+article .callout[data-callout="tension"] > .callout-title .callout-title-inner p {
+  color: rgb(var(--callout-color));
 }
 
 .callout[data-callout="logic-map"] {
@@ -157,6 +151,7 @@ article li:has(> .callout) {
 }
 
 .callout[data-callout="logic-map"] .callout-content {
+  display: block;
   overflow-x: auto;
   padding-bottom: 0.75rem;
 }
@@ -164,12 +159,12 @@ article li:has(> .callout) {
 .callout[data-callout="logic-map"] .mermaid {
   box-sizing: border-box;
   width: max-content;
-  min-width: 760px;
+  min-width: 780px;
   max-width: none;
   margin: 0.4rem auto 0.2rem;
-  padding: 1rem;
+  padding: 1.2rem;
   border: 1px solid rgba(85, 107, 47, 0.2);
-  border-radius: 8px;
+  border-radius: 10px;
   background: color-mix(in srgb, var(--background-primary) 94%, white 6%);
 }
 
@@ -194,4 +189,24 @@ article li:has(> .callout) {
 .callout[data-callout="logic-map"] .mermaid .edgePath path,
 .callout[data-callout="logic-map"] .mermaid marker path {
   stroke: #5f6f52 !important;
+}
+
+.callout[data-callout="logic-map"] .mermaid .edgeLabel {
+  background: color-mix(in srgb, var(--background-primary) 90%, white 10%) !important;
+}
+
+:root[saved-theme="dark"] .callout[data-callout="timeline"] {
+  background: color-mix(in srgb, var(--background-primary) 88%, rgb(72, 95, 145) 12%);
+  border-color: rgba(72, 95, 145, 0.32);
+}
+
+:root[saved-theme="dark"] .callout[data-callout="timeline"] .callout-content ul > li::before {
+  box-shadow:
+    0 0 0 2.5px color-mix(in srgb, var(--background-primary) 70%, rgb(72, 95, 145) 30%),
+    0 0 0 4.5px rgba(72, 95, 145, 0.18);
+}
+
+:root[saved-theme="dark"] .callout[data-callout="phase"] {
+  background: color-mix(in srgb, var(--background-primary) 88%, rgb(155, 103, 44) 12%);
+  border-color: rgba(155, 103, 44, 0.32);
 }
