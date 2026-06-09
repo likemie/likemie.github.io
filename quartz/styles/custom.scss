@@ -93,6 +93,8 @@ article {
 
 .callout[data-callout="logic-map"] .mermaid text,
 .callout[data-callout="logic-map"] .mermaid tspan,
+.callout[data-callout="logic-map"] .mermaid foreignObject,
+.callout[data-callout="logic-map"] .mermaid foreignObject *,
 .callout[data-callout="logic-map"] .mermaid .nodeLabel,
 .callout[data-callout="logic-map"] .mermaid .edgeLabel,
 .callout[data-callout="logic-map"] .mermaid .label {
