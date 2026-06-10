@@ -55,6 +55,27 @@
   margin-top: 0.35rem;
 }
 
+.concept-explore-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+}
+
+.concept-explore-stats span {
+  background: color-mix(in srgb, var(--lightgray) 55%, transparent);
+  border: 1px solid var(--lightgray);
+  border-radius: 999px;
+  color: var(--darkgray);
+  font-size: 0.84rem;
+  line-height: 1;
+  padding: 0.35rem 0.55rem;
+}
+
+.concept-explore-stats strong {
+  color: var(--dark);
+}
+
 .concept-explore-actions,
 .concept-explore-grid {
   display: flex;
@@ -101,4 +122,21 @@
   gap: 0.55rem;
   font-size: 1.25rem;
   font-weight: 700;
+}
+
+.concept-roam {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: -0.35rem 0 1.35rem;
+}
+
+.concept-roam-meta {
+  color: var(--gray);
+  font-size: 0.86rem;
+}
+
+.concept-roam-button {
+  padding: 0.45rem 0.75rem;
 }
