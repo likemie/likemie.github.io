@@ -15,3 +15,90 @@
 .note-properties .note-properties-value {
   width: auto;
 }
+
+.concept-explore-card {
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 0 0 1.5rem;
+  background: var(--light);
+}
+
+.concept-explore-kicker {
+  color: var(--gray);
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+}
+
+.concept-explore-heading {
+  margin: 0 0 0.4rem;
+}
+
+.concept-explore-title {
+  color: var(--secondary);
+  display: inline-block;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.concept-explore-title:hover {
+  text-decoration: underline;
+}
+
+.concept-explore-meta {
+  color: var(--darkgray);
+  font-size: 0.95rem;
+  margin-top: 0.35rem;
+}
+
+.concept-explore-actions,
+.concept-explore-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+}
+
+.concept-explore-button {
+  align-items: center;
+  background: var(--secondary);
+  border: 1px solid var(--secondary);
+  border-radius: 999px;
+  color: var(--light);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1;
+  padding: 0.55rem 0.85rem;
+  text-decoration: none;
+}
+
+.concept-explore-button:hover {
+  filter: brightness(1.06);
+  text-decoration: none;
+}
+
+.concept-explore-button.ghost {
+  background: transparent;
+  color: var(--secondary);
+}
+
+.concept-explore-result {
+  border-top: 1px solid var(--lightgray);
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
+.concept-collision {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
