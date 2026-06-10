@@ -240,7 +240,12 @@ plugins:
       includedProperties:
         - description
         - tags
-        - aliases
+        - related_concepts
+        - related_arguments
+        - related_theories
+        - related_methods
+        - related_persons
+        - related_facts
       excludedProperties: []
       hidePropertiesView: false
       delimiters: ---
