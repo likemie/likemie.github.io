@@ -1,3 +1,17 @@
 @use "./variables.scss" as *;
 
 // put your custom CSS here!
+
+.note-properties .note-properties-table {
+  table-layout: auto !important;
+}
+
+.note-properties .note-properties-key {
+  width: 1% !important;
+  max-width: 11rem;
+  white-space: nowrap;
+}
+
+.note-properties .note-properties-value {
+  width: auto;
+}

@@ -61,6 +61,9 @@ jobs:
       - name: Install Quartz plugins
         run: npx quartz plugin install --from-config --clean
 
+      - name: Patch Quartz plugins
+        run: npm run patch-plugins
+
       - name: Build Quartz
         run: npx quartz build
 
