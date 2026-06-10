@@ -239,7 +239,7 @@ plugins:
       includeAll: false
       includedProperties:
         - description
-        - tags
+        - authors
         - related_concepts
         - related_arguments
         - related_theories
