@@ -193,3 +193,598 @@
     flex-direction: column;
   }
 }
+
+/* Argument callouts adapted from the Obsidian argument-callouts snippet. */
+.callout {
+  border-radius: 8px;
+}
+
+.callout > .callout-content {
+  line-height: 1.65;
+}
+
+.callout[data-callout="question"] {
+  --argument-color: 88, 96, 180;
+  background:
+    linear-gradient(135deg, rgba(var(--argument-color), 0.12), rgba(var(--argument-color), 0.03)),
+    var(--light);
+  border: 1px solid rgba(var(--argument-color), 0.22);
+  border-left: 6px solid rgb(var(--argument-color));
+  box-shadow: 0 8px 20px rgba(var(--argument-color), 0.09);
+  overflow: hidden;
+  position: relative;
+}
+
+.callout[data-callout="question"]::after {
+  color: rgba(var(--argument-color), 0.08);
+  content: "?";
+  font-size: 7.5rem;
+  font-style: italic;
+  font-weight: 900;
+  line-height: 1;
+  pointer-events: none;
+  position: absolute;
+  right: 0.6rem;
+  top: -1rem;
+  z-index: 0;
+}
+
+.callout[data-callout="question"] > .callout-title,
+.callout[data-callout="question"] > .callout-content {
+  position: relative;
+  z-index: 1;
+}
+
+.callout[data-callout="stat-cards"] {
+  --argument-color: 72, 132, 112;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 24px,
+      rgba(var(--argument-color), 0.04) 24px,
+      rgba(var(--argument-color), 0.04) 25px
+    ),
+    linear-gradient(135deg, rgba(var(--argument-color), 0.1), rgba(var(--argument-color), 0.025)),
+    var(--light);
+  border: 1px solid rgba(var(--argument-color), 0.22);
+  border-left: 6px solid rgb(var(--argument-color));
+  box-shadow: 0 8px 20px rgba(var(--argument-color), 0.09);
+}
+
+.callout[data-callout="stat-cards"] .callout-content > ul {
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: repeat(6, 1fr);
+  list-style: none;
+  margin: 0.65rem 0 0.25rem;
+  padding-inline-start: 0;
+}
+
+.callout[data-callout="stat-cards"] .callout-content > ul > li {
+  background: color-mix(in srgb, var(--light) 88%, rgb(var(--argument-color)) 12%);
+  border: 1px solid rgba(var(--argument-color), 0.18);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(var(--argument-color), 0.06);
+  grid-column: span 2;
+  line-height: 1.55;
+  margin: 0;
+  padding: 1rem 1rem 0.8rem;
+}
+
+.callout[data-callout="stat-cards"] .callout-content > ul:has(> li:nth-child(4):last-child) > li {
+  grid-column: span 3;
+}
+
+.callout[data-callout="stat-cards"]
+  .callout-content
+  > ul:has(> li:nth-child(5):last-child)
+  > li:nth-child(n + 4) {
+  grid-column: span 3;
+}
+
+.callout[data-callout="stat-cards"]
+  .callout-content
+  > ul:has(> li:nth-child(7):last-child)
+  > li:nth-child(-n + 2),
+.callout[data-callout="stat-cards"]
+  .callout-content
+  > ul:has(> li:nth-child(7):last-child)
+  > li:nth-child(n + 6),
+.callout[data-callout="stat-cards"]
+  .callout-content
+  > ul:has(> li:nth-child(8):last-child)
+  > li:nth-child(n + 4):nth-child(-n + 5) {
+  grid-column: span 3;
+}
+
+.callout[data-callout="stat-cards"] .callout-content > ul > li strong:first-child {
+  color: rgb(var(--argument-color));
+  display: block;
+  font-size: 1.55em;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  margin-bottom: 0.2rem;
+}
+
+.callout[data-callout="framework-table"] {
+  --argument-color: 82, 145, 214;
+  background:
+    radial-gradient(ellipse at 18% 0%, rgba(var(--argument-color), 0.17), transparent 46%),
+    linear-gradient(180deg, rgba(var(--argument-color), 0.09), rgba(var(--argument-color), 0.02)),
+    var(--light);
+  border: 1px solid rgba(var(--argument-color), 0.24);
+  border-left: 6px double rgb(var(--argument-color));
+  box-shadow:
+    inset 0 1px 0 rgba(var(--argument-color), 0.14),
+    0 8px 20px rgba(var(--argument-color), 0.09);
+  overflow: hidden;
+  position: relative;
+}
+
+.callout[data-callout="framework-table"]::before {
+  background: conic-gradient(
+    from 195deg,
+    rgba(var(--argument-color), 0.06) 0deg,
+    transparent 12deg,
+    rgba(var(--argument-color), 0.06) 24deg,
+    transparent 36deg,
+    rgba(var(--argument-color), 0.06) 48deg,
+    transparent 60deg,
+    rgba(var(--argument-color), 0.06) 72deg,
+    transparent 84deg,
+    rgba(var(--argument-color), 0.06) 96deg,
+    transparent 108deg
+  );
+  border-radius: 50%;
+  content: "";
+  height: 150px;
+  pointer-events: none;
+  position: absolute;
+  right: -24px;
+  top: -24px;
+  width: 150px;
+  z-index: 0;
+}
+
+.callout[data-callout="framework-table"] > .callout-title,
+.callout[data-callout="framework-table"] > .callout-content {
+  position: relative;
+  z-index: 1;
+}
+
+.callout[data-callout="framework-table"] table {
+  border-collapse: separate;
+  border-spacing: 0 0.38rem;
+  display: table;
+  margin-block: 0.55rem 0.2rem;
+  width: 100%;
+}
+
+.callout[data-callout="framework-table"] th {
+  display: none;
+}
+
+.callout[data-callout="framework-table"] td {
+  background: color-mix(in srgb, var(--light) 90%, rgb(var(--argument-color)) 10%);
+  border: 1px solid rgba(var(--argument-color), 0.16);
+  line-height: 1.65;
+  vertical-align: top;
+}
+
+.callout[data-callout="framework-table"] td:first-child {
+  border-radius: 8px 0 0 8px;
+  border-right: 0;
+  color: rgb(var(--argument-color));
+  font-weight: 700;
+  width: 12rem;
+}
+
+.callout[data-callout="framework-table"] td:last-child {
+  border-left: 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.callout[data-callout="method-panel"] {
+  --argument-color: 26, 142, 166;
+  background:
+    linear-gradient(135deg, rgba(var(--argument-color), 0.12), rgba(var(--argument-color), 0.03)),
+    var(--light);
+  border: 1px solid rgba(var(--argument-color), 0.25);
+  border-left: 6px solid rgb(var(--argument-color));
+  box-shadow: 0 8px 20px rgba(var(--argument-color), 0.09);
+}
+
+.callout[data-callout="sample-panel"] {
+  --argument-color: 86, 132, 102;
+  background:
+    linear-gradient(135deg, rgba(var(--argument-color), 0.12), rgba(var(--argument-color), 0.03)),
+    var(--light);
+  border: 1px solid rgba(var(--argument-color), 0.25);
+  border-left: 6px solid rgb(var(--argument-color));
+  box-shadow: 0 8px 20px rgba(var(--argument-color), 0.09);
+}
+
+.callout[data-callout="method-panel"] table,
+.callout[data-callout="sample-panel"] table {
+  border-collapse: separate;
+  border-spacing: 0;
+  display: table;
+  margin-block: 0.5rem 0.2rem;
+  width: 100%;
+}
+
+.callout[data-callout="method-panel"] th,
+.callout[data-callout="sample-panel"] th {
+  background: rgba(var(--argument-color), 0.14);
+  font-weight: 700;
+}
+
+.callout[data-callout="method-panel"] th,
+.callout[data-callout="method-panel"] td,
+.callout[data-callout="sample-panel"] th,
+.callout[data-callout="sample-panel"] td {
+  border-color: rgba(var(--argument-color), 0.18);
+  line-height: 1.65;
+  vertical-align: top;
+}
+
+.callout[data-callout="method-panel"] td:first-child,
+.callout[data-callout="sample-panel"] td:first-child {
+  color: rgb(var(--argument-color));
+  font-weight: 650;
+  width: 10rem;
+}
+
+.callout[data-callout="logic-map"] {
+  --argument-color: 85, 107, 47;
+  background:
+    radial-gradient(circle, rgba(var(--argument-color), 0.16) 1.3px, transparent 1.3px),
+    linear-gradient(135deg, rgba(var(--argument-color), 0.09), rgba(var(--argument-color), 0.02)),
+    var(--light);
+  background-position:
+    4px 4px,
+    0 0,
+    0 0;
+  background-size:
+    22px 22px,
+    auto,
+    auto;
+  border: 1px solid rgba(var(--argument-color), 0.24);
+  border-left: 6px solid rgb(var(--argument-color));
+  box-shadow: 0 8px 20px rgba(var(--argument-color), 0.09);
+}
+
+.callout[data-callout="logic-map"] .callout-content {
+  overflow-x: auto;
+}
+
+.callout[data-callout="logic-map"] .mermaid {
+  cursor: default;
+  max-height: 380px;
+  overflow: auto;
+  padding: 0.5rem 0;
+}
+
+.callout[data-callout="logic-map"] .mermaid svg {
+  display: block;
+  font-size: 15px;
+  height: auto;
+  max-height: none;
+  min-width: 640px;
+}
+
+.callout[data-callout="contrast-table"] {
+  --argument-color: 72, 82, 96;
+  background:
+    linear-gradient(var(--light), var(--light)) padding-box,
+    linear-gradient(
+        90deg,
+        rgba(95, 114, 133, 0.85),
+        rgba(95, 114, 133, 0.2) 24%,
+        rgba(95, 114, 133, 0.2) 76%,
+        rgba(95, 114, 133, 0.85)
+      )
+      border-box;
+  border: 1px solid transparent;
+  border-top-width: 10px;
+  box-shadow: 0 14px 30px rgba(var(--argument-color), 0.13);
+  overflow: hidden;
+  position: relative;
+}
+
+.callout[data-callout="contrast-table"]::before {
+  background: repeating-linear-gradient(
+    135deg,
+    transparent 0,
+    transparent 30px,
+    rgba(var(--argument-color), 0.018) 30px,
+    rgba(var(--argument-color), 0.018) 31px
+  );
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.callout[data-callout="contrast-table"] > .callout-title,
+.callout[data-callout="contrast-table"] > .callout-content {
+  position: relative;
+  z-index: 1;
+}
+
+.callout[data-callout="contrast-table"] > .callout-title .callout-title-inner::before {
+  background: rgba(95, 114, 133, 0.18);
+  border-radius: 6px;
+  color: rgb(126, 137, 150);
+  content: "CONTRAST";
+  display: inline-block;
+  font-size: 0.7em;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  margin-right: 0.55rem;
+  padding: 0.08rem 0.42rem;
+}
+
+.callout[data-callout="contrast-table"] table {
+  border-collapse: separate;
+  border-spacing: 0;
+  display: table;
+  margin-block: 0.55rem 0.2rem;
+  width: 100%;
+}
+
+.callout[data-callout="contrast-table"] th,
+.callout[data-callout="contrast-table"] td {
+  border-color: rgba(126, 137, 150, 0.12);
+  line-height: 1.65;
+  vertical-align: top;
+}
+
+.callout[data-callout="contrast-table"] th {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.callout[data-callout="contrast-table"] th:nth-child(1),
+.callout[data-callout="contrast-table"] td:nth-child(1) {
+  background: transparent;
+  color: rgb(126, 137, 150);
+  font-weight: 700;
+  width: 9rem;
+}
+
+.callout[data-callout="contrast-table"] th:nth-child(2),
+.callout[data-callout="contrast-table"] td:nth-child(2) {
+  background: rgba(181, 139, 69, 0.1);
+}
+
+.callout[data-callout="contrast-table"] th:nth-child(3),
+.callout[data-callout="contrast-table"] td:nth-child(3) {
+  background: rgba(159, 100, 117, 0.1);
+}
+
+.callout[data-callout="finding-cards"] {
+  --argument-color: 192, 108, 56;
+  background:
+    linear-gradient(135deg, rgba(var(--argument-color), 0.12), rgba(var(--argument-color), 0.025)),
+    var(--light);
+  border: 1px solid rgba(var(--argument-color), 0.22);
+  border-left: 6px solid rgb(var(--argument-color));
+  box-shadow: 0 8px 20px rgba(var(--argument-color), 0.09);
+  overflow: hidden;
+  position: relative;
+}
+
+.callout[data-callout="finding-cards"]::before {
+  background: conic-gradient(
+    rgba(var(--argument-color), 0.09) 0deg,
+    transparent 15deg,
+    rgba(var(--argument-color), 0.09) 30deg,
+    transparent 45deg,
+    rgba(var(--argument-color), 0.09) 60deg,
+    transparent 75deg,
+    rgba(var(--argument-color), 0.09) 90deg,
+    transparent 105deg,
+    rgba(var(--argument-color), 0.09) 120deg,
+    transparent 135deg,
+    rgba(var(--argument-color), 0.09) 150deg,
+    transparent 165deg,
+    rgba(var(--argument-color), 0.09) 180deg
+  );
+  border-radius: 50%;
+  content: "";
+  height: 130px;
+  pointer-events: none;
+  position: absolute;
+  right: -32px;
+  top: -32px;
+  width: 130px;
+  z-index: 0;
+}
+
+.callout[data-callout="finding-cards"] > .callout-title,
+.callout[data-callout="finding-cards"] > .callout-content {
+  position: relative;
+  z-index: 1;
+}
+
+.callout[data-callout="finding-cards"] .callout-content > ol,
+.callout[data-callout="finding-cards"] .callout-content > ul {
+  counter-reset: finding;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+  margin: 0.7rem 0 0.25rem;
+  padding-inline-start: 0;
+}
+
+.callout[data-callout="finding-cards"] .callout-content > ol > li,
+.callout[data-callout="finding-cards"] .callout-content > ul > li {
+  background: color-mix(in srgb, var(--light) 88%, rgb(var(--argument-color)) 12%);
+  border: 1px solid rgba(var(--argument-color), 0.18);
+  border-radius: 8px;
+  counter-increment: finding;
+  line-height: 1.65;
+  margin: 0;
+  padding: 0.9rem 1rem;
+}
+
+.callout[data-callout="finding-cards"] .callout-content > ol > li:nth-child(3):last-child,
+.callout[data-callout="finding-cards"] .callout-content > ul > li:nth-child(3):last-child {
+  background:
+    linear-gradient(135deg, rgba(var(--argument-color), 0.16), rgba(var(--argument-color), 0.055)),
+    var(--light);
+  box-shadow: 0 8px 20px rgba(var(--argument-color), 0.09);
+  grid-column: 1 / -1;
+}
+
+.callout[data-callout="finding-cards"] .callout-content > ol > li::before,
+.callout[data-callout="finding-cards"] .callout-content > ul > li::before {
+  background: rgba(var(--argument-color), 0.2);
+  border-radius: 999px;
+  color: rgb(155, 82, 32);
+  content: counter(finding);
+  display: inline-grid;
+  font-size: 0.82em;
+  font-weight: 800;
+  height: 1.35rem;
+  margin-right: 0.45rem;
+  place-items: center;
+  width: 1.35rem;
+}
+
+.callout[data-callout="timeline"] {
+  --argument-color: 72, 95, 145;
+  background: color-mix(in srgb, var(--light) 82%, rgb(var(--argument-color)) 18%);
+  border: 1px solid rgba(var(--argument-color), 0.28);
+  border-left: 4px solid rgb(var(--argument-color));
+  border-radius: 8px;
+  padding: 0.85rem 1.1rem 0.7rem;
+}
+
+.callout[data-callout="timeline"] > .callout-title {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  color: var(--light);
+  margin-bottom: 0.55rem;
+  padding-bottom: 0.45rem;
+}
+
+.callout[data-callout="timeline"] .callout-content ul {
+  list-style: none;
+  margin: 0.3rem 0 0;
+  padding-left: 2.2rem;
+  position: relative;
+}
+
+.callout[data-callout="timeline"] .callout-content ul::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--argument-color), 0) 0%,
+    rgba(var(--argument-color), 0.5) 12%,
+    rgba(var(--argument-color), 0.5) 88%,
+    rgba(var(--argument-color), 0) 100%
+  );
+  border-radius: 1px;
+  bottom: 0.6rem;
+  content: "";
+  left: 0.65rem;
+  position: absolute;
+  top: 0.6rem;
+  width: 2px;
+}
+
+.callout[data-callout="timeline"] .callout-content ul > li {
+  border-radius: 6px;
+  line-height: 1.72;
+  margin-bottom: 0.08rem;
+  padding: 0.38rem 0.6rem 0.38rem 0.5rem;
+  position: relative;
+}
+
+.callout[data-callout="timeline"] .callout-content ul > li::before {
+  background: rgb(var(--argument-color));
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 2.5px color-mix(in srgb, var(--light) 78%, rgb(var(--argument-color)) 22%),
+    0 0 0 4.5px rgba(var(--argument-color), 0.1);
+  content: "";
+  height: 8px;
+  left: -1.59rem;
+  position: absolute;
+  top: 0.78rem;
+  width: 8px;
+  z-index: 1;
+}
+
+.callout[data-callout="timeline"] .callout-content ul > li > strong:first-child {
+  background: rgb(var(--argument-color));
+  border-radius: 4px;
+  color: var(--light);
+  display: inline-block;
+  font-size: 0.79em;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  margin-right: 0.35em;
+  padding: 0.06em 0.48em 0.09em;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.callout[data-callout="timeline"] ul ul {
+  display: grid;
+  gap: 0.55rem;
+  grid-template-columns: 1fr 1fr;
+  list-style: none;
+  margin: 0.4rem 0 0.15rem 1.2rem;
+  padding-left: 0;
+}
+
+.callout[data-callout="timeline"] ul ul > li:first-child,
+.callout[data-callout="timeline"] ul ul > li:last-child {
+  border-radius: 6px;
+  font-size: 0.88em;
+  line-height: 1.55;
+  margin: 0;
+  padding: 0.4rem 0.6rem;
+}
+
+.callout[data-callout="timeline"] ul ul > li:first-child {
+  background: rgba(200, 60, 45, 0.14);
+  border: 1px solid rgba(192, 57, 43, 0.3);
+  border-left: 4px solid rgb(185, 45, 35);
+}
+
+.callout[data-callout="timeline"] ul ul > li:last-child {
+  background: rgba(40, 175, 100, 0.14);
+  border: 1px solid rgba(39, 174, 96, 0.3);
+  border-left: 4px solid rgb(25, 145, 80);
+}
+
+@media all and ($mobile) {
+  .callout[data-callout="stat-cards"] .callout-content > ul,
+  .callout[data-callout="finding-cards"] .callout-content > ol,
+  .callout[data-callout="finding-cards"] .callout-content > ul,
+  .callout[data-callout="timeline"] ul ul {
+    grid-template-columns: 1fr;
+  }
+
+  .callout[data-callout="stat-cards"] .callout-content > ul > li,
+  .callout[data-callout="finding-cards"] .callout-content > ol > li:nth-child(3):last-child,
+  .callout[data-callout="finding-cards"] .callout-content > ul > li:nth-child(3):last-child {
+    grid-column: auto;
+  }
+
+  .callout[data-callout="framework-table"] table,
+  .callout[data-callout="contrast-table"] table {
+    display: block;
+    overflow-x: auto;
+  }
+}
