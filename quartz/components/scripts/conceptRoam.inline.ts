@@ -24,25 +24,42 @@ function pickRandom<T>(items: T[]) {
   return items[Math.floor(Math.random() * items.length)]
 }
 
+function findRoamAnchor() {
+  return (
+    document.querySelector(".markdown-preview-view h1") ??
+    document.querySelector("article h1") ??
+    document.querySelector(".page-header h1.article-title") ??
+    document.querySelector("h1.article-title")
+  )
+}
+
 function makeButton(targets: any[]) {
   const roam = document.createElement("div")
   roam.className = "concept-roam"
 
+  const copy = document.createElement("div")
+  copy.className = "concept-roam-copy"
+
+  const kicker = document.createElement("div")
+  kicker.className = "concept-roam-kicker"
+  kicker.textContent = "概念漫游"
+
+  const meta = document.createElement("div")
+  meta.className = "concept-roam-meta"
+  meta.textContent = `从 ${targets.length} 个相邻概念中随机跳一步，看看这条线索会把你带到哪里。`
+
   const button = document.createElement("button")
   button.type = "button"
-  button.className = "concept-explore-button ghost concept-roam-button"
-  button.textContent = "随机相关概念"
-
-  const meta = document.createElement("span")
-  meta.className = "concept-roam-meta"
-  meta.textContent = `从 ${targets.length} 个相邻概念中跳一步`
+  button.className = "concept-roam-button"
+  button.textContent = "随机相关概念 ->"
 
   button.addEventListener("click", () => {
     const target = pickRandom(targets)
     window.spaNavigate?.(new URL(getConceptUrl(target.slug), window.location.origin), false)
   })
 
-  roam.append(button, meta)
+  copy.append(kicker, meta)
+  roam.append(copy, button)
   return roam
 }
 
@@ -63,9 +80,7 @@ async function setupConceptRoam() {
 
   if (targets.length === 0) return
 
-  const title = document.querySelector(
-    ".page-header h1.article-title, article > h1, h1.article-title",
-  )
+  const title = findRoamAnchor()
   title?.insertAdjacentElement("afterend", makeButton(targets))
 }
 
