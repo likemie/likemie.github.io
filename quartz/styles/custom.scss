@@ -788,3 +788,416 @@
     overflow-x: auto;
   }
 }
+
+/* Everyday callouts: make common notes feel more intentional without changing Markdown. */
+.callout[data-callout="summary"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="example"],
+.callout[data-callout="tip"],
+.callout[data-callout="success"],
+.callout[data-callout="warning"],
+.callout[data-callout="note"] {
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--dark) 5%, transparent);
+}
+
+.callout[data-callout="summary"] {
+  --everyday-color: 64, 112, 128;
+  background:
+    linear-gradient(90deg, rgba(var(--everyday-color), 0.1), transparent 54%), var(--light);
+  border: 1px solid rgba(var(--everyday-color), 0.18);
+  border-left: 5px solid rgb(var(--everyday-color));
+}
+
+.callout[data-callout="summary"] > .callout-title {
+  letter-spacing: 0.01em;
+}
+
+.callout[data-callout="summary"] > .callout-content > ul {
+  margin-top: 0.35rem;
+}
+
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="example"] {
+  --everyday-color: 58, 121, 180;
+  background:
+    radial-gradient(circle at top right, rgba(var(--everyday-color), 0.12), transparent 38%),
+    linear-gradient(135deg, rgba(var(--everyday-color), 0.08), transparent 58%), var(--light);
+  border: 1px solid rgba(var(--everyday-color), 0.18);
+  border-left: 5px solid rgb(var(--everyday-color));
+}
+
+.callout[data-callout="example"] {
+  --everyday-color: 116, 94, 160;
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="success"] {
+  --everyday-color: 47, 137, 96;
+  background:
+    linear-gradient(135deg, rgba(var(--everyday-color), 0.1), rgba(var(--everyday-color), 0.025)),
+    var(--light);
+  border: 1px solid rgba(var(--everyday-color), 0.2);
+  border-left: 5px solid rgb(var(--everyday-color));
+}
+
+.callout[data-callout="warning"] {
+  --everyday-color: 188, 121, 44;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(var(--everyday-color), 0.045) 0,
+      rgba(var(--everyday-color), 0.045) 6px,
+      transparent 6px,
+      transparent 16px
+    ),
+    linear-gradient(135deg, rgba(var(--everyday-color), 0.1), rgba(var(--everyday-color), 0.025)),
+    var(--light);
+  border: 1px solid rgba(var(--everyday-color), 0.22);
+  border-left: 5px solid rgb(var(--everyday-color));
+}
+
+.callout[data-callout="note"] {
+  --everyday-color: 88, 111, 128;
+  background:
+    linear-gradient(var(--light), var(--light)) padding-box,
+    linear-gradient(135deg, rgba(var(--everyday-color), 0.26), rgba(var(--everyday-color), 0.06))
+      border-box;
+  border: 1px solid transparent;
+  border-left: 5px solid rgb(var(--everyday-color));
+}
+
+.callout[data-callout="quote"] {
+  --everyday-color: 96, 113, 128;
+  background:
+    linear-gradient(90deg, rgba(var(--everyday-color), 0.09), rgba(var(--everyday-color), 0.02)),
+    var(--light);
+  border: 1px solid rgba(var(--everyday-color), 0.18);
+  border-left: 5px solid rgb(var(--everyday-color));
+  box-shadow: 0 4px 14px rgba(var(--everyday-color), 0.07);
+  overflow: hidden;
+  position: relative;
+}
+
+.callout[data-callout="quote"]::before {
+  color: rgba(var(--everyday-color), 0.1);
+  content: "\201C";
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 7rem;
+  font-weight: 900;
+  left: 0.45rem;
+  line-height: 1;
+  pointer-events: none;
+  position: absolute;
+  top: -1.45rem;
+  z-index: 0;
+}
+
+.callout[data-callout="quote"] > .callout-title,
+.callout[data-callout="quote"] > .callout-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Argument micro-patterns for A/B lines, evidence panels, and compact reference cards. */
+.markdown-preview-view,
+article {
+  counter-reset: argument-line;
+}
+
+.callout[data-callout="line-a"],
+.callout[data-callout="line-b"],
+.callout[data-callout="line-c"],
+.callout[data-callout="line-d"],
+.callout[data-callout="line-e"] {
+  --argument-color: 88, 96, 180;
+  background:
+    radial-gradient(circle, rgba(var(--argument-color), 0.11) 1.2px, transparent 1.8px),
+    linear-gradient(135deg, rgba(var(--argument-color), 0.09), rgba(var(--argument-color), 0.025)),
+    var(--light);
+  background-size:
+    18px 18px,
+    auto,
+    auto;
+  border: 1px solid rgba(var(--argument-color), 0.24);
+  border-left: 6px solid rgb(var(--argument-color));
+  box-shadow: 0 8px 20px rgba(var(--argument-color), 0.09);
+  overflow: hidden;
+  position: relative;
+}
+
+.callout[data-callout="line-a"] {
+  counter-increment: argument-line;
+}
+
+.callout[data-callout="line-b"] {
+  --argument-color: 164, 74, 102;
+  background:
+    linear-gradient(90deg, rgba(var(--argument-color), 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(var(--argument-color), 0.06) 1px, transparent 1px),
+    linear-gradient(135deg, rgba(var(--argument-color), 0.09), rgba(var(--argument-color), 0.02)),
+    var(--light);
+  background-size:
+    28px 100%,
+    100% 18px,
+    auto,
+    auto;
+}
+
+.callout[data-callout="line-a"]::after,
+.callout[data-callout="line-b"]::after,
+.callout[data-callout="line-c"]::after,
+.callout[data-callout="line-d"]::after,
+.callout[data-callout="line-e"]::after {
+  color: rgba(var(--argument-color), 0.09);
+  font-size: 5rem;
+  font-weight: 900;
+  line-height: 1;
+  pointer-events: none;
+  position: absolute;
+  right: 0.75rem;
+  top: -0.8rem;
+  z-index: 0;
+}
+
+.callout[data-callout="line-a"]::after,
+.callout[data-callout="line-b"]::after {
+  content: counter(argument-line, upper-alpha);
+}
+
+.callout[data-callout="line-c"]::after {
+  content: "C";
+}
+
+.callout[data-callout="line-d"]::after {
+  content: "D";
+}
+
+.callout[data-callout="line-e"]::after {
+  content: "E";
+}
+
+.callout[data-callout="line-a"] > .callout-title,
+.callout[data-callout="line-a"] > .callout-content,
+.callout[data-callout="line-b"] > .callout-title,
+.callout[data-callout="line-b"] > .callout-content,
+.callout[data-callout="line-c"] > .callout-title,
+.callout[data-callout="line-c"] > .callout-content,
+.callout[data-callout="line-d"] > .callout-title,
+.callout[data-callout="line-d"] > .callout-content,
+.callout[data-callout="line-e"] > .callout-title,
+.callout[data-callout="line-e"] > .callout-content {
+  position: relative;
+  z-index: 1;
+}
+
+.callout[data-callout="line-a"] > .callout-title .callout-title-inner::before,
+.callout[data-callout="line-b"] > .callout-title .callout-title-inner::before,
+.callout[data-callout="line-c"] > .callout-title .callout-title-inner::before,
+.callout[data-callout="line-d"] > .callout-title .callout-title-inner::before,
+.callout[data-callout="line-e"] > .callout-title .callout-title-inner::before {
+  background: rgba(var(--argument-color), 0.16);
+  border-radius: 6px;
+  color: rgb(var(--argument-color));
+  display: inline-block;
+  font-size: 0.72em;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  margin-right: 0.55rem;
+  padding: 0.08rem 0.42rem;
+}
+
+.callout[data-callout="line-a"] > .callout-title .callout-title-inner::before,
+.callout[data-callout="line-b"] > .callout-title .callout-title-inner::before {
+  content: counter(argument-line, upper-alpha);
+}
+
+.callout[data-callout="line-c"] > .callout-title .callout-title-inner::before {
+  content: "C";
+}
+
+.callout[data-callout="line-d"] > .callout-title .callout-title-inner::before {
+  content: "D";
+}
+
+.callout[data-callout="line-e"] > .callout-title .callout-title-inner::before {
+  content: "E";
+}
+
+.callout[data-callout="line-a"]:has(+ .callout[data-callout="line-b"]),
+.callout[data-callout="line-c"]:has(+ .callout[data-callout="line-b"]),
+.callout[data-callout="line-d"]:has(+ .callout[data-callout="line-b"]),
+.callout[data-callout="line-e"]:has(+ .callout[data-callout="line-b"]) {
+  border-bottom-color: rgba(88, 96, 180, 0.1);
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  margin-bottom: 2px;
+}
+
+.callout[data-callout="line-a"] + .callout[data-callout="line-b"],
+.callout[data-callout="line-c"] + .callout[data-callout="line-b"],
+.callout[data-callout="line-d"] + .callout[data-callout="line-b"],
+.callout[data-callout="line-e"] + .callout[data-callout="line-b"] {
+  border-top-color: rgba(164, 74, 102, 0.1);
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.callout[data-callout="citation-card"] {
+  --argument-color: 96, 113, 128;
+  background:
+    linear-gradient(90deg, rgba(var(--argument-color), 0.1), rgba(var(--argument-color), 0.025)),
+    var(--light);
+  border: 1px solid rgba(var(--argument-color), 0.18);
+  border-left: 5px solid rgb(var(--argument-color));
+  box-shadow: 0 4px 12px rgba(var(--argument-color), 0.06);
+  overflow: hidden;
+  position: relative;
+}
+
+.callout[data-callout="citation-card"]::before {
+  color: rgba(var(--argument-color), 0.09);
+  content: "\201C";
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 8rem;
+  font-weight: 900;
+  left: 0.4rem;
+  line-height: 1;
+  pointer-events: none;
+  position: absolute;
+  top: -1.6rem;
+  z-index: 0;
+}
+
+.callout[data-callout="citation-card"] > .callout-title,
+.callout[data-callout="citation-card"] > .callout-content {
+  position: relative;
+  z-index: 1;
+}
+
+.callout[data-callout="tension"] {
+  --argument-color: 190, 95, 45;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(var(--argument-color), 0.055) 0,
+      rgba(var(--argument-color), 0.055) 5px,
+      transparent 5px,
+      transparent 14px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(var(--argument-color), 0.035) 0,
+      rgba(var(--argument-color), 0.035) 5px,
+      transparent 5px,
+      transparent 14px
+    ),
+    linear-gradient(90deg, rgba(var(--argument-color), 0.11), transparent 55%), var(--light);
+  border: 1px solid rgba(var(--argument-color), 0.24);
+  border-left: 5px solid rgb(var(--argument-color));
+  border-right: 5px solid rgba(var(--argument-color), 0.4);
+  box-shadow: 0 8px 20px rgba(var(--argument-color), 0.09);
+}
+
+.callout[data-callout="boundary"] {
+  --argument-color: 34, 139, 94;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(var(--argument-color), 0.08) 0,
+      rgba(var(--argument-color), 0.08) 8px,
+      rgba(var(--argument-color), 0.03) 8px,
+      rgba(var(--argument-color), 0.03) 16px
+    ),
+    var(--light);
+  border: 1px solid rgba(var(--argument-color), 0.23);
+  box-shadow: 0 4px 12px rgba(var(--argument-color), 0.06);
+  outline: 1px dashed rgba(var(--argument-color), 0.38);
+  outline-offset: -6px;
+}
+
+.callout[data-callout="case"] {
+  --argument-color: 178, 126, 44;
+  background:
+    linear-gradient(135deg, rgba(var(--argument-color), 0.1), rgba(var(--argument-color), 0.025)),
+    var(--light);
+  border: 1px solid rgba(var(--argument-color), 0.24);
+  border-left: 5px solid rgb(var(--argument-color));
+  box-shadow: 0 8px 20px rgba(var(--argument-color), 0.09);
+}
+
+.callout[data-callout="case"] > .callout-title .callout-title-inner::before {
+  background: rgba(var(--argument-color), 0.18);
+  border-radius: 4px;
+  color: rgb(148, 102, 28);
+  content: "CASE";
+  display: inline-block;
+  font-size: 0.68em;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  margin-right: 0.5rem;
+  padding: 0.06em 0.4em;
+}
+
+.callout[data-callout="evidence-grid"],
+.callout[data-callout="evidence-grid-a"],
+.callout[data-callout="evidence-grid-b"],
+.callout[data-callout="features"],
+.callout[data-callout="taxonomy"] {
+  --argument-color: 66, 120, 150;
+  background:
+    linear-gradient(180deg, rgba(var(--argument-color), 0.11), rgba(var(--argument-color), 0.03)),
+    var(--light);
+  border: 1px solid rgba(var(--argument-color), 0.22);
+  border-left: 5px solid rgb(var(--argument-color));
+  box-shadow: 0 8px 20px rgba(var(--argument-color), 0.09);
+}
+
+.callout[data-callout="evidence-grid-b"] {
+  --argument-color: 112, 106, 164;
+}
+
+.callout[data-callout="features"] {
+  --argument-color: 75, 132, 92;
+}
+
+.callout[data-callout="taxonomy"] {
+  --argument-color: 126, 103, 72;
+}
+
+.callout[data-callout="evidence-grid"] .callout-content > ul,
+.callout[data-callout="evidence-grid-a"] .callout-content > ul,
+.callout[data-callout="evidence-grid-b"] .callout-content > ul,
+.callout[data-callout="features"] .callout-content > ul,
+.callout[data-callout="taxonomy"] .callout-content > ul {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  list-style: none;
+  margin: 0.75rem 0 0.25rem;
+  padding-inline-start: 0;
+}
+
+.callout[data-callout="evidence-grid"] .callout-content > ul > li,
+.callout[data-callout="evidence-grid-a"] .callout-content > ul > li,
+.callout[data-callout="evidence-grid-b"] .callout-content > ul > li,
+.callout[data-callout="features"] .callout-content > ul > li,
+.callout[data-callout="taxonomy"] .callout-content > ul > li {
+  background: color-mix(in srgb, var(--light) 86%, rgb(var(--argument-color)) 14%);
+  border: 1px solid rgba(var(--argument-color), 0.2);
+  border-radius: 8px;
+  line-height: 1.65;
+  margin: 0;
+  padding: 0.75rem 0.85rem;
+}
+
+.callout[data-callout="evidence-grid"] .callout-content > ul > li strong:first-child,
+.callout[data-callout="evidence-grid-a"] .callout-content > ul > li strong:first-child,
+.callout[data-callout="evidence-grid-b"] .callout-content > ul > li strong:first-child,
+.callout[data-callout="features"] .callout-content > ul > li strong:first-child,
+.callout[data-callout="taxonomy"] .callout-content > ul > li strong:first-child {
+  color: rgb(var(--argument-color));
+  display: block;
+  margin-bottom: 0.35rem;
+}
