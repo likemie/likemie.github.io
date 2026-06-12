@@ -123,8 +123,8 @@ function KnowledgeHome(userOpts = {}) {
               ),
             h(
               "a",
-              { class: "knowledge-home-button ghost", href: hrefFor("wiki") },
-              "进入 Wiki",
+              { class: "knowledge-home-button ghost", href: hrefFor("wiki/research-map") },
+              "进入研究地图",
             ),
           ),
         ),
