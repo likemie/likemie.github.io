@@ -163,16 +163,19 @@ plugins:
     layout:
       position: beforeBody
       priority: 10
+      condition: not-index
   - source: github:quartz-community/content-meta
     enabled: true
     layout:
       position: beforeBody
       priority: 20
+      condition: not-index
   - source: github:quartz-community/tag-list
     enabled: true
     layout:
       position: beforeBody
       priority: 30
+      condition: not-index
   - source: github:quartz-community/page-title
     enabled: true
     layout:
@@ -229,6 +232,15 @@ plugins:
       position: left
       priority: 25
       display: mobile-only
+  - source: ./plugins/knowledge-home
+    enabled: true
+    options:
+      recentLimit: 5
+      constellationLimit: 18
+    order: 26
+    layout:
+      position: beforeBody
+      priority: 1
   - source: github:quartz-community/bases-page
     enabled: true
     options: {}
@@ -254,6 +266,7 @@ plugins:
     layout:
       position: beforeBody
       priority: 15
+      condition: not-index
       display: all
   - source: github:quartz-community/unlisted-pages
     enabled: true

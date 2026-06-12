@@ -1,0 +1,36 @@
+{
+  "name": "knowledge-home",
+  "version": "0.1.0",
+  "description": "Homepage dashboard and note constellation for this Quartz garden.",
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./components": "./components/index.js",
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "preact": "^10.0.0"
+  },
+  "quartz": {
+    "name": "knowledge-home",
+    "displayName": "Knowledge Home",
+    "category": "component",
+    "version": "1.0.0",
+    "quartzVersion": ">=5.0.0",
+    "defaultEnabled": true,
+    "defaultOptions": {
+      "recentLimit": 5,
+      "constellationLimit": 18
+    },
+    "components": {
+      "KnowledgeHome": {
+        "name": "KnowledgeHome",
+        "displayName": "Knowledge Home",
+        "description": "A homepage-only dashboard, constellation map, and random roam entry.",
+        "version": "1.0.0",
+        "defaultPosition": "beforeBody",
+        "defaultPriority": 1
+      }
+    }
+  }
+}
