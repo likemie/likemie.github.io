@@ -241,6 +241,12 @@ plugins:
     layout:
       position: beforeBody
       priority: 1
+  - source: ./plugins/argument-dossier
+    enabled: true
+    order: 27
+    layout:
+      position: beforeBody
+      priority: 18
   - source: github:quartz-community/bases-page
     enabled: true
     options: {}

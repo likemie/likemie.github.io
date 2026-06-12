@@ -1,0 +1,31 @@
+{
+  "name": "argument-dossier",
+  "version": "0.1.0",
+  "description": "Structured dossier card for argument notes.",
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./components": "./components/index.js",
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "preact": "^10.0.0"
+  },
+  "quartz": {
+    "name": "argument-dossier",
+    "displayName": "Argument Dossier",
+    "category": "component",
+    "version": "1.0.0",
+    "quartzVersion": ">=5.0.0",
+    "components": {
+      "ArgumentDossier": {
+        "name": "ArgumentDossier",
+        "displayName": "Argument Dossier",
+        "description": "A compact research dossier for argument pages.",
+        "version": "1.0.0",
+        "defaultPosition": "beforeBody",
+        "defaultPriority": 18
+      }
+    }
+  }
+}
