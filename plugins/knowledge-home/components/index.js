@@ -101,8 +101,8 @@ function KnowledgeHome(userOpts = {}) {
         h(
           "div",
           { class: "knowledge-home-copy" },
-          h("p", { class: "knowledge-home-kicker" }, "今日驾驶舱"),
-          h("h1", null, "绍杨的知识库"),
+          h("p", { class: "knowledge-home-kicker" }, "Knowledge Home"),
+          h("h1", null, "今日驾驶舱"),
           h(
             "p",
             { class: "knowledge-home-lede" },
