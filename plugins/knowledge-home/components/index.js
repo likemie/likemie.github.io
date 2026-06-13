@@ -1,8 +1,8 @@
 import { h } from "preact"
 
 const defaultOptions = {
-  recentLimit: 5,
-  constellationLimit: 18,
+  recentLimit: 8,
+  constellationLimit: 10,
 }
 
 function isListedContent(page) {
@@ -157,7 +157,7 @@ function KnowledgeHome(userOpts = {}) {
                 {
                   class: `knowledge-star tone-${index % 5}`,
                   href: hrefFor(page),
-                  style: `--size:${Math.min(1.45, 0.82 + linksFor(page) / 18).toFixed(2)}; --delay:${index * 45}ms`,
+                  style: `--delay:${index * 45}ms`,
                 },
                 h("span", { class: "knowledge-star-type" }, sectionFor(page)),
                 h("strong", null, titleFor(page)),
@@ -379,14 +379,14 @@ function KnowledgeHome(userOpts = {}) {
 }
 
 .knowledge-home-stars {
-  align-items: stretch;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: 0.6rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .knowledge-star {
   --tone: var(--secondary);
+  align-items: center;
   animation: knowledge-star-rise 520ms ease both;
   animation-delay: var(--delay);
   background:
@@ -396,10 +396,9 @@ function KnowledgeHome(userOpts = {}) {
   border-radius: 8px;
   color: var(--dark);
   display: grid;
-  flex: 1 1 calc(33.333% - 0.6rem);
-  gap: 0.3rem;
-  min-width: 9.5rem;
-  padding: calc(0.72rem * var(--size));
+  gap: 0.25rem;
+  grid-template-columns: 1fr auto;
+  padding: 0.72rem 0.8rem;
   text-decoration: none;
 }
 
@@ -410,12 +409,16 @@ function KnowledgeHome(userOpts = {}) {
 }
 
 .knowledge-star strong {
-  font-size: calc(0.98rem * var(--size));
+  font-size: 0.98rem;
+  grid-column: 1 / -1;
   line-height: 1.22;
+  overflow-wrap: anywhere;
 }
 
 .knowledge-star small {
   color: var(--darkgray);
+  font-size: 0.82rem;
+  justify-self: end;
 }
 
 .knowledge-star.tone-1 { --tone: var(--tertiary); }
@@ -478,15 +481,15 @@ function KnowledgeHome(userOpts = {}) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     padding: 1rem 0 0;
   }
+
+  .knowledge-home-stars {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media all and (max-width: 520px) {
   .knowledge-home-panel {
     grid-template-columns: 1fr;
-  }
-
-  .knowledge-star {
-    flex-basis: 100%;
   }
 }
 `
