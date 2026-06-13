@@ -1,8 +1,8 @@
 import { h } from "preact"
 
 const defaultOptions = {
-  recentLimit: 6,
-  constellationLimit: 6,
+  recentLimit: 12,
+  constellationLimit: 12,
 }
 
 function isListedContent(page) {
@@ -362,7 +362,21 @@ function KnowledgeHome(userOpts = {}) {
 .knowledge-home-card {
   border: 1px solid var(--lightgray);
   border-radius: 8px;
+  height: clamp(25rem, 42vw, 31rem);
+  overflow: hidden;
   padding: 1rem;
+  position: relative;
+}
+
+.knowledge-home-card::after {
+  background: linear-gradient(transparent, var(--light) 82%);
+  bottom: 0;
+  content: "";
+  height: 2.5rem;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
 }
 
 .knowledge-home-section-head {
@@ -409,10 +423,13 @@ function KnowledgeHome(userOpts = {}) {
 }
 
 .knowledge-star strong {
+  display: -webkit-box;
   font-size: 0.98rem;
   grid-column: 1 / -1;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   line-height: 1.22;
-  overflow-wrap: anywhere;
+  overflow: hidden;
 }
 
 .knowledge-star small {
@@ -448,8 +465,12 @@ function KnowledgeHome(userOpts = {}) {
 
 .knowledge-home-recent a {
   color: var(--dark);
+  display: -webkit-box;
   font-weight: 700;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   line-height: 1.25;
+  overflow: hidden;
 }
 
 .knowledge-home-recent time,
@@ -484,6 +505,15 @@ function KnowledgeHome(userOpts = {}) {
 
   .knowledge-home-stars {
     grid-template-columns: 1fr;
+  }
+
+  .knowledge-home-card {
+    height: auto;
+    overflow: visible;
+  }
+
+  .knowledge-home-card::after {
+    display: none;
   }
 }
 
