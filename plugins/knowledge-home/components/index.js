@@ -86,11 +86,11 @@ function KnowledgeHome(userOpts = {}) {
     const constellation = [...pages]
       .sort((a, b) => linksFor(b) - linksFor(a) || titleFor(a).localeCompare(titleFor(b)))
       .slice(0, opts.constellationLimit)
-    const randomPage = deterministicPick(pages, new Date().toISOString().slice(0, 10))
-    const sourceCount = pages.filter((page) => (page.slug ?? "").startsWith("sources")).length
+    const todayKey = new Date().toISOString().slice(0, 10)
+    const concepts = pages.filter((page) => (page.slug ?? "").startsWith("wiki/concepts/"))
+    const todayConcept = deterministicPick(concepts, todayKey)
     const wikiCount = pages.filter((page) => (page.slug ?? "").startsWith("wiki")).length
     const totalLinks = pages.reduce((sum, page) => sum + linksFor(page), 0)
-    const currentSlug = fileData.slug
 
     return h(
       "section",
@@ -108,19 +108,18 @@ function KnowledgeHome(userOpts = {}) {
             { class: "knowledge-home-lede" },
             "一间由论文、概念、理论和 AI 劳动痕迹搭起来的开放书房。每天进来，先看看最近亮起的节点，再随手漫游到一个旧想法。",
           ),
+          todayConcept &&
+            h(
+              "a",
+              { class: "knowledge-home-today", href: hrefFor(todayConcept) },
+              h("span", null, "今日概念"),
+              h("strong", null, titleFor(todayConcept)),
+              h("small", null, `${todayKey} · 从 ${formatCount(concepts.length)} 个概念里抽取`),
+            ),
           h(
             "div",
             { class: "knowledge-home-actions" },
-            randomPage &&
-              h(
-                "a",
-                {
-                  class: "knowledge-home-button",
-                  href: hrefFor(randomPage),
-                },
-                "随机漫游：",
-                titleFor(randomPage),
-              ),
+            h("a", { class: "knowledge-home-button", href: hrefFor("explore") }, "打开探索页"),
             h(
               "a",
               { class: "knowledge-home-button ghost", href: hrefFor("wiki/research-map") },
@@ -133,7 +132,7 @@ function KnowledgeHome(userOpts = {}) {
           { class: "knowledge-home-panel", "aria-label": "知识库概览" },
           h("div", null, h("span", null, "条目"), h("strong", null, formatCount(pages.length))),
           h("div", null, h("span", null, "Wiki"), h("strong", null, formatCount(wikiCount))),
-          h("div", null, h("span", null, "文献"), h("strong", null, formatCount(sourceCount))),
+          h("div", null, h("span", null, "概念"), h("strong", null, formatCount(concepts.length))),
           h("div", null, h("span", null, "链接"), h("strong", null, formatCount(totalLinks))),
         ),
       ),
@@ -268,7 +267,42 @@ function KnowledgeHome(userOpts = {}) {
   display: flex;
   flex-wrap: wrap;
   gap: 0.65rem;
-  margin-top: 1.25rem;
+  margin-top: 0.9rem;
+}
+
+.knowledge-home-today {
+  background: color-mix(in srgb, var(--light) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--secondary) 18%, var(--lightgray));
+  border-radius: 8px;
+  color: var(--dark);
+  display: grid;
+  gap: 0.2rem;
+  margin-top: 1.1rem;
+  max-width: 34rem;
+  padding: 0.75rem 0.9rem;
+  text-decoration: none;
+}
+
+.knowledge-home-today:hover {
+  border-color: color-mix(in srgb, var(--secondary) 48%, var(--lightgray));
+  text-decoration: none;
+}
+
+.knowledge-home-today span {
+  color: var(--secondary);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.knowledge-home-today strong {
+  color: var(--secondary);
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  line-height: 1.1;
+}
+
+.knowledge-home-today small {
+  color: var(--darkgray);
+  font-size: 0.9rem;
 }
 
 .knowledge-home-button {
