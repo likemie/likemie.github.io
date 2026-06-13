@@ -1,8 +1,8 @@
 import { h } from "preact"
 
 const defaultOptions = {
-  recentLimit: 8,
-  constellationLimit: 10,
+  recentLimit: 6,
+  constellationLimit: 6,
 }
 
 function isListedContent(page) {

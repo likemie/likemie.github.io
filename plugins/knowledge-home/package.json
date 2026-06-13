@@ -19,8 +19,8 @@
     "quartzVersion": ">=5.0.0",
     "defaultEnabled": true,
     "defaultOptions": {
-      "recentLimit": 8,
-      "constellationLimit": 10
+      "recentLimit": 6,
+      "constellationLimit": 6
     },
     "components": {
       "KnowledgeHome": {

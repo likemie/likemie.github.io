@@ -235,8 +235,8 @@ plugins:
   - source: ./plugins/knowledge-home
     enabled: true
     options:
-      recentLimit: 8
-      constellationLimit: 10
+      recentLimit: 6
+      constellationLimit: 6
     order: 26
     layout:
       position: beforeBody
