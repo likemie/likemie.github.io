@@ -573,12 +573,20 @@ function KnowledgeHome(userOpts = {}) {
             { class: "knowledge-explore-route-grid" },
             routes.map((route) =>
               h(
-                "div",
+                "details",
                 { class: "knowledge-explore-route" },
-                h("span", null, route.eyebrow),
-                h("strong", null, route.title),
-                h("p", null, route.body),
-                h("em", { class: "knowledge-explore-route-meta" }, `自动：${route.meta}`),
+                h(
+                  "summary",
+                  { class: "knowledge-explore-route-summary" },
+                  h("span", null, route.eyebrow),
+                  h("strong", null, route.title),
+                  h("p", null, route.body),
+                  h(
+                    "em",
+                    { class: "knowledge-explore-route-meta" },
+                    `展开路线 · 自动：${route.meta}`,
+                  ),
+                ),
                 h(
                   "ol",
                   { class: "knowledge-explore-route-stops" },
@@ -1098,7 +1106,7 @@ body[data-slug="explore/index"] article {
 .knowledge-explore-kicker,
 .knowledge-explore-head span,
 .knowledge-explore-chip span,
-.knowledge-explore-route > span {
+.knowledge-explore-route-summary > span {
   color: var(--secondary);
   font-size: 0.78rem;
   font-weight: 700;
@@ -1276,18 +1284,47 @@ body[data-slug="explore/index"] article {
     var(--light);
   border: 1px solid color-mix(in srgb, var(--secondary) 22%, var(--lightgray));
   border-radius: 8px;
+  color: var(--dark);
+  overflow: hidden;
+}
+
+.knowledge-explore-route[open] {
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--secondary) 10%, transparent);
+}
+
+.knowledge-explore-route-summary {
+  cursor: pointer;
   display: grid;
   gap: 0.5rem;
+  list-style: none;
+  min-height: 11.5rem;
   padding: 0.9rem;
 }
 
-.knowledge-explore-route strong {
+.knowledge-explore-route-summary::-webkit-details-marker {
+  display: none;
+}
+
+.knowledge-explore-route-summary::after {
+  align-self: end;
+  color: var(--secondary);
+  content: "展开路线";
+  font-size: 0.82rem;
+  font-weight: 800;
+  justify-self: start;
+}
+
+.knowledge-explore-route[open] .knowledge-explore-route-summary::after {
+  content: "收起路线";
+}
+
+.knowledge-explore-route-summary strong {
   font-family: var(--headerFont);
   font-size: 1.18rem;
   line-height: 1.2;
 }
 
-.knowledge-explore-route p {
+.knowledge-explore-route-summary p {
   color: var(--darkgray);
   line-height: 1.55;
   margin: 0;
@@ -1301,22 +1338,23 @@ body[data-slug="explore/index"] article {
 }
 
 .knowledge-explore-route-stops {
+  border-top: 1px solid color-mix(in srgb, var(--secondary) 18%, var(--lightgray));
   counter-reset: route-stop;
   display: grid;
   gap: 0.5rem;
   list-style: none;
-  margin: 0.25rem 0 0;
-  padding: 0;
+  margin: 0;
+  padding: 0.85rem 0.9rem 0.9rem;
   position: relative;
 }
 
 .knowledge-explore-route-stops::before {
   background: color-mix(in srgb, var(--secondary) 28%, var(--lightgray));
-  bottom: 1rem;
+  bottom: 1.8rem;
   content: "";
-  left: 0.8rem;
+  left: 1.7rem;
   position: absolute;
-  top: 1rem;
+  top: 1.65rem;
   width: 1px;
 }
 
