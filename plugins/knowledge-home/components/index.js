@@ -74,7 +74,7 @@ function formatDate(date, locale) {
 
 function hrefFor(pageOrSlug) {
   const slug = typeof pageOrSlug === "string" ? pageOrSlug : pageOrSlug.slug
-  return slug === "index" ? "." : slug
+  return slug === "index" ? "/" : `/${slug}`
 }
 
 function pagesIn(pages, prefix) {
@@ -89,6 +89,15 @@ function topLinked(pages, limit) {
 
 function isExploreSlug(slug) {
   return slug === "explore" || slug === "explore/index"
+}
+
+function slugForTitle(pages, title, fallback, preferredPrefix) {
+  const matches = pages.filter((page) => titleFor(page) === title)
+  return (
+    matches.find((page) => (page.slug ?? "").startsWith(preferredPrefix))?.slug ??
+    matches[0]?.slug ??
+    fallback
+  )
 }
 
 function KnowledgeHome(userOpts = {}) {
@@ -130,7 +139,12 @@ function KnowledgeHome(userOpts = {}) {
           eyebrow: "Evidence",
           title: "循证教育路线",
           body: "从 Evidence-Based Education 出发，看证据、治理、专业判断和方法边界如何互相牵扯。",
-          href: "wiki/concepts/evidence-based-education",
+          href: slugForTitle(
+            pages,
+            "Evidence-Based Education",
+            "wiki/concepts/evidence-based-education",
+            "wiki/concepts/",
+          ),
         },
         {
           eyebrow: "Governance",
