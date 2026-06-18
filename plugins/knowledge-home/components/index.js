@@ -87,11 +87,15 @@ function topLinked(pages, limit) {
     .slice(0, limit)
 }
 
+function isExploreSlug(slug) {
+  return slug === "explore" || slug === "explore/index"
+}
+
 function KnowledgeHome(userOpts = {}) {
   const opts = { ...defaultOptions, ...userOpts }
 
   const Component = ({ cfg, fileData, allFiles, displayClass }) => {
-    if (fileData.slug !== "index" && fileData.slug !== "explore") return null
+    if (fileData.slug !== "index" && !isExploreSlug(fileData.slug)) return null
 
     const pages = allFiles.filter(isListedContent)
     const datedPages = [...pages].sort(byDateThenLinks)
@@ -105,7 +109,7 @@ function KnowledgeHome(userOpts = {}) {
     const wikiCount = pages.filter((page) => (page.slug ?? "").startsWith("wiki")).length
     const totalLinks = pages.reduce((sum, page) => sum + linksFor(page), 0)
 
-    if (fileData.slug === "explore") {
+    if (isExploreSlug(fileData.slug)) {
       const sections = [
         { label: "概念", prefix: "wiki/concepts/", seed: "concept" },
         { label: "论证", prefix: "wiki/arguments/", seed: "argument" },
@@ -666,7 +670,11 @@ function KnowledgeHome(userOpts = {}) {
 body[data-slug="explore"] .breadcrumb-container,
 body[data-slug="explore"] .article-title,
 body[data-slug="explore"] .content-meta,
-body[data-slug="explore"] article {
+body[data-slug="explore"] article,
+body[data-slug="explore/index"] .breadcrumb-container,
+body[data-slug="explore/index"] .article-title,
+body[data-slug="explore/index"] .content-meta,
+body[data-slug="explore/index"] article {
   display: none;
 }
 
