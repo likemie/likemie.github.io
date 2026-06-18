@@ -138,31 +138,140 @@ function KnowledgeHome(userOpts = {}) {
         {
           eyebrow: "Evidence",
           title: "循证教育路线",
-          body: "从 Evidence-Based Education 出发，看证据、治理、专业判断和方法边界如何互相牵扯。",
-          href: slugForTitle(
-            pages,
-            "Evidence-Based Education",
-            "wiki/concepts/evidence-based-education",
-            "wiki/concepts/",
-          ),
+          body: "从理念进入，再看制度化证据生产，最后回到方法和现场判断。",
+          stops: [
+            {
+              label: "起点",
+              title: "Evidence-Based Education",
+              href: slugForTitle(
+                pages,
+                "Evidence-Based Education",
+                "wiki/concepts/educational-policy-reform/evidence-based-education",
+                "wiki/concepts/",
+              ),
+            },
+            {
+              label: "证据装置",
+              title: "Randomised Controlled Trials",
+              href: slugForTitle(
+                pages,
+                "Randomised Controlled Trials",
+                "wiki/methods/quantitative/randomised-controlled-trials",
+                "wiki/methods/",
+              ),
+            },
+            {
+              label: "回到实践",
+              title: "Professional Judgment",
+              href: slugForTitle(
+                pages,
+                "Professional Judgment",
+                "wiki/concepts/educational-policy-reform/professional-judgment",
+                "wiki/concepts/",
+              ),
+            },
+          ],
         },
         {
           eyebrow: "Governance",
           title: "全球教育治理路线",
-          body: "沿着 PISA、UNESCO、知识经济和跨国政策流动，追踪教育如何被全球尺度重新组织。",
-          href: "wiki/research-map",
+          body: "从国际组织和评估进入，追踪教育如何被经济竞争与跨国政策流动重写。",
+          stops: [
+            {
+              label: "行动者",
+              title: "OECD",
+              href: slugForTitle(pages, "OECD", "wiki/facts/global/oecd", "wiki/facts/"),
+            },
+            {
+              label: "测量机器",
+              title: "PISA",
+              href: slugForTitle(pages, "PISA", "wiki/facts/global/pisa", "wiki/facts/"),
+            },
+            {
+              label: "全球话语",
+              title: "Knowledge-Based Economy",
+              href: slugForTitle(
+                pages,
+                "Knowledge-Based Economy",
+                "wiki/concepts/political-economy-geopolitics/knowledge-based-economy",
+                "wiki/concepts/",
+              ),
+            },
+          ],
         },
         {
           eyebrow: "Curriculum",
           title: "课程政策路线",
-          body: "从事实档案回到概念和论证，避免把国家、政策和改革压扁成一句口号。",
-          href: "wiki/facts",
+          body: "先看具体改革，再进入课程理论，最后用文献论证检查改革叙事。",
+          stops: [
+            {
+              label: "案例",
+              title: "China Basic Education Curriculum Reform",
+              href: slugForTitle(
+                pages,
+                "China Basic Education Curriculum Reform",
+                "wiki/facts/china/china-basic-education-curriculum-reform",
+                "wiki/facts/",
+              ),
+            },
+            {
+              label: "理论",
+              title: "Curriculum Design Coherence Model",
+              href: slugForTitle(
+                pages,
+                "Curriculum Design Coherence Model",
+                "wiki/theories/curriculum/curriculum-design-coherence-model",
+                "wiki/theories/",
+              ),
+            },
+            {
+              label: "论证",
+              title: "Argument_McPhail_2023_JCS",
+              href: slugForTitle(
+                pages,
+                "Argument_McPhail_2023_JCS",
+                "wiki/arguments/journal-articles/journal-of-curriculum-studies/argument-mcphail-2023-jcs",
+                "wiki/arguments/",
+              ),
+            },
+          ],
         },
         {
           eyebrow: "Methods",
           title: "方法与证据路线",
-          body: "进入方法库，检查 RCT、元分析、效度、因果推断和解释性研究各自能说明什么。",
-          href: "wiki/methods",
+          body: "从因果问题进入方法谱系，再用效度框架判断研究到底能说明什么。",
+          stops: [
+            {
+              label: "问题",
+              title: "Causality",
+              href: slugForTitle(
+                pages,
+                "Causality",
+                "wiki/concepts/research-methodology/causality",
+                "wiki/concepts/",
+              ),
+            },
+            {
+              label: "综合",
+              title: "Systematic Review",
+              href: slugForTitle(
+                pages,
+                "Systematic Review",
+                "wiki/methods/qualitative/systematic-review",
+                "wiki/methods/",
+              ),
+            },
+            {
+              label: "判断",
+              title: "Campbellian Validity Framework",
+              href: slugForTitle(
+                pages,
+                "Campbellian Validity Framework",
+                "wiki/theories/research-methodology/campbellian-validity-framework",
+                "wiki/theories/",
+              ),
+            },
+          ],
         },
       ]
       const visitorEntrances = [
@@ -243,11 +352,23 @@ function KnowledgeHome(userOpts = {}) {
             { class: "knowledge-explore-route-grid" },
             routes.map((route) =>
               h(
-                "a",
-                { href: hrefFor(route.href), class: "knowledge-explore-route" },
+                "article",
+                { class: "knowledge-explore-route" },
                 h("span", null, route.eyebrow),
                 h("strong", null, route.title),
                 h("p", null, route.body),
+                h(
+                  "ol",
+                  { class: "knowledge-explore-route-stops" },
+                  route.stops.map((stop) =>
+                    h(
+                      "li",
+                      null,
+                      h("small", null, stop.label),
+                      h("a", { href: hrefFor(stop.href), class: "internal" }, stop.title),
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
@@ -754,7 +875,7 @@ body[data-slug="explore/index"] article {
 .knowledge-explore-kicker,
 .knowledge-explore-head span,
 .knowledge-explore-chip span,
-.knowledge-explore-route span {
+.knowledge-explore-route > span {
   color: var(--secondary);
   font-size: 0.78rem;
   font-weight: 700;
@@ -874,7 +995,6 @@ body[data-slug="explore/index"] article {
 }
 
 .knowledge-explore-chip,
-.knowledge-explore-route,
 .knowledge-explore-entrance {
   color: var(--dark);
   text-decoration: none;
@@ -928,6 +1048,9 @@ body[data-slug="explore/index"] article {
 }
 
 .knowledge-explore-route {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--light) 98%, var(--secondary)), var(--light)),
+    var(--light);
   border: 1px solid color-mix(in srgb, var(--secondary) 22%, var(--lightgray));
   border-radius: 8px;
   display: grid;
@@ -947,8 +1070,73 @@ body[data-slug="explore/index"] article {
   margin: 0;
 }
 
+.knowledge-explore-route-stops {
+  counter-reset: route-stop;
+  display: grid;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  position: relative;
+}
+
+.knowledge-explore-route-stops::before {
+  background: color-mix(in srgb, var(--secondary) 28%, var(--lightgray));
+  bottom: 1rem;
+  content: "";
+  left: 0.8rem;
+  position: absolute;
+  top: 1rem;
+  width: 1px;
+}
+
+.knowledge-explore-route-stops li {
+  align-items: center;
+  counter-increment: route-stop;
+  display: grid;
+  gap: 0.2rem;
+  grid-template-columns: 1.7rem minmax(0, 1fr);
+  position: relative;
+}
+
+.knowledge-explore-route-stops li::before {
+  align-items: center;
+  background: var(--light);
+  border: 1px solid color-mix(in srgb, var(--secondary) 48%, var(--lightgray));
+  border-radius: 999px;
+  color: var(--secondary);
+  content: counter(route-stop);
+  display: flex;
+  font-size: 0.72rem;
+  font-weight: 800;
+  height: 1.7rem;
+  justify-content: center;
+  width: 1.7rem;
+}
+
+.knowledge-explore-route-stops small {
+  color: var(--darkgray);
+  font-size: 0.72rem;
+  grid-column: 2;
+  letter-spacing: 0.02em;
+}
+
+.knowledge-explore-route-stops a {
+  border-bottom: 1px solid color-mix(in srgb, var(--secondary) 24%, transparent);
+  color: var(--dark);
+  font-weight: 700;
+  grid-column: 2;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.knowledge-explore-route-stops a:hover {
+  border-color: var(--secondary);
+  color: var(--secondary);
+  text-decoration: none;
+}
+
 .knowledge-explore-chip:hover,
-.knowledge-explore-route:hover,
 .knowledge-explore-entrance:hover {
   border-color: color-mix(in srgb, var(--secondary) 46%, var(--lightgray));
   box-shadow: 0 10px 24px color-mix(in srgb, var(--secondary) 12%, transparent);
