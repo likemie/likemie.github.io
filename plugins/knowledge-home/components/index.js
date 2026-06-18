@@ -11,6 +11,8 @@ function isListedContent(page) {
   return (
     slug &&
     slug !== "index" &&
+    slug !== "explore" &&
+    !slug.startsWith("explore/") &&
     !slug.endsWith("/index") &&
     !slug.startsWith("tags/") &&
     !slug.split("/").includes("templates") &&
@@ -94,6 +96,11 @@ function topLinked(pages, limit) {
 
 function isExploreSlug(slug) {
   return slug === "explore" || slug === "explore/index"
+}
+
+function exploreRouteKey(slug) {
+  const key = slug?.match(/^explore\/([^/]+)$/)?.[1]
+  return ["evidence", "governance", "curriculum", "methods"].includes(key) ? key : undefined
 }
 
 function pageIndexFor(pages) {
@@ -277,6 +284,8 @@ function graphRoutes(pages, routeConfigs) {
       }
 
       return {
+        key: config.key,
+        href: `explore/${config.key}`,
         eyebrow: config.eyebrow,
         title: config.title,
         body: config.body,
@@ -287,11 +296,193 @@ function graphRoutes(pages, routeConfigs) {
     .filter((route) => route.stops.length > 1)
 }
 
+function exploreRouteConfigs() {
+  return [
+    {
+      key: "evidence",
+      eyebrow: "Evidence",
+      title: "循证教育路线",
+      body: "从理念进入，再看制度化证据生产，最后回到方法和现场判断。",
+      seeds: [
+        {
+          title: "Evidence-Based Education",
+          preferredPrefix: "wiki/concepts/",
+        },
+      ],
+      stops: [
+        {
+          label: "证据装置",
+          prefixes: ["wiki/methods/", "wiki/facts/"],
+          preferred: ["Randomised Controlled Trials", "Systematic Review", "Education Endowment Foundation"],
+          fallback: {
+            title: "Randomised Controlled Trials",
+            slug: "wiki/methods/quantitative/randomised-controlled-trials",
+            preferredPrefix: "wiki/methods/",
+          },
+        },
+        {
+          label: "关键争议",
+          prefixes: ["wiki/arguments/"],
+          preferred: ["Argument_Wrigley_2018_BERJ", "Argument_Biesta_2010_SPE", "Argument_Cowen_2019_ERE"],
+          fallback: {
+            title: "Argument_Wrigley_2018_BERJ",
+            slug: "wiki/arguments/journal-articles/british-educational-research-journal/argument_wrigley_2018_berj",
+            preferredPrefix: "wiki/arguments/",
+          },
+        },
+        {
+          label: "回到实践",
+          prefixes: ["wiki/concepts/"],
+          preferred: ["Professional Judgment", "Local Knowledge in Evidence-Based Policy", "Knowledge Mobilisation"],
+          fallback: {
+            title: "Professional Judgment",
+            slug: "wiki/concepts/educational-policy-reform/professional-judgment",
+            preferredPrefix: "wiki/concepts/",
+          },
+        },
+      ],
+    },
+    {
+      key: "governance",
+      eyebrow: "Governance",
+      title: "全球教育治理路线",
+      body: "从国际组织和评估进入，追踪教育如何被经济竞争与跨国政策流动重写。",
+      seeds: [
+        {
+          title: "OECD",
+          preferredPrefix: "wiki/facts/",
+        },
+      ],
+      stops: [
+        {
+          label: "测量机器",
+          prefixes: ["wiki/facts/"],
+          preferred: ["PISA", "Baby PISA", "OECD AHELO Project"],
+          fallback: {
+            title: "PISA",
+            slug: "wiki/facts/global/pisa",
+            preferredPrefix: "wiki/facts/",
+          },
+        },
+        {
+          label: "全球话语",
+          prefixes: ["wiki/concepts/"],
+          preferred: ["Knowledge-Based Economy", "Global Education Reform Movement", "Global Education Industry"],
+          fallback: {
+            title: "Knowledge-Based Economy",
+            slug: "wiki/concepts/political-economy-geopolitics/knowledge-based-economy",
+            preferredPrefix: "wiki/concepts/",
+          },
+        },
+        {
+          label: "批判视角",
+          prefixes: ["wiki/arguments/", "wiki/concepts/"],
+          preferred: ["Argument_Zhao_2020_JEC", "PISA Distorted View of Education", "Policy Borrowing"],
+          fallback: {
+            title: "Argument_Zhao_2020_JEC",
+            slug: "wiki/arguments/journal-articles/journal-of-educational-change/argument_zhao_2020_jec",
+            preferredPrefix: "wiki/arguments/",
+          },
+        },
+      ],
+    },
+    {
+      key: "curriculum",
+      eyebrow: "Curriculum",
+      title: "课程政策路线",
+      body: "先看具体改革，再进入课程理论，最后用文献论证检查改革叙事。",
+      seeds: [
+        {
+          title: "China Basic Education Curriculum Reform",
+          preferredPrefix: "wiki/facts/",
+        },
+      ],
+      stops: [
+        {
+          label: "比较案例",
+          prefixes: ["wiki/facts/"],
+          preferred: ["Finnish National Core Curriculum", "The New Zealand Curriculum", "Australian Curriculum"],
+          fallback: {
+            title: "Finnish National Core Curriculum",
+            slug: "wiki/facts/finland/finnish-national-core-curriculum",
+            preferredPrefix: "wiki/facts/",
+          },
+        },
+        {
+          label: "理论",
+          prefixes: ["wiki/theories/"],
+          preferred: ["Curriculum Design Coherence Model", "Cuban's Curriculum Change Theory"],
+          fallback: {
+            title: "Curriculum Design Coherence Model",
+            slug: "wiki/theories/curriculum/curriculum-design-coherence-model",
+            preferredPrefix: "wiki/theories/",
+          },
+        },
+        {
+          label: "论证",
+          prefixes: ["wiki/arguments/"],
+          preferred: ["Argument_McPhail_2023_JCS", "Argument_Yan_2025_JCS", "Argument_Terhart_2011_JCS"],
+          fallback: {
+            title: "Argument_McPhail_2023_JCS",
+            slug: "wiki/arguments/journal-articles/journal-of-curriculum-studies/argument_mcphail_2023_jcs",
+            preferredPrefix: "wiki/arguments/",
+          },
+        },
+      ],
+    },
+    {
+      key: "methods",
+      eyebrow: "Methods",
+      title: "方法与证据路线",
+      body: "从因果问题进入方法谱系，再用效度框架判断研究到底能说明什么。",
+      seeds: [
+        {
+          title: "Causality",
+          preferredPrefix: "wiki/concepts/",
+        },
+      ],
+      stops: [
+        {
+          label: "实验",
+          prefixes: ["wiki/methods/"],
+          preferred: ["Randomised Controlled Trials", "Causal Modeling", "Quasi-Experimental Designs"],
+          fallback: {
+            title: "Randomised Controlled Trials",
+            slug: "wiki/methods/quantitative/randomised-controlled-trials",
+            preferredPrefix: "wiki/methods/",
+          },
+        },
+        {
+          label: "综合",
+          prefixes: ["wiki/methods/"],
+          preferred: ["Systematic Review", "Meta-analysis", "Comparative Meta-synthesis"],
+          fallback: {
+            title: "Systematic Review",
+            slug: "wiki/methods/qualitative/systematic-review",
+            preferredPrefix: "wiki/methods/",
+          },
+        },
+        {
+          label: "判断",
+          prefixes: ["wiki/theories/", "wiki/concepts/"],
+          preferred: ["Campbellian Validity Framework", "External Validity", "Internal Validity"],
+          fallback: {
+            title: "Campbellian Validity Framework",
+            slug: "wiki/theories/research-methodology/campbellian-validity-framework",
+            preferredPrefix: "wiki/theories/",
+          },
+        },
+      ],
+    },
+  ]
+}
+
 function KnowledgeHome(userOpts = {}) {
   const opts = { ...defaultOptions, ...userOpts }
 
   const Component = ({ cfg, fileData, allFiles, displayClass }) => {
-    if (fileData.slug !== "index" && !isExploreSlug(fileData.slug)) return null
+    const currentRouteKey = exploreRouteKey(fileData.slug)
+    if (fileData.slug !== "index" && !isExploreSlug(fileData.slug) && !currentRouteKey) return null
 
     const pages = allFiles.filter(isListedContent)
     const datedPages = [...pages].sort(byDateThenLinks)
@@ -304,6 +495,44 @@ function KnowledgeHome(userOpts = {}) {
     const todayConcept = deterministicPick(concepts, todayKey)
     const wikiCount = pages.filter((page) => (page.slug ?? "").startsWith("wiki")).length
     const totalLinks = pages.reduce((sum, page) => sum + linksFor(page), 0)
+    const routes = graphRoutes(pages, exploreRouteConfigs())
+
+    if (currentRouteKey) {
+      const route = routes.find((item) => item.key === currentRouteKey)
+      if (!route) return null
+
+      return h(
+        "section",
+        { class: [displayClass, "knowledge-explore knowledge-route-page"].filter(Boolean).join(" ") },
+        h(
+          "div",
+          { class: "knowledge-explore-hero knowledge-route-hero" },
+          h("a", { href: hrefFor("explore"), class: "knowledge-route-back" }, "返回探索大厅"),
+          h("p", { class: "knowledge-explore-kicker" }, route.eyebrow),
+          h("h1", null, route.title),
+          h("p", null, route.body),
+          h("em", { class: "knowledge-explore-route-meta" }, `自动：${route.meta}`),
+        ),
+        h(
+          "section",
+          { class: "knowledge-route-board" },
+          h("div", { class: "knowledge-explore-head" }, h("h2", null, "路线节点"), h("span", null, "按图谱生成")),
+          h(
+            "ol",
+            { class: "knowledge-route-path" },
+            route.stops.map((stop) =>
+              h(
+                "li",
+                null,
+                h("small", null, stop.label),
+                h("a", { href: hrefFor(stop.href), class: "internal" }, stop.title),
+                h("span", null, `${stop.section} · ${stop.source}`),
+              ),
+            ),
+          ),
+        ),
+      )
+    }
 
     if (isExploreSlug(fileData.slug)) {
       const sections = [
@@ -321,180 +550,6 @@ function KnowledgeHome(userOpts = {}) {
           return page && { ...section, page, count: pool.length }
         })
         .filter(Boolean)
-      const routes = graphRoutes(pages, [
-        {
-          eyebrow: "Evidence",
-          title: "循证教育路线",
-          body: "从理念进入，再看制度化证据生产，最后回到方法和现场判断。",
-          seeds: [
-            {
-              title: "Evidence-Based Education",
-              preferredPrefix: "wiki/concepts/",
-            },
-          ],
-          stops: [
-            {
-              label: "证据装置",
-              prefixes: ["wiki/methods/", "wiki/facts/"],
-              preferred: ["Randomised Controlled Trials", "Systematic Review", "Education Endowment Foundation"],
-              fallback: {
-                title: "Randomised Controlled Trials",
-                slug: "wiki/methods/quantitative/randomised-controlled-trials",
-                preferredPrefix: "wiki/methods/",
-              },
-            },
-            {
-              label: "关键争议",
-              prefixes: ["wiki/arguments/"],
-              preferred: ["Argument_Wrigley_2018_BERJ", "Argument_Biesta_2010_SPE", "Argument_Cowen_2019_ERE"],
-              fallback: {
-                title: "Argument_Wrigley_2018_BERJ",
-                slug: "wiki/arguments/journal-articles/british-educational-research-journal/argument_wrigley_2018_berj",
-                preferredPrefix: "wiki/arguments/",
-              },
-            },
-            {
-              label: "回到实践",
-              prefixes: ["wiki/concepts/"],
-              preferred: ["Professional Judgment", "Local Knowledge in Evidence-Based Policy", "Knowledge Mobilisation"],
-              fallback: {
-                title: "Professional Judgment",
-                slug: "wiki/concepts/educational-policy-reform/professional-judgment",
-                preferredPrefix: "wiki/concepts/",
-              },
-            },
-          ],
-        },
-        {
-          eyebrow: "Governance",
-          title: "全球教育治理路线",
-          body: "从国际组织和评估进入，追踪教育如何被经济竞争与跨国政策流动重写。",
-          seeds: [
-            {
-              title: "OECD",
-              preferredPrefix: "wiki/facts/",
-            },
-          ],
-          stops: [
-            {
-              label: "测量机器",
-              prefixes: ["wiki/facts/"],
-              preferred: ["PISA", "Baby PISA", "OECD AHELO Project"],
-              fallback: {
-                title: "PISA",
-                slug: "wiki/facts/global/pisa",
-                preferredPrefix: "wiki/facts/",
-              },
-            },
-            {
-              label: "全球话语",
-              prefixes: ["wiki/concepts/"],
-              preferred: ["Knowledge-Based Economy", "Global Education Reform Movement", "Global Education Industry"],
-              fallback: {
-                title: "Knowledge-Based Economy",
-                slug: "wiki/concepts/political-economy-geopolitics/knowledge-based-economy",
-                preferredPrefix: "wiki/concepts/",
-              },
-            },
-            {
-              label: "批判视角",
-              prefixes: ["wiki/arguments/", "wiki/concepts/"],
-              preferred: ["Argument_Zhao_2020_JEC", "PISA Distorted View of Education", "Policy Borrowing"],
-              fallback: {
-                title: "Argument_Zhao_2020_JEC",
-                slug: "wiki/arguments/journal-articles/journal-of-educational-change/argument_zhao_2020_jec",
-                preferredPrefix: "wiki/arguments/",
-              },
-            },
-          ],
-        },
-        {
-          eyebrow: "Curriculum",
-          title: "课程政策路线",
-          body: "先看具体改革，再进入课程理论，最后用文献论证检查改革叙事。",
-          seeds: [
-            {
-              title: "China Basic Education Curriculum Reform",
-              preferredPrefix: "wiki/facts/",
-            },
-          ],
-          stops: [
-            {
-              label: "比较案例",
-              prefixes: ["wiki/facts/"],
-              preferred: ["Finnish National Core Curriculum", "The New Zealand Curriculum", "Australian Curriculum"],
-              fallback: {
-                title: "Finnish National Core Curriculum",
-                slug: "wiki/facts/finland/finnish-national-core-curriculum",
-                preferredPrefix: "wiki/facts/",
-              },
-            },
-            {
-              label: "理论",
-              prefixes: ["wiki/theories/"],
-              preferred: ["Curriculum Design Coherence Model", "Cuban's Curriculum Change Theory"],
-              fallback: {
-                title: "Curriculum Design Coherence Model",
-                slug: "wiki/theories/curriculum/curriculum-design-coherence-model",
-                preferredPrefix: "wiki/theories/",
-              },
-            },
-            {
-              label: "论证",
-              prefixes: ["wiki/arguments/"],
-              preferred: ["Argument_McPhail_2023_JCS", "Argument_Yan_2025_JCS", "Argument_Terhart_2011_JCS"],
-              fallback: {
-                title: "Argument_McPhail_2023_JCS",
-                slug: "wiki/arguments/journal-articles/journal-of-curriculum-studies/argument_mcphail_2023_jcs",
-                preferredPrefix: "wiki/arguments/",
-              },
-            },
-          ],
-        },
-        {
-          eyebrow: "Methods",
-          title: "方法与证据路线",
-          body: "从因果问题进入方法谱系，再用效度框架判断研究到底能说明什么。",
-          seeds: [
-            {
-              title: "Causality",
-              preferredPrefix: "wiki/concepts/",
-            },
-          ],
-          stops: [
-            {
-              label: "实验",
-              prefixes: ["wiki/methods/"],
-              preferred: ["Randomised Controlled Trials", "Causal Modeling", "Quasi-Experimental Designs"],
-              fallback: {
-                title: "Randomised Controlled Trials",
-                slug: "wiki/methods/quantitative/randomised-controlled-trials",
-                preferredPrefix: "wiki/methods/",
-              },
-            },
-            {
-              label: "综合",
-              prefixes: ["wiki/methods/"],
-              preferred: ["Systematic Review", "Meta-analysis", "Comparative Meta-synthesis"],
-              fallback: {
-                title: "Systematic Review",
-                slug: "wiki/methods/qualitative/systematic-review",
-                preferredPrefix: "wiki/methods/",
-              },
-            },
-            {
-              label: "判断",
-              prefixes: ["wiki/theories/", "wiki/concepts/"],
-              preferred: ["Campbellian Validity Framework", "External Validity", "Internal Validity"],
-              fallback: {
-                title: "Campbellian Validity Framework",
-                slug: "wiki/theories/research-methodology/campbellian-validity-framework",
-                preferredPrefix: "wiki/theories/",
-              },
-            },
-          ],
-        },
-      ])
       const visitorEntrances = [
         { title: "快速了解这座库", href: "wiki/research-map", body: "先看研究地图，知道这里有哪些房间。" },
         { title: "找一个概念", href: "bases/concepts", body: "进入概念索引，用表格和卡片筛选。" },
@@ -573,33 +628,12 @@ function KnowledgeHome(userOpts = {}) {
             { class: "knowledge-explore-route-grid" },
             routes.map((route) =>
               h(
-                "details",
-                { class: "knowledge-explore-route" },
-                h(
-                  "summary",
-                  { class: "knowledge-explore-route-summary" },
-                  h("span", null, route.eyebrow),
-                  h("strong", null, route.title),
-                  h("p", null, route.body),
-                  h(
-                    "em",
-                    { class: "knowledge-explore-route-meta" },
-                    `展开路线 · 自动：${route.meta}`,
-                  ),
-                ),
-                h(
-                  "ol",
-                  { class: "knowledge-explore-route-stops" },
-                  route.stops.map((stop) =>
-                    h(
-                      "li",
-                      null,
-                      h("small", null, stop.label),
-                      h("a", { href: hrefFor(stop.href), class: "internal" }, stop.title),
-                      h("span", null, `${stop.section} · ${stop.source}`),
-                    ),
-                  ),
-                ),
+                "a",
+                { href: hrefFor(route.href), class: "knowledge-explore-route" },
+                h("span", null, route.eyebrow),
+                h("strong", null, route.title),
+                h("p", null, route.body),
+                h("em", { class: "knowledge-explore-route-meta" }, `进入路线 · 自动：${route.meta}`),
               ),
             ),
           ),
@@ -1057,7 +1091,11 @@ body[data-slug="explore"] article,
 body[data-slug="explore/index"] .breadcrumb-container,
 body[data-slug="explore/index"] .article-title,
 body[data-slug="explore/index"] .content-meta,
-body[data-slug="explore/index"] article {
+body[data-slug="explore/index"] article,
+body[data-slug^="explore/"] .breadcrumb-container,
+body[data-slug^="explore/"] .article-title,
+body[data-slug^="explore/"] .content-meta,
+body[data-slug^="explore/"] article {
   display: none;
 }
 
@@ -1106,7 +1144,7 @@ body[data-slug="explore/index"] article {
 .knowledge-explore-kicker,
 .knowledge-explore-head span,
 .knowledge-explore-chip span,
-.knowledge-explore-route-summary > span {
+.knowledge-explore-route > span {
   color: var(--secondary);
   font-size: 0.78rem;
   font-weight: 700;
@@ -1285,46 +1323,29 @@ body[data-slug="explore/index"] article {
   border: 1px solid color-mix(in srgb, var(--secondary) 22%, var(--lightgray));
   border-radius: 8px;
   color: var(--dark);
-  overflow: hidden;
-}
-
-.knowledge-explore-route[open] {
-  box-shadow: 0 10px 24px color-mix(in srgb, var(--secondary) 10%, transparent);
-}
-
-.knowledge-explore-route-summary {
-  cursor: pointer;
   display: grid;
   gap: 0.5rem;
-  list-style: none;
   min-height: 11.5rem;
   padding: 0.9rem;
+  text-decoration: none;
 }
 
-.knowledge-explore-route-summary::-webkit-details-marker {
-  display: none;
-}
-
-.knowledge-explore-route-summary::after {
+.knowledge-explore-route::after {
   align-self: end;
   color: var(--secondary);
-  content: "展开路线";
+  content: "进入路线";
   font-size: 0.82rem;
   font-weight: 800;
   justify-self: start;
 }
 
-.knowledge-explore-route[open] .knowledge-explore-route-summary::after {
-  content: "收起路线";
-}
-
-.knowledge-explore-route-summary strong {
+.knowledge-explore-route strong {
   font-family: var(--headerFont);
   font-size: 1.18rem;
   line-height: 1.2;
 }
 
-.knowledge-explore-route-summary p {
+.knowledge-explore-route p {
   color: var(--darkgray);
   line-height: 1.55;
   margin: 0;
@@ -1411,7 +1432,99 @@ body[data-slug="explore/index"] article {
   text-decoration: none;
 }
 
+.knowledge-route-page {
+  max-width: 70rem;
+}
+
+.knowledge-route-back {
+  color: var(--secondary);
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.knowledge-route-back:hover {
+  text-decoration: underline;
+}
+
+.knowledge-route-board {
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.knowledge-route-path {
+  counter-reset: route-stop;
+  display: grid;
+  gap: 0.8rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.knowledge-route-path::before {
+  background: color-mix(in srgb, var(--secondary) 28%, var(--lightgray));
+  bottom: 2rem;
+  content: "";
+  left: 1.25rem;
+  position: absolute;
+  top: 2rem;
+  width: 1px;
+}
+
+.knowledge-route-path li {
+  align-items: center;
+  background: color-mix(in srgb, var(--light) 94%, var(--secondary));
+  border: 1px solid color-mix(in srgb, var(--secondary) 18%, var(--lightgray));
+  border-radius: 8px;
+  counter-increment: route-stop;
+  display: grid;
+  gap: 0.2rem 0.75rem;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  padding: 0.85rem;
+  position: relative;
+}
+
+.knowledge-route-path li::before {
+  align-items: center;
+  background: var(--light);
+  border: 1px solid color-mix(in srgb, var(--secondary) 48%, var(--lightgray));
+  border-radius: 999px;
+  color: var(--secondary);
+  content: counter(route-stop);
+  display: flex;
+  font-size: 0.8rem;
+  font-weight: 800;
+  grid-row: 1 / span 3;
+  height: 2.5rem;
+  justify-content: center;
+  width: 2.5rem;
+}
+
+.knowledge-route-path small,
+.knowledge-route-path span {
+  color: var(--darkgray);
+  font-size: 0.78rem;
+}
+
+.knowledge-route-path a {
+  color: var(--dark);
+  font-family: var(--headerFont);
+  font-size: 1.12rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.knowledge-route-path a:hover {
+  color: var(--secondary);
+  text-decoration: none;
+}
+
 .knowledge-explore-chip:hover,
+.knowledge-explore-route:hover,
 .knowledge-explore-entrance:hover {
   border-color: color-mix(in srgb, var(--secondary) 46%, var(--lightgray));
   box-shadow: 0 10px 24px color-mix(in srgb, var(--secondary) 12%, transparent);
