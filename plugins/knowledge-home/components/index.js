@@ -257,35 +257,52 @@ function KnowledgeHome(userOpts = {}) {
           { class: "knowledge-explore-grid bottom" },
           h(
             "section",
-            { class: "knowledge-explore-card" },
+            { class: "knowledge-explore-card knowledge-explore-panel knowledge-explore-hubs" },
             h("div", { class: "knowledge-explore-head" }, h("h2", null, "高连接节点"), h("span", null, "按链接密度")),
             h(
               "ol",
               { class: "knowledge-explore-list" },
-              highNodes.map((page) =>
+              highNodes.map((page, index) =>
                 h(
                   "li",
                   null,
-                  h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
-                  h("span", null, `${sectionFor(page)} · ${linksFor(page)} links`),
+                  h("span", { class: "knowledge-explore-rank" }, String(index + 1).padStart(2, "0")),
+                  h(
+                    "div",
+                    { class: "knowledge-explore-list-main" },
+                    h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
+                    h("span", null, sectionFor(page)),
+                  ),
+                  h("strong", { class: "knowledge-explore-score" }, linksFor(page)),
                 ),
               ),
             ),
           ),
           h(
             "section",
-            { class: "knowledge-explore-card" },
+            { class: "knowledge-explore-card knowledge-explore-panel knowledge-explore-workbench" },
             h("div", { class: "knowledge-explore-head" }, h("h2", null, "最近工作台"), h("span", null, "按修改时间")),
             h(
               "ol",
               { class: "knowledge-explore-list" },
-              workbench.map((page) => {
+              workbench.map((page, index) => {
                 const date = pageDate(page)
                 return h(
                   "li",
                   null,
-                  h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
-                  h("span", null, `${sectionFor(page)}${date ? ` · ${formatDate(date, cfg.locale)}` : ""}`),
+                  h("span", { class: "knowledge-explore-rank" }, String(index + 1).padStart(2, "0")),
+                  h(
+                    "div",
+                    { class: "knowledge-explore-list-main" },
+                    h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
+                    h("span", null, sectionFor(page)),
+                  ),
+                  date &&
+                    h(
+                      "time",
+                      { class: "knowledge-explore-date", dateTime: date.toISOString() },
+                      formatDate(date, cfg.locale),
+                    ),
                 )
               }),
             ),
@@ -777,7 +794,7 @@ body[data-slug="explore/index"] article {
 }
 
 .knowledge-explore-stats span,
-.knowledge-explore-list span,
+.knowledge-explore-list-main span,
 .knowledge-explore-entrance span,
 .knowledge-explore-chip small {
   color: var(--darkgray);
@@ -808,6 +825,33 @@ body[data-slug="explore/index"] article {
 
 .knowledge-explore-card {
   background: var(--light);
+}
+
+.knowledge-explore-panel {
+  --panel-tone: var(--secondary);
+  background:
+    radial-gradient(circle at 12% 10%, color-mix(in srgb, var(--panel-tone) 16%, transparent), transparent 34%),
+    linear-gradient(180deg, color-mix(in srgb, var(--light) 96%, var(--panel-tone)), var(--light));
+  display: flex;
+  flex-direction: column;
+  height: clamp(27rem, 42vw, 32rem);
+  overflow: hidden;
+  position: relative;
+}
+
+.knowledge-explore-panel::after {
+  background: linear-gradient(transparent, var(--light) 82%);
+  bottom: 0;
+  content: "";
+  height: 2rem;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+}
+
+.knowledge-explore-workbench {
+  --panel-tone: var(--tertiary);
 }
 
 .knowledge-explore-head {
@@ -915,19 +959,30 @@ body[data-slug="explore/index"] article {
 .knowledge-explore-list {
   list-style: none;
   margin: 0;
+  overflow: auto;
   padding: 0;
+  scrollbar-width: thin;
 }
 
 .knowledge-explore-list li {
-  border-bottom: 1px solid var(--lightgray);
+  align-items: center;
+  background: color-mix(in srgb, var(--light) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--panel-tone) 18%, var(--lightgray));
+  border-radius: 8px;
   display: grid;
-  gap: 0.2rem;
-  padding-bottom: 0.65rem;
+  gap: 0.7rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  padding: 0.72rem 0.78rem;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
 }
 
-.knowledge-explore-list li:last-child {
-  border-bottom: 0;
-  padding-bottom: 0;
+.knowledge-explore-list li:hover {
+  border-color: color-mix(in srgb, var(--panel-tone) 42%, var(--lightgray));
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--panel-tone) 10%, transparent);
+  transform: translateY(-1px);
 }
 
 .knowledge-explore-list a {
@@ -938,6 +993,58 @@ body[data-slug="explore/index"] article {
   -webkit-box-orient: vertical;
   line-height: 1.25;
   overflow: hidden;
+}
+
+.knowledge-explore-list-main {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.knowledge-explore-list-main span {
+  font-size: 0.86rem;
+}
+
+.knowledge-explore-rank {
+  align-items: center;
+  background: color-mix(in srgb, var(--panel-tone) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--panel-tone) 32%, var(--lightgray));
+  border-radius: 999px;
+  color: var(--panel-tone);
+  display: inline-flex;
+  font-size: 0.76rem;
+  font-weight: 800;
+  height: 2rem;
+  justify-content: center;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  width: 2rem;
+}
+
+.knowledge-explore-score {
+  background: var(--panel-tone);
+  border-radius: 999px;
+  color: var(--light);
+  font-size: 0.9rem;
+  line-height: 1;
+  min-width: 2.6rem;
+  padding: 0.45rem 0.55rem;
+  text-align: center;
+}
+
+.knowledge-explore-score::after {
+  content: " links";
+  display: block;
+  font-size: 0.58rem;
+  font-weight: 600;
+  margin-top: 0.18rem;
+  opacity: 0.78;
+}
+
+.knowledge-explore-date {
+  color: var(--darkgray);
+  font-size: 0.82rem;
+  justify-self: end;
+  white-space: nowrap;
 }
 
 @keyframes knowledge-star-rise {
@@ -972,6 +1079,19 @@ body[data-slug="explore/index"] article {
 
   .knowledge-explore-random-grid {
     grid-template-columns: 1fr;
+  }
+
+  .knowledge-explore-panel {
+    height: auto;
+    max-height: none;
+  }
+
+  .knowledge-explore-panel::after {
+    display: none;
+  }
+
+  .knowledge-explore-list {
+    overflow: visible;
   }
 
   .knowledge-home-card {
