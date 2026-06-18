@@ -7,11 +7,14 @@ const defaultOptions = {
 
 function isListedContent(page) {
   const slug = page.slug ?? ""
+  const title = titleFor(page)
   return (
     slug &&
     slug !== "index" &&
     !slug.endsWith("/index") &&
     !slug.startsWith("tags/") &&
+    !slug.split("/").includes("templates") &&
+    !title.includes("<%") &&
     page.unlisted !== true
   )
 }
@@ -74,11 +77,21 @@ function hrefFor(pageOrSlug) {
   return slug === "index" ? "." : slug
 }
 
+function pagesIn(pages, prefix) {
+  return pages.filter((page) => (page.slug ?? "").startsWith(prefix))
+}
+
+function topLinked(pages, limit) {
+  return [...pages]
+    .sort((a, b) => linksFor(b) - linksFor(a) || titleFor(a).localeCompare(titleFor(b)))
+    .slice(0, limit)
+}
+
 function KnowledgeHome(userOpts = {}) {
   const opts = { ...defaultOptions, ...userOpts }
 
   const Component = ({ cfg, fileData, allFiles, displayClass }) => {
-    if (fileData.slug !== "index") return null
+    if (fileData.slug !== "index" && fileData.slug !== "explore") return null
 
     const pages = allFiles.filter(isListedContent)
     const datedPages = [...pages].sort(byDateThenLinks)
@@ -91,6 +104,177 @@ function KnowledgeHome(userOpts = {}) {
     const todayConcept = deterministicPick(concepts, todayKey)
     const wikiCount = pages.filter((page) => (page.slug ?? "").startsWith("wiki")).length
     const totalLinks = pages.reduce((sum, page) => sum + linksFor(page), 0)
+
+    if (fileData.slug === "explore") {
+      const sections = [
+        { label: "概念", prefix: "wiki/concepts/", seed: "concept" },
+        { label: "论证", prefix: "wiki/arguments/", seed: "argument" },
+        { label: "人物", prefix: "wiki/persons/", seed: "person" },
+        { label: "事实", prefix: "wiki/facts/", seed: "fact" },
+        { label: "理论", prefix: "wiki/theories/", seed: "theory" },
+        { label: "方法", prefix: "wiki/methods/", seed: "method" },
+      ]
+      const randomEntries = sections
+        .map((section) => {
+          const pool = pagesIn(pages, section.prefix)
+          const page = deterministicPick(pool, `${todayKey}-${section.seed}`)
+          return page && { ...section, page, count: pool.length }
+        })
+        .filter(Boolean)
+      const routes = [
+        {
+          eyebrow: "Evidence",
+          title: "循证教育路线",
+          body: "从 Evidence-Based Education 出发，看证据、治理、专业判断和方法边界如何互相牵扯。",
+          href: "wiki/concepts/evidence-based-education",
+        },
+        {
+          eyebrow: "Governance",
+          title: "全球教育治理路线",
+          body: "沿着 PISA、UNESCO、知识经济和跨国政策流动，追踪教育如何被全球尺度重新组织。",
+          href: "wiki/research-map",
+        },
+        {
+          eyebrow: "Curriculum",
+          title: "课程政策路线",
+          body: "从事实档案回到概念和论证，避免把国家、政策和改革压扁成一句口号。",
+          href: "wiki/facts",
+        },
+        {
+          eyebrow: "Methods",
+          title: "方法与证据路线",
+          body: "进入方法库，检查 RCT、元分析、效度、因果推断和解释性研究各自能说明什么。",
+          href: "wiki/methods",
+        },
+      ]
+      const visitorEntrances = [
+        { title: "快速了解这座库", href: "wiki/research-map", body: "先看研究地图，知道这里有哪些房间。" },
+        { title: "找一个概念", href: "bases/concepts", body: "进入概念索引，用表格和卡片筛选。" },
+        { title: "看一篇文献怎么被拆", href: "wiki/arguments", body: "从论证框架进入问题、证据链和结论。" },
+        { title: "顺着国家或政策看", href: "wiki/facts", body: "从事实档案进入具体制度场景。" },
+      ]
+      const highNodes = topLinked(pages.filter((page) => (page.slug ?? "").startsWith("wiki/")), 10)
+      const workbench = recent.slice(0, 8)
+
+      return h(
+        "section",
+        { class: [displayClass, "knowledge-explore"].filter(Boolean).join(" ") },
+        h(
+          "div",
+          { class: "knowledge-explore-hero" },
+          h("p", { class: "knowledge-explore-kicker" }, "Explore"),
+          h("h1", null, "探索大厅"),
+          h(
+            "p",
+            null,
+            "不按文件夹排队。按心情、问题和线索进入：抽一张研究卡，走一条主题路线，或者直接跳进连接最密的节点。",
+          ),
+          h(
+            "div",
+            { class: "knowledge-explore-stats", "aria-label": "探索页统计" },
+            h("div", null, h("span", null, "条目"), h("strong", null, formatCount(pages.length))),
+            h("div", null, h("span", null, "Wiki"), h("strong", null, formatCount(wikiCount))),
+            h("div", null, h("span", null, "链接"), h("strong", null, formatCount(totalLinks))),
+          ),
+        ),
+        h(
+          "div",
+          { class: "knowledge-explore-grid" },
+          h(
+            "section",
+            { class: "knowledge-explore-card knowledge-explore-random" },
+            h("div", { class: "knowledge-explore-head" }, h("h2", null, "随机漫游"), h("span", null, todayKey)),
+            h(
+              "div",
+              { class: "knowledge-explore-random-grid" },
+              randomEntries.map((entry) =>
+                h(
+                  "a",
+                  { href: hrefFor(entry.page), class: "knowledge-explore-chip" },
+                  h("span", null, entry.label),
+                  h("strong", null, titleFor(entry.page)),
+                  h("small", null, `${formatCount(entry.count)} 个候选`),
+                ),
+              ),
+            ),
+          ),
+          h(
+            "section",
+            { class: "knowledge-explore-card" },
+            h("div", { class: "knowledge-explore-head" }, h("h2", null, "访客入口"), h("span", null, "按目的")),
+            h(
+              "div",
+              { class: "knowledge-explore-entrances" },
+              visitorEntrances.map((item) =>
+                h(
+                  "a",
+                  { href: hrefFor(item.href), class: "knowledge-explore-entrance" },
+                  h("strong", null, item.title),
+                  h("span", null, item.body),
+                ),
+              ),
+            ),
+          ),
+        ),
+        h(
+          "section",
+          { class: "knowledge-explore-routes" },
+          h("div", { class: "knowledge-explore-head" }, h("h2", null, "主题路线"), h("span", null, "从问题进入")),
+          h(
+            "div",
+            { class: "knowledge-explore-route-grid" },
+            routes.map((route) =>
+              h(
+                "a",
+                { href: hrefFor(route.href), class: "knowledge-explore-route" },
+                h("span", null, route.eyebrow),
+                h("strong", null, route.title),
+                h("p", null, route.body),
+              ),
+            ),
+          ),
+        ),
+        h(
+          "div",
+          { class: "knowledge-explore-grid bottom" },
+          h(
+            "section",
+            { class: "knowledge-explore-card" },
+            h("div", { class: "knowledge-explore-head" }, h("h2", null, "高连接节点"), h("span", null, "按链接密度")),
+            h(
+              "ol",
+              { class: "knowledge-explore-list" },
+              highNodes.map((page) =>
+                h(
+                  "li",
+                  null,
+                  h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
+                  h("span", null, `${sectionFor(page)} · ${linksFor(page)} links`),
+                ),
+              ),
+            ),
+          ),
+          h(
+            "section",
+            { class: "knowledge-explore-card" },
+            h("div", { class: "knowledge-explore-head" }, h("h2", null, "最近工作台"), h("span", null, "按修改时间")),
+            h(
+              "ol",
+              { class: "knowledge-explore-list" },
+              workbench.map((page) => {
+                const date = pageDate(page)
+                return h(
+                  "li",
+                  null,
+                  h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
+                  h("span", null, `${sectionFor(page)}${date ? ` · ${formatDate(date, cfg.locale)}` : ""}`),
+                )
+              }),
+            ),
+          ),
+        ),
+      )
+    }
 
     return h(
       "section",
@@ -479,6 +663,261 @@ function KnowledgeHome(userOpts = {}) {
   font-size: 0.9rem;
 }
 
+body[data-slug="explore"] .breadcrumb-container,
+body[data-slug="explore"] .article-title,
+body[data-slug="explore"] .content-meta,
+body[data-slug="explore"] article {
+  display: none;
+}
+
+.knowledge-explore {
+  display: grid;
+  gap: 1rem;
+  margin: 0 0 2rem;
+}
+
+.knowledge-explore,
+.knowledge-explore * {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.knowledge-explore-hero {
+  background:
+    radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--tertiary) 30%, transparent), transparent 30%),
+    radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--secondary) 20%, transparent), transparent 30%),
+    linear-gradient(135deg, color-mix(in srgb, var(--light) 94%, var(--secondary)), var(--light));
+  border: 1px solid color-mix(in srgb, var(--secondary) 24%, var(--lightgray));
+  border-radius: 8px;
+  overflow: hidden;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  position: relative;
+}
+
+.knowledge-explore-hero::after {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--secondary) 13%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--secondary) 13%, transparent) 1px, transparent 1px);
+  background-size: 32px 32px;
+  content: "";
+  inset: 0;
+  mask-image: linear-gradient(115deg, transparent, black 36%, transparent 84%);
+  opacity: 0.45;
+  pointer-events: none;
+  position: absolute;
+}
+
+.knowledge-explore-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.knowledge-explore-kicker,
+.knowledge-explore-head span,
+.knowledge-explore-chip span,
+.knowledge-explore-route span {
+  color: var(--secondary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.knowledge-explore h1 {
+  font-size: clamp(2.2rem, 5vw, 4.4rem);
+  line-height: 1;
+  margin: 0.25rem 0 0.75rem;
+}
+
+.knowledge-explore-hero p:last-of-type {
+  color: var(--darkgray);
+  font-size: 1.06rem;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 45rem;
+}
+
+.knowledge-explore-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.knowledge-explore-stats div {
+  background: color-mix(in srgb, var(--light) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--secondary) 18%, var(--lightgray));
+  border-radius: 8px;
+  display: grid;
+  gap: 0.2rem;
+  min-width: 7rem;
+  padding: 0.7rem 0.85rem;
+}
+
+.knowledge-explore-stats span,
+.knowledge-explore-list span,
+.knowledge-explore-entrance span,
+.knowledge-explore-chip small {
+  color: var(--darkgray);
+}
+
+.knowledge-explore-stats strong {
+  color: var(--dark);
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.knowledge-explore-grid,
+.knowledge-explore-route-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.knowledge-explore-grid {
+  grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+}
+
+.knowledge-explore-card,
+.knowledge-explore-routes {
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.knowledge-explore-card {
+  background: var(--light);
+}
+
+.knowledge-explore-head {
+  align-items: baseline;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.knowledge-explore-head h2 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.knowledge-explore-random-grid {
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.knowledge-explore-chip,
+.knowledge-explore-route,
+.knowledge-explore-entrance {
+  color: var(--dark);
+  text-decoration: none;
+}
+
+.knowledge-explore-chip {
+  background:
+    radial-gradient(circle at 14% 12%, color-mix(in srgb, var(--secondary) 16%, transparent), transparent 36%),
+    color-mix(in srgb, var(--light) 94%, var(--secondary));
+  border: 1px solid color-mix(in srgb, var(--secondary) 26%, var(--lightgray));
+  border-radius: 8px;
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.8rem;
+}
+
+.knowledge-explore-chip strong {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.2;
+  overflow: hidden;
+}
+
+.knowledge-explore-entrances,
+.knowledge-explore-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.knowledge-explore-entrance {
+  border-bottom: 1px solid var(--lightgray);
+  display: grid;
+  gap: 0.25rem;
+  padding-bottom: 0.7rem;
+}
+
+.knowledge-explore-entrance:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.knowledge-explore-routes {
+  background:
+    radial-gradient(circle at 12% 16%, color-mix(in srgb, var(--tertiary) 18%, transparent), transparent 32%),
+    var(--light);
+}
+
+.knowledge-explore-route-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.knowledge-explore-route {
+  border: 1px solid color-mix(in srgb, var(--secondary) 22%, var(--lightgray));
+  border-radius: 8px;
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.9rem;
+}
+
+.knowledge-explore-route strong {
+  font-family: var(--headerFont);
+  font-size: 1.18rem;
+  line-height: 1.2;
+}
+
+.knowledge-explore-route p {
+  color: var(--darkgray);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.knowledge-explore-chip:hover,
+.knowledge-explore-route:hover,
+.knowledge-explore-entrance:hover {
+  border-color: color-mix(in srgb, var(--secondary) 46%, var(--lightgray));
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--secondary) 12%, transparent);
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.knowledge-explore-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.knowledge-explore-list li {
+  border-bottom: 1px solid var(--lightgray);
+  display: grid;
+  gap: 0.2rem;
+  padding-bottom: 0.65rem;
+}
+
+.knowledge-explore-list li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.knowledge-explore-list a {
+  color: var(--dark);
+  display: -webkit-box;
+  font-weight: 700;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.25;
+  overflow: hidden;
+}
+
 @keyframes knowledge-star-rise {
   from {
     opacity: 0;
@@ -492,7 +931,9 @@ function KnowledgeHome(userOpts = {}) {
 
 @media all and (max-width: 900px) {
   .knowledge-home-hero,
-  .knowledge-home-grid {
+  .knowledge-home-grid,
+  .knowledge-explore-grid,
+  .knowledge-explore-route-grid {
     grid-template-columns: 1fr;
   }
 
@@ -504,6 +945,10 @@ function KnowledgeHome(userOpts = {}) {
   }
 
   .knowledge-home-stars {
+    grid-template-columns: 1fr;
+  }
+
+  .knowledge-explore-random-grid {
     grid-template-columns: 1fr;
   }
 

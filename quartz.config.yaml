@@ -11,7 +11,9 @@ configuration:
   ignorePatterns:
     - private
     - templates
+    - "**/templates/**"
     - templater
+    - "**/templater/**"
     - .obsidian
     - information
   theme:
