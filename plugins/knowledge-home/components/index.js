@@ -573,7 +573,7 @@ function KnowledgeHome(userOpts = {}) {
             { class: "knowledge-explore-route-grid" },
             routes.map((route) =>
               h(
-                "article",
+                "div",
                 { class: "knowledge-explore-route" },
                 h("span", null, route.eyebrow),
                 h("strong", null, route.title),
