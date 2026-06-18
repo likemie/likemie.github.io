@@ -36,7 +36,12 @@ function sectionFor(page) {
 }
 
 function linksFor(page) {
-  return Object.keys(page.links ?? {}).length
+  return outgoingSlugs(page).length
+}
+
+function outgoingSlugs(page) {
+  if (Array.isArray(page.links)) return page.links.filter(Boolean)
+  return Object.keys(page.links ?? {})
 }
 
 function pageDate(page) {
@@ -91,13 +96,195 @@ function isExploreSlug(slug) {
   return slug === "explore" || slug === "explore/index"
 }
 
-function slugForTitle(pages, title, fallback, preferredPrefix) {
-  const matches = pages.filter((page) => titleFor(page) === title)
-  return (
-    matches.find((page) => (page.slug ?? "").startsWith(preferredPrefix))?.slug ??
-    matches[0]?.slug ??
-    fallback
-  )
+function pageIndexFor(pages) {
+  const bySlug = new Map()
+  const byTitle = new Map()
+
+  for (const page of pages) {
+    if (page.slug) bySlug.set(page.slug, page)
+    const title = titleFor(page)
+    if (!byTitle.has(title)) byTitle.set(title, [])
+    byTitle.get(title).push(page)
+  }
+
+  const backlinks = new Map()
+  for (const page of pages) {
+    for (const slug of outgoingSlugs(page)) {
+      if (!backlinks.has(slug)) backlinks.set(slug, [])
+      backlinks.get(slug).push(page.slug)
+    }
+  }
+
+  return { bySlug, byTitle, backlinks }
+}
+
+function pageByTitle(index, title, preferredPrefix) {
+  const matches = index.byTitle.get(title) ?? []
+  return matches.find((page) => (page.slug ?? "").startsWith(preferredPrefix ?? "")) ?? matches[0]
+}
+
+function preferredPage(index, pages, preferred, fallback, prefixes = []) {
+  for (const title of preferred ?? []) {
+    const page = pageByTitle(index, title, prefixes[0])
+    if (page) return page
+  }
+
+  const fallbackPage = pageByTitle(index, fallback?.title, fallback?.preferredPrefix)
+  if (fallbackPage) return fallbackPage
+
+  const fallbackSlug = fallback?.slug
+  if (fallbackSlug) return index.bySlug.get(fallbackSlug) ?? { slug: fallbackSlug, frontmatter: { title: fallback?.title } }
+
+  return pages.find((page) => prefixes.some((prefix) => (page.slug ?? "").startsWith(prefix)))
+}
+
+function preferredRoutePage(index, preferred = [], prefixes = []) {
+  for (const title of preferred) {
+    const page = pageByTitle(index, title, prefixes[0])
+    if (page) return page
+  }
+}
+
+function relatedPages(index, seedPages, maxDepth = 2) {
+  const seen = new Set(seedPages.map((page) => page.slug).filter(Boolean))
+  const related = new Map()
+  let frontier = seedPages
+
+  for (let depth = 1; depth <= maxDepth; depth++) {
+    const next = []
+    for (const page of frontier) {
+      const connectedSlugs = [
+        ...outgoingSlugs(page),
+        ...(index.backlinks.get(page.slug) ?? []),
+      ].filter(Boolean)
+
+      for (const slug of connectedSlugs) {
+        const connected = index.bySlug.get(slug)
+        if (!connected || !isListedContent(connected)) continue
+
+        const existing = related.get(slug) ?? { page: connected, distance: depth, touches: 0 }
+        existing.distance = Math.min(existing.distance, depth)
+        existing.touches += 1
+        related.set(slug, existing)
+
+        if (!seen.has(slug)) {
+          seen.add(slug)
+          next.push(connected)
+        }
+      }
+    }
+    frontier = next
+  }
+
+  return [...related.values()]
+}
+
+function chooseRouteStop({ index, pages, seedPages, selected, stop, routeKey }) {
+  const prefixes = stop.prefixes ?? []
+  const configuredPreferred = preferredRoutePage(index, stop.preferred, prefixes)
+  if (configuredPreferred && !selected.has(configuredPreferred.slug)) {
+    selected.add(configuredPreferred.slug)
+    return {
+      label: stop.label,
+      title: titleFor(configuredPreferred),
+      href: configuredPreferred.slug,
+      section: sectionFor(configuredPreferred),
+      source: relatedPages(index, seedPages, 2).some(({ page }) => page.slug === configuredPreferred.slug)
+        ? "图谱优选"
+        : "阶段优选",
+      routeKey,
+    }
+  }
+
+  const preferred = preferredPage(index, pages, stop.preferred, stop.fallback, prefixes)
+  const candidates = relatedPages(index, seedPages, 2)
+    .filter(({ page }) => !selected.has(page.slug))
+    .filter(({ page }) => prefixes.length === 0 || prefixes.some((prefix) => (page.slug ?? "").startsWith(prefix)))
+
+  const preferredCandidate = preferred && !selected.has(preferred.slug)
+    ? { ...(candidates.find(({ page }) => page.slug === preferred.slug) ?? { page: preferred, distance: 2, touches: 0 }), isPreferred: true }
+    : undefined
+
+  const pool = preferredCandidate ? [preferredCandidate, ...candidates] : candidates
+  const fallback = preferred && !selected.has(preferred.slug) ? { page: preferred, distance: 3, touches: 0 } : undefined
+  const scored = (pool.length > 0 ? pool : fallback ? [fallback] : [])
+    .map((candidate) => {
+      const page = candidate.page
+      const preferredRank = (stop.preferred ?? []).indexOf(titleFor(page))
+      const date = pageDate(page)?.getTime() ?? 0
+      const recency = date > 0 ? date / 1_000_000_000_000 : 0
+      const score =
+        (candidate.isPreferred ? 120 : 0) +
+        (preferredRank >= 0 ? 100 - preferredRank * 8 : 0) +
+        (3 - candidate.distance) * 18 +
+        candidate.touches * 10 +
+        linksFor(page) * 0.8 +
+        recency
+      return { ...candidate, score }
+    })
+    .sort((a, b) => b.score - a.score || titleFor(a.page).localeCompare(titleFor(b.page)))
+
+  const chosen = scored[0]?.page
+  if (!chosen) return undefined
+
+  selected.add(chosen.slug)
+  return {
+    label: stop.label,
+    title: titleFor(chosen),
+    href: chosen.slug,
+    section: sectionFor(chosen),
+    source: scored[0].distance <= 1 ? "直接连接" : `${scored[0].distance} 跳连接`,
+    routeKey,
+  }
+}
+
+function graphRoutes(pages, routeConfigs) {
+  const index = pageIndexFor(pages)
+
+  return routeConfigs
+    .map((config) => {
+      const seedPages = config.seeds
+        .map((seed) => pageByTitle(index, seed.title, seed.preferredPrefix) ?? index.bySlug.get(seed.slug))
+        .filter(Boolean)
+      const selected = new Set()
+      const stops = []
+
+      for (const seed of seedPages) {
+        if (!selected.has(seed.slug)) {
+          selected.add(seed.slug)
+          stops.push({
+            label: config.seedLabel ?? "起点",
+            title: titleFor(seed),
+            href: seed.slug,
+            section: sectionFor(seed),
+            source: "种子节点",
+            routeKey: config.eyebrow,
+          })
+          break
+        }
+      }
+
+      for (const stop of config.stops) {
+        const chosen = chooseRouteStop({
+          index,
+          pages,
+          seedPages,
+          selected,
+          stop,
+          routeKey: config.eyebrow,
+        })
+        if (chosen) stops.push(chosen)
+      }
+
+      return {
+        eyebrow: config.eyebrow,
+        title: config.title,
+        body: config.body,
+        meta: `${formatCount(relatedPages(index, seedPages, 2).length)} 个图谱邻居`,
+        stops: stops.slice(0, config.limit ?? 4),
+      }
+    })
+    .filter((route) => route.stops.length > 1)
 }
 
 function KnowledgeHome(userOpts = {}) {
@@ -134,41 +321,47 @@ function KnowledgeHome(userOpts = {}) {
           return page && { ...section, page, count: pool.length }
         })
         .filter(Boolean)
-      const routes = [
+      const routes = graphRoutes(pages, [
         {
           eyebrow: "Evidence",
           title: "循证教育路线",
           body: "从理念进入，再看制度化证据生产，最后回到方法和现场判断。",
+          seeds: [
+            {
+              title: "Evidence-Based Education",
+              preferredPrefix: "wiki/concepts/",
+            },
+          ],
           stops: [
             {
-              label: "起点",
-              title: "Evidence-Based Education",
-              href: slugForTitle(
-                pages,
-                "Evidence-Based Education",
-                "wiki/concepts/educational-policy-reform/evidence-based-education",
-                "wiki/concepts/",
-              ),
+              label: "证据装置",
+              prefixes: ["wiki/methods/", "wiki/facts/"],
+              preferred: ["Randomised Controlled Trials", "Systematic Review", "Education Endowment Foundation"],
+              fallback: {
+                title: "Randomised Controlled Trials",
+                slug: "wiki/methods/quantitative/randomised-controlled-trials",
+                preferredPrefix: "wiki/methods/",
+              },
             },
             {
-              label: "证据装置",
-              title: "Randomised Controlled Trials",
-              href: slugForTitle(
-                pages,
-                "Randomised Controlled Trials",
-                "wiki/methods/quantitative/randomised-controlled-trials",
-                "wiki/methods/",
-              ),
+              label: "关键争议",
+              prefixes: ["wiki/arguments/"],
+              preferred: ["Argument_Wrigley_2018_BERJ", "Argument_Biesta_2010_SPE", "Argument_Cowen_2019_ERE"],
+              fallback: {
+                title: "Argument_Wrigley_2018_BERJ",
+                slug: "wiki/arguments/journal-articles/british-educational-research-journal/argument_wrigley_2018_berj",
+                preferredPrefix: "wiki/arguments/",
+              },
             },
             {
               label: "回到实践",
-              title: "Professional Judgment",
-              href: slugForTitle(
-                pages,
-                "Professional Judgment",
-                "wiki/concepts/educational-policy-reform/professional-judgment",
-                "wiki/concepts/",
-              ),
+              prefixes: ["wiki/concepts/"],
+              preferred: ["Professional Judgment", "Local Knowledge in Evidence-Based Policy", "Knowledge Mobilisation"],
+              fallback: {
+                title: "Professional Judgment",
+                slug: "wiki/concepts/educational-policy-reform/professional-judgment",
+                preferredPrefix: "wiki/concepts/",
+              },
             },
           ],
         },
@@ -176,26 +369,42 @@ function KnowledgeHome(userOpts = {}) {
           eyebrow: "Governance",
           title: "全球教育治理路线",
           body: "从国际组织和评估进入，追踪教育如何被经济竞争与跨国政策流动重写。",
+          seeds: [
+            {
+              title: "OECD",
+              preferredPrefix: "wiki/facts/",
+            },
+          ],
           stops: [
             {
-              label: "行动者",
-              title: "OECD",
-              href: slugForTitle(pages, "OECD", "wiki/facts/global/oecd", "wiki/facts/"),
-            },
-            {
               label: "测量机器",
-              title: "PISA",
-              href: slugForTitle(pages, "PISA", "wiki/facts/global/pisa", "wiki/facts/"),
+              prefixes: ["wiki/facts/"],
+              preferred: ["PISA", "Baby PISA", "OECD AHELO Project"],
+              fallback: {
+                title: "PISA",
+                slug: "wiki/facts/global/pisa",
+                preferredPrefix: "wiki/facts/",
+              },
             },
             {
               label: "全球话语",
-              title: "Knowledge-Based Economy",
-              href: slugForTitle(
-                pages,
-                "Knowledge-Based Economy",
-                "wiki/concepts/political-economy-geopolitics/knowledge-based-economy",
-                "wiki/concepts/",
-              ),
+              prefixes: ["wiki/concepts/"],
+              preferred: ["Knowledge-Based Economy", "Global Education Reform Movement", "Global Education Industry"],
+              fallback: {
+                title: "Knowledge-Based Economy",
+                slug: "wiki/concepts/political-economy-geopolitics/knowledge-based-economy",
+                preferredPrefix: "wiki/concepts/",
+              },
+            },
+            {
+              label: "批判视角",
+              prefixes: ["wiki/arguments/", "wiki/concepts/"],
+              preferred: ["Argument_Zhao_2020_JEC", "PISA Distorted View of Education", "Policy Borrowing"],
+              fallback: {
+                title: "Argument_Zhao_2020_JEC",
+                slug: "wiki/arguments/journal-articles/journal-of-educational-change/argument_zhao_2020_jec",
+                preferredPrefix: "wiki/arguments/",
+              },
             },
           ],
         },
@@ -203,36 +412,42 @@ function KnowledgeHome(userOpts = {}) {
           eyebrow: "Curriculum",
           title: "课程政策路线",
           body: "先看具体改革，再进入课程理论，最后用文献论证检查改革叙事。",
+          seeds: [
+            {
+              title: "China Basic Education Curriculum Reform",
+              preferredPrefix: "wiki/facts/",
+            },
+          ],
           stops: [
             {
-              label: "案例",
-              title: "China Basic Education Curriculum Reform",
-              href: slugForTitle(
-                pages,
-                "China Basic Education Curriculum Reform",
-                "wiki/facts/china/china-basic-education-curriculum-reform",
-                "wiki/facts/",
-              ),
+              label: "比较案例",
+              prefixes: ["wiki/facts/"],
+              preferred: ["Finnish National Core Curriculum", "The New Zealand Curriculum", "Australian Curriculum"],
+              fallback: {
+                title: "Finnish National Core Curriculum",
+                slug: "wiki/facts/finland/finnish-national-core-curriculum",
+                preferredPrefix: "wiki/facts/",
+              },
             },
             {
               label: "理论",
-              title: "Curriculum Design Coherence Model",
-              href: slugForTitle(
-                pages,
-                "Curriculum Design Coherence Model",
-                "wiki/theories/curriculum/curriculum-design-coherence-model",
-                "wiki/theories/",
-              ),
+              prefixes: ["wiki/theories/"],
+              preferred: ["Curriculum Design Coherence Model", "Cuban's Curriculum Change Theory"],
+              fallback: {
+                title: "Curriculum Design Coherence Model",
+                slug: "wiki/theories/curriculum/curriculum-design-coherence-model",
+                preferredPrefix: "wiki/theories/",
+              },
             },
             {
               label: "论证",
-              title: "Argument_McPhail_2023_JCS",
-              href: slugForTitle(
-                pages,
-                "Argument_McPhail_2023_JCS",
-                "wiki/arguments/journal-articles/journal-of-curriculum-studies/argument-mcphail-2023-jcs",
-                "wiki/arguments/",
-              ),
+              prefixes: ["wiki/arguments/"],
+              preferred: ["Argument_McPhail_2023_JCS", "Argument_Yan_2025_JCS", "Argument_Terhart_2011_JCS"],
+              fallback: {
+                title: "Argument_McPhail_2023_JCS",
+                slug: "wiki/arguments/journal-articles/journal-of-curriculum-studies/argument_mcphail_2023_jcs",
+                preferredPrefix: "wiki/arguments/",
+              },
             },
           ],
         },
@@ -240,40 +455,46 @@ function KnowledgeHome(userOpts = {}) {
           eyebrow: "Methods",
           title: "方法与证据路线",
           body: "从因果问题进入方法谱系，再用效度框架判断研究到底能说明什么。",
+          seeds: [
+            {
+              title: "Causality",
+              preferredPrefix: "wiki/concepts/",
+            },
+          ],
           stops: [
             {
-              label: "问题",
-              title: "Causality",
-              href: slugForTitle(
-                pages,
-                "Causality",
-                "wiki/concepts/research-methodology/causality",
-                "wiki/concepts/",
-              ),
+              label: "实验",
+              prefixes: ["wiki/methods/"],
+              preferred: ["Randomised Controlled Trials", "Causal Modeling", "Quasi-Experimental Designs"],
+              fallback: {
+                title: "Randomised Controlled Trials",
+                slug: "wiki/methods/quantitative/randomised-controlled-trials",
+                preferredPrefix: "wiki/methods/",
+              },
             },
             {
               label: "综合",
-              title: "Systematic Review",
-              href: slugForTitle(
-                pages,
-                "Systematic Review",
-                "wiki/methods/qualitative/systematic-review",
-                "wiki/methods/",
-              ),
+              prefixes: ["wiki/methods/"],
+              preferred: ["Systematic Review", "Meta-analysis", "Comparative Meta-synthesis"],
+              fallback: {
+                title: "Systematic Review",
+                slug: "wiki/methods/qualitative/systematic-review",
+                preferredPrefix: "wiki/methods/",
+              },
             },
             {
               label: "判断",
-              title: "Campbellian Validity Framework",
-              href: slugForTitle(
-                pages,
-                "Campbellian Validity Framework",
-                "wiki/theories/research-methodology/campbellian-validity-framework",
-                "wiki/theories/",
-              ),
+              prefixes: ["wiki/theories/", "wiki/concepts/"],
+              preferred: ["Campbellian Validity Framework", "External Validity", "Internal Validity"],
+              fallback: {
+                title: "Campbellian Validity Framework",
+                slug: "wiki/theories/research-methodology/campbellian-validity-framework",
+                preferredPrefix: "wiki/theories/",
+              },
             },
           ],
         },
-      ]
+      ])
       const visitorEntrances = [
         { title: "快速了解这座库", href: "wiki/research-map", body: "先看研究地图，知道这里有哪些房间。" },
         { title: "找一个概念", href: "bases/concepts", body: "进入概念索引，用表格和卡片筛选。" },
@@ -357,6 +578,7 @@ function KnowledgeHome(userOpts = {}) {
                 h("span", null, route.eyebrow),
                 h("strong", null, route.title),
                 h("p", null, route.body),
+                h("em", { class: "knowledge-explore-route-meta" }, `自动：${route.meta}`),
                 h(
                   "ol",
                   { class: "knowledge-explore-route-stops" },
@@ -366,6 +588,7 @@ function KnowledgeHome(userOpts = {}) {
                       null,
                       h("small", null, stop.label),
                       h("a", { href: hrefFor(stop.href), class: "internal" }, stop.title),
+                      h("span", null, `${stop.section} · ${stop.source}`),
                     ),
                   ),
                 ),
@@ -1070,6 +1293,13 @@ body[data-slug="explore/index"] article {
   margin: 0;
 }
 
+.knowledge-explore-route-meta {
+  color: var(--darkgray);
+  font-size: 0.76rem;
+  font-style: normal;
+  line-height: 1.2;
+}
+
 .knowledge-explore-route-stops {
   counter-reset: route-stop;
   display: grid;
@@ -1119,6 +1349,13 @@ body[data-slug="explore/index"] article {
   font-size: 0.72rem;
   grid-column: 2;
   letter-spacing: 0.02em;
+}
+
+.knowledge-explore-route-stops span {
+  color: var(--darkgray);
+  font-size: 0.7rem;
+  grid-column: 2;
+  line-height: 1.2;
 }
 
 .knowledge-explore-route-stops a {
