@@ -325,7 +325,7 @@ function routePathList(routeKey, variant, hidden = false) {
 }
 
 function routeShuffleOnClick() {
-  return `(() => { const key = this.getAttribute("data-random-route"); const board = document.querySelector("[data-route-board='" + key + "']"); if (!board) return; const variants = Array.from(board.querySelectorAll("[data-route-variant='" + key + "']")); if (variants.length === 0) return; const current = variants.findIndex((variant) => !variant.hidden); let next = Math.floor(Math.random() * variants.length); if (variants.length > 1 && next === current) next = (next + 1) % variants.length; variants.forEach((variant, index) => { variant.hidden = index !== next }); this.dataset.activeRoute = String(next); const label = this.dataset.routeLabel || "换一条"; this.textContent = variants.length > 1 ? label + " · " + String(next + 1) + "/" + variants.length : label; })()`
+  return `(() => { const key = this.getAttribute("data-random-route"); const board = document.querySelector("[data-route-board='" + key + "']"); if (!board) return; const variants = Array.from(board.querySelectorAll("[data-route-variant='" + key + "']")); if (variants.length === 0) return; const current = variants.findIndex((variant) => !variant.hidden && variant.style.display !== "none"); let next = Math.floor(Math.random() * variants.length); if (variants.length > 1 && next === current) next = (next + 1) % variants.length; variants.forEach((variant, index) => { const hidden = index !== next; variant.hidden = hidden; variant.style.display = hidden ? "none" : "grid"; }); this.dataset.activeRoute = String(next); const label = this.dataset.routeLabel || "换一条"; this.textContent = variants.length > 1 ? label + " · " + String(next + 1) + "/" + variants.length : label; })()`
 }
 
 function exploreRouteConfigs() {
@@ -803,7 +803,9 @@ function setKnowledgeRoute(routeKey, index) {
 
   const safeIndex = ((index % variants.length) + variants.length) % variants.length
   variants.forEach((variant, variantIndex) => {
-    variant.hidden = variantIndex !== safeIndex
+    const hidden = variantIndex !== safeIndex
+    variant.hidden = hidden
+    variant.style.display = hidden ? "none" : "grid"
   })
 
   if (button) {
@@ -839,7 +841,7 @@ if (window.knowledgeRouteShuffleBound !== true) {
     const { variants } = knowledgeRouteState(routeKey)
     if (variants.length === 0) return
 
-    const current = variants.findIndex((variant) => !variant.hidden)
+    const current = variants.findIndex((variant) => !variant.hidden && variant.style.display !== "none")
     let next = Math.floor(Math.random() * variants.length)
     if (variants.length > 1 && next === current) next = (next + 1) % variants.length
     setKnowledgeRoute(routeKey, next)
@@ -1556,6 +1558,10 @@ body[data-slug^="explore/"] article {
   margin: 0;
   padding: 0;
   position: relative;
+}
+
+.knowledge-route-path[hidden] {
+  display: none !important;
 }
 
 .knowledge-route-path::before {
