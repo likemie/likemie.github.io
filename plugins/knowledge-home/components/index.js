@@ -324,6 +324,10 @@ function routePathList(routeKey, variant, hidden = false) {
   )
 }
 
+function routeShuffleOnClick() {
+  return `(() => { const key = this.getAttribute("data-random-route"); const board = document.querySelector("[data-route-board='" + key + "']"); if (!board) return; const variants = Array.from(board.querySelectorAll("[data-route-variant='" + key + "']")); if (variants.length === 0) return; const current = variants.findIndex((variant) => !variant.hidden); let next = Math.floor(Math.random() * variants.length); if (variants.length > 1 && next === current) next = (next + 1) % variants.length; variants.forEach((variant, index) => { variant.hidden = index !== next }); this.dataset.activeRoute = String(next); const label = this.dataset.routeLabel || "换一条"; this.textContent = variants.length > 1 ? label + " · " + String(next + 1) + "/" + variants.length : label; })()`
+}
+
 function exploreRouteConfigs() {
   return [
     {
@@ -475,6 +479,7 @@ function KnowledgeHome(userOpts = {}) {
               type: "button",
               "data-random-route": route.key,
               "data-route-label": "换一条随机路线",
+              onclick: routeShuffleOnClick(),
             },
             "换一条随机路线",
           ),
@@ -764,6 +769,7 @@ function KnowledgeHome(userOpts = {}) {
                   type: "button",
                   "data-random-route": homeWalk.key,
                   "data-route-label": "换一条",
+                  onclick: routeShuffleOnClick(),
                 },
                 "换一条",
               ),
