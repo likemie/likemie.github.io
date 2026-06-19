@@ -27,6 +27,7 @@ function titleFor(page) {
 
 function sectionFor(page) {
   const slug = page.slug ?? ""
+  if (slug.startsWith("wiki/concepts/research-methodology")) return "方法概念"
   if (slug.startsWith("wiki/concepts")) return "概念"
   if (slug.startsWith("wiki/theories")) return "理论"
   if (slug.startsWith("wiki/arguments")) return "论证"
