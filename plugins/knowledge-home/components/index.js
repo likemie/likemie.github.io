@@ -273,7 +273,33 @@ function graphRoutes(pages, routeConfigs, seedKey) {
   const index = pageIndexFor(pages)
 
   return routeConfigs
-    .map((config) => randomWalkRoute({ index, pages, config, seedKey }))
+    .map((config) => {
+      const variants = []
+      const seen = new Set()
+
+      for (let indexSeed = 0; indexSeed < 18; indexSeed++) {
+        const route = randomWalkRoute({
+          index,
+          pages,
+          config,
+          seedKey: `${seedKey}-${indexSeed}`,
+        })
+        if (!route) continue
+
+        const signature = route.stops.map((stop) => stop.href).join(">")
+        if (seen.has(signature)) continue
+
+        seen.add(signature)
+        variants.push(route)
+      }
+
+      const route = variants[0]
+      return route && {
+        ...route,
+        meta: `随机 · ${variants.length} 条候选路径`,
+        variants,
+      }
+    })
     .filter(Boolean)
     .filter((route) => route.stops.length > 1)
 }
@@ -401,23 +427,55 @@ function KnowledgeHome(userOpts = {}) {
           h("h1", null, route.title),
           h("p", null, route.body),
           h("em", { class: "knowledge-explore-route-meta" }, `自动：${route.meta}`),
+          h("button", { class: "knowledge-route-shuffle", type: "button", "data-random-route": route.key }, "换一条随机路线"),
         ),
         h(
           "section",
-          { class: "knowledge-route-board" },
-          h("div", { class: "knowledge-explore-head" }, h("h2", null, "路线节点"), h("span", null, "按图谱生成")),
-          h(
-            "ol",
-            { class: "knowledge-route-path" },
-            route.stops.map((stop) =>
-              h(
-                "li",
-                null,
-                h("small", null, stop.label),
-                h("a", { href: hrefFor(stop.href), class: "internal" }, stop.title),
-                h("span", null, `${stop.section} · ${stop.source}`),
+          { class: "knowledge-route-board", "data-route-board": route.key },
+          h("div", { class: "knowledge-explore-head" }, h("h2", null, "路线节点"), h("span", null, "随机候选")),
+          route.variants.map((variant, variantIndex) =>
+            h(
+              "ol",
+              {
+                class: "knowledge-route-path",
+                "data-route-variant": route.key,
+                hidden: variantIndex === 0 ? undefined : true,
+              },
+              variant.stops.map((stop) =>
+                h(
+                  "li",
+                  null,
+                  h("small", null, stop.label),
+                  h("a", { href: hrefFor(stop.href), class: "internal" }, stop.title),
+                  h("span", null, `${stop.section} · ${stop.source}`),
+                ),
               ),
             ),
+          ),
+          h(
+            "script",
+            null,
+            `
+(() => {
+  const key = ${JSON.stringify(route.key)}
+  const variants = [...document.querySelectorAll('[data-route-variant=' + key + ']')]
+  const button = document.querySelector('[data-random-route=' + key + ']')
+  if (variants.length <= 1) return
+  let current = 0
+  const show = (index) => {
+    current = index
+    variants.forEach((variant, variantIndex) => {
+      variant.hidden = variantIndex !== index
+    })
+  }
+  show(Math.floor(Math.random() * variants.length))
+  button?.addEventListener('click', () => {
+    let next = Math.floor(Math.random() * variants.length)
+    if (variants.length > 1 && next === current) next = (next + 1) % variants.length
+    show(next)
+  })
+})()
+            `.trim(),
           ),
         ),
       )
@@ -1334,6 +1392,24 @@ body[data-slug^="explore/"] article {
 
 .knowledge-route-back:hover {
   text-decoration: underline;
+}
+
+.knowledge-route-shuffle {
+  background: var(--secondary);
+  border: 1px solid var(--secondary);
+  border-radius: 999px;
+  color: var(--light);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  justify-self: start;
+  line-height: 1.2;
+  margin-top: 0.9rem;
+  padding: 0.65rem 0.9rem;
+}
+
+.knowledge-route-shuffle:hover {
+  filter: brightness(1.08);
 }
 
 .knowledge-route-board {
