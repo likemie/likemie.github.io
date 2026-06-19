@@ -304,6 +304,26 @@ function graphRoutes(pages, routeConfigs, seedKey) {
     .filter((route) => route.stops.length > 1)
 }
 
+function routePathList(routeKey, variant, hidden = false) {
+  return h(
+    "ol",
+    {
+      class: "knowledge-route-path",
+      "data-route-variant": routeKey,
+      hidden: hidden ? true : undefined,
+    },
+    variant.stops.map((stop) =>
+      h(
+        "li",
+        null,
+        h("small", null, stop.label),
+        h("a", { href: hrefFor(stop.href), class: "internal" }, stop.title),
+        h("span", null, `${stop.section} · ${stop.source}`),
+      ),
+    ),
+  )
+}
+
 function exploreRouteConfigs() {
   return [
     {
@@ -411,6 +431,27 @@ function KnowledgeHome(userOpts = {}) {
     const wikiCount = pages.filter((page) => (page.slug ?? "").startsWith("wiki")).length
     const totalLinks = pages.reduce((sum, page) => sum + linksFor(page), 0)
     const routes = graphRoutes(pages, exploreRouteConfigs(), todayKey)
+    const homeWalk = todayConcept
+      ? graphRoutes(
+          pages,
+          [
+            {
+              key: "home-walk",
+              eyebrow: "Random Walk",
+              title: "随机路径",
+              body: "从今日概念出发，沿真实链接随机走几步。",
+              limit: 4,
+              seeds: [
+                {
+                  title: titleFor(todayConcept),
+                  preferredPrefix: `${todayConcept.slug?.split("/").slice(0, -1).join("/")}/`,
+                },
+              ],
+            },
+          ],
+          `${todayKey}-home-walk`,
+        )[0]
+      : undefined
 
     if (currentRouteKey) {
       const route = routes.find((item) => item.key === currentRouteKey)
@@ -433,50 +474,7 @@ function KnowledgeHome(userOpts = {}) {
           "section",
           { class: "knowledge-route-board", "data-route-board": route.key },
           h("div", { class: "knowledge-explore-head" }, h("h2", null, "路线节点"), h("span", null, "随机候选")),
-          route.variants.map((variant, variantIndex) =>
-            h(
-              "ol",
-              {
-                class: "knowledge-route-path",
-                "data-route-variant": route.key,
-                hidden: variantIndex === 0 ? undefined : true,
-              },
-              variant.stops.map((stop) =>
-                h(
-                  "li",
-                  null,
-                  h("small", null, stop.label),
-                  h("a", { href: hrefFor(stop.href), class: "internal" }, stop.title),
-                  h("span", null, `${stop.section} · ${stop.source}`),
-                ),
-              ),
-            ),
-          ),
-          h(
-            "script",
-            null,
-            `
-(() => {
-  const key = ${JSON.stringify(route.key)}
-  const variants = [...document.querySelectorAll('[data-route-variant=' + key + ']')]
-  const button = document.querySelector('[data-random-route=' + key + ']')
-  if (variants.length <= 1) return
-  let current = 0
-  const show = (index) => {
-    current = index
-    variants.forEach((variant, variantIndex) => {
-      variant.hidden = variantIndex !== index
-    })
-  }
-  show(Math.floor(Math.random() * variants.length))
-  button?.addEventListener('click', () => {
-    let next = Math.floor(Math.random() * variants.length)
-    if (variants.length > 1 && next === current) next = (next + 1) % variants.length
-    show(next)
-  })
-})()
-            `.trim(),
-          ),
+          route.variants.map((variant, variantIndex) => routePathList(route.key, variant, variantIndex !== 0)),
         ),
       )
     }
@@ -742,9 +740,70 @@ function KnowledgeHome(userOpts = {}) {
             }),
           ),
         ),
+        homeWalk &&
+          h(
+            "section",
+            { class: "knowledge-home-card knowledge-home-walk" },
+            h(
+              "div",
+              { class: "knowledge-home-section-head" },
+              h("h2", null, "随机路径"),
+              h("button", { class: "knowledge-route-shuffle subtle", type: "button", "data-random-route": homeWalk.key }, "换一条"),
+            ),
+            h("p", { class: "knowledge-home-walk-note" }, `从 ${titleFor(todayConcept)} 出发，沿真实连接随机生成。`),
+            h(
+              "div",
+              { class: "knowledge-route-board compact", "data-route-board": homeWalk.key },
+              homeWalk.variants.map((variant, variantIndex) =>
+                routePathList(homeWalk.key, variant, variantIndex !== 0),
+              ),
+            ),
+          ),
       ),
-    )
+      )
+    }
+
+  Component.afterDOMLoaded = `
+function initKnowledgeRandomRoutes() {
+  const boards = Array.from(document.querySelectorAll("[data-route-board]"))
+
+  for (const board of boards) {
+    const routeKey = board.getAttribute("data-route-board")
+    const variants = Array.from(board.querySelectorAll("[data-route-variant='" + routeKey + "']"))
+    const button = document.querySelector("[data-random-route='" + routeKey + "']")
+    if (variants.length === 0) continue
+
+    let current = variants.findIndex((variant) => !variant.hidden)
+    if (current < 0) current = 0
+
+    const show = (index) => {
+      variants.forEach((variant, variantIndex) => {
+        variant.hidden = variantIndex !== index
+      })
+      current = index
+    }
+
+    show(Math.floor(Math.random() * variants.length))
+
+    if (button && button.dataset.routeBound !== "true") {
+      button.dataset.routeBound = "true"
+      button.addEventListener("click", () => {
+        if (variants.length <= 1) {
+          show(0)
+          return
+        }
+
+        let next = Math.floor(Math.random() * variants.length)
+        if (next === current) next = (next + 1) % variants.length
+        show(next)
+      })
+    }
   }
+}
+
+document.addEventListener("nav", initKnowledgeRandomRoutes)
+initKnowledgeRandomRoutes()
+`
 
   Component.css = `
 .knowledge-home {
@@ -907,8 +966,12 @@ function KnowledgeHome(userOpts = {}) {
 .knowledge-home-grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
   margin-top: 1rem;
+}
+
+.knowledge-home-constellation {
+  grid-column: span 2;
 }
 
 .knowledge-home-card {
@@ -1029,6 +1092,12 @@ function KnowledgeHome(userOpts = {}) {
 .knowledge-home-recent span {
   color: var(--darkgray);
   font-size: 0.9rem;
+}
+
+.knowledge-home-walk-note {
+  color: var(--darkgray);
+  line-height: 1.55;
+  margin: -0.25rem 0 0.85rem;
 }
 
 body[data-slug="explore"] .breadcrumb-container,
@@ -1260,7 +1329,7 @@ body[data-slug^="explore/"] article {
 }
 
 .knowledge-explore-route-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
 }
 
 .knowledge-explore-route {
@@ -1412,11 +1481,26 @@ body[data-slug^="explore/"] article {
   filter: brightness(1.08);
 }
 
+.knowledge-route-shuffle.subtle {
+  background: color-mix(in srgb, var(--light) 82%, transparent);
+  border-color: color-mix(in srgb, var(--secondary) 28%, var(--lightgray));
+  color: var(--secondary);
+  font-size: 0.82rem;
+  margin-top: 0;
+  padding: 0.45rem 0.65rem;
+}
+
 .knowledge-route-board {
   background: var(--light);
   border: 1px solid var(--lightgray);
   border-radius: 8px;
   padding: 1rem;
+}
+
+.knowledge-route-board.compact {
+  background: transparent;
+  border: 0;
+  padding: 0;
 }
 
 .knowledge-route-path {
@@ -1638,6 +1722,10 @@ body[data-slug^="explore/"] article {
   .knowledge-home-card {
     height: auto;
     overflow: visible;
+  }
+
+  .knowledge-home-constellation {
+    grid-column: auto;
   }
 
   .knowledge-home-card::after {
