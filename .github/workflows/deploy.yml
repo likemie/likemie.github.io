@@ -64,8 +64,8 @@ jobs:
       - name: Patch Quartz plugins
         run: npm run patch-plugins
 
-      - name: Refresh generated concept base fields
-        run: python3 content/scripts/vault_index.py --concept-fields-only
+      - name: Refresh vault indexes
+        run: python3 content/scripts/vault_index.py
 
       - name: Build Quartz
         run: npx quartz build
