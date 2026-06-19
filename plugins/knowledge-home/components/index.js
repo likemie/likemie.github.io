@@ -468,7 +468,16 @@ function KnowledgeHome(userOpts = {}) {
           h("h1", null, route.title),
           h("p", null, route.body),
           h("em", { class: "knowledge-explore-route-meta" }, `自动：${route.meta}`),
-          h("button", { class: "knowledge-route-shuffle", type: "button", "data-random-route": route.key }, "换一条随机路线"),
+          h(
+            "button",
+            {
+              class: "knowledge-route-shuffle",
+              type: "button",
+              "data-random-route": route.key,
+              "data-route-label": "换一条随机路线",
+            },
+            "换一条随机路线",
+          ),
         ),
         h(
           "section",
@@ -748,7 +757,16 @@ function KnowledgeHome(userOpts = {}) {
               "div",
               { class: "knowledge-home-section-head" },
               h("h2", null, "随机路径"),
-              h("button", { class: "knowledge-route-shuffle subtle", type: "button", "data-random-route": homeWalk.key }, "换一条"),
+              h(
+                "button",
+                {
+                  class: "knowledge-route-shuffle subtle",
+                  type: "button",
+                  "data-random-route": homeWalk.key,
+                  "data-route-label": "换一条",
+                },
+                "换一条",
+              ),
             ),
             h("p", { class: "knowledge-home-walk-note" }, `从 ${titleFor(todayConcept)} 出发，沿真实连接随机生成。`),
             h(
@@ -764,41 +782,62 @@ function KnowledgeHome(userOpts = {}) {
     }
 
   Component.afterDOMLoaded = `
+function knowledgeRouteState(routeKey) {
+  const board = document.querySelector("[data-route-board='" + routeKey + "']")
+  const variants = board
+    ? Array.from(board.querySelectorAll("[data-route-variant='" + routeKey + "']"))
+    : []
+  return { board, variants }
+}
+
+function setKnowledgeRoute(routeKey, index) {
+  const { variants } = knowledgeRouteState(routeKey)
+  const button = document.querySelector("[data-random-route='" + routeKey + "']")
+  if (variants.length === 0) return
+
+  const safeIndex = ((index % variants.length) + variants.length) % variants.length
+  variants.forEach((variant, variantIndex) => {
+    variant.hidden = variantIndex !== safeIndex
+  })
+
+  if (button) {
+    button.dataset.activeRoute = String(safeIndex)
+    const label = button.dataset.routeLabel || "换一条"
+    button.textContent = variants.length > 1 ? label + " · " + String(safeIndex + 1) + "/" + variants.length : label
+  }
+}
+
 function initKnowledgeRandomRoutes() {
   const boards = Array.from(document.querySelectorAll("[data-route-board]"))
 
   for (const board of boards) {
     const routeKey = board.getAttribute("data-route-board")
-    const variants = Array.from(board.querySelectorAll("[data-route-variant='" + routeKey + "']"))
-    const button = document.querySelector("[data-random-route='" + routeKey + "']")
+    const { variants } = knowledgeRouteState(routeKey)
     if (variants.length === 0) continue
 
     let current = variants.findIndex((variant) => !variant.hidden)
     if (current < 0) current = 0
-
-    const show = (index) => {
-      variants.forEach((variant, variantIndex) => {
-        variant.hidden = variantIndex !== index
-      })
-      current = index
-    }
-
-    show(Math.floor(Math.random() * variants.length))
-
-    if (button && button.dataset.routeBound !== "true") {
-      button.dataset.routeBound = "true"
-      button.addEventListener("click", () => {
-        if (variants.length <= 1) {
-          show(0)
-          return
-        }
-
-        let next = Math.floor(Math.random() * variants.length)
-        if (next === current) next = (next + 1) % variants.length
-        show(next)
-      })
-    }
+    const initial = Math.floor(Math.random() * variants.length)
+    setKnowledgeRoute(routeKey, variants.length > 1 && initial === current ? (initial + 1) % variants.length : initial)
   }
+}
+
+if (window.knowledgeRouteShuffleBound !== true) {
+  window.knowledgeRouteShuffleBound = true
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-random-route]")
+    if (!button) return
+
+    event.preventDefault()
+    const routeKey = button.getAttribute("data-random-route")
+    const { variants } = knowledgeRouteState(routeKey)
+    if (variants.length === 0) return
+
+    const current = variants.findIndex((variant) => !variant.hidden)
+    let next = Math.floor(Math.random() * variants.length)
+    if (variants.length > 1 && next === current) next = (next + 1) % variants.length
+    setKnowledgeRoute(routeKey, next)
+  })
 }
 
 document.addEventListener("nav", initKnowledgeRandomRoutes)
