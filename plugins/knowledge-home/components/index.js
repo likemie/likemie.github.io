@@ -101,7 +101,7 @@ function isExploreSlug(slug) {
 
 function exploreRouteKey(slug) {
   const key = slug?.match(/^explore\/([^/]+)$/)?.[1]
-  return ["evidence", "governance", "curriculum", "methods"].includes(key) ? key : undefined
+  return ["evidence", "governance", "curriculum", "methods", "random"].includes(key) ? key : undefined
 }
 
 function pageIndexFor(pages) {
@@ -416,6 +416,24 @@ function exploreRouteConfigs() {
   ]
 }
 
+function randomRouteConfig(todayConcept) {
+  if (!todayConcept) return undefined
+
+  return {
+    key: "random",
+    eyebrow: "Random Walk",
+    title: "随机路径",
+    body: "从今日概念出发，沿真实链接随机走几步。每次打开和点击换一条，都会在知识图谱里换一条可追踪的路径。",
+    limit: 4,
+    seeds: [
+      {
+        title: titleFor(todayConcept),
+        preferredPrefix: `${todayConcept.slug?.split("/").slice(0, -1).join("/")}/`,
+      },
+    ],
+  }
+}
+
 function KnowledgeHome(userOpts = {}) {
   const opts = { ...defaultOptions, ...userOpts }
 
@@ -435,30 +453,12 @@ function KnowledgeHome(userOpts = {}) {
     const wikiCount = pages.filter((page) => (page.slug ?? "").startsWith("wiki")).length
     const totalLinks = pages.reduce((sum, page) => sum + linksFor(page), 0)
     const routes = graphRoutes(pages, exploreRouteConfigs(), todayKey)
-    const homeWalk = todayConcept
-      ? graphRoutes(
-          pages,
-          [
-            {
-              key: "home-walk",
-              eyebrow: "Random Walk",
-              title: "随机路径",
-              body: "从今日概念出发，沿真实链接随机走几步。",
-              limit: 4,
-              seeds: [
-                {
-                  title: titleFor(todayConcept),
-                  preferredPrefix: `${todayConcept.slug?.split("/").slice(0, -1).join("/")}/`,
-                },
-              ],
-            },
-          ],
-          `${todayKey}-home-walk`,
-        )[0]
-      : undefined
+    const randomConfig = randomRouteConfig(todayConcept)
+    const randomRoute = randomConfig ? graphRoutes(pages, [randomConfig], `${todayKey}-random-route`)[0] : undefined
+    const routePages = randomRoute ? [...routes, randomRoute] : routes
 
     if (currentRouteKey) {
-      const route = routes.find((item) => item.key === currentRouteKey)
+      const route = routePages.find((item) => item.key === currentRouteKey)
       if (!route) return null
 
       return h(
@@ -689,6 +689,12 @@ function KnowledgeHome(userOpts = {}) {
               { class: "knowledge-home-button ghost", href: hrefFor("wiki/research-map") },
               "进入研究地图",
             ),
+            randomRoute &&
+              h(
+                "a",
+                { class: "knowledge-home-button ghost", href: hrefFor("explore/random") },
+                "随机路径",
+              ),
           ),
         ),
         h(
@@ -754,35 +760,6 @@ function KnowledgeHome(userOpts = {}) {
             }),
           ),
         ),
-        homeWalk &&
-          h(
-            "section",
-            { class: "knowledge-home-card knowledge-home-walk" },
-            h(
-              "div",
-              { class: "knowledge-home-section-head" },
-              h("h2", null, "随机路径"),
-              h(
-                "button",
-                {
-                  class: "knowledge-route-shuffle subtle",
-                  type: "button",
-                  "data-random-route": homeWalk.key,
-                  "data-route-label": "换一条",
-                  onclick: routeShuffleOnClick(),
-                },
-                "换一条",
-              ),
-            ),
-            h("p", { class: "knowledge-home-walk-note" }, `从 ${titleFor(todayConcept)} 出发，沿真实连接随机生成。`),
-            h(
-              "div",
-              { class: "knowledge-route-board compact", "data-route-board": homeWalk.key },
-              homeWalk.variants.map((variant, variantIndex) =>
-                routePathList(homeWalk.key, variant, variantIndex !== 0),
-              ),
-            ),
-          ),
       ),
       )
     }
@@ -1013,12 +990,8 @@ initKnowledgeRandomRoutes()
 .knowledge-home-grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr);
   margin-top: 1rem;
-}
-
-.knowledge-home-constellation {
-  grid-column: span 2;
 }
 
 .knowledge-home-card {
@@ -1139,12 +1112,6 @@ initKnowledgeRandomRoutes()
 .knowledge-home-recent span {
   color: var(--darkgray);
   font-size: 0.9rem;
-}
-
-.knowledge-home-walk-note {
-  color: var(--darkgray);
-  line-height: 1.55;
-  margin: -0.25rem 0 0.85rem;
 }
 
 body[data-slug="explore"] .breadcrumb-container,
@@ -1773,10 +1740,6 @@ body[data-slug^="explore/"] article {
   .knowledge-home-card {
     height: auto;
     overflow: visible;
-  }
-
-  .knowledge-home-constellation {
-    grid-column: auto;
   }
 
   .knowledge-home-card::after {
