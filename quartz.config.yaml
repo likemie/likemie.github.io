@@ -259,6 +259,7 @@ plugins:
       includeAll: false
       includedProperties:
         - citation
+        - argument_key
         - description
         - authors
         - related_concepts

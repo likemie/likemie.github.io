@@ -265,7 +265,7 @@
 
 .note-properties .note-properties-row {
   display: grid;
-  grid-template-columns: minmax(7.5rem, 0.22fr) minmax(0, 1fr);
+  grid-template-columns: minmax(9.5rem, 0.24fr) minmax(0, 1fr);
   border-bottom: 1px solid color-mix(in srgb, var(--lightgray) 76%, transparent);
 }
 
@@ -286,9 +286,11 @@
   padding: 0.72rem 0.9rem;
   color: var(--gray);
   font-family: var(--codeFont);
-  font-size: 0.76rem;
+  font-size: 0.68rem;
   letter-spacing: 0;
-  white-space: normal;
+  line-height: 1.35;
+  overflow-wrap: normal;
+  white-space: nowrap;
 }
 
 .note-properties .note-properties-value {
@@ -345,6 +347,7 @@ body[data-slug^="wiki/arguments/"] .argument-dossier {
 
   .note-properties .note-properties-key {
     padding-bottom: 0.18rem;
+    white-space: normal;
   }
 
   .note-properties .note-properties-value {
