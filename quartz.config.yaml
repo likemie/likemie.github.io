@@ -244,7 +244,7 @@ plugins:
       position: beforeBody
       priority: 1
   - source: ./plugins/argument-dossier
-    enabled: true
+    enabled: false
     order: 27
     layout:
       position: beforeBody
@@ -258,6 +258,7 @@ plugins:
     options:
       includeAll: false
       includedProperties:
+        - citation
         - description
         - authors
         - related_concepts
@@ -323,4 +324,5 @@ layout:
       positions:
         right: []
     canvas: {}
-    bases: {}
+    bases:
+      template: full-width

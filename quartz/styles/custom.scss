@@ -219,18 +219,137 @@
   }
 }
 
-.note-properties .note-properties-table {
-  table-layout: auto !important;
+.note-properties.metadata-container {
+  margin: 0.65rem 0 1.15rem;
+  border: 1px solid color-mix(in srgb, var(--secondary) 18%, var(--lightgray));
+  border-radius: 8px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--light) 94%, var(--secondary) 6%),
+    var(--light) 42%
+  );
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.045);
+  overflow: hidden;
+}
+
+.note-properties .note-properties-header {
+  min-height: 2.75rem;
+  padding: 0.55rem 0.9rem;
+  border-bottom: 1px solid transparent;
+}
+
+.note-properties[open] > .note-properties-header {
+  border-bottom-color: color-mix(in srgb, var(--secondary) 14%, var(--lightgray));
+}
+
+.note-properties .note-properties-title {
+  color: var(--dark);
+  font-weight: 700;
+}
+
+.note-properties .note-properties-count {
+  min-width: 1.7rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--secondary) 10%, transparent);
+  color: var(--secondary);
+  text-align: center;
+  font-weight: 700;
+}
+
+.note-properties .note-properties-table,
+.note-properties .note-properties-table tbody {
+  display: block;
+  width: 100%;
+}
+
+.note-properties .note-properties-row {
+  display: grid;
+  grid-template-columns: minmax(7.5rem, 0.22fr) minmax(0, 1fr);
+  border-bottom: 1px solid color-mix(in srgb, var(--lightgray) 76%, transparent);
+}
+
+.note-properties .note-properties-row:last-child {
+  border-bottom: 0;
+}
+
+.note-properties .note-properties-key,
+.note-properties .note-properties-value {
+  display: block;
+  width: auto !important;
+  min-width: 0;
+  border: 0;
+  vertical-align: top;
 }
 
 .note-properties .note-properties-key {
-  width: 1% !important;
-  max-width: 11rem;
-  white-space: nowrap;
+  padding: 0.72rem 0.9rem;
+  color: var(--gray);
+  font-family: var(--codeFont);
+  font-size: 0.76rem;
+  letter-spacing: 0;
+  white-space: normal;
 }
 
 .note-properties .note-properties-value {
-  width: auto;
+  padding: 0.66rem 0.95rem;
+  color: var(--dark);
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+body[data-slug^="wiki/arguments/"] .note-properties .note-properties-row:first-child {
+  background: color-mix(in srgb, var(--secondary) 5%, transparent);
+}
+
+body[data-slug^="wiki/arguments/"] .note-properties .note-properties-row:first-child .note-properties-key {
+  color: var(--secondary);
+  font-family: var(--bodyFont);
+  font-weight: 700;
+}
+
+body[data-slug^="wiki/arguments/"] .note-properties .note-properties-row:first-child .note-properties-value {
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+body[data-slug^="wiki/arguments/"] .argument-dossier {
+  display: none !important;
+}
+
+.note-properties .note-properties-link {
+  display: inline-block;
+  margin: 0.08rem 0.12rem 0.08rem 0;
+  padding: 0.04rem 0.28rem;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--secondary) 9%, var(--light));
+  color: var(--secondary);
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.note-properties .note-properties-link:hover {
+  background: color-mix(in srgb, var(--secondary) 16%, var(--light));
+  text-decoration: none;
+}
+
+.note-properties .note-properties-separator {
+  color: var(--gray);
+  margin-right: 0.06rem;
+}
+
+@media all and (max-width: 700px) {
+  .note-properties .note-properties-row {
+    grid-template-columns: 1fr;
+  }
+
+  .note-properties .note-properties-key {
+    padding-bottom: 0.18rem;
+  }
+
+  .note-properties .note-properties-value {
+    padding-top: 0.18rem;
+  }
 }
 
 .concept-explore-card {
@@ -1417,4 +1536,112 @@ article {
   color: rgb(var(--argument-color));
   display: block;
   margin-bottom: 0.35rem;
+}
+
+/* Obsidian Bases: keep long card/table views visible in Quartz pages. */
+body[data-slug^="bases/"] .page {
+  max-width: min(1760px, calc(100vw - 3rem));
+}
+
+body[data-slug^="bases/"] #quartz-body {
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-areas:
+    "grid-header"
+    "grid-center"
+    "grid-footer" !important;
+}
+
+body[data-slug^="bases/"] .sidebar.left,
+body[data-slug^="bases/"] .sidebar.right {
+  display: none !important;
+}
+
+body[data-slug^="bases/"] .center,
+body[data-slug^="bases/"] .center > article {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  width: 100%;
+}
+
+.bases-page {
+  overflow: visible;
+}
+
+.bases-inline {
+  display: block;
+}
+
+.bases-view-container,
+.bases-view,
+.bases-cards-wrapper {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.bases-cards {
+  align-items: start;
+  grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
+  max-width: 100%;
+}
+
+.bases-card {
+  align-self: start;
+  border-radius: 8px;
+  min-width: 0;
+  overflow: visible;
+}
+
+.bases-card-image,
+.bases-card-image.bases-card-color {
+  display: none;
+}
+
+.bases-card-body {
+  gap: 0.65rem;
+  min-width: 0;
+  padding: 1rem;
+}
+
+.bases-card-meta:empty {
+  display: none;
+}
+
+.bases-card-title {
+  display: block;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.bases-card-row {
+  align-items: baseline;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 3.2rem minmax(0, 1fr);
+  justify-content: initial;
+}
+
+.bases-card-label {
+  flex: 0 0 auto;
+}
+
+.bases-card-value {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+.bases-card-value .bases-list {
+  display: inline-flex;
+  gap: 0.3rem;
+  max-width: 100%;
+}
+
+.bases-card-value .bases-list-item {
+  min-width: 0;
+}
+
+.bases-table-wrapper {
+  max-width: 100%;
 }

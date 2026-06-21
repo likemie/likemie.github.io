@@ -68,6 +68,37 @@ function getVisibleProperties(data, opts) {`,
       result[key] = data[key];
     }`,
   },
+  {
+    file: ".quartz/plugins/bases-page/src/components/views/cards.tsx",
+    find: `          return (
+            <a href={href} class="internal internal-link bases-card" data-slug={entry.slug}>`,
+    replace: `          return (
+            <div class="bases-card" data-slug={entry.slug}>`,
+  },
+  {
+    file: ".quartz/plugins/bases-page/src/components/views/cards.tsx",
+    find: `                <span class="bases-card-title">{entry.title}</span>`,
+    replace: `                <a href={href} class="internal internal-link bases-card-title">
+                  {entry.title}
+                </a>`,
+  },
+  {
+    file: ".quartz/plugins/bases-page/src/components/views/cards.tsx",
+    find: `            </a>
+          );`,
+    replace: `            </div>
+          );`,
+  },
+  {
+    file: ".quartz/plugins/bases-page/dist/chunk-4HXXKSJ4.js",
+    find: `      return /* @__PURE__ */ u("a", { href, class: "internal internal-link bases-card", "data-slug": entry.slug, children: [`,
+    replace: `      return /* @__PURE__ */ u("div", { class: "bases-card", "data-slug": entry.slug, children: [`,
+  },
+  {
+    file: ".quartz/plugins/bases-page/dist/chunk-4HXXKSJ4.js",
+    find: `          /* @__PURE__ */ u("span", { class: "bases-card-title", children: entry.title }),`,
+    replace: `          /* @__PURE__ */ u("a", { href, class: "internal internal-link bases-card-title", children: entry.title }),`,
+  },
 ]
 
 for (const patch of patches) {
@@ -84,4 +115,4 @@ for (const patch of patches) {
   fs.writeFileSync(patch.file, original.replace(patch.find, patch.replace))
 }
 
-console.log("Patched note-properties to hide empty values.")
+console.log("Patched Quartz plugins.")
