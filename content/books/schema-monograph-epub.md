@@ -112,7 +112,7 @@ epub 全程保留在 `books/` 文件夹作为本地阅读副本，但不进入 g
      <div id="epub-viewer" style="width:100%;height:560px;border:1px solid rgb(204,204,204);" data-epub="/books/作者姓_年份_出版社/BookName.epub"></div>
      <div id="epub-viewer-online" style="width:100%;height:600px;border:1px solid rgb(204,204,204);" data-epub="https://img.mylikemie.icu/books/作者姓_年份_出版社/BookName.epub"></div>
      ```
-     前提：Quartz 的 `static/epub-loader.js`、`static/epub-init.js`、`static/jszip.min.js` 和 `static/epub.min.js` 已配置；`epub-init.js` 必须保留远程 NAS URL，不把它改写为站内路径。
+     前提：Quartz 的 `static/epub-loader.js`、`static/epub-init.js`、`static/jszip.min.js` 和 `static/epub.min.js` 已配置；`epub-init.js` 必须保留远程 NAS URL，不把它改写为站内路径。NAS/CDN 必须对 `.epub` 返回 `Access-Control-Allow-Origin: *`（或至少允许站点域名），否则浏览器会因 CORS 拦截，页面只能提供打开/下载链接，不能内嵌阅读。
 5. 更新 wiki/index.md，将 📖 改为 ✅
 ```
 

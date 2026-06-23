@@ -1,9 +1,19 @@
 (function () {
-  function setMessage(container, message) {
+  function setMessage(container, message, href) {
     container.innerHTML = "";
     const note = document.createElement("div");
     note.className = "epub-viewer-message";
-    note.textContent = message;
+    const text = document.createElement("span");
+    text.textContent = message;
+    note.appendChild(text);
+    if (href) {
+      const link = document.createElement("a");
+      link.href = href;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "Open EPUB";
+      note.appendChild(link);
+    }
     container.appendChild(note);
   }
 
@@ -12,7 +22,7 @@
       typeof containerId === "string" ? document.getElementById(containerId) : containerId;
     if (!container || container.dataset.epubLoaded === epubPath) return;
     if (typeof window.ePub !== "function") {
-      setMessage(container, "EPUB reader failed to load.");
+      setMessage(container, "EPUB reader failed to load.", epubPath);
       return;
     }
 
@@ -35,7 +45,13 @@
     title.className = "epub-viewer-title";
     title.textContent = decodeURIComponent(epubPath.split("/").pop() || "EPUB");
 
-    toolbar.append(prev, title, next);
+    const open = document.createElement("a");
+    open.href = epubPath;
+    open.target = "_blank";
+    open.rel = "noopener noreferrer";
+    open.textContent = "Open";
+
+    toolbar.append(prev, title, next, open);
 
     const stage = document.createElement("div");
     stage.className = "epub-viewer-stage";
@@ -58,11 +74,11 @@
 
       rendition.display().catch(function (error) {
         console.error("Failed to display EPUB", error);
-        setMessage(container, "EPUB failed to display.");
+        setMessage(container, "EPUB failed to display. The NAS URL may need CORS headers.", epubPath);
       });
     } catch (error) {
       console.error("Failed to load EPUB", error);
-      setMessage(container, "EPUB failed to load.");
+      setMessage(container, "EPUB failed to load. The NAS URL may need CORS headers.", epubPath);
     }
   };
 })();
