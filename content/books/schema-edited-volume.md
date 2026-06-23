@@ -16,6 +16,8 @@ books/
     Ch7_ChapterAuthor_Year.md
 ```
 
+PDF 是本地阅读副本，保留在 `books/<book-folder>/`，但不进入 git；同路径文件需同步到 NAS，并通过 `https://img.mylikemie.icu/books/<book-folder>/<文件名>.pdf` 发布。
+
 论文集每章独立处理，各自有：
 - `books/Author(Ed.)_Year_Publisher/ChX_ChapterAuthor_Year.md` + `.pdf` ← 该章 sources 记录与 PDF
 - `wiki/arguments/Argument_ChapterAuthor_Year_关键词.md` ← 该章论证框架（使用 template-argument.md）
@@ -36,6 +38,13 @@ processed_date: YYYY-MM-DD
 
 ![[前言PDF文件名.pdf]]
 
+<iframe
+  src="https://img.mylikemie.icu/books/Author(Ed.)_Year_Publisher/前言PDF文件名.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>
+
 ## 已处理章节
 - [[Argument_ChapterAuthor_Year_关键词]] — 章节标题及核心贡献简述
 - [[Argument_ChapterAuthor2_Year_关键词]] — 章节标题及核心贡献简述
@@ -54,6 +63,13 @@ part_of: "[[Author(Ed.)_Year_Publisher]]"
 # ChapterAuthor_Year_关键词
 
 ![[ChapterAuthor_Year_关键词.pdf]]
+
+<iframe
+  src="https://img.mylikemie.icu/books/Author(Ed.)_Year_Publisher/ChapterAuthor_Year_关键词.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>
 ```
 
 ---
@@ -71,7 +87,7 @@ part_of: "[[Author(Ed.)_Year_Publisher]]"
    新建 Argument_Editor_Year_Publisher.md
 5. 新建 books/Author(Ed.)_Year_Publisher/Author(Ed.)_Year_Publisher_书名_overview.md：
    - 填入 citation、extracted_to（含整体 Argument 链接）、processed_date
-   - 嵌入前言 PDF
+   - 嵌入本地前言 PDF，并添加 NAS iframe
    - 建立「已处理章节」列表（暂为空）
 6. 更新 wiki/index.md 的 Arguments > Books 分组：
    - [[Argument_Editor_Year_Publisher]] — 书名（论文集整体）
@@ -88,7 +104,7 @@ part_of: "[[Author(Ed.)_Year_Publisher]]"
 5. 读取 wiki/index.md，按 vault-schema.md 工作流步骤 4–9 处理该章节（提取所有 wiki 条目）
 6. 在 books/Author(Ed.)_Year_Publisher/ 新建该章 sources 记录：
    文件名：ChX_ChapterAuthor_Year.md（与 PDF 同名）
-   填入 citation、extracted_to、processed_date、part_of，嵌入 PDF
+   填入 citation、extracted_to、processed_date、part_of，嵌入本地 PDF，并添加 NAS iframe
 7. 在 wiki/arguments/ 新建该章的论证框架条目：
    读取 wiki/templates/template-argument.md
    文件名：Argument_作者姓_年份_章节关键词.md

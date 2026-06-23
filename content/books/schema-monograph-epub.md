@@ -23,7 +23,7 @@ wiki/arguments/
   Argument_作者姓_年份_出版社.md  ← 全书论证框架
 ```
 
-epub 全程保留在 `books/` 文件夹，用 Obsidian Epub Reader 插件本地阅读。
+epub 全程保留在 `books/` 文件夹作为本地阅读副本，但不进入 git；同路径文件需同步到 NAS，并通过 `https://img.mylikemie.icu/books/<book-folder>/<文件名>.epub` 发布。
 
 ---
 
@@ -107,26 +107,12 @@ epub 全程保留在 `books/` 文件夹，用 Obsidian Epub Reader 插件本地�
    - citation（APA）
    - extracted_to（所有提取条目的完整列表 + Argument 链接）
    - processed_date
-   - 嵌入以下 HTML 代码块（路径替换为实际文件路径）：
+   - 嵌入以下 HTML 代码块（路径替换为实际文件路径）：本地 viewer 保留给 Obsidian/本地预览，在线 viewer 指向 NAS。
      ```html
-     <div id="epub-viewer" style="width:100%;height:600px;border:1px solid #ccc;"></div>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/epub.js/0.3.93/epub.min.js"></script>
-     <script src="/static/epub-loader.js"></script>
-     <script>loadEpub("epub-viewer", "/books/作者姓_年份_出版社/BookName.epub");</script>
+     <div id="epub-viewer" style="width:100%;height:560px;border:1px solid rgb(204,204,204);" data-epub="/books/作者姓_年份_出版社/BookName.epub"></div>
+     <div id="epub-viewer-online" style="width:100%;height:600px;border:1px solid rgb(204,204,204);" data-epub="https://img.mylikemie.icu/books/作者姓_年份_出版社/BookName.epub"></div>
      ```
-     前提：需在 Quartz 的 `static/epub-loader.js` 放入以下代码（一次性设置，所有 epub 共用）：
-     ```javascript
-     function loadEpub(containerId, epubPath) {
-       var book = ePub(epubPath);
-       var rendition = book.renderTo(containerId, {
-         width: "100%",
-         height: 600,
-         spread: "none"
-       });
-       rendition.display();
-     }
-     ```
-     注意：Obsidian 本地不渲染此 HTML，本地阅读用 Epub Reader 插件直接打开 epub；网页端 Quartz 会正常渲染
+     前提：Quartz 的 `static/epub-loader.js`、`static/epub-init.js`、`static/jszip.min.js` 和 `static/epub.min.js` 已配置；`epub-init.js` 必须保留远程 NAS URL，不把它改写为站内路径。
 5. 更新 wiki/index.md，将 📖 改为 ✅
 ```
 

@@ -15,6 +15,8 @@ books/
       ch02_章节名.txt
 ```
 
+PDF 是本地阅读副本，保留在 `books/`，但不进入 git；同一路径文件需同步到 NAS，并通过 `https://img.mylikemie.icu/books/<book-folder>/<文件名>.pdf` 发布。
+
 整合完成后建立 sources 记录：
 ```
 sources/
@@ -106,11 +108,12 @@ wiki/arguments/
    - 从各章概览中提炼全书研究问题、理论框架、论证结构、主要发现、关键引用、局限性
    - 用 str_replace 在「各章概览」之前写入正式章节
    - 「各章概览」保留在最后，作为原始章节记录
-4. 新建 sources 记录（sources/作者姓_年份_出版社.md）：
+4. 新建 source 记录（books/作者姓_年份_出版社/作者姓_年份_出版社.md）：
    - citation（APA）
    - extracted_to（所有提取条目的完整列表 + Argument 链接）
    - processed_date
-   - ![[书名.pdf]] 嵌入 PDF
+   - 本地 `![[书名.pdf]]` 嵌入 PDF
+   - NAS iframe：`https://img.mylikemie.icu/books/作者姓_年份_出版社/书名.pdf`
 5. 更新 wiki/index.md，将 📖 改为 ✅
 ```
 

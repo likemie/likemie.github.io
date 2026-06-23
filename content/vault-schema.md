@@ -70,7 +70,7 @@ raw/
 ```
 
 ### sources/ 文件
-处理完成后，PDF 移入 sources/，同时新建同名 md 文件作为文献档案：
+处理完成后，PDF 移入 sources/ 作为本地阅读副本，同时新建同名 md 文件作为文献档案；PDF 不进入 git，需按同路径同步到 NAS：
 ```
 sources/
   Thomas_2000_RER.pdf
@@ -88,12 +88,20 @@ processed_date: 2026-04-30
 # Thomas_2000_RER
 
 ![[Thomas_2000_RER.pdf]]
+
+<iframe
+  src="https://img.mylikemie.icu/sources/Thomas_2000_RER.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>
 ```
 
 - `citation` — APA 完整引用，用双引号包裹整个字符串
 - `extracted_to` — 本论文提取出的所有条目；**每个 wikilink 必须用双引号包裹，整体为数组格式**，否则 Obsidian 无法解析 frontmatter
 - `processed_date` — 处理日期，格式 YYYY-MM-DD
-- `![[文件名.pdf]]` — 嵌入 PDF，点开 md 即可预览原文
+- `![[文件名.pdf]]` — 本地嵌入 PDF，点开 md 即可预览原文
+- `https://img.mylikemie.icu/...` iframe — Quartz 发布时使用的 NAS 在线阅读入口
 
 > ⚠️ **常见错误：** `extracted_to: [[条目A]], [[条目B]]` 会导致 frontmatter 显示为原始代码。
 > **正确写法：** `extracted_to: ["[[条目A]]", "[[条目B]]"]`
@@ -139,7 +147,7 @@ processed_date: 2026-04-30
 
 7. 移动 PDF 并建立文献档案：
    mv raw/FILENAME.pdf sources/FILENAME.pdf
-   在 sources/ 新建同名 md，填入 citation、extracted_to、processed_date，嵌入 PDF
+   在 sources/ 新建同名 md，填入 citation、extracted_to、processed_date，嵌入本地 PDF，并添加对应 NAS iframe
 
 8. 处理待更新列表（逐条执行）：
    读取条目文件
