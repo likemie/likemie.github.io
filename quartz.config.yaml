@@ -16,6 +16,8 @@ configuration:
     - "**/templater/**"
     - .obsidian
     - information
+    - scratch
+    - "**/scratch/**"
   theme:
     fontOrigin: googleFonts
     cdnCaching: true
