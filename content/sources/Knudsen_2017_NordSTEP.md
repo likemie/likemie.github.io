@@ -6,4 +6,9 @@ processed_date: 2026-05-07
 
 # Knudsen_2017_NordSTEP
 
-![[Knudsen_2017_NordSTEP.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Knudsen_2017_NordSTEP.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

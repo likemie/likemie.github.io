@@ -10,4 +10,9 @@ processed_date: 2026-05-01
 
 # Yan_2025_JCS
 
-![[Yan_2025_JCS.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Yan_2025_JCS.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

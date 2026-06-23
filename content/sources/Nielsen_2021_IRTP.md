@@ -10,4 +10,9 @@ processed_date: 2026-05-03
 
 # Nielsen_2021_IRTP
 
-![[Nielsen_2021_IRTP.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Nielsen_2021_IRTP.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

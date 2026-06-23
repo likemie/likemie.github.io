@@ -10,4 +10,9 @@ processed_date: 2026-05-03
 
 # Simpson_2019_ERE
 
-![[Simpson_2019_ERE.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Simpson_2019_ERE.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

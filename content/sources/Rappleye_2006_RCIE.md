@@ -6,7 +6,12 @@ processed_date: 2026-05-06
 
 # Rappleye_2006_RCIE
 
-![[Rappleye_2006_RCIE.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Rappleye_2006_RCIE.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>
 
 ## Cross-Reference Notes
 

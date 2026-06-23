@@ -6,4 +6,9 @@ processed_date: 2026-05-04
 
 # Zhao_2017_JEC
 
-![[Zhao_2017_JEC.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Zhao_2017_JEC.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

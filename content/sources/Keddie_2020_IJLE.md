@@ -10,4 +10,9 @@ processed_date: 2026-05-03
 
 # Keddie_2020_IJLE
 
-![[Keddie_2020_IJLE.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Keddie_2020_IJLE.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

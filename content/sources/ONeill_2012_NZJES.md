@@ -6,4 +6,9 @@ processed_date: 2026-05-06
 
 # ONeill_2012_NZJES
 
-![[ONeill_2012_NZJES.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/ONeill_2012_NZJES.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

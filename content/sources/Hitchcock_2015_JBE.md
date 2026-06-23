@@ -10,4 +10,9 @@ processed_date: 2026-05-02
 
 # Hitchcock_2015_JBE
 
-![[Hitchcock_2015_JBE.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Hitchcock_2015_JBE.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

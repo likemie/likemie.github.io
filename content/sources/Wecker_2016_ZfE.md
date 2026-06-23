@@ -10,4 +10,9 @@ processed_date: 2026-05-03
 
 # Wecker_2016_ZfE
 
-![[Wecker_2016_ZfE.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Wecker_2016_ZfE.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

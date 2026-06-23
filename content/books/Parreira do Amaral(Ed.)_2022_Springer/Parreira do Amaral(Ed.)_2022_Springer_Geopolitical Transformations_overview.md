@@ -6,7 +6,12 @@ processed_date: 2026-05-08
 
 # Parreira do Amaral(Ed.)_2022_Springer
 
-![[Parreira do Amaral(Ed.)_2022_Springer.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/books/Parreira%20do%20Amaral(Ed.)_2022_Springer/Parreira%20do%20Amaral(Ed.)_2022_Springer.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>
 
 ## 已处理章节
 - [[Argument_Moisio_2022_Springer]] — Ch2 Sami Moisio: 知识经济化在何种意义上具有地缘政治维度，以 Harvey、Porter 和 Hub and Flow 想象为分析资源

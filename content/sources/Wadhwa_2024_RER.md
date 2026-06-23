@@ -6,4 +6,9 @@ processed_date: 2026-05-05
 
 # Wadhwa_2024_RER
 
-![[Wadhwa_2024_RER.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Wadhwa_2024_RER.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

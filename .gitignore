@@ -11,3 +11,11 @@ private/
 replit.nix
 .quartz/
 quartz/cli/tui/dist/
+
+# PDF assets are hosted on NAS and referenced by public URLs.
+content/sources/**/*.pdf
+content/sources/**/*.PDF
+content/books/**/*.pdf
+content/books/**/*.PDF
+content/books/**/*.epub
+content/books/**/*.EPUB

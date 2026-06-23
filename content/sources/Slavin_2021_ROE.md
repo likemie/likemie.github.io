@@ -10,4 +10,9 @@ processed_date: 2026-05-02
 
 # Slavin_2021_ROE
 
-![[Slavin_2021_ROE.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Slavin_2021_ROE.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

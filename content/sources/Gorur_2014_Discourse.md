@@ -10,4 +10,9 @@ processed_date: 2026-05-01
 
 # Gorur_2014_Discourse
 
-![[Gorur_2014_Discourse.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Gorur_2014_Discourse.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

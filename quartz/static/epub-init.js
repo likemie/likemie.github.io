@@ -14,6 +14,7 @@
   function normalizeEpubPath(epubPath) {
     try {
       const url = new URL(epubPath, window.location.origin);
+      if (url.origin !== window.location.origin) return url.href;
       const parts = url.pathname.split("/");
       const booksIndex = parts.indexOf("books");
       if (booksIndex >= 0 && parts[booksIndex + 1]) {

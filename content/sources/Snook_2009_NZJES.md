@@ -10,4 +10,9 @@ processed_date: 2026-05-03
 
 # Snook_2009_NZJES
 
-![[Snook_2009_NZJES.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Snook_2009_NZJES.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

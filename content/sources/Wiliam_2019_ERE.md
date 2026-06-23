@@ -10,4 +10,9 @@ processed_date: 2026-05-01
 
 # Wiliam_2019_ERE
 
-![[Wiliam_2019_ERE.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Wiliam_2019_ERE.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

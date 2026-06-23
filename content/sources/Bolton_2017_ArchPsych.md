@@ -6,4 +6,9 @@ processed_date: 2026-05-04
 
 # Bolton_2017_ArchPsych
 
-![[Bolton_2017_ArchPsych.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Bolton_2017_ArchPsych.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

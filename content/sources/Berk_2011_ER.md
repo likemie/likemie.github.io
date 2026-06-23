@@ -10,4 +10,9 @@ processed_date: 2026-05-03
 
 # Berk_2011_ER
 
-![[Berk_2011_ER.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Berk_2011_ER.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

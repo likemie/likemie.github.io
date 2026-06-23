@@ -6,4 +6,9 @@ processed_date: 2026-05-07
 
 # Hattie_2017_SLM
 
-![[Hattie_2017_SLM.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Hattie_2017_SLM.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

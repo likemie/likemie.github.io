@@ -10,4 +10,9 @@ processed_date: 2026-05-01
 
 # Eacott_2011_JEAH
 
-![[Eacott_2011_JEAH.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Eacott_2011_JEAH.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

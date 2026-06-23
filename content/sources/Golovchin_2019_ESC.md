@@ -10,4 +10,9 @@ processed_date: 2026-05-02
 
 # Golovchin_2019_ESC
 
-![[Golovchin_2019_ESC.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Golovchin_2019_ESC.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

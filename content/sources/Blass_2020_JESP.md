@@ -6,4 +6,9 @@ processed_date: 2026-05-05
 
 # Blass_2020_JESP
 
-![[Blass_2020_JESP.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Blass_2020_JESP.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

@@ -6,4 +6,9 @@ processed_date: 2026-05-06
 
 # Wong_2022_HERD
 
-![[Wong_2022_HERD.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Wong_2022_HERD.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

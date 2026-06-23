@@ -10,4 +10,9 @@ processed_date: 2026-05-02
 
 # Pampaka_2016_IJRME
 
-![[Pampaka_2016_IJRME.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Pampaka_2016_IJRME.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

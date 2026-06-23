@@ -10,4 +10,9 @@ processed_date: 2026-05-03
 
 # OConnor_2020_AJLL
 
-![[OConnor_2020_AJLL.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/OConnor_2020_AJLL.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>

@@ -10,4 +10,9 @@ processed_date: 2026-05-02
 
 # Wolf_2020_JREE
 
-![[Wolf_2020_JREE.pdf]]
+<iframe
+  src="https://img.mylikemie.icu/sources/Wolf_2020_JREE.pdf"
+  width="100%"
+  height="820"
+  style="border: 1px solid #ddd; border-radius: 8px;"
+></iframe>
