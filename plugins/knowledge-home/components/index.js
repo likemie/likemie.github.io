@@ -34,6 +34,7 @@ function sectionFor(page) {
   if (slug.startsWith("wiki/persons")) return "人物"
   if (slug.startsWith("wiki/facts")) return "事实"
   if (slug.startsWith("wiki/methods")) return "方法"
+  if (slug.startsWith("wiki/instruments")) return "测量工具"
   if (slug.startsWith("sources")) return "文献"
   return "笔记"
 }
@@ -403,6 +404,7 @@ function exploreRouteConfigs() {
       routePrefixes: [
         "wiki/concepts/research-methodology/",
         "wiki/methods/",
+        "wiki/instruments/",
         "wiki/theories/research-methodology/",
         "wiki/arguments/",
       ],
@@ -442,7 +444,9 @@ function KnowledgeHome(userOpts = {}) {
     if (fileData.slug !== "index" && !isExploreSlug(fileData.slug) && !currentRouteKey) return null
 
     const pages = allFiles.filter(isListedContent)
-    const datedPages = [...pages].sort(byDateThenLinks)
+    const datedPages = pages
+      .filter((page) => (page.slug ?? "").startsWith("wiki/"))
+      .sort(byDateThenLinks)
     const recent = datedPages.slice(0, opts.recentLimit)
     const constellation = [...pages]
       .sort((a, b) => linksFor(b) - linksFor(a) || titleFor(a).localeCompare(titleFor(b)))
@@ -501,6 +505,7 @@ function KnowledgeHome(userOpts = {}) {
         { label: "事实", prefix: "wiki/facts/", seed: "fact" },
         { label: "理论", prefix: "wiki/theories/", seed: "theory" },
         { label: "方法", prefix: "wiki/methods/", seed: "method" },
+        { label: "测量工具", prefix: "wiki/instruments/", seed: "instrument" },
       ]
       const randomEntries = sections
         .map((section) => {

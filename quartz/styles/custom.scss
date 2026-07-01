@@ -69,7 +69,7 @@
 .research-map-stats {
   display: grid;
   gap: 0.6rem;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
 }
 
 .research-map-stats a {
@@ -127,6 +127,10 @@
   background:
     radial-gradient(circle at 12% 12%, color-mix(in srgb, var(--tertiary) 22%, transparent), transparent 38%),
     color-mix(in srgb, var(--light) 96%, var(--secondary));
+}
+
+.research-map-card.wide {
+  grid-column: 1 / -1;
 }
 
 .research-map-card-title,
@@ -1130,6 +1134,7 @@ body[data-slug^="wiki/arguments/"] .argument-dossier {
 
 /* Everyday callouts: make common notes feel more intentional without changing Markdown. */
 .callout[data-callout="summary"],
+.callout[data-callout="index-list"],
 .callout[data-callout="abstract"],
 .callout[data-callout="info"],
 .callout[data-callout="example"],
@@ -1140,7 +1145,8 @@ body[data-slug^="wiki/arguments/"] .argument-dossier {
   box-shadow: 0 6px 18px color-mix(in srgb, var(--dark) 5%, transparent);
 }
 
-.callout[data-callout="summary"] {
+.callout[data-callout="summary"],
+.callout[data-callout="index-list"] {
   --everyday-color: 64, 112, 128;
   background:
     linear-gradient(90deg, rgba(var(--everyday-color), 0.1), transparent 54%), var(--light);
@@ -1148,12 +1154,19 @@ body[data-slug^="wiki/arguments/"] .argument-dossier {
   border-left: 5px solid rgb(var(--everyday-color));
 }
 
-.callout[data-callout="summary"] > .callout-title {
+.callout[data-callout="summary"] > .callout-title,
+.callout[data-callout="index-list"] > .callout-title {
   letter-spacing: 0.01em;
 }
 
-.callout[data-callout="summary"] > .callout-content > ul {
+.callout[data-callout="summary"] > .callout-content > ul,
+.callout[data-callout="index-list"] > .callout-content > ul {
   margin-top: 0.35rem;
+}
+
+.callout[data-callout="index-list"] > .callout-title .callout-title-inner::before {
+  content: none;
+  display: none;
 }
 
 .callout[data-callout="abstract"],
