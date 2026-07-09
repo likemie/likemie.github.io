@@ -4005,7 +4005,7 @@
   color: rgb(80, 92, 105);
 }
 
-/* ─── frames-ref（思维框架参考卡 — 紧凑双列 + 钢蓝） ──────── */
+/* ─── frames-ref（思维框架参考卡 — 自适应卡片 + 钢蓝） ──────── */
 .callout[data-callout="frames-ref"] {
   --callout-color: 72, 108, 150;
   background:
@@ -4024,10 +4024,10 @@
 .callout[data-callout="frames-ref"] .callout-content > ol,
 .callout[data-callout="frames-ref"] .callout-content > ul {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.3rem 0.55rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr));
+  gap: 0.65rem 0.75rem;
   padding-inline-start: 0;
-  margin-block: 0.4rem 0.1rem;
+  margin-block: 0.75rem 0.1rem;
   list-style: none;
   counter-reset: frame;
 }
@@ -4035,37 +4035,43 @@
 .callout[data-callout="frames-ref"] .callout-content > ol > li,
 .callout[data-callout="frames-ref"] .callout-content > ul > li {
   counter-increment: frame;
-  display: flex;
-  align-items: baseline;
-  gap: 0.38rem;
-  padding: 0.32rem 0.55rem;
-  border-radius: 5px;
+  position: relative;
+  display: block;
+  min-width: 0;
+  padding: 0.75rem 0.85rem 0.75rem 3rem;
+  border-radius: 8px;
   background: rgba(72, 108, 150, 0.055);
-  border: 1px solid rgba(72, 108, 150, 0.10);
+  border: 1px solid rgba(72, 108, 150, 0.13);
   font-size: var(--fs-table);
-  line-height: 1.45;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
 }
 
 .callout[data-callout="frames-ref"] .callout-content > ol > li::before,
 .callout[data-callout="frames-ref"] .callout-content > ul > li::before {
   content: counter(frame);
-  flex-shrink: 0;
-  width: 1.1rem;
-  height: 1.1rem;
+  position: absolute;
+  left: 1rem;
+  top: 0.8rem;
+  width: 1.35rem;
+  height: 1.35rem;
   display: grid;
   place-items: center;
   border-radius: 50%;
   background: rgba(72, 108, 150, 0.18);
   color: rgb(65, 130, 195);
-  font-size: 0.72em;
+  font-size: 0.78em;
   font-weight: 800;
-  margin-top: 0.1rem;
 }
 
 .callout[data-callout="frames-ref"] .callout-content > ol > li strong:first-child,
 .callout[data-callout="frames-ref"] .callout-content > ul > li strong:first-child {
   color: rgb(65, 130, 195);
+  display: block;
   font-size: var(--fs-body);
+  line-height: 1.45;
+  margin-bottom: 0.25rem;
+  overflow-wrap: anywhere;
 }
 
 /* 最后一项若为奇数，独占全行 */
@@ -11710,7 +11716,7 @@
 
 /* ── 共享动效基础（所有内置类型） ── */
 .callout[data-callout="note"],
-.callout[data-callout="abstract"], .callout[data-callout="summary"], .callout[data-callout="tldr"],
+.callout[data-callout="abstract"], .callout[data-callout="summary"], .callout[data-callout="tldr"], .callout[data-callout="index-list"],
 .callout[data-callout="info"],
 .callout[data-callout="todo"],
 .callout[data-callout="tip"], .callout[data-callout="hint"], .callout[data-callout="important"],
@@ -11732,6 +11738,7 @@
 .callout[data-callout="abstract"] > .callout-title .callout-title-inner::before,
 .callout[data-callout="summary"] > .callout-title .callout-title-inner::before,
 .callout[data-callout="tldr"] > .callout-title .callout-title-inner::before,
+.callout[data-callout="index-list"] > .callout-title .callout-title-inner::before,
 .callout[data-callout="info"] > .callout-title .callout-title-inner::before,
 .callout[data-callout="todo"] > .callout-title .callout-title-inner::before,
 .callout[data-callout="tip"] > .callout-title .callout-title-inner::before,
@@ -11772,6 +11779,7 @@
 .callout[data-callout="abstract"] > .callout-title,
 .callout[data-callout="summary"] > .callout-title,
 .callout[data-callout="tldr"] > .callout-title,
+.callout[data-callout="index-list"] > .callout-title,
 .callout[data-callout="info"] > .callout-title,
 .callout[data-callout="todo"] > .callout-title,
 .callout[data-callout="tip"] > .callout-title,
@@ -11827,7 +11835,8 @@
    ───────────────────────────────────────────── */
 .callout[data-callout="abstract"],
 .callout[data-callout="summary"],
-.callout[data-callout="tldr"] {
+.callout[data-callout="tldr"],
+.callout[data-callout="index-list"] {
   --callout-color: 20, 148, 152;
   background: linear-gradient(135deg, rgba(20, 148, 152, 0.08), rgba(20, 148, 152, 0.01)), var(--light);
   border: 1px solid rgba(20, 148, 152, 0.20);
@@ -11837,25 +11846,30 @@
 }
 .callout[data-callout="abstract"] > .callout-title,
 .callout[data-callout="summary"] > .callout-title,
-.callout[data-callout="tldr"] > .callout-title { color: rgb(14, 118, 122); }
+.callout[data-callout="tldr"] > .callout-title,
+.callout[data-callout="index-list"] > .callout-title { color: rgb(14, 118, 122); }
 .callout[data-callout="abstract"] > .callout-title .callout-title-inner::before { content: "ABSTRACT"; }
 .callout[data-callout="summary"] > .callout-title .callout-title-inner::before { content: "SUMMARY"; }
 .callout[data-callout="tldr"] > .callout-title .callout-title-inner::before { content: "TL;DR"; }
+.callout[data-callout="index-list"] > .callout-title .callout-title-inner::before { content: none; display: none; }
 .callout[data-callout="abstract"]:hover,
 .callout[data-callout="summary"]:hover,
-.callout[data-callout="tldr"]:hover {
+.callout[data-callout="tldr"]:hover,
+.callout[data-callout="index-list"]:hover {
   box-shadow: 0 0 0 2px rgba(20, 148, 152, 0.20), 0 6px 18px rgba(20, 148, 152, 0.12);
 }
 [saved-theme="dark"] .callout[data-callout="abstract"],
 [saved-theme="dark"] .callout[data-callout="summary"],
-[saved-theme="dark"] .callout[data-callout="tldr"] {
+[saved-theme="dark"] .callout[data-callout="tldr"],
+[saved-theme="dark"] .callout[data-callout="index-list"] {
   --callout-color: 40, 190, 195;
   border-color: rgba(40, 190, 195, 0.22); border-left-color: rgb(40, 190, 195);
   background: linear-gradient(135deg, rgba(40, 190, 195, 0.09), rgba(40, 190, 195, 0.02)), var(--light);
 }
 [saved-theme="dark"] .callout[data-callout="abstract"] > .callout-title,
 [saved-theme="dark"] .callout[data-callout="summary"] > .callout-title,
-[saved-theme="dark"] .callout[data-callout="tldr"] > .callout-title { color: rgb(50, 200, 205); }
+[saved-theme="dark"] .callout[data-callout="tldr"] > .callout-title,
+[saved-theme="dark"] .callout[data-callout="index-list"] > .callout-title { color: rgb(50, 200, 205); }
 
 /* ─────────────────────────────────────────────
    info — 钢蓝
@@ -12250,3 +12264,595 @@
 }
 [saved-theme="dark"] .callout[data-callout="quote"] > .callout-title,
 [saved-theme="dark"] .callout[data-callout="cite"] > .callout-title { color: rgb(162, 172, 185); }
+
+/* ─────────────────────────────────────────────
+   instrument-profile — 测量工具四格定位卡
+   ───────────────────────────────────────────── */
+.callout[data-callout="instrument-profile"] {
+  --callout-color: 18, 126, 125;
+  --callout-icon: lucide-gauge;
+  border: 1px solid rgba(18, 126, 125, 0.24);
+  border-left: 4px solid rgb(18, 126, 125);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 96% 8%, rgba(18, 126, 125, 0.14), transparent 30%),
+    linear-gradient(145deg, rgba(18, 126, 125, 0.08), rgba(255, 255, 255, 0.01)),
+    var(--light);
+  box-shadow: 0 8px 24px rgba(18, 126, 125, 0.08);
+}
+
+.callout[data-callout="instrument-profile"] > .callout-title {
+  color: rgb(13, 103, 102);
+}
+
+.callout[data-callout="instrument-profile"] > .callout-title .callout-title-inner::before {
+  content: "TOOL";
+  display: inline-block;
+  margin-right: 0.5rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(var(--callout-color), 0.14);
+  color: rgb(var(--callout-color));
+  font-size: var(--fs-label);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  vertical-align: middle;
+}
+
+.callout[data-callout="instrument-profile"] > .callout-content > ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 0.8rem 0 0;
+  padding: 0;
+}
+
+.callout[data-callout="instrument-profile"] > .callout-content > ul > li {
+  min-width: 0;
+  margin: 0;
+  padding: 0.9rem 1rem;
+  list-style: none;
+  border: 1px solid rgba(18, 126, 125, 0.16);
+  border-top: 3px solid rgba(18, 126, 125, 0.65);
+  border-radius: 10px;
+  background: rgba(18, 126, 125, 0.045);
+}
+
+.callout[data-callout="instrument-profile"] > .callout-content > ul > li::marker {
+  content: "";
+}
+
+.callout[data-callout="instrument-profile"] > .callout-content > ul > li > strong:first-child {
+  display: block;
+  margin-bottom: 0.38rem;
+  color: rgb(13, 103, 102);
+  font-size: 0.78rem;
+  letter-spacing: 0.045em;
+}
+
+@media (max-width: 700px) {
+  .callout[data-callout="instrument-profile"] > .callout-content > ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+[saved-theme="dark"] .callout[data-callout="instrument-profile"] {
+  --callout-color: 75, 190, 186;
+  border-color: rgba(75, 190, 186, 0.25);
+  border-left-color: rgb(75, 190, 186);
+  background:
+    radial-gradient(circle at 96% 8%, rgba(75, 190, 186, 0.13), transparent 30%),
+    linear-gradient(145deg, rgba(75, 190, 186, 0.09), rgba(75, 190, 186, 0.015)),
+    var(--light);
+}
+
+[saved-theme="dark"] .callout[data-callout="instrument-profile"] > .callout-title,
+[saved-theme="dark"] .callout[data-callout="instrument-profile"] > .callout-content > ul > li > strong:first-child {
+  color: rgb(104, 211, 207);
+}
+
+[saved-theme="dark"] .callout[data-callout="instrument-profile"] > .callout-content > ul > li {
+  border-color: rgba(75, 190, 186, 0.19);
+  border-top-color: rgba(75, 190, 186, 0.72);
+  background: rgba(75, 190, 186, 0.055);
+}
+
+/* Instrument 构念与维度专表 */
+.callout[data-callout="construct-table"] {
+  --callout-color: 78, 92, 170;
+  --callout-icon: lucide-boxes;
+  overflow: hidden;
+  border: 1px solid rgba(78, 92, 170, 0.22);
+  border-left: 4px solid rgb(78, 92, 170);
+  border-radius: 12px;
+  background:
+    linear-gradient(145deg, rgba(78, 92, 170, 0.08), rgba(78, 92, 170, 0.015)),
+    var(--light);
+  box-shadow: 0 6px 18px rgba(78, 92, 170, 0.08);
+}
+
+.callout[data-callout="construct-table"] > .callout-title {
+  color: rgb(62, 76, 150);
+  border-bottom: 1px solid rgba(78, 92, 170, 0.14);
+}
+
+.callout[data-callout="construct-table"] > .callout-title .callout-title-inner::before {
+  content: "CONSTRUCT";
+  display: inline-block;
+  margin-right: 0.5rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(78, 92, 170, 0.14);
+  color: rgb(62, 76, 150);
+  font-size: var(--fs-label);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  vertical-align: middle;
+}
+
+.callout[data-callout="construct-table"] > .callout-content {
+  padding: 0;
+  overflow-x: auto;
+}
+
+.callout[data-callout="construct-table"] table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+}
+
+.callout[data-callout="construct-table"] thead th {
+  padding: 0.55rem 0.8rem;
+  color: rgb(62, 76, 150);
+  background: rgba(78, 92, 170, 0.09);
+  border-bottom: 1.5px solid rgba(78, 92, 170, 0.22);
+  font-weight: 750;
+  text-align: left;
+}
+
+.callout[data-callout="construct-table"] tbody td {
+  padding: 0.58rem 0.8rem;
+  border-bottom: 1px solid rgba(78, 92, 170, 0.08);
+  vertical-align: top;
+}
+
+.callout[data-callout="construct-table"] tbody tr:nth-child(even) td {
+  background: rgba(78, 92, 170, 0.03);
+}
+
+.callout[data-callout="construct-table"] tbody tr:hover td {
+  background: rgba(78, 92, 170, 0.07);
+}
+
+[saved-theme="dark"] .callout[data-callout="construct-table"] {
+  --callout-color: 150, 164, 230;
+  border-color: rgba(150, 164, 230, 0.25);
+  border-left-color: rgb(150, 164, 230);
+  background:
+    linear-gradient(145deg, rgba(150, 164, 230, 0.09), rgba(150, 164, 230, 0.015)),
+    var(--light);
+}
+
+[saved-theme="dark"] .callout[data-callout="construct-table"] > .callout-title,
+[saved-theme="dark"] .callout[data-callout="construct-table"] > .callout-title .callout-title-inner::before,
+[saved-theme="dark"] .callout[data-callout="construct-table"] thead th {
+  color: rgb(166, 178, 238);
+}
+
+[saved-theme="dark"] .callout[data-callout="construct-table"] > .callout-title .callout-title-inner::before {
+  background: rgba(150, 164, 230, 0.16);
+}
+
+/* Instrument 访谈问题与观察重点专表 */
+.callout[data-callout="interview-guide"],
+.callout[data-callout="observation-focus"] {
+  overflow: hidden;
+  border: 1px solid rgba(var(--callout-color), 0.22);
+  border-left: 4px solid rgb(var(--callout-color));
+  border-radius: 12px;
+  background:
+    linear-gradient(145deg, rgba(var(--callout-color), 0.08), rgba(var(--callout-color), 0.015)),
+    var(--light);
+  box-shadow: 0 6px 18px rgba(var(--callout-color), 0.08);
+}
+
+.callout[data-callout="interview-guide"] {
+  --callout-color: 34, 112, 158;
+  --callout-icon: lucide-messages-square;
+}
+
+.callout[data-callout="observation-focus"] {
+  --callout-color: 70, 130, 88;
+  --callout-icon: lucide-scan-eye;
+}
+
+.callout[data-callout="interview-guide"] > .callout-title,
+.callout[data-callout="observation-focus"] > .callout-title {
+  color: rgb(var(--callout-color));
+  border-bottom: 1px solid rgba(var(--callout-color), 0.14);
+}
+
+.callout[data-callout="interview-guide"] > .callout-title .callout-title-inner::before,
+.callout[data-callout="observation-focus"] > .callout-title .callout-title-inner::before {
+  display: inline-block;
+  margin-right: 0.5rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(var(--callout-color), 0.14);
+  color: rgb(var(--callout-color));
+  font-size: var(--fs-label);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  vertical-align: middle;
+}
+
+.callout[data-callout="interview-guide"] > .callout-title .callout-title-inner::before {
+  content: "INTERVIEW";
+}
+
+.callout[data-callout="observation-focus"] > .callout-title .callout-title-inner::before {
+  content: "OBSERVE";
+}
+
+.callout[data-callout="interview-guide"] > .callout-content,
+.callout[data-callout="observation-focus"] > .callout-content {
+  padding: 0;
+  overflow-x: auto;
+}
+
+.callout[data-callout="interview-guide"] table,
+.callout[data-callout="observation-focus"] table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+}
+
+.callout[data-callout="interview-guide"] thead th,
+.callout[data-callout="observation-focus"] thead th {
+  padding: 0.55rem 0.8rem;
+  color: rgb(var(--callout-color));
+  background: rgba(var(--callout-color), 0.09);
+  border-bottom: 1.5px solid rgba(var(--callout-color), 0.22);
+  font-weight: 750;
+  text-align: left;
+}
+
+.callout[data-callout="interview-guide"] tbody td,
+.callout[data-callout="observation-focus"] tbody td {
+  padding: 0.58rem 0.8rem;
+  border-bottom: 1px solid rgba(var(--callout-color), 0.08);
+  vertical-align: top;
+}
+
+.callout[data-callout="interview-guide"] tbody tr:nth-child(even) td,
+.callout[data-callout="observation-focus"] tbody tr:nth-child(even) td {
+  background: rgba(var(--callout-color), 0.03);
+}
+
+.callout[data-callout="interview-guide"] tbody tr:hover td,
+.callout[data-callout="observation-focus"] tbody tr:hover td {
+  background: rgba(var(--callout-color), 0.07);
+}
+
+[saved-theme="dark"] .callout[data-callout="interview-guide"] {
+  --callout-color: 102, 190, 232;
+}
+
+[saved-theme="dark"] .callout[data-callout="observation-focus"] {
+  --callout-color: 124, 204, 146;
+}
+
+.instrument-dimension-table-marker,
+.instrument-item-table-marker,
+.instrument-study-table-marker,
+.instrument-result-table-marker,
+.instrument-version-table-marker,
+.instrument-interview-table-marker,
+.instrument-observation-table-marker {
+  display: none;
+}
+
+.callout:has(.instrument-dimension-table-marker) > .callout-content,
+.callout:has(.instrument-item-table-marker) > .callout-content,
+.callout:has(.instrument-study-table-marker) > .callout-content,
+.callout:has(.instrument-result-table-marker) > .callout-content,
+.callout:has(.instrument-version-table-marker) > .callout-content,
+.callout:has(.instrument-interview-table-marker) > .callout-content,
+.callout:has(.instrument-observation-table-marker) > .callout-content {
+  overflow-x: auto;
+}
+
+.callout:has(.instrument-dimension-table-marker) table,
+.callout:has(.instrument-item-table-marker) table,
+.callout:has(.instrument-study-table-marker) table,
+.callout:has(.instrument-result-table-marker) table,
+.callout:has(.instrument-version-table-marker) table,
+.callout:has(.instrument-interview-table-marker) table,
+.callout:has(.instrument-observation-table-marker) table {
+  table-layout: fixed !important;
+}
+
+.callout:has(.instrument-dimension-table-marker) table { min-width: 720px; }
+.callout:has(.instrument-dimension-table-marker) th:nth-child(1),
+.callout:has(.instrument-dimension-table-marker) td:nth-child(1) { width: 20%; }
+.callout:has(.instrument-dimension-table-marker) th:nth-child(2),
+.callout:has(.instrument-dimension-table-marker) td:nth-child(2) { width: 10%; }
+.callout:has(.instrument-dimension-table-marker) th:nth-child(3),
+.callout:has(.instrument-dimension-table-marker) td:nth-child(3) { width: 42%; }
+.callout:has(.instrument-dimension-table-marker) th:nth-child(4),
+.callout:has(.instrument-dimension-table-marker) td:nth-child(4) { width: 28%; }
+
+.callout:has(.instrument-item-table-marker) table { min-width: 960px; }
+.callout:has(.instrument-item-table-marker) th:nth-child(1),
+.callout:has(.instrument-item-table-marker) td:nth-child(1) { width: 6%; }
+.callout:has(.instrument-item-table-marker) th:nth-child(2),
+.callout:has(.instrument-item-table-marker) td:nth-child(2) { width: 54%; }
+.callout:has(.instrument-item-table-marker) th:nth-child(3),
+.callout:has(.instrument-item-table-marker) td:nth-child(3) { width: 13%; }
+.callout:has(.instrument-item-table-marker) th:nth-child(4),
+.callout:has(.instrument-item-table-marker) td:nth-child(4) { width: 12%; }
+.callout:has(.instrument-item-table-marker) th:nth-child(5),
+.callout:has(.instrument-item-table-marker) td:nth-child(5) { width: 15%; }
+
+.callout:has(.instrument-study-table-marker) table { min-width: 1120px; }
+.callout:has(.instrument-study-table-marker) th,
+.callout:has(.instrument-study-table-marker) td { font-size: 0.86em !important; }
+.callout:has(.instrument-study-table-marker) th:nth-child(1),
+.callout:has(.instrument-study-table-marker) td:nth-child(1) { width: 13%; }
+.callout:has(.instrument-study-table-marker) th:nth-child(2),
+.callout:has(.instrument-study-table-marker) td:nth-child(2) { width: 13%; }
+.callout:has(.instrument-study-table-marker) th:nth-child(3),
+.callout:has(.instrument-study-table-marker) td:nth-child(3) { width: 25%; }
+.callout:has(.instrument-study-table-marker) th:nth-child(4),
+.callout:has(.instrument-study-table-marker) td:nth-child(4) { width: 27%; }
+.callout:has(.instrument-study-table-marker) th:nth-child(5),
+.callout:has(.instrument-study-table-marker) td:nth-child(5) { width: 22%; }
+
+.callout:has(.instrument-result-table-marker) table { min-width: 720px; }
+.callout:has(.instrument-result-table-marker) th:nth-child(1),
+.callout:has(.instrument-result-table-marker) td:nth-child(1) { width: 24%; }
+.callout:has(.instrument-result-table-marker) th:nth-child(2),
+.callout:has(.instrument-result-table-marker) td:nth-child(2) { width: 26%; }
+.callout:has(.instrument-result-table-marker) th:nth-child(3),
+.callout:has(.instrument-result-table-marker) td:nth-child(3) { width: 26%; }
+.callout:has(.instrument-result-table-marker) th:nth-child(4),
+.callout:has(.instrument-result-table-marker) td:nth-child(4) { width: 24%; }
+
+.callout:has(.instrument-version-table-marker) table { min-width: 920px; }
+.callout:has(.instrument-version-table-marker) th:nth-child(1),
+.callout:has(.instrument-version-table-marker) td:nth-child(1) { width: 15%; }
+.callout:has(.instrument-version-table-marker) th:nth-child(2),
+.callout:has(.instrument-version-table-marker) td:nth-child(2) { width: 15%; }
+.callout:has(.instrument-version-table-marker) th:nth-child(3),
+.callout:has(.instrument-version-table-marker) td:nth-child(3) { width: 18%; }
+.callout:has(.instrument-version-table-marker) th:nth-child(4),
+.callout:has(.instrument-version-table-marker) td:nth-child(4) { width: 7%; }
+.callout:has(.instrument-version-table-marker) th:nth-child(5),
+.callout:has(.instrument-version-table-marker) td:nth-child(5) { width: 30%; }
+.callout:has(.instrument-version-table-marker) th:nth-child(6),
+.callout:has(.instrument-version-table-marker) td:nth-child(6) { width: 15%; }
+
+/* 构念、版本、访谈与观察专表统一字号 */
+.callout:has(.instrument-dimension-table-marker) th,
+.callout:has(.instrument-dimension-table-marker) td,
+.callout:has(.instrument-version-table-marker) th,
+.callout:has(.instrument-version-table-marker) td,
+.callout:has(.instrument-interview-table-marker) th,
+.callout:has(.instrument-interview-table-marker) td,
+.callout:has(.instrument-observation-table-marker) th,
+.callout:has(.instrument-observation-table-marker) td {
+  font-size: 0.82rem !important;
+  line-height: 1.45;
+}
+
+/* 访谈问题表  核心问题获得最大空间 */
+.callout:has(.instrument-interview-table-marker) table { min-width: 980px; }
+.callout:has(.instrument-interview-table-marker) th:nth-child(1),
+.callout:has(.instrument-interview-table-marker) td:nth-child(1) { width: 7%; }
+.callout:has(.instrument-interview-table-marker) th:nth-child(2),
+.callout:has(.instrument-interview-table-marker) td:nth-child(2) { width: 16%; }
+.callout:has(.instrument-interview-table-marker) th:nth-child(3),
+.callout:has(.instrument-interview-table-marker) td:nth-child(3) { width: 40%; }
+.callout:has(.instrument-interview-table-marker) th:nth-child(4),
+.callout:has(.instrument-interview-table-marker) td:nth-child(4) { width: 24%; }
+.callout:has(.instrument-interview-table-marker) th:nth-child(5),
+.callout:has(.instrument-interview-table-marker) td:nth-child(5) { width: 13%; }
+
+/* 观察重点表  观察内容获得最大空间 */
+.callout:has(.instrument-observation-table-marker) table { min-width: 1080px; }
+.callout:has(.instrument-observation-table-marker) th:nth-child(1),
+.callout:has(.instrument-observation-table-marker) td:nth-child(1) { width: 6%; }
+.callout:has(.instrument-observation-table-marker) th:nth-child(2),
+.callout:has(.instrument-observation-table-marker) td:nth-child(2) { width: 15%; }
+.callout:has(.instrument-observation-table-marker) th:nth-child(3),
+.callout:has(.instrument-observation-table-marker) td:nth-child(3) { width: 35%; }
+.callout:has(.instrument-observation-table-marker) th:nth-child(4),
+.callout:has(.instrument-observation-table-marker) td:nth-child(4) { width: 15%; }
+.callout:has(.instrument-observation-table-marker) th:nth-child(5),
+.callout:has(.instrument-observation-table-marker) td:nth-child(5) { width: 17%; }
+.callout:has(.instrument-observation-table-marker) th:nth-child(6),
+.callout:has(.instrument-observation-table-marker) td:nth-child(6) { width: 12%; }
+
+/* 概念页其他实证结果表
+   长文本集中在样本、关键结果与解释边界，使用固定列宽和横向滚动，
+   避免七列在正文宽度内被压成狭长文本。 */
+.concept-other-empirical-table-marker,
+.concept-effect-table-marker,
+.concept-meta-analysis-table-marker,
+.concept-meta-moderator-table-marker,
+.concept-meta-robustness-table-marker {
+  display: none;
+}
+
+.callout:has(.concept-other-empirical-table-marker) > .callout-content,
+.callout:has(.concept-effect-table-marker) > .callout-content,
+.callout:has(.concept-meta-analysis-table-marker) > .callout-content,
+.callout:has(.concept-meta-moderator-table-marker) > .callout-content,
+.callout:has(.concept-meta-robustness-table-marker) > .callout-content {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-gutter: stable;
+  padding-bottom: 0.18rem;
+}
+
+.callout:has(.concept-other-empirical-table-marker) > .callout-content::-webkit-scrollbar,
+.callout:has(.concept-effect-table-marker) > .callout-content::-webkit-scrollbar,
+.callout:has(.concept-meta-analysis-table-marker) > .callout-content::-webkit-scrollbar,
+.callout:has(.concept-meta-moderator-table-marker) > .callout-content::-webkit-scrollbar,
+.callout:has(.concept-meta-robustness-table-marker) > .callout-content::-webkit-scrollbar {
+  height: 8px;
+}
+
+.callout:has(.concept-other-empirical-table-marker) > .callout-content::-webkit-scrollbar-thumb,
+.callout:has(.concept-effect-table-marker) > .callout-content::-webkit-scrollbar-thumb,
+.callout:has(.concept-meta-analysis-table-marker) > .callout-content::-webkit-scrollbar-thumb,
+.callout:has(.concept-meta-moderator-table-marker) > .callout-content::-webkit-scrollbar-thumb,
+.callout:has(.concept-meta-robustness-table-marker) > .callout-content::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: rgba(var(--callout-color), 0.32);
+  background-clip: padding-box;
+}
+
+.callout:has(.concept-other-empirical-table-marker) .table-container,
+.callout:has(.concept-effect-table-marker) .table-container,
+.callout:has(.concept-meta-analysis-table-marker) .table-container,
+.callout:has(.concept-meta-moderator-table-marker) .table-container,
+.callout:has(.concept-meta-robustness-table-marker) .table-container {
+  width: 100%;
+  overflow: visible;
+}
+
+.callout:has(.concept-other-empirical-table-marker) .table-container > table,
+.callout:has(.concept-effect-table-marker) .table-container > table,
+.callout:has(.concept-meta-analysis-table-marker) .table-container > table,
+.callout:has(.concept-meta-moderator-table-marker) .table-container > table,
+.callout:has(.concept-meta-robustness-table-marker) .table-container > table {
+  margin: 0;
+}
+
+.callout:has(.concept-other-empirical-table-marker) table {
+  width: 100%;
+  min-width: 1280px;
+  table-layout: fixed !important;
+}
+
+.callout:has(.concept-other-empirical-table-marker) th:nth-child(1),
+.callout:has(.concept-other-empirical-table-marker) td:nth-child(1) { width: 13%; }
+.callout:has(.concept-other-empirical-table-marker) th:nth-child(2),
+.callout:has(.concept-other-empirical-table-marker) td:nth-child(2) { width: 17%; }
+.callout:has(.concept-other-empirical-table-marker) th:nth-child(3),
+.callout:has(.concept-other-empirical-table-marker) td:nth-child(3) { width: 12%; }
+.callout:has(.concept-other-empirical-table-marker) th:nth-child(4),
+.callout:has(.concept-other-empirical-table-marker) td:nth-child(4) { width: 15%; }
+.callout:has(.concept-other-empirical-table-marker) th:nth-child(5),
+.callout:has(.concept-other-empirical-table-marker) td:nth-child(5) { width: 21%; }
+.callout:has(.concept-other-empirical-table-marker) th:nth-child(6),
+.callout:has(.concept-other-empirical-table-marker) td:nth-child(6) { width: 10%; }
+.callout:has(.concept-other-empirical-table-marker) th:nth-child(7),
+.callout:has(.concept-other-empirical-table-marker) td:nth-child(7) { width: 12%; }
+
+/* 概念页一级研究结果表 */
+.callout:has(.concept-effect-table-marker) table {
+  width: 100%;
+  min-width: 1400px;
+  table-layout: fixed !important;
+}
+
+.callout:has(.concept-other-empirical-table-marker) th,
+.callout:has(.concept-other-empirical-table-marker) td,
+.callout:has(.concept-effect-table-marker) th,
+.callout:has(.concept-effect-table-marker) td,
+.callout:has(.concept-meta-analysis-table-marker) th,
+.callout:has(.concept-meta-analysis-table-marker) td,
+.callout:has(.concept-meta-moderator-table-marker) th,
+.callout:has(.concept-meta-moderator-table-marker) td,
+.callout:has(.concept-meta-robustness-table-marker) th,
+.callout:has(.concept-meta-robustness-table-marker) td {
+  font-size: 0.82rem !important;
+  line-height: 1.45;
+}
+
+/* 标准八列表  组别统计、检验结果和解释边界获得更多空间 */
+.callout:has(.concept-effect-table-marker) table:has(th:nth-child(8)) th:nth-child(1),
+.callout:has(.concept-effect-table-marker) table:has(th:nth-child(8)) td:nth-child(1) { width: 13% !important; }
+.callout:has(.concept-effect-table-marker) table:has(th:nth-child(8)) th:nth-child(2),
+.callout:has(.concept-effect-table-marker) table:has(th:nth-child(8)) td:nth-child(2) { width: 13% !important; }
+.callout:has(.concept-effect-table-marker) table:has(th:nth-child(8)) th:nth-child(3),
+.callout:has(.concept-effect-table-marker) table:has(th:nth-child(8)) td:nth-child(3) { width: 13% !important; }
+.callout:has(.concept-effect-table-marker) table:has(th:nth-child(8)) th:nth-child(4),
+.callout:has(.concept-effect-table-marker) table:has(th:nth-child(8)) td:nth-child(4) { width: 10% !important; }
+.callout:has(.concept-effect-table-marker) table:has(th:nth-child(8)) th:nth-child(5),
+.callout:has(.concept-effect-table-marker) table:has(th:nth-child(8)) td:nth-child(5) { width: 17% !important; }
+.callout:has(.concept-effect-table-marker) table:has(th:nth-child(8)) th:nth-child(6),
+.callout:has(.concept-effect-table-marker) table:has(th:nth-child(8)) td:nth-child(6) { width: 9% !important; }
+.callout:has(.concept-effect-table-marker) table:has(th:nth-child(8)) th:nth-child(7),
+.callout:has(.concept-effect-table-marker) table:has(th:nth-child(8)) td:nth-child(7) { width: 12% !important; }
+.callout:has(.concept-effect-table-marker) table:has(th:nth-child(8)) th:nth-child(8),
+.callout:has(.concept-effect-table-marker) table:has(th:nth-child(8)) td:nth-child(8) { width: 13% !important; }
+
+/* 概念页元分析汇总表 */
+.callout:has(.concept-meta-analysis-table-marker) table {
+  width: 100%;
+  min-width: 1280px;
+  table-layout: fixed !important;
+}
+
+.callout:has(.concept-meta-analysis-table-marker) th:nth-child(1),
+.callout:has(.concept-meta-analysis-table-marker) td:nth-child(1) { width: 14% !important; }
+.callout:has(.concept-meta-analysis-table-marker) th:nth-child(2),
+.callout:has(.concept-meta-analysis-table-marker) td:nth-child(2) { width: 14% !important; }
+.callout:has(.concept-meta-analysis-table-marker) th:nth-child(3),
+.callout:has(.concept-meta-analysis-table-marker) td:nth-child(3) { width: 9% !important; }
+.callout:has(.concept-meta-analysis-table-marker) th:nth-child(4),
+.callout:has(.concept-meta-analysis-table-marker) td:nth-child(4) { width: 16% !important; }
+.callout:has(.concept-meta-analysis-table-marker) th:nth-child(5),
+.callout:has(.concept-meta-analysis-table-marker) td:nth-child(5) { width: 17% !important; }
+.callout:has(.concept-meta-analysis-table-marker) th:nth-child(6),
+.callout:has(.concept-meta-analysis-table-marker) td:nth-child(6) { width: 18% !important; }
+.callout:has(.concept-meta-analysis-table-marker) th:nth-child(7),
+.callout:has(.concept-meta-analysis-table-marker) td:nth-child(7) { width: 12% !important; }
+
+/* 元分析调节变量与亚组分析 */
+.callout:has(.concept-meta-moderator-table-marker) table {
+  width: 100%;
+  min-width: 1480px;
+  table-layout: fixed !important;
+}
+
+.callout:has(.concept-meta-moderator-table-marker) th:nth-child(1),
+.callout:has(.concept-meta-moderator-table-marker) td:nth-child(1) { width: 12% !important; }
+.callout:has(.concept-meta-moderator-table-marker) th:nth-child(2),
+.callout:has(.concept-meta-moderator-table-marker) td:nth-child(2) { width: 12% !important; }
+.callout:has(.concept-meta-moderator-table-marker) th:nth-child(3),
+.callout:has(.concept-meta-moderator-table-marker) td:nth-child(3) { width: 10% !important; }
+.callout:has(.concept-meta-moderator-table-marker) th:nth-child(4),
+.callout:has(.concept-meta-moderator-table-marker) td:nth-child(4) { width: 19% !important; }
+.callout:has(.concept-meta-moderator-table-marker) th:nth-child(5),
+.callout:has(.concept-meta-moderator-table-marker) td:nth-child(5) { width: 14% !important; }
+.callout:has(.concept-meta-moderator-table-marker) th:nth-child(6),
+.callout:has(.concept-meta-moderator-table-marker) td:nth-child(6) { width: 14% !important; }
+.callout:has(.concept-meta-moderator-table-marker) th:nth-child(7),
+.callout:has(.concept-meta-moderator-table-marker) td:nth-child(7) { width: 8% !important; }
+.callout:has(.concept-meta-moderator-table-marker) th:nth-child(8),
+.callout:has(.concept-meta-moderator-table-marker) td:nth-child(8) { width: 11% !important; }
+
+/* 元分析稳健性与偏倚 */
+.callout:has(.concept-meta-robustness-table-marker) table {
+  width: 100%;
+  min-width: 1120px;
+  table-layout: fixed !important;
+}
+
+.callout:has(.concept-meta-robustness-table-marker) th:nth-child(1),
+.callout:has(.concept-meta-robustness-table-marker) td:nth-child(1) { width: 15% !important; }
+.callout:has(.concept-meta-robustness-table-marker) th:nth-child(2),
+.callout:has(.concept-meta-robustness-table-marker) td:nth-child(2) { width: 20% !important; }
+.callout:has(.concept-meta-robustness-table-marker) th:nth-child(3),
+.callout:has(.concept-meta-robustness-table-marker) td:nth-child(3) { width: 17% !important; }
+.callout:has(.concept-meta-robustness-table-marker) th:nth-child(4),
+.callout:has(.concept-meta-robustness-table-marker) td:nth-child(4) { width: 15% !important; }
+.callout:has(.concept-meta-robustness-table-marker) th:nth-child(5),
+.callout:has(.concept-meta-robustness-table-marker) td:nth-child(5) { width: 15% !important; }
+.callout:has(.concept-meta-robustness-table-marker) th:nth-child(6),
+.callout:has(.concept-meta-robustness-table-marker) td:nth-child(6) { width: 18% !important; }
