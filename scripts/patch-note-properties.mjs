@@ -144,6 +144,26 @@ document.documentElement.setAttribute("saved-theme", currentTheme);`,
     find: `var darkmode_inline_default = 'var r=window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark",h=localStorage.getItem("theme")??r;document.documentElement.setAttribute("saved-theme",h);var m=t=>{document.body?.classList.remove("theme-dark","theme-light"),document.body?.classList.add(\`theme-\${t}\`)},c=t=>{let n=new CustomEvent("themechange",{detail:{theme:t}});document.dispatchEvent(n)},s=()=>{let t=document.documentElement.getAttribute("saved-theme")??"light";m(t);let n=()=>{let e=document.documentElement.getAttribute("saved-theme")==="dark"?"light":"dark";document.documentElement.setAttribute("saved-theme",e),localStorage.setItem("theme",e),m(e),c(e)},o=e=>{let d=e.matches?"dark":"light";document.documentElement.setAttribute("saved-theme",d),localStorage.setItem("theme",d),m(d),c(d)};for(let e of document.getElementsByClassName("darkmode"))e.addEventListener("click",n),window.addCleanup(()=>e.removeEventListener("click",n));let a=window.matchMedia("(prefers-color-scheme: dark)");a.addEventListener("change",o),window.addCleanup(()=>a.removeEventListener("change",o))};document.addEventListener("nav",s);document.addEventListener("render",s);\\n';`,
     replace: `var darkmode_inline_default = 'var r=localStorage.getItem("theme")??"dark";document.documentElement.setAttribute("saved-theme",r);var c=t=>{document.body?.classList.remove("theme-dark","theme-light"),document.body?.classList.add(\`theme-\${t}\`)},m=t=>{let n=new CustomEvent("themechange",{detail:{theme:t}});document.dispatchEvent(n)},s=()=>{let t=document.documentElement.getAttribute("saved-theme")??"dark";c(t);let n=()=>{let e=document.documentElement.getAttribute("saved-theme")==="dark"?"light":"dark";document.documentElement.setAttribute("saved-theme",e),localStorage.setItem("theme",e),c(e),m(e)};for(let e of document.getElementsByClassName("darkmode"))e.addEventListener("click",n),window.addCleanup(()=>e.removeEventListener("click",n))};document.addEventListener("nav",s);document.addEventListener("render",s);\\n';`,
   },
+  {
+    file: ".quartz/plugins/obsidian-flavored-markdown/src/transformer.ts",
+    find: `                  class="callout-title"
+                >
+                  <div class="callout-icon"></div>`,
+    replace: `                  class="callout-title"
+                  data-callout-default-title="\${useDefaultTitle ? "true" : "false"}"
+                >
+                  <div class="callout-icon"></div>`,
+  },
+  {
+    file: ".quartz/plugins/obsidian-flavored-markdown/dist/index.js",
+    find: `                  class="callout-title"
+                >
+                  <div class="callout-icon"></div>`,
+    replace: `                  class="callout-title"
+                  data-callout-default-title="\${useDefaultTitle ? "true" : "false"}"
+                >
+                  <div class="callout-icon"></div>`,
+  },
 ]
 
 for (const patch of patches) {
@@ -154,6 +174,7 @@ for (const patch of patches) {
   const original = fs.readFileSync(patch.file, "utf8")
   if (patch.replace && original.includes(patch.replace)) continue
   if (!original.includes(patch.find)) {
+    if (patch.replace === "") continue
     throw new Error(`Patch anchor not found in ${patch.file}`)
   }
 

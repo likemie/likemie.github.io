@@ -2221,7 +2221,7 @@
 .callout[data-callout="evidence-grid-a"] .callout-content > ul,
 .callout[data-callout="evidence-grid-b"] .callout-content > ul {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(6, 1fr);
   gap: 0.75rem;
   padding-inline-start: 0;
   margin-block: 0.75rem 0.25rem;
@@ -2231,6 +2231,7 @@
 .callout[data-callout="evidence-grid"]   .callout-content > ul > li,
 .callout[data-callout="evidence-grid-a"] .callout-content > ul > li,
 .callout[data-callout="evidence-grid-b"] .callout-content > ul > li {
+  grid-column: span 3;
   margin: 0;
   padding: 0.75rem 0.85rem;
   border: 1px solid rgba(var(--callout-color), 0.2);
@@ -2240,12 +2241,40 @@
   line-height: 1.65;
 }
 
-.callout[data-callout="evidence-grid"]   .callout-content > ul:has(> li:nth-child(odd):last-child) > li:last-child,
-.callout[data-callout="evidence-grid-a"] .callout-content > ul:has(> li:nth-child(odd):last-child) > li:last-child,
-.callout[data-callout="evidence-grid-b"] .callout-content > ul:has(> li:nth-child(odd):last-child) > li:last-child {
-  grid-column: 1 / -1;
-  max-width: 50%;
-  margin-inline: auto;
+.callout[data-callout="evidence-grid"]   .callout-content > ul:has(> li:nth-child(1):last-child) > li,
+.callout[data-callout="evidence-grid-a"] .callout-content > ul:has(> li:nth-child(1):last-child) > li,
+.callout[data-callout="evidence-grid-b"] .callout-content > ul:has(> li:nth-child(1):last-child) > li {
+  grid-column: span 6;
+}
+
+.callout[data-callout="evidence-grid"]   .callout-content > ul:has(> li:nth-child(3):last-child) > li,
+.callout[data-callout="evidence-grid-a"] .callout-content > ul:has(> li:nth-child(3):last-child) > li,
+.callout[data-callout="evidence-grid-b"] .callout-content > ul:has(> li:nth-child(3):last-child) > li {
+  grid-column: span 2;
+}
+
+.callout[data-callout="evidence-grid"]   .callout-content > ul:has(> li:nth-child(5):last-child) > li:nth-child(-n+2),
+.callout[data-callout="evidence-grid-a"] .callout-content > ul:has(> li:nth-child(5):last-child) > li:nth-child(-n+2),
+.callout[data-callout="evidence-grid-b"] .callout-content > ul:has(> li:nth-child(5):last-child) > li:nth-child(-n+2) {
+  grid-column: span 3;
+}
+
+.callout[data-callout="evidence-grid"]   .callout-content > ul:has(> li:nth-child(5):last-child) > li:nth-child(n+3),
+.callout[data-callout="evidence-grid-a"] .callout-content > ul:has(> li:nth-child(5):last-child) > li:nth-child(n+3),
+.callout[data-callout="evidence-grid-b"] .callout-content > ul:has(> li:nth-child(5):last-child) > li:nth-child(n+3) {
+  grid-column: span 2;
+}
+
+.callout[data-callout="evidence-grid"]   .callout-content > ul:has(> li:nth-child(7):last-child) > li,
+.callout[data-callout="evidence-grid-a"] .callout-content > ul:has(> li:nth-child(7):last-child) > li,
+.callout[data-callout="evidence-grid-b"] .callout-content > ul:has(> li:nth-child(7):last-child) > li {
+  grid-column: span 3;
+}
+
+.callout[data-callout="evidence-grid"]   .callout-content > ul:has(> li:nth-child(7):last-child) > li:nth-child(n+3):nth-child(-n+5),
+.callout[data-callout="evidence-grid-a"] .callout-content > ul:has(> li:nth-child(7):last-child) > li:nth-child(n+3):nth-child(-n+5),
+.callout[data-callout="evidence-grid-b"] .callout-content > ul:has(> li:nth-child(7):last-child) > li:nth-child(n+3):nth-child(-n+5) {
+  grid-column: span 2;
 }
 
 .callout[data-callout="evidence-grid"]   .callout-content > ul > li strong:first-child,
@@ -11772,6 +11801,40 @@
   font-weight: 800;
   letter-spacing: 0.09em;
   vertical-align: middle;
+}
+
+/* Quartz generates a visible default title when no callout title is provided
+   (for example, [!info] becomes "Info"). Obsidian only shows the styled badge
+   in that case. Hide only the generated default title text, while preserving
+   custom titles such as "[!abstract] 公平市场价值的运作逻辑". */
+.callout[data-callout="note"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="abstract"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="summary"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="tldr"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="info"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="todo"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="tip"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="hint"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="important"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="success"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="check"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="done"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="question"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="faq"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="help"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="warning"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="caution"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="attention"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="failure"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="fail"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="missing"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="danger"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="error"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="bug"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="example"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="quote"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="cite"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p {
+  display: none;
 }
 
 /* ── 共享标题 font-weight ── */
