@@ -81,6 +81,17 @@ function formatDate(date, locale) {
   })
 }
 
+function formatRecentDate(date) {
+  return date.toLocaleString("zh-CN", {
+    timeZone: "Asia/Shanghai",
+    month: "short",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  })
+}
+
 function hrefFor(pageOrSlug) {
   const slug = typeof pageOrSlug === "string" ? pageOrSlug : pageOrSlug.slug
   return slug === "index" ? "/" : `/${slug}`
@@ -631,7 +642,7 @@ function KnowledgeHome(userOpts = {}) {
           h(
             "section",
             { class: "knowledge-explore-card knowledge-explore-panel knowledge-explore-workbench" },
-            h("div", { class: "knowledge-explore-head" }, h("h2", null, "最近工作台"), h("span", null, "按修改时间")),
+            h("div", { class: "knowledge-explore-head" }, h("h2", null, "最近工作台"), h("span", null, "按提交/修改时间")),
             h(
               "ol",
               { class: "knowledge-explore-list" },
@@ -651,7 +662,7 @@ function KnowledgeHome(userOpts = {}) {
                     h(
                       "time",
                       { class: "knowledge-explore-date", dateTime: date.toISOString() },
-                      formatDate(date, cfg.locale),
+                      formatRecentDate(date),
                     ),
                 )
               }),
@@ -748,7 +759,7 @@ function KnowledgeHome(userOpts = {}) {
             "div",
             { class: "knowledge-home-section-head" },
             h("h2", null, "最近亮起"),
-            h("span", null, "按修改时间"),
+            h("span", null, "按提交/修改时间"),
           ),
           h(
             "ol",
@@ -759,7 +770,7 @@ function KnowledgeHome(userOpts = {}) {
                 "li",
                 null,
                 h("a", { class: "internal", href: hrefFor(page) }, titleFor(page)),
-                date && h("time", { dateTime: date.toISOString() }, formatDate(date, cfg.locale)),
+                date && h("time", { dateTime: date.toISOString() }, formatRecentDate(date)),
                 h("span", null, sectionFor(page)),
               )
             }),
