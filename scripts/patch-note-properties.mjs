@@ -1,4 +1,5 @@
 import fs from "node:fs"
+import path from "node:path"
 
 const patches = [
   {
@@ -166,19 +167,40 @@ document.documentElement.setAttribute("saved-theme", currentTheme);`,
   },
 ]
 
+function resolvePatchFile(patch) {
+  if (fs.existsSync(patch.file)) return patch.file
+
+  const directory = path.dirname(patch.file)
+  const filename = path.basename(patch.file)
+  if (!filename.startsWith("chunk-") || !fs.existsSync(directory)) return patch.file
+
+  const candidates = fs
+    .readdirSync(directory)
+    .filter((candidate) => candidate.startsWith("chunk-") && candidate.endsWith(".js"))
+    .map((candidate) => path.join(directory, candidate))
+    .filter((candidate) => {
+      const contents = fs.readFileSync(candidate, "utf8")
+      return contents.includes(patch.find) || (patch.replace && contents.includes(patch.replace))
+    })
+
+  if (candidates.length !== 1) return patch.file
+  return candidates[0]
+}
+
 for (const patch of patches) {
-  if (!fs.existsSync(patch.file)) {
+  const patchFile = resolvePatchFile(patch)
+  if (!fs.existsSync(patchFile)) {
     throw new Error(`Cannot patch missing file: ${patch.file}`)
   }
 
-  const original = fs.readFileSync(patch.file, "utf8")
+  const original = fs.readFileSync(patchFile, "utf8")
   if (patch.replace && original.includes(patch.replace)) continue
   if (!original.includes(patch.find)) {
     if (patch.replace === "") continue
-    throw new Error(`Patch anchor not found in ${patch.file}`)
+    throw new Error(`Patch anchor not found in ${patchFile}`)
   }
 
-  fs.writeFileSync(patch.file, original.replace(patch.find, patch.replace))
+  fs.writeFileSync(patchFile, original.replace(patch.find, patch.replace))
 }
 
 console.log("Patched Quartz plugins.")
