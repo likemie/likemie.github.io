@@ -275,6 +275,19 @@ function hasPrebuiltDist(pluginDir: string): boolean {
 }
 
 function needsBuild(pluginDir: string): boolean {
+  const pkgPath = path.join(pluginDir, "package.json")
+  let hasBuildScript = false
+
+  if (fs.existsSync(pkgPath)) {
+    try {
+      const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"))
+      hasBuildScript = typeof pkg.scripts?.build === "string"
+    } catch {}
+  }
+
+  // Local plugins may ship executable JavaScript directly from the package
+  // root and therefore need no dist/ directory or compilation step.
+  if (!hasBuildScript) return false
   if (isDistGitignored(pluginDir)) return true
   const distDir = path.join(pluginDir, "dist")
   return !fs.existsSync(distDir)
@@ -372,7 +385,7 @@ function buildInstalledPlugin(pluginDir: string, name: string, verbose?: boolean
     if (verbose) {
       console.log(styleText("cyan", `→`), `${name}: installing dependencies...`)
     }
-    execSync("npm install --ignore-scripts", {
+    execSync("npm install --ignore-scripts --no-package-lock", {
       cwd: pluginDir,
       stdio: verbose ? "inherit" : "pipe",
       timeout: 120_000,

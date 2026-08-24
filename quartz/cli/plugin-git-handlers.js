@@ -56,7 +56,7 @@ async function buildPluginAsync(pluginDir, name) {
   try {
     const skipBuild = !needsBuild(pluginDir)
     console.log(styleText("cyan", `  → ${name}: installing dependencies...`))
-    await execAsync("npm install --ignore-scripts", { cwd: pluginDir })
+    await execAsync("npm install --ignore-scripts --no-package-lock", { cwd: pluginDir })
     if (!skipBuild) {
       console.log(styleText("cyan", `  → ${name}: building...`))
       await execAsync("npm run build", { cwd: pluginDir })
@@ -115,6 +115,19 @@ function hasPrebuiltDist(pluginDir) {
 }
 
 function needsBuild(pluginDir) {
+  const pkgPath = path.join(pluginDir, "package.json")
+  let hasBuildScript = false
+
+  if (fs.existsSync(pkgPath)) {
+    try {
+      const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"))
+      hasBuildScript = typeof pkg.scripts?.build === "string"
+    } catch {}
+  }
+
+  // Local plugins may ship executable JavaScript directly from the package
+  // root and therefore need no dist/ directory or compilation step.
+  if (!hasBuildScript) return false
   if (isDistGitignored(pluginDir)) return true
   const distDir = path.join(pluginDir, "dist")
   return !fs.existsSync(distDir)

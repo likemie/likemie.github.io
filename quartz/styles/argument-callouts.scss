@@ -5045,7 +5045,7 @@
 .callout[data-callout="ref-table"] > .callout-title,
 .callout[data-callout="meta-table"] > .callout-title {
   color: rgb(var(--callout-color));
-  font-weight: 650;
+  font-weight: 700;
   letter-spacing: 0.01em;
   padding: 0.6rem 1.1rem;
   border-bottom: 1px solid rgba(var(--callout-color), 0.13);
@@ -5083,6 +5083,7 @@
   width: 100%;
   border-collapse: collapse;
   margin: 0;
+  padding: 0;
   table-layout: fixed;
 }
 
@@ -5171,13 +5172,24 @@
   background: rgba(100, 160, 220, 0.08);
 }
 
-/* ── REF-TABLE 独有 ── */
-.callout[data-callout="ref-table"] th:nth-child(1),
-.callout[data-callout="ref-table"] td:nth-child(1) { width: 28%; font-size: var(--fs-table); }
-.callout[data-callout="ref-table"] th:nth-child(2),
-.callout[data-callout="ref-table"] td:nth-child(2) { width: 34%; font-size: var(--fs-table); }
-.callout[data-callout="ref-table"] th:nth-child(3),
-.callout[data-callout="ref-table"] td:nth-child(3) { width: 38%; font-size: var(--fs-table); }
+/* ── REF-TABLE 独有 ──
+   ref-table 既用于三列表，也用于“编号 / 准则 / 类型 / 后果”四列表。
+   只有在确认列数后才分配宽度，避免前三列占满 100% 后把第四列压成 0px。 */
+.callout[data-callout="ref-table"] table:has(> thead > tr > th:nth-child(3):last-child) :is(th, td):nth-child(1) { width: 28%; }
+.callout[data-callout="ref-table"] table:has(> thead > tr > th:nth-child(3):last-child) :is(th, td):nth-child(2) { width: 34%; }
+.callout[data-callout="ref-table"] table:has(> thead > tr > th:nth-child(3):last-child) :is(th, td):nth-child(3) { width: 38%; }
+
+.callout[data-callout="ref-table"] table:has(> thead > tr > th:nth-child(4):last-child) :is(th, td):nth-child(1) { width: 12%; }
+.callout[data-callout="ref-table"] table:has(> thead > tr > th:nth-child(4):last-child) :is(th, td):nth-child(2) { width: 31%; }
+.callout[data-callout="ref-table"] table:has(> thead > tr > th:nth-child(4):last-child) :is(th, td):nth-child(3) { width: 18%; }
+.callout[data-callout="ref-table"] table:has(> thead > tr > th:nth-child(4):last-child) :is(th, td):nth-child(4) { width: 39%; }
+
+.callout[data-callout="ref-table"] :is(th, td) { font-size: var(--fs-table); }
+
+.callout[data-callout="ref-table"] > .callout-title .internal-link,
+.callout[data-callout="meta-table"] > .callout-title .internal-link {
+  font-weight: 700;
+}
 
 .callout[data-callout="ref-table"] thead th {
   font-size: var(--fs-table);
