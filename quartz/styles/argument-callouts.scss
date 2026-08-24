@@ -7233,11 +7233,33 @@
 .callout[data-callout="warrant"] > .callout-title,
 .callout[data-callout="implication"] > .callout-title,
 .callout[data-callout="concept-lens"] > .callout-title {
+  align-items: center;
   padding: 0.56rem 1rem;
   background: linear-gradient(90deg, rgba(var(--callout-color), 0.10), rgba(var(--callout-color), 0.025));
   border-bottom: 1px solid rgba(var(--callout-color), 0.12);
   color: rgb(var(--callout-color));
   font-weight: 700;
+}
+
+/* Quartz wraps the title text in a block-level <p>; keep the badge and title
+   in the same row so the web rendering matches Obsidian. */
+.callout[data-callout="claim"] > .callout-title .callout-title-inner,
+.callout[data-callout="warrant"] > .callout-title .callout-title-inner,
+.callout[data-callout="implication"] > .callout-title .callout-title-inner,
+.callout[data-callout="concept-lens"] > .callout-title .callout-title-inner {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  min-width: 0;
+}
+
+.callout[data-callout="claim"] > .callout-title .callout-title-inner > p,
+.callout[data-callout="warrant"] > .callout-title .callout-title-inner > p,
+.callout[data-callout="implication"] > .callout-title .callout-title-inner > p,
+.callout[data-callout="concept-lens"] > .callout-title .callout-title-inner > p {
+  display: inline;
+  min-width: 0;
+  margin: 0;
 }
 
 .callout[data-callout="claim"] > .callout-title .callout-title-inner::before,
@@ -7260,22 +7282,34 @@
   --callout-color: 38, 96, 145;
 }
 
+.callout[data-callout="claim"] > .callout-title > .callout-icon {
+  --callout-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>');
+}
+
 .callout[data-callout="claim"] > .callout-title .callout-title-inner::before {
   content: "CLAIM";
 }
 
 .callout[data-callout="claim"] > .callout-content {
-  padding: 0.85rem 1.05rem;
+  padding: 0.72rem 1.05rem 0.85rem;
   font-size: var(--fs-lead);
   line-height: 1.7;
 }
 
-.callout[data-callout="claim"] > .callout-content > p:first-child {
+.callout[data-callout="claim"] > .callout-content > *:first-child {
   margin-top: 0;
+}
+
+.callout[data-callout="claim"] > .callout-content > *:last-child {
+  margin-bottom: 0;
 }
 
 .callout[data-callout="warrant"] {
   --callout-color: 172, 118, 42;
+}
+
+.callout[data-callout="warrant"] > .callout-title > .callout-icon {
+  --callout-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7v5M12 12l-7 4.5M12 12l7 4.5"/></svg>');
 }
 
 .callout[data-callout="warrant"] > .callout-title .callout-title-inner::before {
@@ -7313,6 +7347,10 @@
   --callout-color: 42, 128, 96;
 }
 
+.callout[data-callout="implication"] > .callout-title > .callout-icon {
+  --callout-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l5 5-5 5"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg>');
+}
+
 .callout[data-callout="implication"] > .callout-title .callout-title-inner::before {
   content: "SO WHAT";
 }
@@ -7335,7 +7373,7 @@
   line-height: 1.58;
 }
 
-.callout[data-callout="implication"] > .callout-content > ul > li > strong:first-child {
+.callout[data-callout="implication"] > .callout-content > ul > li > strong:first-of-type {
   display: block;
   margin-bottom: 0.18rem;
   color: rgb(var(--callout-color));
@@ -7364,6 +7402,10 @@
   border-radius: 10px;
   box-shadow: 0 3px 12px rgba(185, 42, 58, 0.07);
   transition: border-left-color 0.20s ease, box-shadow 0.22s ease;
+}
+
+.callout[data-callout="concept-lens"] > .callout-title > .callout-icon {
+  --callout-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/></svg>');
 }
 .callout[data-callout="concept-lens"]:hover {
   border-left-color: rgb(215, 58, 76);
@@ -7443,7 +7485,7 @@
   border-color: rgba(var(--cl), 0.28);
 }
 
-.callout[data-callout="concept-lens"] > .callout-content > ul > li > strong:first-child {
+.callout[data-callout="concept-lens"] > .callout-content > ul > li > strong:first-of-type {
   display: block;
   margin-bottom: 0.20rem;
   color: rgb(165, 30, 45);
