@@ -3863,32 +3863,189 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
-   [!phase]  历史阶段叙事块
+   [!phase]  历史阶段时间线块
+   与 Obsidian 端保持一致：竖轨、阶段卡片、编号胶囊与装饰序号。
    ═══════════════════════════════════════════════════════════ */
+@keyframes phase-node-pulse {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(155, 103, 44, 0.30), 0 0 0 4px rgba(155, 103, 44, 0.12); }
+  50% { box-shadow: 0 0 0 2px rgba(155, 103, 44, 0.15), 0 0 0 6px rgba(155, 103, 44, 0.04); }
+}
+
 .callout[data-callout="phase"] {
   --callout-color: 155, 103, 44;
   background: color-mix(in srgb, var(--light) 94%, rgb(155, 103, 44) 6%);
-  border: 1px solid rgba(155, 103, 44, 0.22);
-  border-left: 3.5px solid rgb(155, 103, 44);
-  border-radius: 10px;
-  padding: 0.85rem 1.1rem 0.9rem;
+  border: 1px solid rgba(155, 103, 44, 0.20);
+  border-left: 4px solid rgba(155, 103, 44, 0.55);
+  border-radius: 8px;
+  padding: 0.78rem 1rem 0.82rem;
 }
 
 .callout[data-callout="phase"] > .callout-title {
   color: rgb(155, 103, 44);
   font-weight: 700;
-  padding-bottom: 0.45rem;
-  border-bottom: 1px solid rgba(155, 103, 44, 0.18);
+  padding-bottom: 0.38rem;
+  border-bottom: 1px solid rgba(155, 103, 44, 0.16);
   margin-bottom: 0.6rem;
 }
 
-.callout[data-callout="phase"] > .callout-content {
-  line-height: 1.75;
+.callout[data-callout="phase"] > .callout-content > :is(ul, ol) {
+  counter-reset: phase-item;
+  list-style: none;
+  padding-left: 1rem;
+  margin: 0;
+  position: relative;
+}
+
+.callout[data-callout="phase"] > .callout-content > :is(ul, ol)::before {
+  content: "";
+  position: absolute;
+  left: 0.18rem;
+  top: 0.8rem;
+  bottom: 0.8rem;
+  width: 2px;
+  border-radius: 1px;
+  background: linear-gradient(to bottom, rgba(155, 103, 44, 0.50), rgba(155, 103, 44, 0.08));
+}
+
+.callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li {
+  counter-increment: phase-item;
+  position: relative;
+  display: block;
+  background: rgba(155, 103, 44, 0.05);
+  border: 1px solid rgba(155, 103, 44, 0.14);
+  border-radius: 7px;
+  padding: 0.60rem 3.2rem 0.65rem 0.85rem;
+  margin-bottom: 0.55rem;
+  line-height: 1.70;
+  transition: background 0.20s ease, border-color 0.20s ease, transform 0.20s ease;
+}
+
+.callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li:last-child {
+  margin-bottom: 0;
+}
+
+.callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li:hover {
+  background: rgba(155, 103, 44, 0.09);
+  border-color: rgba(155, 103, 44, 0.28);
+  transform: translateX(3px);
+}
+
+.callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li::before {
+  content: "Phase " counter(phase-item);
+  position: absolute;
+  left: 0.85rem;
+  top: 0.65rem;
+  padding: 0.10rem 0.52rem;
+  border-radius: 4px;
+  background: rgba(155, 103, 44, 0.16);
+  color: rgb(125, 74, 12);
+  font-size: 0.59em;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  animation: phase-node-pulse 3.2s ease-in-out infinite;
+}
+
+.callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li:nth-child(2)::before { animation-delay: 0.8s; }
+.callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li:nth-child(3)::before { animation-delay: 1.6s; }
+.callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li:nth-child(4)::before { animation-delay: 2.4s; }
+.callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li:nth-child(5)::before { animation-delay: 3.2s; }
+
+.callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li > p:first-of-type {
+  margin: 0;
+  padding-left: 4.5rem;
+  font-weight: 700;
+  color: rgb(172, 115, 35);
+  line-height: 1.5;
+}
+
+.callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li > p:not(:first-of-type) {
+  margin: 0.40rem 0 0;
+  padding-top: 0.38rem;
+  border-top: 1px solid rgba(155, 103, 44, 0.12);
+  font-weight: normal;
+  color: var(--darkgray);
+  line-height: 1.72;
+}
+
+.callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li::after {
+  content: "0" counter(phase-item);
+  position: absolute;
+  top: 0.30rem;
+  right: 0.75rem;
+  font-size: 1.50em;
+  font-weight: 900;
+  color: rgba(155, 103, 44, 0.14);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-family: var(--codeFont);
+  pointer-events: none;
+}
+
+.callout[data-callout="phase"] > .callout-content > *:last-child {
+  margin-bottom: 0;
 }
 
 [saved-theme="dark"] .callout[data-callout="phase"] {
   background: color-mix(in srgb, var(--light) 88%, rgb(155, 103, 44) 12%);
-  border-color: rgba(155, 103, 44, 0.32);
+  border-color: rgba(155, 103, 44, 0.28);
+  border-left-color: rgba(155, 103, 44, 0.65);
+}
+
+[saved-theme="dark"] .callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li {
+  background: rgba(155, 103, 44, 0.08);
+  border-color: rgba(155, 103, 44, 0.20);
+}
+
+[saved-theme="dark"] .callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li:hover {
+  background: rgba(155, 103, 44, 0.14);
+  border-color: rgba(155, 103, 44, 0.35);
+}
+
+[saved-theme="dark"] .callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li::before {
+  background: rgba(205, 148, 62, 0.15);
+  color: rgb(215, 162, 75);
+}
+
+[saved-theme="dark"] .callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li::after {
+  color: rgba(205, 148, 62, 0.22);
+}
+
+[saved-theme="dark"] .callout[data-callout="phase"] .callout-content li > p:first-of-type > strong:first-of-type {
+  color: rgb(220, 165, 75);
+}
+
+@media (max-width: 600px) {
+  .callout[data-callout="phase"] {
+    padding-inline: 0.72rem;
+  }
+
+  .callout[data-callout="phase"] > .callout-content > :is(ul, ol) {
+    padding-left: 0.65rem;
+  }
+
+  .callout[data-callout="phase"] > .callout-content > :is(ul, ol)::before {
+    left: 0;
+  }
+
+  .callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li {
+    padding-right: 0.8rem;
+  }
+
+  .callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li::after {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li::before {
+    animation: none;
+  }
+
+  .callout[data-callout="phase"] > .callout-content > :is(ul, ol) > li:hover {
+    transform: none;
+  }
 }
 
 /* ─── quad-grid（四格网格卡片）─────────────────────────── */
