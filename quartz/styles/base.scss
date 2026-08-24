@@ -658,9 +658,36 @@ ol.overflow {
 }
 
 .katex-display {
-  display: initial;
+  display: block;
+  width: 100%;
+  max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
+}
+
+/* Obsidian accepts one-line $$…$$ as display math, while remark-math emits
+   those expressions as a paragraph containing one inline KaTeX node. Restore
+   display-math alignment and safe horizontal scrolling for that DOM shape. */
+article p:has(> .katex:only-child),
+article p:has(> .katex + br + .katex) {
+  display: block;
+  max-width: 100%;
+  margin: 0.65rem 0;
+  padding: 0.25rem 0.15rem;
+  text-align: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+}
+
+article p:has(> .katex:only-child) > .katex,
+article p:has(> .katex + br + .katex) > .katex {
+  display: inline-block;
+  min-width: max-content;
+  max-width: none;
+  text-align: left;
+  overflow-wrap: normal;
+  text-wrap: nowrap;
 }
 
 .external-embed.youtube,

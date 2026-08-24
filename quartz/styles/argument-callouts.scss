@@ -6239,39 +6239,43 @@
 
 /* ════════════════════════════════════════════════════════════════════
    [!formula]  —  单公式展示卡
-   Color : deep indigo  rgb(95, 45, 185)
+   Color : teal  rgb(28, 148, 168)
    Icon  : lucide-sigma
    特性  : block math 公式岛居中 · 变量列表自动编号徽章
    ════════════════════════════════════════════════════════════════════ */
 .callout[data-callout="formula"] {
-  --callout-color: 95, 45, 185;
+  --callout-color: 28, 148, 168;
   background:
-    linear-gradient(135deg, rgba(95, 45, 185, 0.07), rgba(95, 45, 185, 0.02)),
+    linear-gradient(135deg, rgba(28, 148, 168, 0.07), rgba(28, 148, 168, 0.02)),
     var(--light);
-  border: 1px solid rgba(95, 45, 185, 0.20);
-  border-left: 6px solid rgb(95, 45, 185);
+  border: 1px solid rgba(28, 148, 168, 0.20);
+  border-left: 6px solid rgb(28, 148, 168);
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(95, 45, 185, 0.07);
+  box-shadow: 0 2px 10px rgba(28, 148, 168, 0.07);
 }
 
 .callout[data-callout="formula"] > .callout-title {
-  color: rgb(95, 45, 185);
+  color: rgb(20, 118, 135);
   font-weight: 700;
   letter-spacing: 0.02em;
 }
 
 /* ─── 公式岛：block math 居中高亮 ─────────────────────── */
 .callout[data-callout="formula"] .callout-content mjx-container[display="true"],
-.callout[data-callout="formula"] .callout-content .math-block {
+.callout[data-callout="formula"] .callout-content .math-block,
+.callout[data-callout="formula"] .callout-content .katex-display,
+.callout[data-callout="formula"] .callout-content p:has(> .katex:only-child),
+.callout[data-callout="formula"] .callout-content p:has(> .katex + br + .katex) {
   display: block !important;
   text-align: center;
   margin: 0.45rem 0 0.5rem !important;
   padding: 0.55rem 1rem;
-  background: rgba(95, 45, 185, 0.06);
-  border: 1px solid rgba(95, 45, 185, 0.15);
+  background: rgba(28, 148, 168, 0.06);
+  border: 1px solid rgba(28, 148, 168, 0.15);
   border-radius: 6px;
   font-size: 1.08em;
   overflow-x: auto;
+  overflow-y: hidden;
 }
 
 /* ─── 变量注释列表：自动编号徽章 ────────────────────────── */
@@ -6298,8 +6302,8 @@
   width: 1.18rem;
   height: 1.18rem;
   border-radius: 50%;
-  background: rgba(95, 45, 185, 0.13);
-  color: rgb(95, 45, 185);
+  background: rgba(28, 148, 168, 0.13);
+  color: rgb(28, 148, 168);
   font-size: 0.62em;
   font-weight: 700;
   line-height: 1.18rem;
@@ -6308,27 +6312,30 @@
 
 /* ─── 暗模式 ────────────────────────────────────────────── */
 [saved-theme="dark"] .callout[data-callout="formula"] {
-  --callout-color: 155, 120, 255;
+  --callout-color: 68, 198, 218;
   background:
-    linear-gradient(135deg, rgba(95, 45, 185, 0.14), rgba(95, 45, 185, 0.04)),
+    linear-gradient(135deg, rgba(28, 148, 168, 0.09), rgba(28, 148, 168, 0.02)),
     var(--light);
-  border-color: rgba(155, 120, 255, 0.25);
-  border-left-color: rgb(140, 100, 240);
+  border-color: rgba(68, 198, 218, 0.22);
+  border-left-color: rgb(55, 185, 205);
 }
 
 [saved-theme="dark"] .callout[data-callout="formula"] > .callout-title {
-  color: rgb(170, 140, 255);
+  color: rgb(80, 210, 228);
 }
 
 [saved-theme="dark"] .callout[data-callout="formula"] .callout-content mjx-container[display="true"],
-[saved-theme="dark"] .callout[data-callout="formula"] .callout-content .math-block {
-  background: rgba(95, 45, 185, 0.14);
-  border-color: rgba(155, 120, 255, 0.22);
+[saved-theme="dark"] .callout[data-callout="formula"] .callout-content .math-block,
+[saved-theme="dark"] .callout[data-callout="formula"] .callout-content .katex-display,
+[saved-theme="dark"] .callout[data-callout="formula"] .callout-content p:has(> .katex:only-child),
+[saved-theme="dark"] .callout[data-callout="formula"] .callout-content p:has(> .katex + br + .katex) {
+  background: rgba(28, 148, 168, 0.09);
+  border-color: rgba(68, 198, 218, 0.20);
 }
 
 [saved-theme="dark"] .callout[data-callout="formula"] .callout-content > ul > li::before {
-  background: rgba(155, 120, 255, 0.20);
-  color: rgb(170, 140, 255);
+  background: rgba(68, 198, 218, 0.15);
+  color: rgb(90, 215, 232);
 }
 
 /* ════════════════════════════════════════════════════════════════════
@@ -6390,8 +6397,8 @@
   margin-bottom: 0.45rem;
 }
 
-/* 卡内行内公式放大 */
-.callout[data-callout="formula-set"] .callout-content > ul > li mjx-container {
+/* 卡内公式放大（Obsidian MathJax / Quartz KaTeX） */
+.callout[data-callout="formula-set"] .callout-content > ul > li :is(mjx-container, .katex) {
   font-size: 1.08em;
 }
 
@@ -6454,7 +6461,10 @@
 }
 
 .callout[data-callout="formula-step"] .callout-content mjx-container[display="true"],
-.callout[data-callout="formula-step"] .callout-content .math-block {
+.callout[data-callout="formula-step"] .callout-content .math-block,
+.callout[data-callout="formula-step"] .callout-content .katex-display,
+.callout[data-callout="formula-step"] .callout-content p:has(> .katex:only-child),
+.callout[data-callout="formula-step"] .callout-content p:has(> .katex + br + .katex) {
   display: block !important;
   text-align: center;
   margin: 0.45rem 0 0.75rem !important;
@@ -6464,6 +6474,7 @@
   border-radius: 6px;
   font-size: var(--fs-lead);
   overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .callout[data-callout="formula-step"] .callout-content p > strong:first-child {
@@ -6510,9 +6521,23 @@
 }
 
 [saved-theme="dark"] .callout[data-callout="formula-step"] .callout-content mjx-container[display="true"],
-[saved-theme="dark"] .callout[data-callout="formula-step"] .callout-content .math-block {
+[saved-theme="dark"] .callout[data-callout="formula-step"] .callout-content .math-block,
+[saved-theme="dark"] .callout[data-callout="formula-step"] .callout-content .katex-display,
+[saved-theme="dark"] .callout[data-callout="formula-step"] .callout-content p:has(> .katex:only-child),
+[saved-theme="dark"] .callout[data-callout="formula-step"] .callout-content p:has(> .katex + br + .katex) {
   background: rgba(78, 92, 168, 0.13);
   border-color: rgba(136, 146, 230, 0.22);
+}
+
+@media (max-width: 600px) {
+  .callout[data-callout="formula"] .callout-content p:has(> .katex:only-child),
+  .callout[data-callout="formula"] .callout-content p:has(> .katex + br + .katex),
+  .callout[data-callout="formula-step"] .callout-content p:has(> .katex:only-child),
+  .callout[data-callout="formula-step"] .callout-content p:has(> .katex + br + .katex) {
+    padding-inline: 0.65rem;
+    font-size: var(--fs-body);
+    text-align: left;
+  }
 }
 
 /* ════════════════════════════════════════════════════════════════════
