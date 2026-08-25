@@ -13341,3 +13341,87 @@
 .callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(7) { width: 11% !important; }
 .callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(8) { width: 7% !important; }
 .callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(9) { width: 12% !important; }
+
+/* Evidence-synthesis table callouts · compact density scale */
+:is(
+  .callout[data-callout="evidence-scope"],
+  .callout[data-callout="search-protocol"],
+  .callout[data-callout="coding-frame"],
+  .callout[data-callout="coding-protocol"],
+  .callout[data-callout="synthesis-model"],
+  .callout[data-callout="overlap-audit"],
+  .callout[data-callout="effect-summary"],
+  .callout[data-callout="bias-audit"]
+) > .callout-content {
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+}
+
+:is(
+  .callout[data-callout="evidence-scope"],
+  .callout[data-callout="search-protocol"],
+  .callout[data-callout="coding-frame"],
+  .callout[data-callout="coding-protocol"],
+  .callout[data-callout="synthesis-model"],
+  .callout[data-callout="overlap-audit"],
+  .callout[data-callout="effect-summary"],
+  .callout[data-callout="bias-audit"]
+) table {
+  font-size: 0.78rem !important;
+  line-height: 1.36;
+}
+
+:is(
+  .callout[data-callout="coding-frame"],
+  .callout[data-callout="coding-protocol"]
+) table {
+  font-size: 0.74rem !important;
+}
+
+.callout[data-callout="overlap-audit"] table {
+  font-size: 0.76rem !important;
+}
+
+:is(
+  .callout[data-callout="evidence-scope"],
+  .callout[data-callout="search-protocol"],
+  .callout[data-callout="coding-frame"],
+  .callout[data-callout="coding-protocol"],
+  .callout[data-callout="synthesis-model"],
+  .callout[data-callout="overlap-audit"],
+  .callout[data-callout="effect-summary"],
+  .callout[data-callout="bias-audit"]
+) :is(th, td) {
+  padding: 0.3rem 0.46rem !important;
+  font-size: inherit !important;
+  line-height: 1.36;
+  vertical-align: top;
+}
+
+:is(
+  .callout[data-callout="evidence-scope"],
+  .callout[data-callout="search-protocol"],
+  .callout[data-callout="coding-frame"],
+  .callout[data-callout="coding-protocol"],
+  .callout[data-callout="synthesis-model"],
+  .callout[data-callout="overlap-audit"],
+  .callout[data-callout="effect-summary"],
+  .callout[data-callout="bias-audit"]
+) table:has(thead th:nth-child(6)) {
+  font-size: 0.74rem !important;
+}
+
+:is(
+  .callout[data-callout="evidence-scope"],
+  .callout[data-callout="search-protocol"],
+  .callout[data-callout="coding-frame"],
+  .callout[data-callout="coding-protocol"],
+  .callout[data-callout="synthesis-model"],
+  .callout[data-callout="overlap-audit"],
+  .callout[data-callout="effect-summary"],
+  .callout[data-callout="bias-audit"]
+) table:has(thead th:nth-child(8)) {
+  font-size: 0.72rem !important;
+}
