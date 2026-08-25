@@ -13295,3 +13295,49 @@
 .callout:has(.concept-meta-moderator-table-marker) :is(th, td):nth-child(5) { width: 18% !important; }
 .callout:has(.concept-meta-moderator-table-marker) :is(th, td):nth-child(6) { width: 14% !important; }
 .callout:has(.concept-meta-moderator-table-marker) :is(th, td):nth-child(7) { width: 13% !important; }
+
+/* Moderator summary · compact result-table scale */
+.callout[data-callout="moderator-summary"] > .callout-content {
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+  padding-bottom: 0.22rem;
+}
+
+.callout[data-callout="moderator-summary"] table {
+  width: 100% !important;
+  min-width: 100% !important;
+  margin-block: 0.42rem 0.2rem;
+  table-layout: auto;
+  font-size: 0.78rem !important;
+  line-height: 1.36;
+}
+
+.callout[data-callout="moderator-summary"] :is(th, td) {
+  min-width: 0 !important;
+  max-width: none !important;
+  padding: 0.26rem 0.42rem !important;
+  font-size: inherit !important;
+  line-height: 1.36;
+  vertical-align: top;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(8)) {
+  width: max(100%, 960px) !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+  font-size: 0.76rem !important;
+}
+
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(1) { width: 16% !important; }
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(2) { width: 22% !important; }
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(3) { width: 7% !important; }
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(4) { width: 7% !important; }
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(5) { width: 9% !important; }
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(6) { width: 9% !important; }
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(7) { width: 11% !important; }
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(8) { width: 7% !important; }
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(9) { width: 12% !important; }
