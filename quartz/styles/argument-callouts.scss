@@ -13161,3 +13161,137 @@
 .callout:has(.concept-meta-robustness-table-marker) td:nth-child(5) { width: 15% !important; }
 .callout:has(.concept-meta-robustness-table-marker) th:nth-child(6),
 .callout:has(.concept-meta-robustness-table-marker) td:nth-child(6) { width: 18% !important; }
+
+/* ================================================================
+   EMPIRICAL DATA · final Quartz layout
+   Keep badges/titles inline and keep wide tables inside their callout.
+   ================================================================ */
+
+.callout:is([data-callout="effect-table"], [data-callout="ma-table"], [data-callout="ref-table"]) > .callout-title {
+  align-items: center;
+}
+
+.callout:is([data-callout="effect-table"], [data-callout="ma-table"], [data-callout="ref-table"]) > .callout-title .callout-title-inner {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  align-items: center;
+  gap: 0.62rem;
+}
+
+.callout:is([data-callout="effect-table"], [data-callout="ma-table"], [data-callout="ref-table"]) > .callout-title .callout-title-inner > p {
+  display: inline;
+  min-width: 0;
+  margin: 0;
+}
+
+.callout[data-callout="effect-table"] > .callout-title > .callout-icon {
+  --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 2v7.31'/%3E%3Cpath d='M14 9.3V2'/%3E%3Cpath d='M8.5 2h7'/%3E%3Cpath d='M14 9.3 19.52 18a2 2 0 0 1-1.69 3H6.17a2 2 0 0 1-1.69-3L10 9.3'/%3E%3Cpath d='M6.5 17h11'/%3E%3C/svg%3E");
+}
+
+.callout[data-callout="ma-table"] > .callout-title > .callout-icon {
+  --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z'/%3E%3Cpath d='m22 12.5-9.17 4.17a2 2 0 0 1-1.66 0L2 12.5'/%3E%3Cpath d='m22 17.5-9.17 4.17a2 2 0 0 1-1.66 0L2 17.5'/%3E%3C/svg%3E");
+}
+
+.callout[data-callout="ref-table"] > .callout-title > .callout-icon {
+  --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v18'/%3E%3Cpath d='M3 9h18'/%3E%3Cpath d='M3 15h18'/%3E%3Crect width='18' height='18' x='3' y='3' rx='2'/%3E%3C/svg%3E");
+}
+
+.callout:has(:is(
+  .scrollable-table-marker,
+  .concept-effect-table-marker,
+  .concept-meta-analysis-table-marker,
+  .concept-meta-moderator-table-marker,
+  .concept-meta-robustness-table-marker,
+  .concept-other-empirical-table-marker
+)) > .callout-content {
+  min-width: 0;
+  overflow-x: hidden;
+  padding-bottom: 0;
+}
+
+.callout:has(:is(
+  .scrollable-table-marker,
+  .concept-effect-table-marker,
+  .concept-meta-analysis-table-marker,
+  .concept-meta-moderator-table-marker,
+  .concept-meta-robustness-table-marker,
+  .concept-other-empirical-table-marker
+)) > .callout-content > .table-container {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+  scrollbar-color: color-mix(in srgb, var(--callout-color) 60%, transparent) transparent;
+  scrollbar-width: thin;
+}
+
+.callout:has(:is(.scrollable-table-marker, .concept-effect-table-marker, .concept-meta-analysis-table-marker, .concept-meta-moderator-table-marker, .concept-meta-robustness-table-marker, .concept-other-empirical-table-marker)) > .callout-content > .table-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.callout:has(:is(.scrollable-table-marker, .concept-effect-table-marker, .concept-meta-analysis-table-marker, .concept-meta-moderator-table-marker, .concept-meta-robustness-table-marker, .concept-other-empirical-table-marker)) > .callout-content > .table-container::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--callout-color) 56%, transparent);
+  border-radius: 999px;
+}
+
+.callout:has(.concept-effect-table-marker) table {
+  width: max(100%, 1080px) !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+}
+
+.callout:has(.concept-meta-analysis-table-marker) table {
+  width: max(100%, 1280px) !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+}
+
+.callout:has(.concept-meta-moderator-table-marker) table {
+  width: max(100%, 1280px) !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+}
+
+.callout:has(.concept-second-order-meta-table-marker) table {
+  width: max(100%, 1320px) !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+}
+
+.callout:has(.concept-second-order-role-subgroup-marker) table,
+.callout:has(.concept-other-empirical-table-marker) table {
+  width: max(100%, 1280px) !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+}
+
+.callout:has(:is(.scrollable-table-marker, .concept-effect-table-marker, .concept-meta-analysis-table-marker, .concept-meta-moderator-table-marker, .concept-meta-robustness-table-marker, .concept-other-empirical-table-marker)) tbody td {
+  vertical-align: top !important;
+}
+
+.callout:has(:is(.scrollable-table-marker, .concept-effect-table-marker, .concept-meta-analysis-table-marker, .concept-meta-moderator-table-marker, .concept-meta-robustness-table-marker, .concept-other-empirical-table-marker)) thead th {
+  vertical-align: middle !important;
+}
+
+.callout:has(:is(.scrollable-table-marker, .concept-effect-table-marker, .concept-meta-analysis-table-marker, .concept-meta-moderator-table-marker, .concept-meta-robustness-table-marker, .concept-other-empirical-table-marker)) td .katex {
+  white-space: nowrap;
+}
+
+.callout:has(.concept-effect-table-marker) :is(th, td):is(:nth-child(1), :nth-child(2), :nth-child(3), :nth-child(8)),
+.callout:has(.concept-meta-analysis-table-marker) :is(th, td):is(:nth-child(1), :nth-child(2), :nth-child(7)),
+.callout:has(.concept-meta-moderator-table-marker) :is(th, td):is(:nth-child(1), :nth-child(2), :nth-child(3), :nth-child(7)),
+.callout:has(.concept-second-order-meta-table-marker) :is(th, td):is(:nth-child(1), :nth-child(2), :nth-child(7)) {
+  text-align: left !important;
+}
+
+.callout:has(.concept-meta-moderator-table-marker) :is(th, td):nth-child(1) { width: 14% !important; }
+.callout:has(.concept-meta-moderator-table-marker) :is(th, td):nth-child(2) { width: 11% !important; }
+.callout:has(.concept-meta-moderator-table-marker) :is(th, td):nth-child(3) { width: 18% !important; }
+.callout:has(.concept-meta-moderator-table-marker) :is(th, td):nth-child(4) { width: 12% !important; }
+.callout:has(.concept-meta-moderator-table-marker) :is(th, td):nth-child(5) { width: 18% !important; }
+.callout:has(.concept-meta-moderator-table-marker) :is(th, td):nth-child(6) { width: 14% !important; }
+.callout:has(.concept-meta-moderator-table-marker) :is(th, td):nth-child(7) { width: 13% !important; }
