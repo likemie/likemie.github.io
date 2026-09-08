@@ -1,0 +1,380 @@
+/* Web DOM adaptations, maintained separately from the generated snippet. */
+/* Quartz wraps the title text in a block-level <p>; keep the badge and title
+   in the same row so the web rendering matches Obsidian. */
+.callout[data-callout="claim"] > .callout-title .callout-title-inner,
+.callout[data-callout="warrant"] > .callout-title .callout-title-inner,
+.callout[data-callout="implication"] > .callout-title .callout-title-inner,
+.callout[data-callout="concept-lens"] > .callout-title .callout-title-inner {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  min-width: 0;
+}
+
+.callout[data-callout="claim"] > .callout-title .callout-title-inner > p,
+.callout[data-callout="warrant"] > .callout-title .callout-title-inner > p,
+.callout[data-callout="implication"] > .callout-title .callout-title-inner > p,
+.callout[data-callout="concept-lens"] > .callout-title .callout-title-inner > p {
+  display: inline;
+  min-width: 0;
+  margin: 0;
+}
+
+.callout[data-callout="claim"] > .callout-title .callout-title-inner::before,
+.callout[data-callout="warrant"] > .callout-title .callout-title-inner::before,
+.callout[data-callout="implication"] > .callout-title .callout-title-inner::before,
+.callout[data-callout="concept-lens"] > .callout-title .callout-title-inner::before {
+  display: inline-block;
+  margin-right: 0.55rem;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(var(--callout-color), 0.12);
+  color: rgb(var(--callout-color));
+  font-size: 0.64em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  vertical-align: middle;
+}
+
+/* Quartz generates a visible default title when no callout title is provided
+   (for example, [!info] becomes "Info"). Obsidian only shows the styled badge
+   in that case. Hide only the generated default title text, while preserving
+   custom titles such as "[!abstract] 公平市场价值的运作逻辑". */
+.callout[data-callout="note"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="abstract"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="summary"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="tldr"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="info"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="todo"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="tip"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="hint"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="important"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="success"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="check"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="done"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="question"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="faq"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="help"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="warning"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="caution"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="attention"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="failure"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="fail"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="missing"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="danger"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="error"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="bug"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="example"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="quote"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p,
+.callout[data-callout="cite"] > .callout-title[data-callout-default-title="true"] .callout-title-inner > p {
+  display: none;
+}
+
+
+
+.callout[data-callout="claim"] > .callout-title > .callout-icon {
+  --callout-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>');
+}
+
+
+.callout[data-callout="warrant"] > .callout-title > .callout-icon {
+  --callout-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7v5M12 12l-7 4.5M12 12l7 4.5"/></svg>');
+}
+
+
+.callout[data-callout="implication"] > .callout-title > .callout-icon {
+  --callout-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l5 5-5 5"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg>');
+}
+
+
+.callout[data-callout="concept-lens"] > .callout-title > .callout-icon {
+  --callout-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/></svg>');
+}
+
+
+.callout[data-callout="effect-table"] > .callout-title > .callout-icon {
+  --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 2v7.31'/%3E%3Cpath d='M14 9.3V2'/%3E%3Cpath d='M8.5 2h7'/%3E%3Cpath d='M14 9.3 19.52 18a2 2 0 0 1-1.69 3H6.17a2 2 0 0 1-1.69-3L10 9.3'/%3E%3Cpath d='M6.5 17h11'/%3E%3C/svg%3E");
+}
+
+
+.callout[data-callout="ma-table"] > .callout-title > .callout-icon {
+  --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z'/%3E%3Cpath d='m22 12.5-9.17 4.17a2 2 0 0 1-1.66 0L2 12.5'/%3E%3Cpath d='m22 17.5-9.17 4.17a2 2 0 0 1-1.66 0L2 17.5'/%3E%3C/svg%3E");
+}
+
+
+.callout[data-callout="ref-table"] > .callout-title > .callout-icon {
+  --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v18'/%3E%3Cpath d='M3 9h18'/%3E%3Cpath d='M3 15h18'/%3E%3Crect width='18' height='18' x='3' y='3' rx='2'/%3E%3C/svg%3E");
+}
+/* ================================================================
+   EMPIRICAL DATA · final Quartz layout
+   Keep badges/titles inline and keep wide tables inside their callout.
+   ================================================================ */
+
+.callout:is([data-callout="effect-table"], [data-callout="ma-table"], [data-callout="ref-table"]) > .callout-title {
+  align-items: center;
+}
+
+.callout:is([data-callout="effect-table"], [data-callout="ma-table"], [data-callout="ref-table"]) > .callout-title .callout-title-inner {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  align-items: center;
+  gap: 0.62rem;
+}
+
+.callout:is([data-callout="effect-table"], [data-callout="ma-table"], [data-callout="ref-table"]) > .callout-title .callout-title-inner > p {
+  display: inline;
+  min-width: 0;
+  margin: 0;
+}
+
+.callout[data-callout="effect-table"] > .callout-title > .callout-icon {
+  --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 2v7.31'/%3E%3Cpath d='M14 9.3V2'/%3E%3Cpath d='M8.5 2h7'/%3E%3Cpath d='M14 9.3 19.52 18a2 2 0 0 1-1.69 3H6.17a2 2 0 0 1-1.69-3L10 9.3'/%3E%3Cpath d='M6.5 17h11'/%3E%3C/svg%3E");
+}
+
+.callout[data-callout="ma-table"] > .callout-title > .callout-icon {
+  --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z'/%3E%3Cpath d='m22 12.5-9.17 4.17a2 2 0 0 1-1.66 0L2 12.5'/%3E%3Cpath d='m22 17.5-9.17 4.17a2 2 0 0 1-1.66 0L2 17.5'/%3E%3C/svg%3E");
+}
+
+.callout[data-callout="ref-table"] > .callout-title > .callout-icon {
+  --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v18'/%3E%3Cpath d='M3 9h18'/%3E%3Cpath d='M3 15h18'/%3E%3Crect width='18' height='18' x='3' y='3' rx='2'/%3E%3C/svg%3E");
+}
+
+.callout:has(:is(
+  .scrollable-table-marker,
+  .concept-effect-table-marker,
+  .concept-meta-analysis-table-marker,
+  .concept-meta-moderator-table-marker,
+  .concept-meta-robustness-table-marker,
+  .concept-other-empirical-table-marker
+)) > .callout-content {
+  min-width: 0;
+  overflow-x: hidden;
+  padding-bottom: 0;
+}
+
+.callout:has(:is(
+  .scrollable-table-marker,
+  .concept-effect-table-marker,
+  .concept-meta-analysis-table-marker,
+  .concept-meta-moderator-table-marker,
+  .concept-meta-robustness-table-marker,
+  .concept-other-empirical-table-marker
+)) > .callout-content > .table-container {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+  scrollbar-color: color-mix(in srgb, var(--callout-color) 60%, transparent) transparent;
+  scrollbar-width: thin;
+}
+
+.callout:has(:is(.scrollable-table-marker, .concept-effect-table-marker, .concept-meta-analysis-table-marker, .concept-meta-moderator-table-marker, .concept-meta-robustness-table-marker, .concept-other-empirical-table-marker)) > .callout-content > .table-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.callout:has(:is(.scrollable-table-marker, .concept-effect-table-marker, .concept-meta-analysis-table-marker, .concept-meta-moderator-table-marker, .concept-meta-robustness-table-marker, .concept-other-empirical-table-marker)) > .callout-content > .table-container::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--callout-color) 56%, transparent);
+  border-radius: 999px;
+}
+
+.callout:has(.concept-effect-table-marker) table {
+  width: max(100%, 1080px) !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+}
+
+.callout:has(.concept-meta-analysis-table-marker) table {
+  width: max(100%, 1280px) !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+}
+
+.callout:has(.concept-meta-moderator-table-marker) table {
+  width: max(100%, 1280px) !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+}
+
+.callout:has(.concept-second-order-meta-table-marker) table {
+  width: max(100%, 1320px) !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+}
+
+.callout:has(.concept-second-order-role-subgroup-marker) table,
+.callout:has(.concept-other-empirical-table-marker) table {
+  width: max(100%, 1280px) !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+}
+
+.callout:has(:is(.scrollable-table-marker, .concept-effect-table-marker, .concept-meta-analysis-table-marker, .concept-meta-moderator-table-marker, .concept-meta-robustness-table-marker, .concept-other-empirical-table-marker)) tbody td {
+  vertical-align: top !important;
+}
+
+.callout:has(:is(.scrollable-table-marker, .concept-effect-table-marker, .concept-meta-analysis-table-marker, .concept-meta-moderator-table-marker, .concept-meta-robustness-table-marker, .concept-other-empirical-table-marker)) thead th {
+  vertical-align: middle !important;
+}
+
+.callout:has(:is(.scrollable-table-marker, .concept-effect-table-marker, .concept-meta-analysis-table-marker, .concept-meta-moderator-table-marker, .concept-meta-robustness-table-marker, .concept-other-empirical-table-marker)) td .katex {
+  white-space: nowrap;
+}
+
+.callout:has(.concept-effect-table-marker) :is(th, td):is(:nth-child(1), :nth-child(2), :nth-child(3), :nth-child(8)),
+.callout:has(.concept-meta-analysis-table-marker) :is(th, td):is(:nth-child(1), :nth-child(2), :nth-child(7)),
+.callout:has(.concept-meta-moderator-table-marker) :is(th, td):is(:nth-child(1), :nth-child(2), :nth-child(3), :nth-child(7)),
+.callout:has(.concept-second-order-meta-table-marker) :is(th, td):is(:nth-child(1), :nth-child(2), :nth-child(7)) {
+  text-align: left !important;
+}
+
+.callout:has(.concept-meta-moderator-table-marker) :is(th, td):nth-child(1) { width: 14% !important; }
+.callout:has(.concept-meta-moderator-table-marker) :is(th, td):nth-child(2) { width: 11% !important; }
+.callout:has(.concept-meta-moderator-table-marker) :is(th, td):nth-child(3) { width: 18% !important; }
+.callout:has(.concept-meta-moderator-table-marker) :is(th, td):nth-child(4) { width: 12% !important; }
+.callout:has(.concept-meta-moderator-table-marker) :is(th, td):nth-child(5) { width: 18% !important; }
+.callout:has(.concept-meta-moderator-table-marker) :is(th, td):nth-child(6) { width: 14% !important; }
+.callout:has(.concept-meta-moderator-table-marker) :is(th, td):nth-child(7) { width: 13% !important; }
+
+/* Moderator summary · compact result-table scale */
+.callout[data-callout="moderator-summary"] > .callout-content {
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+  padding-bottom: 0.22rem;
+}
+
+.callout[data-callout="moderator-summary"] table {
+  width: 100% !important;
+  min-width: 100% !important;
+  margin-block: 0.42rem 0.2rem;
+  table-layout: auto;
+  font-size: 0.78rem !important;
+  line-height: 1.36;
+}
+
+.callout[data-callout="moderator-summary"] :is(th, td) {
+  min-width: 0 !important;
+  max-width: none !important;
+  padding: 0.26rem 0.42rem !important;
+  font-size: inherit !important;
+  line-height: 1.36;
+  vertical-align: top;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(8)) {
+  width: max(100%, 960px) !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+  font-size: 0.76rem !important;
+}
+
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(1) { width: 16% !important; }
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(2) { width: 22% !important; }
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(3) { width: 7% !important; }
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(4) { width: 7% !important; }
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(5) { width: 9% !important; }
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(6) { width: 9% !important; }
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(7) { width: 11% !important; }
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(8) { width: 7% !important; }
+.callout[data-callout="moderator-summary"] table:has(thead th:nth-child(9)) :is(th, td):nth-child(9) { width: 12% !important; }
+
+/* Evidence-synthesis table callouts · compact density scale */
+:is(
+  .callout[data-callout="evidence-scope"],
+  .callout[data-callout="search-protocol"],
+  .callout[data-callout="coding-frame"],
+  .callout[data-callout="coding-protocol"],
+  .callout[data-callout="synthesis-model"],
+  .callout[data-callout="overlap-audit"],
+  .callout[data-callout="effect-summary"],
+  .callout[data-callout="bias-audit"]
+) > .callout-content {
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+}
+
+:is(
+  .callout[data-callout="evidence-scope"],
+  .callout[data-callout="search-protocol"],
+  .callout[data-callout="coding-frame"],
+  .callout[data-callout="coding-protocol"],
+  .callout[data-callout="synthesis-model"],
+  .callout[data-callout="overlap-audit"],
+  .callout[data-callout="effect-summary"],
+  .callout[data-callout="bias-audit"]
+) table {
+  font-size: 0.78rem !important;
+  line-height: 1.36;
+}
+
+:is(
+  .callout[data-callout="coding-frame"],
+  .callout[data-callout="coding-protocol"]
+) table {
+  font-size: 0.74rem !important;
+}
+
+.callout[data-callout="overlap-audit"] table {
+  font-size: 0.76rem !important;
+}
+
+:is(
+  .callout[data-callout="evidence-scope"],
+  .callout[data-callout="search-protocol"],
+  .callout[data-callout="coding-frame"],
+  .callout[data-callout="coding-protocol"],
+  .callout[data-callout="synthesis-model"],
+  .callout[data-callout="overlap-audit"],
+  .callout[data-callout="effect-summary"],
+  .callout[data-callout="bias-audit"]
+) :is(th, td) {
+  padding: 0.3rem 0.46rem !important;
+  font-size: inherit !important;
+  line-height: 1.36;
+  vertical-align: top;
+}
+
+:is(
+  .callout[data-callout="evidence-scope"],
+  .callout[data-callout="search-protocol"],
+  .callout[data-callout="coding-frame"],
+  .callout[data-callout="coding-protocol"],
+  .callout[data-callout="synthesis-model"],
+  .callout[data-callout="overlap-audit"],
+  .callout[data-callout="effect-summary"],
+  .callout[data-callout="bias-audit"]
+) table:has(thead th:nth-child(6)) {
+  font-size: 0.74rem !important;
+}
+
+:is(
+  .callout[data-callout="evidence-scope"],
+  .callout[data-callout="search-protocol"],
+  .callout[data-callout="coding-frame"],
+  .callout[data-callout="coding-protocol"],
+  .callout[data-callout="synthesis-model"],
+  .callout[data-callout="overlap-audit"],
+  .callout[data-callout="effect-summary"],
+  .callout[data-callout="bias-audit"]
+) table:has(thead th:nth-child(8)) {
+  font-size: 0.72rem !important;
+}
+
+/* Preserve the formula-width fix when importing fresh Obsidian CSS. */
+.callout:is([data-callout="formula"], [data-callout="formula-step"])
+  .callout-content :is(.katex-display, p:has(> .katex:only-child), p:has(> .katex + br + .katex)) {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}

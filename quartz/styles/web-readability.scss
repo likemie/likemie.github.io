@@ -1,25 +1,4 @@
-/* Web-only contrast corrections. Keep the Obsidian snippet and its adapted
-   layout separate so a future import cannot erase these fixes. */
-:root {
-  --reading-muted: #595959;
-}
-
-:root[saved-theme="dark"] {
-  --reading-muted: #c4c4c4;
-  --secondary: #a8c9df;
-}
-
-/* Quartz's --gray is a decoration color, not a readable secondary text color.
-   Scope its replacement to callouts; borders elsewhere retain their palette. */
-.callout {
-  --gray: var(--reading-muted);
-}
-
-.callout[data-callout="dev-timeline"] .callout-content > ul > li p,
-.callout[data-callout="dev-timeline"] .callout-content > ul > li > ul > li {
-  color: var(--darkgray);
-}
-
+/* Web-only interaction and readability refinements. */
 /* Separate linked text from its tinted background in both themes. */
 article a.internal {
   text-decoration-thickness: 1px;
@@ -30,4 +9,94 @@ article a.internal:hover,
 article a.internal:focus-visible {
   color: var(--secondary);
   text-decoration: underline;
+}
+
+/* Keep the hue of each card, but separate ink from decorative RGB values. */
+.callout {
+  --web-accent-ink: color-mix(in srgb, rgb(var(--callout-color)) 65%, var(--text-normal));
+}
+:root[saved-theme="dark"] .callout {
+  --web-accent-ink: color-mix(in srgb, rgb(var(--callout-color)) 40%, var(--text-normal));
+}
+
+/* These families use decorative RGB values for readable table labels. */
+article
+  .callout:is(
+    [data-callout="coding-frame"],
+    [data-callout="coding-protocol"],
+    [data-callout="moderator-summary"],
+    [data-callout="overlap-audit"],
+    [data-callout="search-protocol"],
+    [data-callout="synthesis-model"],
+    [data-callout="method-panel"],
+    [data-callout="sample-panel"],
+    [data-callout="contrast-table"],
+    [data-callout="entry-map"],
+    [data-callout="observation-focus"],
+    [data-callout="result-reading"],
+    [data-callout="software-impl"],
+    [data-callout="tension-table"],
+    [data-callout="textbook-overview"],
+    [data-callout="formula-set"],
+    [data-callout="framework-table"]
+  )
+  :is(th, td:first-child) {
+  color: var(--web-accent-ink) !important;
+}
+
+/* Only text accents: leave filled, inverse-color badges in other families. */
+article
+  .callout:is(
+    [data-callout="actor-grid"],
+    [data-callout="bias-audit"],
+    [data-callout="effect-summary"],
+    [data-callout="evidence-scope"],
+    [data-callout="features"],
+    [data-callout="frames-ref"],
+    [data-callout="person-profile"],
+    [data-callout="person-network"],
+    [data-callout="axioms"],
+    [data-callout="book-synthesis"],
+    [data-callout="chapter-arc"],
+    [data-callout="implication"],
+    [data-callout="influence-path"],
+    [data-callout="method-position"],
+    [data-callout="method-scope"],
+    [data-callout="monograph-method"],
+    [data-callout="theory-stance"],
+    [data-callout="continuum"]
+  )
+  .callout-content
+  strong {
+  color: var(--web-accent-ink) !important;
+}
+
+:root[saved-theme="dark"] article .callout a.internal-link {
+  color: var(--secondary) !important;
+}
+
+/* This title has a solid navy fill in both modes. */
+article .callout[data-callout="conclusion"] > .callout-title,
+article .callout[data-callout="conclusion"] > .callout-title .callout-title-inner {
+  color: #f3f6ff !important;
+}
+article
+  .callout:is(
+    [data-callout="continuum"],
+    [data-callout="spectrum"],
+    [data-callout="critique-fatal"],
+    [data-callout="danger"],
+    [data-callout="threat"]
+  )
+  > .callout-title
+  .callout-title-inner {
+  color: var(--web-accent-ink) !important;
+}
+
+article
+  .callout:is([data-callout="continuum"], [data-callout="spectrum"])
+  > .callout-title
+  .callout-title-inner
+  > p {
+  color: var(--web-accent-ink) !important;
 }

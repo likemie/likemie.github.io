@@ -1673,7 +1673,9 @@ body[data-slug^="bases/"] .center > article {
   max-width: 100%;
 }
 
+@import "./obsidian-theme-bridge";
 @import "./argument-callouts";
+@import "./quartz-callout-overrides";
 
 .epub-viewer {
   overflow: hidden;

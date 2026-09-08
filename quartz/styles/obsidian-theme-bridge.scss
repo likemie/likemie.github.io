@@ -1,0 +1,48 @@
+/* Semantic tokens used by the vault's default Obsidian theme.
+   Values checked against the installed Obsidian app.css. Keep this small:
+   importing the full desktop stylesheet would break Quartz navigation. */
+:root {
+  --background-primary: #ffffff;
+  --background-secondary: #f6f6f6;
+  --text-normal: #222222;
+  --text-muted: #5c5c5c;
+  --text-faint: #707070;
+  --color-base-100: #222222;
+  --mono-rgb-100: 0, 0, 0;
+  --font-monospace: var(--codeFont);
+  --h6-size: 1em;
+  --light: var(--background-primary);
+  --darkgray: var(--text-normal);
+  --dark: var(--text-normal);
+}
+
+:root[saved-theme="dark"] {
+  --background-primary: #1e1e1e;
+  --background-secondary: #262626;
+  --text-normal: #dadada;
+  --text-muted: #b3b3b3;
+  --text-faint: #999999;
+  --color-base-100: #dadada;
+  --mono-rgb-100: 255, 255, 255;
+  --light: var(--background-primary);
+  --darkgray: var(--text-normal);
+  --dark: var(--text-normal);
+  --secondary: #a8c9df;
+}
+
+/* In Obsidian, these elements inherit the card's semantic foreground.
+   Quartz gives each paragraph/list item a global foreground by default. */
+article .callout-content :where(p, li, ul, ol) {
+  color: inherit;
+}
+
+article .callout {
+  color: var(--text-normal);
+}
+
+/* Quartz inserts a paragraph inside titles; Obsidian uses inline text. */
+.callout > .callout-title .callout-title-inner > p {
+  display: inline;
+  margin: 0;
+  color: inherit;
+}

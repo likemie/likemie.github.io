@@ -67,6 +67,9 @@ jobs:
       - name: Refresh vault indexes
         run: python3 content/scripts/vault_index.py
 
+      - name: Sync Obsidian styles
+        run: node scripts/sync-obsidian-styles.mjs content
+
       - name: Build Quartz
         run: npx quartz build
 
