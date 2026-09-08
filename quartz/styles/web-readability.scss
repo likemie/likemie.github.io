@@ -75,10 +75,10 @@ article
   color: var(--secondary) !important;
 }
 
-/* This title has a solid navy fill in both modes. */
+/* Use readable title ink with the synchronized translucent title fill. */
 article .callout[data-callout="conclusion"] > .callout-title,
 article .callout[data-callout="conclusion"] > .callout-title .callout-title-inner {
-  color: #f3f6ff !important;
+  color: var(--text-normal) !important;
 }
 article
   .callout:is(
@@ -98,5 +98,26 @@ article
   > .callout-title
   .callout-title-inner
   > p {
+  color: var(--web-accent-ink) !important;
+}
+
+/* These two designs use --cm instead of the shared callout RGB variable. */
+article .callout:is([data-callout="continuum"], [data-callout="spectrum"]) {
+  --web-accent-ink: color-mix(in srgb, rgb(var(--cm)) 60%, var(--text-normal));
+}
+:root[saved-theme="dark"]
+  article
+  .callout:is([data-callout="continuum"], [data-callout="spectrum"]) {
+  --web-accent-ink: color-mix(in srgb, rgb(var(--cm)) 40%, var(--text-normal));
+}
+article
+  .callout:is([data-callout="method-fit"], [data-callout="method-stack"])
+  .callout-content
+  strong,
+:root:not([saved-theme="dark"])
+  article
+  .callout[data-callout="spectrum"]
+  .callout-content
+  :is(li, strong) {
   color: var(--web-accent-ink) !important;
 }
