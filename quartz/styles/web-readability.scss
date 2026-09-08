@@ -1,0 +1,33 @@
+/* Web-only contrast corrections. Keep the Obsidian snippet and its adapted
+   layout separate so a future import cannot erase these fixes. */
+:root {
+  --reading-muted: #595959;
+}
+
+:root[saved-theme="dark"] {
+  --reading-muted: #c4c4c4;
+  --secondary: #a8c9df;
+}
+
+/* Quartz's --gray is a decoration color, not a readable secondary text color.
+   Scope its replacement to callouts; borders elsewhere retain their palette. */
+.callout {
+  --gray: var(--reading-muted);
+}
+
+.callout[data-callout="dev-timeline"] .callout-content > ul > li p,
+.callout[data-callout="dev-timeline"] .callout-content > ul > li > ul > li {
+  color: var(--darkgray);
+}
+
+/* Separate linked text from its tinted background in both themes. */
+article a.internal {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+article a.internal:hover,
+article a.internal:focus-visible {
+  color: var(--secondary);
+  text-decoration: underline;
+}
