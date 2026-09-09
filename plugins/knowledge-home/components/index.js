@@ -563,6 +563,11 @@ function KnowledgeHome(userOpts = {}) {
         },
         { title: "找一个概念", href: "bases/concepts", body: "进入概念索引，用表格和卡片筛选。" },
         {
+          title: "找一个测量工具",
+          href: "bases/instruments",
+          body: "按工具类型浏览测验、量表、问卷与观察工具。",
+        },
+        {
           title: "看一篇文献怎么被拆",
           href: "wiki/arguments",
           body: "从论证框架进入问题、证据链和结论。",
