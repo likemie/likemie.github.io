@@ -583,7 +583,7 @@ function KnowledgeHome(userOpts = {}) {
         {
           eyebrow: "选题指南",
           title: "教育科研选题策略指南",
-          body: "用七类选题策略梳理研究问题、理论视角与可行性，适合本科生逐步阅读。",
+          body: "用九类选题策略梳理研究问题、理论视角与可行性，适合本科生逐步阅读。",
           href: "/static/tools/topic_strategy_guide_undergrad.html",
           action: "打开指南",
           tone: "guide",

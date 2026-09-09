@@ -548,7 +548,7 @@ body {
 <div class="strategy-card" data-id="policy" onclick="selectStrategy(this)">
 <div class="s-icon">📋</div>
 <div class="s-name">响应新政策 → 落地路径</div>
-<div class="s-desc">"双新"、教育强国、小班化等政策热词转化为研究课题</div>
+<div class="s-desc">新课标、教育强国、科学家精神等政策背景转化为具体研究问题</div>
 </div>
 <div class="strategy-card" data-id="theory" onclick="selectStrategy(this)">
 <div class="s-icon">🔬</div>
@@ -567,18 +567,18 @@ body {
 </div>
 <div class="strategy-card" data-id="compare" onclick="selectStrategy(this)">
 <div class="s-icon">🌍</div>
-<div class="s-name">国际比较 → 条件解释与本土转化</div>
+<div class="s-name">国际比较 → 经验借鉴与本土转化</div>
 <div class="s-desc">比较不同国家实践，解释差异条件并判断可迁移性</div>
 </div>
 <div class="strategy-card" data-id="practice" onclick="selectStrategy(this)">
 <div class="s-icon">🎯</div>
-<div class="s-name">实践问题学术化转化</div>
-<div class="s-desc">从阅读、实验、探究等日常教学困惑出发，形成研究问题</div>
+<div class="s-name">实践问题 → 科研课题转化</div>
+<div class="s-desc">把日常教学困惑转化为具体、可观察、可收集证据的研究问题</div>
 </div>
 <div class="strategy-card" data-id="causal" onclick="selectStrategy(this)">
 <div class="s-icon">🔗</div>
-<div class="s-name">教学干预 → 学习结果</div>
-<div class="s-desc">根据研究设计检验效果、变化、改进过程或作用机制</div>
+<div class="s-name">教学策略 → 学习变化</div>
+<div class="s-desc">选择一个具体教学策略，观察学生某一方面是否发生可见变化</div>
 </div>
 
 </div>
@@ -642,20 +642,18 @@ body {
       一个好的选题 Prompt 由以下五个模块组成，每个模块都有其作用：
     </div>
 <div class="template-code">
-<span class="comment">── 模块一：角色设定 ──</span>
-<span class="var">你是一个{角色描述}</span>
-<span class="comment">→ 作用：让 AI 进入专业视角，输出更专业的内容</span>
-<span class="comment">── 模块二：任务说明 ──</span>
-<span class="var">我想研究{研究方向}，请用{选题策略}帮我思考选题</span>
-<span class="comment">→ 作用：明确"做什么"和"怎么做"</span>
-<span class="comment">── 模块三：策略要素注入 ──</span>
-<span class="var">{根据选择的策略，注入具体的技术/理论/政策/群体/变量等要素}</span>
-<span class="comment">→ 作用：这是Prompt的核心差异——不同策略会注入完全不同的约束条件，</span>
-<span class="comment">  引导AI沿着特定方向思考，而不是泛泛而谈</span>
-<span class="comment">── 模块四：质量要求 ──</span>
-<span class="var">先生成候选选题，再比较并筛选更值得继续论证的题目。</span>
-<span class="comment">→ 作用：触发 AI 深度推理，要求它不仅给题目，还要解释为什么好</span>
-</div>
+<span class="comment">── 研究情境 ──</span>
+<span class="var">研究领域 + 学段 + 关注方向</span>
+
+<span class="comment">── 策略要求 ──</span>
+<span class="var">根据所选策略注入必要的技术、问题、政策、理论、群体、比较对象或教学策略</span>
+
+<span class="comment">── 真实案例 ──</span>
+<span class="var">参考真实立项课题的问题结构与命名方式</span>
+
+<span class="comment">── 输出任务 ──</span>
+<span class="var">生成候选题目 → 筛选 → 说明研究问题、创新点、对象和方法</span>
+    </div>
 </div>
 </div>
 </div>
@@ -699,12 +697,12 @@ const strategyConfig = {
 
 参考这类立项课题的命名风格：
 · "大语言模型增强中学生科学探究实践的路径和机制研究（2024）"
-· "AI赋能小学语文“情·趣教学”多模态循证评价研究（2025）"
-· "生成式人工智能赋能中小学课堂提质增效的实践路径研究（2025）"
-· "数智环境下基于大语言模型的个性化学习设计与评价研究（2024）"
+· "数字孪生赋能中小学大规模因材施教的影响机制与实现路径研究（2025）"
+· "虚拟现实环境增强社会情感学习的效果与影响机制研究（2025）"
 · "教学代理对儿童在线学习的影响及效果提升研究（2024）"
-
-请确保技术不是"点缀"，而是切实解决了传统方式难以解决的教学问题。`;
+· "基于多模态智能的初中生综合素质评价模式研究（2024）"
+· "基于智能体的虚拟科学探究学习有效性与支持机制研究（2025）"
+`;
     },
     tips: '生成的 Prompt 会引导 AI 聚焦"技术+学科问题"的交叉创新。拿到选题后，追问 AI："这项技术具体解决了传统教学中的什么痛点？没有这个技术行不行？"——如果回答不出来，说明技术只是贴标签，需要换一个切入点。'
   },
@@ -747,8 +745,7 @@ const strategyConfig = {
 · "教育数字化转型下中小学教师数字负担的系统治理研究（2024）"
 · "青少年短视频沉迷的发生机制及运动联合认知干预研究（2024）"
 · "数字化学习中儿童心智游移的影响因素及干预研究（2024）"
-
-课题名称中应包含"问题识别"和"干预/应对"两个层面。`;
+`;
     },
     tips: '这类选题的关键词是"新"——问题必须是近几年出现的、由技术或社会变革引发的。拿到选题后，追问 AI："这个问题5年前存在吗？是什么变化导致了它的出现？"——确保问题确实具有时代特征。'
   },
@@ -762,7 +759,7 @@ const strategyConfig = {
         <div class="tag-group" id="policyTags">
           <span class="tag" onclick="toggleTag(this)">"双新"(新课标+新教材)</span>
           <span class="tag" onclick="toggleTag(this)">教育强国战略</span>
-          <span class="tag" onclick="toggleTag(this)">少子化/小班化</span>
+          <span class="tag" onclick="toggleTag(this)">课程标准改革</span>
           <span class="tag" onclick="toggleTag(this)">教育家精神</span>
           <span class="tag" onclick="toggleTag(this)">文化自信/铸魂</span>
           <span class="tag" onclick="toggleTag(this)">教育数字化转型</span>
@@ -770,7 +767,7 @@ const strategyConfig = {
           <span class="tag" onclick="toggleTag(this)">"双减"后续影响</span>
           <span class="tag" onclick="toggleTag(this)">"脱颖计划"</span>
           <span class="tag" onclick="toggleTag(this)">"沃土计划"</span>
-          <span class="tag" onclick="toggleTag(this)">科学教育加法</span>
+          <span class="tag" onclick="toggleTag(this)">科学家精神</span>
         </div>
         <input type="text" id="policyCustom" placeholder="或自己填写其他政策关键词..." style="margin-top:8px;">
       </div>
@@ -792,8 +789,7 @@ const strategyConfig = {
 · "“双减”背景下教师教研形成性评价构建与优化路径研究（2023）"
 · "新科技革命背景下工程博士跨界联合培养的促进机制研究（2023）"
 · "教育强国建设背景下高考的功能与属性研究（2025）"
-
-先判断政策是否真正改变了研究对象、制度条件、课程要求或实践问题。如果删去政策背景后研究问题完全不变，就不要把政策写进题目。`;
+`;
     },
     tips: '政策类选题的时效性很强。拿到选题后，追问 AI："这个政策的最新文件是什么时候发布的？政策原文中的核心关键词是什么？"——确保你引用的政策表述准确、是最新的。'
   },
@@ -805,16 +801,15 @@ const strategyConfig = {
       <div class="field">
         <label>你想引入的理论/视角（可多选或自填）</label>
         <div class="tag-group" id="theoryTags">
-          <span class="tag" onclick="toggleTag(this)">具身认知理论</span>
-          <span class="tag" onclick="toggleTag(this)">认知负荷理论</span>
-          <span class="tag" onclick="toggleTag(this)">文化记忆理论</span>
-          <span class="tag" onclick="toggleTag(this)">生态批评</span>
-          <span class="tag" onclick="toggleTag(this)">叙事学</span>
-          <span class="tag" onclick="toggleTag(this)">接受美学</span>
-          <span class="tag" onclick="toggleTag(this)">多模态话语分析</span>
-          <span class="tag" onclick="toggleTag(this)">自我决定论</span>
-          <span class="tag" onclick="toggleTag(this)">心流理论</span>
-          <span class="tag" onclick="toggleTag(this)">学习科学</span>
+          <span class="tag" onclick="toggleTag(this)">分布式认知</span>
+          <span class="tag" onclick="toggleTag(this)">概念隐喻</span>
+          <span class="tag" onclick="toggleTag(this)">叙事运输</span>
+          <span class="tag" onclick="toggleTag(this)">行动者网络理论</span>
+          <span class="tag" onclick="toggleTag(this)">信息觅食理论</span>
+          <span class="tag" onclick="toggleTag(this)">认识警觉</span>
+          <span class="tag" onclick="toggleTag(this)">社会权理论</span>
+          <span class="tag" onclick="toggleTag(this)">复杂系统理论</span>
+          <span class="tag" onclick="toggleTag(this)">他者伦理</span>
         </div>
         <input type="text" id="theoryCustom" placeholder="或自己填写想引入的理论..." style="margin-top:8px;">
       </div>
@@ -831,11 +826,13 @@ const strategyConfig = {
       return `特别要求：请运用"跨领域理论迁移"的选题策略——将 ${allTheories} 等其他学科的理论框架，创造性地引入所选学科教育研究中，用新的理论透镜去重新审视${problem || '学科教学中的传统问题'}。
 
 参考这类立项课题的命名风格：
-· "基于生态系统理论的孤独症儿童教学策略研究（2025）"
-· "基于SOLO分类理论的ADHD小学生学业功能康教协同干预模式的实证研究（2025）"
-· "面向科学探究的具身认知追踪与生成式反馈研究（2025）"
+· "行动者网络理论视角下科技创新后备人才大中衔接培养路径研究（2023）"
+· "他者伦理视域下家校社协同育人的理论构建与实践探索（2023）"
+· "社会权理论下基础教育资源动态统筹调配机制研究（2025）"
+· "复杂系统理论视角下民办高校办学风险预警与应对机制研究（2025）"
+· "基于动力系统与网络理论的心理健康动态干预模型构建研究（2025）"
 
-注意：理论引入不是"贴标签"，需要用该理论的核心概念去分析教育现象，构建新的解释框架。`;
+要求：理论必须能够实质解释研究问题；题目按理论的惯用名称自然表达。`;
     },
     tips: '理论迁移类选题最容易被评审质疑"为什么要用这个理论"。拿到选题后，追问 AI："请解释这个理论的核心概念是什么？它与所选学科教育的哪些现象有内在契合？不用这个理论行不行？"——如果替换成别的理论也成立，说明理论只是装饰。'
   },
@@ -888,10 +885,9 @@ const strategyConfig = {
 · "基于问题提出的小学生关键能力表现性评价研究（2025）"
 · "初中学生跨学科实践能力测评与培养路径研究（2023）"
 · "智能时代中小学教师教研能力测评研究（2025）"
-
-面向本科生，优先把评价研究缩小到课堂可操作范围：明确评价对象→提出2—4个观察维度→设计简短量规、任务或问卷→在小样本中试用并反思。除非确有条件，不要求开发全国通用量表或复杂测评模型。`;
+`;
     },
-    tips: '评价类选题建议从“小工具”开始：一份课堂观察表、一个表现性任务或一个简短量规即可。拿到选题后可追问 AI：“这个题目能不能用一个班级、几次课堂活动完成？需要收集哪些最基本的数据？”'
+    tips: '评价类选题应首先明确“评价什么、依据什么证据、如何评价”。可进一步追问 AI：“这一能力可以分成哪些维度？每个维度可以通过哪些行为、作品或数据进行判断？”'
   },
   group: {
     name: '聚焦特定群体',
@@ -934,15 +930,14 @@ const strategyConfig = {
 · "未就业高校毕业生择业心态的风险排序及纾解策略研究（2024）"
 · "“双减”政策实施后流动儿童家长过度教育焦虑的生成机制与干预策略研究（2025）"
 · "教育强国战略下西部农村特岗教师留任困境与生态化治理研究（2025）"
-
-选题应说明这个群体为什么值得单独研究。面向本科生，优先选择自己能够接触到的学生、班级或教师群体，避免需要跨地区大样本的数据。`;
+`;
     },
     tips: '群体聚焦类选题的说服力取决于"为什么这个群体值得单独研究"。拿到选题后，追问 AI："这个群体和普通学生相比，在学习条件、经验或需求上有什么证据支持的差异？如果用通用的教学方法，会出现什么问题？"——答案越具体，选题越有价值。'
   },
   compare: {
-    name: '国际比较 → 条件解释与本土转化',
+    name: '国际比较 → 经验借鉴与本土转化',
     fields: `
-      <h3>🌍 国际比较 → 条件解释与本土转化 — 策略要素</h3>
+      <h3>🌍 国际比较 → 经验借鉴与本土转化 — 策略要素</h3>
       <div class="hint">思考：其他国家/地区的相关教育经验，与中国情境有哪些可比较的差异？</div>
       <div class="field">
         <label>你想比较的国家/地区（可多选或自填）</label>
@@ -967,44 +962,45 @@ const strategyConfig = {
       const custom = document.getElementById('compareCustom')?.value || '';
       const issue = document.getElementById('compareIssue')?.value || '';
       const allCountries = [...countries, custom].filter(Boolean).join('、') || '主要发达国家';
-      return `特别要求：请运用"国际比较 → 条件解释与本土转化"的选题策略——对比 ${allCountries} 等国家/地区的相关教育经验，${issue ? '聚焦 ' + issue + ' 议题，' : ''}提炼解释差异形成的条件，并判断其对中国情境的可迁移性。
+      return `特别要求：请运用"国际比较 → 经验借鉴与本土转化"的选题策略——对比 ${allCountries} 等国家/地区的相关教育经验，${issue ? '聚焦 ' + issue + ' 议题，' : ''}提炼解释差异形成的条件，并判断其对中国情境的可迁移性。
 
 参考这类立项课题的命名风格：
 · "中小学生工程思维培养的国际比较研究（2024）"
 · "中小学STEM课程建设的国际经验与中国路径研究（2025）"
 · "国际比较视域下的中小学STEM教育实践模式研究（2025）"
 · "科技竞争背景下数学学科发展前沿进中小学数学教材的国际比较与中国路径研究（2025）"
-
-面向本科生，国际比较最好只比较1—2个国家或地区，并聚焦一个具体材料，例如课程标准、教材、评价要求或教学案例。允许得出“某些经验不适合直接迁移”的结论，不强制落脚为“中国路径”。`;
+`;
     },
     tips: '国际比较类选题的常见陷阱是"描述多、分析少"。拿到选题后，追问 AI："中国相关教育实践与XX国最本质的差异是什么？这种差异的根源是什么（文化、制度、语言特性）？哪些经验可以直接借鉴，哪些必须本土化改造？"'
   },
   causal: {
-    name: '教学干预 → 学习结果',
+    name: '教学策略 → 学习变化',
     fields: `
-      <h3>🔗 教学干预 → 学习结果 — 策略要素</h3>
-      <div class="hint">思考：你想尝试什么教学策略，它可能改变学生的哪种学习结果？</div>
+      <h3>🔗 教学策略 → 学习变化 — 策略要素</h3>
+      <div class="hint">思考：你想尝试什么教学策略？你最希望观察学生哪一方面发生变化？</div>
       <div class="field"><label>教学干预/策略</label><input type="text" id="causalIntervention" placeholder="如：论证式教学、同伴互评、虚拟实验、AI学伴..."></div>
-      <div class="field"><label>希望观察的学习结果</label><input type="text" id="causalOutcome" placeholder="如：写作修改能力、科学推理、探究能力、创造力..."></div>
+      <div class="field"><label>希望观察的学习变化</label><input type="text" id="causalOutcome" placeholder="如：写作修改更具体、科学推理更完整、探究问题更可检验..."></div>
     `,
     buildPrompt: () => {
       const intervention = document.getElementById('causalIntervention')?.value || '某种教学策略';
-      const outcome = document.getElementById('causalOutcome')?.value || '学生学习结果';
-      return `特别要求：请运用“教学干预 → 学习结果”的选题策略，围绕 ${intervention} 与 ${outcome} 的关系形成可研究的教育课题。根据实际研究设计谨慎使用“效果”“影响”“促进”“机制”等词。
+      const outcome = document.getElementById('causalOutcome')?.value || '学生某一方面的学习变化';
+      return `特别要求：请运用“教学策略 → 学习变化”的选题策略——选择一个具体教学策略 ${intervention}，对应一个学习结果或能力 ${outcome}，形成“教学策略 × 学习结果”的研究关系，并根据研究设计考察效果、影响、机制或条件。
 
 参考这类真实立项课题的命名风格：
 · "指向创造力发展的初中生好奇心培养机制与教学干预研究（2025）"
 · "提取练习促进儿童新知识学习的优势效应及干预研究（2024）"
 · "人工智能视角下运动-认知训练对青少年创造性思维的促进及其应用研究（2024）"
-
-对初学者，不要为了显得高级而强行加入中介效应、调节效应或复杂因果模型；优先保证问题清楚、对象明确、数据可获得。`;
+· "提升儿童学习效果的所有权效应作用机制及其行动研究（2023）"
+· "跨学科主题学习对中小学生创新素养发展影响的横断追踪研究（2023）"
+· "短视频课程对初中生认知控制能力及学业表现的促进研究（2023）"
+`;
     },
-    tips: '这类选题要特别注意题目表述与研究设计相匹配。若只是课堂行动研究，可用“改进”“变化”“实践”等较稳妥的表达；只有研究设计确实支持时，再使用较强的因果措辞。'
+    tips: '这类选题最重要的是把“策略—变化—证据”对应起来。可以比较学生前后作品、课堂表现或任务结果；如果没有对照和严格设计，就不要轻易写成“某策略对某能力的影响研究”。'
   },
   practice: {
-    name: '实践问题学术化转化',
+    name: '实践问题 → 科研课题转化',
     fields: `
-      <h3>🎯 实践问题学术化转化 — 策略要素</h3>
+      <h3>🎯 实践问题 → 科研课题转化 — 策略要素</h3>
       <div class="hint">思考：你在教学或学习中遇到的最值得研究的问题是什么？</div>
       <div class="field">
         <label>你遇到的教学实践困惑（用日常语言描述即可）</label>
@@ -1018,21 +1014,22 @@ const strategyConfig = {
     buildPrompt: () => {
       const issue = document.getElementById('practiceIssue')?.value || '';
       const attempt = document.getElementById('practiceAttempt')?.value || '';
-      return `特别要求：请运用"实践问题学术化转化"的选题策略——将以下一线教学困惑提升为有学术价值的研究课题：
+      return `特别要求：请运用"实践问题 → 科研课题转化"的选题策略——将以下实践中的难点、偏差、错误、阻滞或其他异常现象转化为可研究的科研课题：
 
 我的教学困惑：${issue || '（学科教学中的具体问题）'}
 ${attempt ? '我曾尝试过：' + attempt : ''}
 
-参考这类真实立项课题如何将实践问题学术化：
-· "字里·字间·字外：核心素养导向下的字理识字价值意蕴阐发和教学实践研究（2024）"
-· "小学生科学精神培育的学习资源开发与进阶实施研究（2025）"
-· "中学跨学科教研模式研究（2023）"
-· "五育融合视域下课堂美育浸润的原理与策略研究（2024）"
-· "指向精准育人的小班化教学改革实践理路与生态格局研究（2025）"
+参考这些真实立项课题如何从具体教学实践切入：
+· "中小学生从错误中学习的机制与策略研究（2025）"
+· "新课标背景下学科实践的实施难点、影响因素与破解机制研究（2023）"
+· "民族地区国家统编教材使用过程的难点评估与解决路径研究（2023）"
+· "西南民族地区中小学中华民族共同体意识教育的实践偏差与优化路径研究（2024）"
+· "科学教师建模教学能力发展现状及提升策略研究（2023）"
+· "中小学教师非教育教学负担常态化监测与减负机制研究（2024）"
 
-转化要点：① 先保留真实的课堂问题；② 明确学生、年级、课程或任务；③ 再决定是否需要“策略”“改进”“实践”等学术表达。不要为了显得高级而强行加入“机制”“模型”“体系”。`;
+要求：先把实践困惑转化为明确、可研究的问题，再据此形成候选题目。`;
     },
-    tips: '实践类选题也很适合本科生课程作业或毕业论文。拿到选题后，追问 AI："请帮我分析，我的教学困惑本质上是什么问题？是教学方法问题、学习动机问题、还是评价导向问题？"——找到问题的"学术归属"，才能确定理论框架。'
+    tips: '实践问题转化的关键是先研究“问题本身”。先问：这个问题具体表现在哪里？有哪些证据？需要解释其成因、机制，还是研究监测与改进？只有当研究起点已经是一种明确教学策略时，才更适合转入“教学策略 → 学习变化”。'
   },
 };
 
@@ -1115,36 +1112,20 @@ function generatePrompt() {
   
   const strategyBlock = config.buildPrompt();
   
-  const prompt = `你是一位资深的教育学研究者和${discipline}教学专家，同时熟悉国内教育科学规划课题的命名规范和评审偏好。 你的首要任务是帮助本科生形成“能看懂、能进入现场、能收集数据、能在有限时间内完成”的小而实的选题。界面中的参考题目均应优先采用2023—2025年全国教育科学规划真实立项案例；教学迁移示例必须明确作为示例，不得冒充真实立项。若用户选择语文教育，优先使用语文案例与语文问题；若选择科学教育，优先使用科学探究、实验教学、科学素养、科学思维、STEM等案例与问题。
+  const prompt = `我想在 ${discipline} 领域开展研究，学段聚焦于 ${levelText}${interestText}。
 
-我想在 ${discipline} 领域开展研究，学段聚焦于 ${levelText}${interestText}。请先发散形成 8 个候选研究问题，再进行严格审查和淘汰，最终保留 3—5 个最值得研究的选题。不要默认每个候选都具有创新性。
+请采用“${config.name}”策略帮助我形成研究选题。
 
 ${strategyBlock}
 
-课题命名规则（非常重要，严格遵守）：
-- 课题名称最多包含 1-3 个核心要素，不超过 30 个字。要素过多的题目不是好题目。
-- 好的示范："具身认知理念下小学生项目化学习设计与实施研究"（2个要素：具身认知 × 项目化学习）
-- 好的示范："利用移动学习终端促进高中生学习力提升的实践研究"（2个要素：移动终端 × 学习力）
-- 反面示范（不要这样写）："基于人工智能大语言模型技术的初中语文写作教学中学生批判性思维与创造力协同培养的混合方法实证研究"（要素堆砌，主题发散）
-- 原则：宁可聚焦一个点打深、打透，也不要贪多求全。每个要素都要有存在的必要性，如果删掉某个要素题目仍然成立，说明它是冗余的。
+请生成 8 个候选题目，并筛选出最值得研究的 4 个。每个保留题目说明：
+1. 课题名称
+2. 核心研究问题
+3. 创新点
+4. 研究对象
+5. 适合的研究方法
 
-评价与淘汰规则：
-- 创新不等于增加新技术、新政策、新理论或热点概念。优先寻找新问题、新证据、新解释、新关系、新情境或新解决方案。
-- 对每个候选从“问题真实性、已有研究缺口、理论必要性、方法可行性、数据可获得性、创新价值”六方面审查。
-- 如果题目只是给旧问题加上“AI、赋能、视域、机制、路径、多模态、核心素养”等装饰性词语，应降级或淘汰。
-- 做一次反向删词检查：删去某个概念后研究问题若没有实质变化，该概念不应保留。
-- 如果已有研究已经高度饱和、问题依据不足、数据难以取得或方法无法回答问题，请明确淘汰，不要强行论证其创新性。
-
-最终对保留的每个选题输出：
-1. 规范的课题名称
-2. 核心研究问题：用一句问句说明到底要回答什么
-3. 创新判断及依据：说明“新”在哪里，同时指出可能与已有研究重复之处
-4. 研究对象与边界
-5. 最适合的研究方法，并说明该方法能回答什么
-6. 可行性风险：数据、样本、工具、伦理或实施方面的主要困难
-7. 推荐等级：★★★★★，并给出一句理由
-
-最后增加“淘汰候选”小节，列出被淘汰的题目及淘汰原因。`;
+题目应围绕真实、明确的研究问题，参考上述真实立项案例的问题结构与命名方式，避免概念堆砌。`;
 
   document.getElementById('promptText').textContent = prompt;
   document.getElementById('usageTips').textContent = config.tips;
