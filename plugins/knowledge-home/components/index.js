@@ -50,7 +50,9 @@ function outgoingSlugs(page) {
 
 function pageDate(page) {
   const dateType = page.defaultDateType ?? "modified"
-  return page.dates?.[dateType] ?? page.dates?.modified ?? page.dates?.created ?? page.dates?.published
+  return (
+    page.dates?.[dateType] ?? page.dates?.modified ?? page.dates?.created ?? page.dates?.published
+  )
 }
 
 function byDateThenLinks(a, b) {
@@ -113,7 +115,9 @@ function isExploreSlug(slug) {
 
 function exploreRouteKey(slug) {
   const key = slug?.match(/^explore\/([^/]+)$/)?.[1]
-  return ["evidence", "governance", "curriculum", "methods", "random"].includes(key) ? key : undefined
+  return ["evidence", "governance", "curriculum", "methods", "random"].includes(key)
+    ? key
+    : undefined
 }
 
 function pageIndexFor(pages) {
@@ -153,7 +157,13 @@ function preferredPage(index, pages, preferred, fallback, prefixes = []) {
   if (fallbackPage) return fallbackPage
 
   const fallbackSlug = fallback?.slug
-  if (fallbackSlug) return index.bySlug.get(fallbackSlug) ?? { slug: fallbackSlug, frontmatter: { title: fallback?.title } }
+  if (fallbackSlug)
+    return (
+      index.bySlug.get(fallbackSlug) ?? {
+        slug: fallbackSlug,
+        frontmatter: { title: fallback?.title },
+      }
+    )
 
   return pages.find((page) => prefixes.some((prefix) => (page.slug ?? "").startsWith(prefix)))
 }
@@ -209,7 +219,10 @@ function hashString(value) {
 
 function seededShuffle(items, seed) {
   return [...items]
-    .map((item, index) => ({ item, rank: hashString(`${seed}-${index}-${item.slug ?? titleFor(item)}`) }))
+    .map((item, index) => ({
+      item,
+      rank: hashString(`${seed}-${index}-${item.slug ?? titleFor(item)}`),
+    }))
     .sort((a, b) => a.rank - b.rank)
     .map(({ item }) => item)
 }
@@ -223,7 +236,9 @@ function connectedPages(index, page) {
 
 function randomWalkRoute({ index, pages, config, seedKey }) {
   const seedPages = config.seeds
-    .map((seed) => pageByTitle(index, seed.title, seed.preferredPrefix) ?? index.bySlug.get(seed.slug))
+    .map(
+      (seed) => pageByTitle(index, seed.title, seed.preferredPrefix) ?? index.bySlug.get(seed.slug),
+    )
     .filter(Boolean)
   const start = seedPages[0]
   if (!start) return undefined
@@ -246,7 +261,9 @@ function randomWalkRoute({ index, pages, config, seedKey }) {
       !config.routePrefixes ||
       config.routePrefixes.some((prefix) => (page.slug ?? "").startsWith(prefix))
     const direct = seededShuffle(
-      connectedPages(index, current).filter((page) => !selected.has(page.slug) && inRouteScope(page)),
+      connectedPages(index, current).filter(
+        (page) => !selected.has(page.slug) && inRouteScope(page),
+      ),
       `${seedKey}-${config.key}-direct-${step}`,
     )
     const fallback = seededShuffle(
@@ -306,11 +323,13 @@ function graphRoutes(pages, routeConfigs, seedKey) {
       }
 
       const route = variants[0]
-      return route && {
-        ...route,
-        meta: `随机 · ${variants.length} 条候选路径`,
-        variants,
-      }
+      return (
+        route && {
+          ...route,
+          meta: `随机 · ${variants.length} 条候选路径`,
+          variants,
+        }
+      )
     })
     .filter(Boolean)
     .filter((route) => route.stops.length > 1)
@@ -469,7 +488,9 @@ function KnowledgeHome(userOpts = {}) {
     const totalLinks = pages.reduce((sum, page) => sum + linksFor(page), 0)
     const routes = graphRoutes(pages, exploreRouteConfigs(), todayKey)
     const randomConfig = randomRouteConfig(todayConcept)
-    const randomRoute = randomConfig ? graphRoutes(pages, [randomConfig], `${todayKey}-random-route`)[0] : undefined
+    const randomRoute = randomConfig
+      ? graphRoutes(pages, [randomConfig], `${todayKey}-random-route`)[0]
+      : undefined
     const routePages = randomRoute ? [...routes, randomRoute] : routes
 
     if (currentRouteKey) {
@@ -478,7 +499,9 @@ function KnowledgeHome(userOpts = {}) {
 
       return h(
         "section",
-        { class: [displayClass, "knowledge-explore knowledge-route-page"].filter(Boolean).join(" ") },
+        {
+          class: [displayClass, "knowledge-explore knowledge-route-page"].filter(Boolean).join(" "),
+        },
         h(
           "div",
           { class: "knowledge-explore-hero knowledge-route-hero" },
@@ -502,8 +525,15 @@ function KnowledgeHome(userOpts = {}) {
         h(
           "section",
           { class: "knowledge-route-board", "data-route-board": route.key },
-          h("div", { class: "knowledge-explore-head" }, h("h2", null, "路线节点"), h("span", null, "随机候选")),
-          route.variants.map((variant, variantIndex) => routePathList(route.key, variant, variantIndex !== 0)),
+          h(
+            "div",
+            { class: "knowledge-explore-head" },
+            h("h2", null, "路线节点"),
+            h("span", null, "随机候选"),
+          ),
+          route.variants.map((variant, variantIndex) =>
+            routePathList(route.key, variant, variantIndex !== 0),
+          ),
         ),
       )
     }
@@ -526,13 +556,42 @@ function KnowledgeHome(userOpts = {}) {
         })
         .filter(Boolean)
       const visitorEntrances = [
-        { title: "快速了解这座库", href: "wiki/research-map", body: "先看研究地图，知道这里有哪些房间。" },
+        {
+          title: "快速了解这座库",
+          href: "wiki/research-map",
+          body: "先看研究地图，知道这里有哪些房间。",
+        },
         { title: "找一个概念", href: "bases/concepts", body: "进入概念索引，用表格和卡片筛选。" },
-        { title: "看一篇文献怎么被拆", href: "wiki/arguments", body: "从论证框架进入问题、证据链和结论。" },
+        {
+          title: "看一篇文献怎么被拆",
+          href: "wiki/arguments",
+          body: "从论证框架进入问题、证据链和结论。",
+        },
         { title: "顺着国家或政策看", href: "wiki/facts", body: "从事实档案进入具体制度场景。" },
       ]
-      const highNodes = topLinked(pages.filter((page) => (page.slug ?? "").startsWith("wiki/")), 10)
+      const highNodes = topLinked(
+        pages.filter((page) => (page.slug ?? "").startsWith("wiki/")),
+        10,
+      )
       const workbench = recent.slice(0, 8)
+      const practicalTools = [
+        {
+          eyebrow: "选题指南",
+          title: "教育科研选题策略指南",
+          body: "用七类选题策略梳理研究问题、理论视角与可行性，适合本科生逐步阅读。",
+          href: "/static/tools/topic_strategy_guide_undergrad.html",
+          action: "打开指南",
+          tone: "guide",
+        },
+        {
+          eyebrow: "Prompt 生成器",
+          title: "教育科研选题 Prompt 生成器",
+          body: "选择策略、填写研究线索，组合出可直接交给 AI 继续打磨的选题提示词。",
+          href: "/static/tools/topic_prompt_generator_undergrad.html",
+          action: "开始生成",
+          tone: "generator",
+        },
+      ]
 
       return h(
         "section",
@@ -556,12 +615,46 @@ function KnowledgeHome(userOpts = {}) {
           ),
         ),
         h(
+          "section",
+          { class: "knowledge-explore-tools", "aria-labelledby": "practical-tools-title" },
+          h(
+            "div",
+            { class: "knowledge-explore-head" },
+            h("h2", { id: "practical-tools-title" }, "实用工具"),
+            h("span", null, "研究选题辅助"),
+          ),
+          h(
+            "div",
+            { class: "knowledge-explore-tool-grid" },
+            practicalTools.map((tool) =>
+              h(
+                "a",
+                {
+                  href: tool.href,
+                  class: `knowledge-explore-tool ${tool.tone}`,
+                  target: "_blank",
+                  rel: "noopener noreferrer",
+                },
+                h("span", { class: "knowledge-explore-tool-eyebrow" }, tool.eyebrow),
+                h("strong", null, tool.title),
+                h("p", null, tool.body),
+                h("em", null, tool.action),
+              ),
+            ),
+          ),
+        ),
+        h(
           "div",
           { class: "knowledge-explore-grid" },
           h(
             "section",
             { class: "knowledge-explore-card knowledge-explore-random" },
-            h("div", { class: "knowledge-explore-head" }, h("h2", null, "随机漫游"), h("span", null, todayKey)),
+            h(
+              "div",
+              { class: "knowledge-explore-head" },
+              h("h2", null, "随机漫游"),
+              h("span", null, todayKey),
+            ),
             h(
               "div",
               { class: "knowledge-explore-random-grid" },
@@ -579,7 +672,12 @@ function KnowledgeHome(userOpts = {}) {
           h(
             "section",
             { class: "knowledge-explore-card" },
-            h("div", { class: "knowledge-explore-head" }, h("h2", null, "访客入口"), h("span", null, "按目的")),
+            h(
+              "div",
+              { class: "knowledge-explore-head" },
+              h("h2", null, "访客入口"),
+              h("span", null, "按目的"),
+            ),
             h(
               "div",
               { class: "knowledge-explore-entrances" },
@@ -597,7 +695,12 @@ function KnowledgeHome(userOpts = {}) {
         h(
           "section",
           { class: "knowledge-explore-routes" },
-          h("div", { class: "knowledge-explore-head" }, h("h2", null, "主题路线"), h("span", null, "从问题进入")),
+          h(
+            "div",
+            { class: "knowledge-explore-head" },
+            h("h2", null, "主题路线"),
+            h("span", null, "从问题进入"),
+          ),
           h(
             "div",
             { class: "knowledge-explore-route-grid" },
@@ -608,7 +711,11 @@ function KnowledgeHome(userOpts = {}) {
                 h("span", null, route.eyebrow),
                 h("strong", null, route.title),
                 h("p", null, route.body),
-                h("em", { class: "knowledge-explore-route-meta" }, `进入路线 · 自动：${route.meta}`),
+                h(
+                  "em",
+                  { class: "knowledge-explore-route-meta" },
+                  `进入路线 · 自动：${route.meta}`,
+                ),
               ),
             ),
           ),
@@ -619,7 +726,12 @@ function KnowledgeHome(userOpts = {}) {
           h(
             "section",
             { class: "knowledge-explore-card knowledge-explore-panel knowledge-explore-hubs" },
-            h("div", { class: "knowledge-explore-head" }, h("h2", null, "高连接节点"), h("span", null, "按链接密度")),
+            h(
+              "div",
+              { class: "knowledge-explore-head" },
+              h("h2", null, "高连接节点"),
+              h("span", null, "按链接密度"),
+            ),
             h(
               "ol",
               { class: "knowledge-explore-list" },
@@ -627,7 +739,11 @@ function KnowledgeHome(userOpts = {}) {
                 h(
                   "li",
                   null,
-                  h("span", { class: "knowledge-explore-rank" }, String(index + 1).padStart(2, "0")),
+                  h(
+                    "span",
+                    { class: "knowledge-explore-rank" },
+                    String(index + 1).padStart(2, "0"),
+                  ),
                   h(
                     "div",
                     { class: "knowledge-explore-list-main" },
@@ -642,7 +758,12 @@ function KnowledgeHome(userOpts = {}) {
           h(
             "section",
             { class: "knowledge-explore-card knowledge-explore-panel knowledge-explore-workbench" },
-            h("div", { class: "knowledge-explore-head" }, h("h2", null, "最近工作台"), h("span", null, "按提交/修改时间")),
+            h(
+              "div",
+              { class: "knowledge-explore-head" },
+              h("h2", null, "最近工作台"),
+              h("span", null, "按提交/修改时间"),
+            ),
             h(
               "ol",
               { class: "knowledge-explore-list" },
@@ -651,7 +772,11 @@ function KnowledgeHome(userOpts = {}) {
                 return h(
                   "li",
                   null,
-                  h("span", { class: "knowledge-explore-rank" }, String(index + 1).padStart(2, "0")),
+                  h(
+                    "span",
+                    { class: "knowledge-explore-rank" },
+                    String(index + 1).padStart(2, "0"),
+                  ),
                   h(
                     "div",
                     { class: "knowledge-explore-list-main" },
@@ -777,8 +902,8 @@ function KnowledgeHome(userOpts = {}) {
           ),
         ),
       ),
-      )
-    }
+    )
+  }
 
   Component.afterDOMLoaded = `
 function knowledgeRouteState(routeKey) {
@@ -1253,7 +1378,8 @@ body[data-slug^="explore/"] article {
 }
 
 .knowledge-explore-card,
-.knowledge-explore-routes {
+.knowledge-explore-routes,
+.knowledge-explore-tools {
   border: 1px solid var(--lightgray);
   border-radius: 8px;
   padding: 1rem;
@@ -1261,6 +1387,72 @@ body[data-slug^="explore/"] article {
 
 .knowledge-explore-card {
   background: var(--light);
+}
+
+.knowledge-explore-tools {
+  background:
+    radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--tertiary) 16%, transparent), transparent 34%),
+    var(--light);
+}
+
+.knowledge-explore-tool-grid {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.knowledge-explore-tool {
+  --tool-tone: var(--secondary);
+  background:
+    radial-gradient(circle at 92% 12%, color-mix(in srgb, var(--tool-tone) 18%, transparent), transparent 34%),
+    color-mix(in srgb, var(--light) 96%, var(--tool-tone));
+  border: 1px solid color-mix(in srgb, var(--tool-tone) 28%, var(--lightgray));
+  border-radius: 8px;
+  color: var(--dark);
+  display: grid;
+  gap: 0.5rem;
+  min-height: 12rem;
+  padding: 1rem;
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.knowledge-explore-tool.generator {
+  --tool-tone: var(--tertiary);
+}
+
+.knowledge-explore-tool-eyebrow {
+  color: var(--tool-tone);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.knowledge-explore-tool strong {
+  font-family: var(--headerFont);
+  font-size: clamp(1.18rem, 2vw, 1.5rem);
+  line-height: 1.25;
+}
+
+.knowledge-explore-tool p {
+  color: var(--darkgray);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.knowledge-explore-tool em {
+  align-self: end;
+  color: var(--tool-tone);
+  font-size: 0.86rem;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.knowledge-explore-tool em::after {
+  content: " ↗";
 }
 
 .knowledge-explore-panel {
@@ -1608,7 +1800,8 @@ body[data-slug^="explore/"] article {
 
 .knowledge-explore-chip:hover,
 .knowledge-explore-route:hover,
-.knowledge-explore-entrance:hover {
+.knowledge-explore-entrance:hover,
+.knowledge-explore-tool:hover {
   border-color: color-mix(in srgb, var(--secondary) 46%, var(--lightgray));
   box-shadow: 0 10px 24px color-mix(in srgb, var(--secondary) 12%, transparent);
   text-decoration: none;
@@ -1721,7 +1914,8 @@ body[data-slug^="explore/"] article {
   .knowledge-home-hero,
   .knowledge-home-grid,
   .knowledge-explore-grid,
-  .knowledge-explore-route-grid {
+  .knowledge-explore-route-grid,
+  .knowledge-explore-tool-grid {
     grid-template-columns: 1fr;
   }
 

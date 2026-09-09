@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>教育科研选题 Prompt 生成器</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&amp;family=LXGW+WenKai+TC&amp;family=Fira+Code:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0f0f13;
+  --surface: #18181f;
+  --surface2: #1e1e28;
+  --border: #2a2a38;
+  --border-active: #5b6abf;
+  --text: #e0dfe6;
+  --text-dim: #8888a0;
+  --text-bright: #ffffff;
+  --accent: #7c8cf5;
+  --accent-glow: rgba(124,140,245,0.15);
+  --accent2: #f5a97c;
+  --green: #7ccfa0;
+  --red: #f57c8c;
+  --tag-bg: rgba(124,140,245,0.12);
+  --code-bg: #12121a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'LXGW WenKai TC', 'Noto Serif SC', serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  padding: 48px 32px 36px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(124,140,245,0.06) 0%, transparent 100%);
+}
+
+.header h1 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 1.8em;
+  font-weight: 900;
+  color: var(--text-bright);
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+
+.header p {
+  color: var(--text-dim);
+  font-size: 0.92em;
+}
+
+.header .badge {
+  display: inline-block;
+  background: var(--tag-bg);
+  color: var(--accent);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.78em;
+  margin-bottom: 14px;
+  border: 1px solid rgba(124,140,245,0.2);
+  letter-spacing: 1px;
+}
+
+/* Layout */
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* Section titles */
+.section-label {
+  font-size: 0.72em;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--border), transparent);
+}
+
+/* Step indicator */
+.step-flow {
+  display: flex;
+  gap: 0;
+  margin-bottom: 36px;
+  background: var(--surface);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.step-item {
+  flex: 1;
+  padding: 14px 16px;
+  text-align: center;
+  font-size: 0.82em;
+  color: var(--text-dim);
+  position: relative;
+  transition: all 0.3s;
+  cursor: default;
+}
+
+.step-item.active {
+  background: var(--accent-glow);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.step-item.done {
+  color: var(--green);
+}
+
+.step-item .step-num {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  line-height: 20px;
+  text-align: center;
+  font-size: 0.8em;
+  margin-right: 6px;
+  font-family: 'Fira Code', monospace;
+}
+
+.step-item.done .step-num {
+  background: var(--green);
+  color: var(--bg);
+  border-color: var(--green);
+}
+
+/* Strategy cards */
+.strategy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.strategy-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.strategy-card:hover {
+  border-color: var(--accent);
+  background: var(--surface2);
+  transform: translateY(-2px);
+}
+
+.strategy-card.selected {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+  box-shadow: 0 0 20px rgba(124,140,245,0.1);
+}
+
+.strategy-card.selected::before {
+  content: '✓';
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  color: var(--accent);
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.strategy-card .s-icon {
+  font-size: 1.3em;
+  margin-bottom: 6px;
+}
+
+.strategy-card .s-name {
+  font-weight: 700;
+  font-size: 0.95em;
+  color: var(--text-bright);
+  margin-bottom: 4px;
+}
+
+.strategy-card .s-desc {
+  font-size: 0.8em;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* Form section */
+.form-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 24px;
+  animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-section h3 {
+  font-size: 1.05em;
+  color: var(--text-bright);
+  margin-bottom: 6px;
+}
+
+.form-section .hint {
+  font-size: 0.82em;
+  color: var(--text-dim);
+  margin-bottom: 18px;
+}
+
+.field {
+  margin-bottom: 18px;
+}
+
+.field label {
+  display: block;
+  font-size: 0.82em;
+  color: var(--accent2);
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+
+.field input, .field textarea, .field select {
+  width: 100%;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.9em;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.field input:focus, .field textarea:focus, .field select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(124,140,245,0.1);
+}
+
+.field textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.field select {
+  cursor: pointer;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238888a0' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+.field .example {
+  font-size: 0.78em;
+  color: var(--text-dim);
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.tag-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 0.82em;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-dim);
+}
+
+.tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tag.active {
+  background: var(--tag-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Buttons */
+.btn-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btn {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.9em;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #6b7be8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(124,140,245,0.3);
+}
+
+.btn-secondary {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--text-dim);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Output */
+.output-section {
+  margin-top: 36px;
+  animation: slideIn 0.5s ease-out;
+}
+
+.prompt-output {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.prompt-output pre {
+  font-family: 'LXGW WenKai TC', serif;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.9em;
+  line-height: 2;
+  color: var(--text);
+}
+
+.prompt-output .role-line {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.prompt-output .structure-line {
+  color: var(--accent2);
+  font-weight: 600;
+}
+
+.prompt-output .example-line {
+  color: var(--green);
+}
+
+.prompt-output .instruction-line {
+  color: var(--text);
+}
+
+.copy-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.78em;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.copy-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.copy-btn.copied {
+  color: var(--green);
+  border-color: var(--green);
+}
+
+/* Analysis box */
+.analysis-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent2);
+  border-radius: 0 10px 10px 0;
+  padding: 22px 24px;
+  margin-top: 20px;
+}
+
+.analysis-box h4 {
+  color: var(--accent2);
+  font-size: 0.88em;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.analysis-box p {
+  font-size: 0.85em;
+  color: var(--text-dim);
+  line-height: 1.8;
+}
+
+/* Template section */
+.template-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 36px;
+}
+
+.template-section h3 {
+  color: var(--text-bright);
+  font-size: 1em;
+  margin-bottom: 16px;
+}
+
+.template-code {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  font-size: 0.85em;
+  line-height: 2;
+  white-space: pre-wrap;
+  word-break: break-word;
+  position: relative;
+}
+
+.template-code .var {
+  color: var(--accent);
+  background: var(--tag-bg);
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.template-code .comment {
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .strategy-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .strategy-grid { grid-template-columns: 1fr; }
+  .header { padding: 32px 16px 24px; }
+  .header h1 { font-size: 1.4em; }
+  .main { padding: 20px 14px; }
+  .step-flow { flex-direction: column; }
+  .form-section { padding: 20px; }
+  .btn-row { flex-direction: column; }
+}
+
+/* Hidden state */
+.hidden { display: none !important; }
+
+/* Typing animation for output */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">教学工具 · 教师版</div>
+<h1>教育科研选题 Prompt 生成器</h1>
+<p>面向语文教育、科学教育等专业：选策略 → 明确问题 → 生成并审查候选选题</p>
+</div>
+<div class="main">
+<!-- Step Flow -->
+<div class="step-flow" id="stepFlow">
+<div class="step-item active" id="step1indicator">
+<span class="step-num">1</span>选择策略
+  </div>
+<div class="step-item" id="step2indicator">
+<span class="step-num">2</span>填写要素
+  </div>
+<div class="step-item" id="step3indicator">
+<span class="step-num">3</span>生成 Prompt
+  </div>
+</div>
+<!-- STEP 1: Choose Strategy -->
+<div id="step1">
+<div class="section-label">第一步 · 选择你的选题策略</div>
+<div class="strategy-grid" id="strategyGrid">
+<div class="strategy-card" data-id="tech" onclick="selectStrategy(this)">
+<div class="s-icon">⚡</div>
+<div class="s-name">新技术 × 传统领域</div>
+<div class="s-desc">将大模型、智能体、眼动追踪等技术用于真实教学问题</div>
+</div>
+<div class="strategy-card" data-id="problem" onclick="selectStrategy(this)">
+<div class="s-icon">🔍</div>
+<div class="s-name">识别新问题 → 干预方案</div>
+<div class="s-desc">发现AI代写、碎片化阅读等"数字时代新病症"，设计干预方案</div>
+</div>
+<div class="strategy-card" data-id="policy" onclick="selectStrategy(this)">
+<div class="s-icon">📋</div>
+<div class="s-name">响应新政策 → 落地路径</div>
+<div class="s-desc">"双新"、教育强国、小班化等政策热词转化为研究课题</div>
+</div>
+<div class="strategy-card" data-id="theory" onclick="selectStrategy(this)">
+<div class="s-icon">🔬</div>
+<div class="s-name">跨领域理论迁移</div>
+<div class="s-desc">将认知科学、社会科学等理论用于解释学科教育问题</div>
+</div>
+<div class="strategy-card" data-id="eval" onclick="selectStrategy(this)">
+<div class="s-icon">📊</div>
+<div class="s-name">构建评价/测评体系</div>
+<div class="s-desc">为数智读写、科学思维等概念开发可验证的测评工具</div>
+</div>
+<div class="strategy-card" data-id="group" onclick="selectStrategy(this)">
+<div class="s-icon">👥</div>
+<div class="s-name">聚焦特定群体</div>
+<div class="s-desc">关注随迁子女、阅读困难学生、民族地区学生等差异化需求</div>
+</div>
+<div class="strategy-card" data-id="compare" onclick="selectStrategy(this)">
+<div class="s-icon">🌍</div>
+<div class="s-name">国际比较 → 条件解释与本土转化</div>
+<div class="s-desc">比较不同国家实践，解释差异条件并判断可迁移性</div>
+</div>
+<div class="strategy-card" data-id="practice" onclick="selectStrategy(this)">
+<div class="s-icon">🎯</div>
+<div class="s-name">实践问题学术化转化</div>
+<div class="s-desc">从阅读、实验、探究等日常教学困惑出发，形成研究问题</div>
+</div>
+<div class="strategy-card" data-id="causal" onclick="selectStrategy(this)">
+<div class="s-icon">🔗</div>
+<div class="s-name">教学干预 → 学习结果</div>
+<div class="s-desc">根据研究设计检验效果、变化、改进过程或作用机制</div>
+</div>
+
+</div>
+<div class="btn-row">
+<button class="btn btn-primary" disabled="" id="toStep2Btn" onclick="goToStep2()">下一步：填写要素 →</button>
+</div>
+</div>
+<!-- STEP 2: Fill Elements -->
+<div class="hidden" id="step2">
+<div class="section-label">第二步 · 填写选题要素</div>
+<!-- 通用字段 -->
+<div class="form-section">
+<h3>基础信息</h3>
+<div class="hint">这些信息将帮助 AI 更精准地生成选题建议</div>
+<div class="field">
+<label>你的学科/研究领域</label>
+<input id="fieldDiscipline" placeholder="如：语文教育、科学教育、物理教育、化学教育、生物教育、教育学" type="text" value=""/>
+</div>
+<div class="field">
+<label>你关注的学段</label>
+<div class="tag-group" id="levelTags">
+<span class="tag" onclick="toggleTag(this)">小学</span>
+<span class="tag" onclick="toggleTag(this)">初中</span>
+<span class="tag" onclick="toggleTag(this)">高中</span>
+<span class="tag" onclick="toggleTag(this)">大学</span>
+<span class="tag" onclick="toggleTag(this)">不限</span>
+</div>
+</div>
+<div class="field">
+<label>你的初步兴趣方向（可以模糊）</label>
+<input id="fieldInterest" placeholder="如：阅读教学、写作教学、科学探究、实验教学、科学素养、STEM教育..." type="text"/>
+<div class="example">不确定也可以留空，让 AI 帮你发散</div>
+</div>
+</div>
+<!-- 策略专属字段 - 动态显示 -->
+<div class="form-section" id="strategyFields"></div>
+<div class="btn-row">
+<button class="btn btn-secondary" onclick="goToStep1()">← 返回选策略</button>
+<button class="btn btn-primary" onclick="goToStep3()">生成 Prompt →</button>
+</div>
+</div>
+<!-- STEP 3: Output -->
+<div class="hidden" id="step3">
+<div class="section-label">第三步 · 你的选题 Prompt</div>
+<div class="prompt-output" id="promptOutput">
+<button class="copy-btn" onclick="copyPrompt()">复制</button>
+<pre id="promptText"></pre>
+</div>
+<div class="analysis-box">
+<h4>📌 使用建议</h4>
+<p id="usageTips"></p>
+</div>
+<div class="btn-row" style="margin-top:24px;">
+<button class="btn btn-secondary" onclick="goToStep2()">← 返回修改</button>
+<button class="btn btn-secondary" onclick="goToStep1()">重新选择策略</button>
+</div>
+<!-- Prompt Template Reference -->
+<div class="template-section" style="margin-top:36px;">
+<h3>📐 Prompt 结构解析</h3>
+<div class="hint" style="color:var(--text-dim); font-size:0.85em; margin-bottom:16px;">
+      一个好的选题 Prompt 由以下五个模块组成，每个模块都有其作用：
+    </div>
+<div class="template-code">
+<span class="comment">── 模块一：角色设定 ──</span>
+<span class="var">你是一个{角色描述}</span>
+<span class="comment">→ 作用：让 AI 进入专业视角，输出更专业的内容</span>
+<span class="comment">── 模块二：任务说明 ──</span>
+<span class="var">我想研究{研究方向}，请用{选题策略}帮我思考选题</span>
+<span class="comment">→ 作用：明确"做什么"和"怎么做"</span>
+<span class="comment">── 模块三：策略要素注入 ──</span>
+<span class="var">{根据选择的策略，注入具体的技术/理论/政策/群体/变量等要素}</span>
+<span class="comment">→ 作用：这是Prompt的核心差异——不同策略会注入完全不同的约束条件，</span>
+<span class="comment">  引导AI沿着特定方向思考，而不是泛泛而谈</span>
+<span class="comment">── 模块四：质量要求 ──</span>
+<span class="var">先生成候选选题，再比较并筛选更值得继续论证的题目。</span>
+<span class="comment">→ 作用：触发 AI 深度推理，要求它不仅给题目，还要解释为什么好</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+// State
+let selectedStrategy = null;
+
+const strategyConfig = {
+  tech: {
+    name: '新技术 × 传统领域',
+    fields: `
+      <h3>⚡ 新技术 × 传统领域 — 策略要素</h3>
+      <div class="hint">思考：你想用什么技术，解决语文教育或科学教育中的什么传统问题？</div>
+      <div class="field">
+        <label>你想引入的技术/工具（可多选或自填）</label>
+        <div class="tag-group" id="techTags">
+          <span class="tag" onclick="toggleTag(this)">大语言模型(LLM)</span>
+          <span class="tag" onclick="toggleTag(this)">生成式AI(AIGC)</span>
+          <span class="tag" onclick="toggleTag(this)">AI智能体</span>
+          <span class="tag" onclick="toggleTag(this)">眼动追踪</span>
+          <span class="tag" onclick="toggleTag(this)">多模态分析</span>
+          <span class="tag" onclick="toggleTag(this)">知识图谱</span>
+          <span class="tag" onclick="toggleTag(this)">虚拟现实(VR)</span>
+          <span class="tag" onclick="toggleTag(this)">数字孪生</span>
+          <span class="tag" onclick="toggleTag(this)">自然语言处理(NLP)</span>
+        </div>
+        <input type="text" id="techCustom" placeholder="或自己填写其他技术..." style="margin-top:8px;">
+      </div>
+      <div class="field">
+        <label>你想解决的教学场景/问题</label>
+        <input type="text" id="techScene" placeholder="如：作文反馈、阅读理解、科学探究、实验教学、概念理解...">
+      </div>
+    `,
+    buildPrompt: () => {
+      const techs = getActiveTags('techTags');
+      const custom = document.getElementById('techCustom')?.value || '';
+      const scene = document.getElementById('techScene')?.value || '';
+      const allTech = [...techs, custom].filter(Boolean).join('、') || '前沿教育技术';
+      const sceneText = scene || '所选学科的传统教学场景';
+      return `特别要求：请运用"新技术 × 传统领域"的选题策略——将 ${allTech} 等前沿技术工具，嫁接到 ${sceneText} 中，探索技术支持所选学科教育的创新路径。
+
+参考这类立项课题的命名风格：
+· "大语言模型增强中学生科学探究实践的路径和机制研究（2024）"
+· "AI赋能小学语文“情·趣教学”多模态循证评价研究（2025）"
+· "生成式人工智能赋能中小学课堂提质增效的实践路径研究（2025）"
+· "数智环境下基于大语言模型的个性化学习设计与评价研究（2024）"
+· "教学代理对儿童在线学习的影响及效果提升研究（2024）"
+
+请确保技术不是"点缀"，而是切实解决了传统方式难以解决的教学问题。`;
+    },
+    tips: '生成的 Prompt 会引导 AI 聚焦"技术+学科问题"的交叉创新。拿到选题后，追问 AI："这项技术具体解决了传统教学中的什么痛点？没有这个技术行不行？"——如果回答不出来，说明技术只是贴标签，需要换一个切入点。'
+  },
+  problem: {
+    name: '识别新问题 → 干预方案',
+    fields: `
+      <h3>🔍 识别新问题 → 干预方案 — 策略要素</h3>
+      <div class="hint">思考：数字时代给你的学科学习带来了哪些新问题？</div>
+      <div class="field">
+        <label>你观察到的新问题/新现象（可多选或自填）</label>
+        <div class="tag-group" id="problemTags">
+          <span class="tag" onclick="toggleTag(this)">AI代写作文</span>
+          <span class="tag" onclick="toggleTag(this)">碎片化阅读</span>
+          <span class="tag" onclick="toggleTag(this)">网络语言入侵书面表达</span>
+          <span class="tag" onclick="toggleTag(this)">短视频侵蚀阅读时间</span>
+          <span class="tag" onclick="toggleTag(this)">手写能力退化</span>
+          <span class="tag" onclick="toggleTag(this)">AI依赖降低思考深度</span>
+          <span class="tag" onclick="toggleTag(this)">注意力涣散难以深度阅读</span>
+          <span class="tag" onclick="toggleTag(this)">AI替代科学推理</span>
+          <span class="tag" onclick="toggleTag(this)">虚拟实验与真实实验脱节</span>
+        </div>
+        <input type="text" id="problemCustom" placeholder="或自己描述你观察到的问题..." style="margin-top:8px;">
+      </div>
+      <div class="field">
+        <label>你希望探索的干预方向</label>
+        <input type="text" id="problemIntervention" placeholder="如：课程设计干预、家校协同、技术辅助识别与预警...">
+      </div>
+    `,
+    buildPrompt: () => {
+      const problems = getActiveTags('problemTags');
+      const custom = document.getElementById('problemCustom')?.value || '';
+      const intervention = document.getElementById('problemIntervention')?.value || '';
+      const allProblems = [...problems, custom].filter(Boolean).join('、') || '数字时代学科学习的新问题';
+      const interventionText = intervention || '教学干预策略';
+      return `特别要求：请运用"识别新问题 → 干预方案"的选题策略——围绕 ${allProblems} 等数字时代出现的学科学习新问题，设计"发现问题→分析机制→提出干预"的完整研究闭环。${interventionText ? '干预方向可侧重：' + interventionText + '。' : ''}
+
+参考这类立项课题的命名风格：
+· "人工智能依赖对大学生创造力的影响机制及干预研究（2025）"
+· "中小学STEM教育中生成式人工智能应用的伦理风险与治理路径研究（2025）"
+· "教育数字化转型下中小学教师数字负担的系统治理研究（2024）"
+· "青少年短视频沉迷的发生机制及运动联合认知干预研究（2024）"
+· "数字化学习中儿童心智游移的影响因素及干预研究（2024）"
+
+课题名称中应包含"问题识别"和"干预/应对"两个层面。`;
+    },
+    tips: '这类选题的关键词是"新"——问题必须是近几年出现的、由技术或社会变革引发的。拿到选题后，追问 AI："这个问题5年前存在吗？是什么变化导致了它的出现？"——确保问题确实具有时代特征。'
+  },
+  policy: {
+    name: '响应新政策 → 落地路径',
+    fields: `
+      <h3>📋 响应新政策 → 落地路径 — 策略要素</h3>
+      <div class="hint">思考：最近有哪些新政策/文件，可以和你的学科教学研究发生实质联系？</div>
+      <div class="field">
+        <label>你想响应的政策/背景（可多选或自填）</label>
+        <div class="tag-group" id="policyTags">
+          <span class="tag" onclick="toggleTag(this)">"双新"(新课标+新教材)</span>
+          <span class="tag" onclick="toggleTag(this)">教育强国战略</span>
+          <span class="tag" onclick="toggleTag(this)">少子化/小班化</span>
+          <span class="tag" onclick="toggleTag(this)">教育家精神</span>
+          <span class="tag" onclick="toggleTag(this)">文化自信/铸魂</span>
+          <span class="tag" onclick="toggleTag(this)">教育数字化转型</span>
+          <span class="tag" onclick="toggleTag(this)">五育融合</span>
+          <span class="tag" onclick="toggleTag(this)">"双减"后续影响</span>
+          <span class="tag" onclick="toggleTag(this)">"脱颖计划"</span>
+          <span class="tag" onclick="toggleTag(this)">"沃土计划"</span>
+          <span class="tag" onclick="toggleTag(this)">科学教育加法</span>
+        </div>
+        <input type="text" id="policyCustom" placeholder="或自己填写其他政策关键词..." style="margin-top:8px;">
+      </div>
+      <div class="field">
+        <label>你想研究的政策落地问题</label>
+        <input type="text" id="policyIssue" placeholder="如：政策如何在课堂落地、实施效果如何评估、面临什么障碍...">
+      </div>
+    `,
+    buildPrompt: () => {
+      const policies = getActiveTags('policyTags');
+      const custom = document.getElementById('policyCustom')?.value || '';
+      const issue = document.getElementById('policyIssue')?.value || '';
+      const allPolicies = [...policies, custom].filter(Boolean).join('、') || '最新教育政策';
+      return `特别要求：请运用"响应新政策 → 落地路径"的选题策略——以 ${allPolicies} 为政策背景，研究这些政策在所选学科教育领域的具体落地路径、实施效果或面临的挑战。${issue ? '重点关注：' + issue + '。' : ''}
+
+参考这类立项课题的命名风格：
+· "“脱颖计划”背景下青少年科学高阶思维的多模态评估与发展研究（2025）"
+· "“沃土计划”背景下小学生科学素养培育环境的系统诊断与协同提升研究（2025）"
+· "“双减”背景下教师教研形成性评价构建与优化路径研究（2023）"
+· "新科技革命背景下工程博士跨界联合培养的促进机制研究（2023）"
+· "教育强国建设背景下高考的功能与属性研究（2025）"
+
+先判断政策是否真正改变了研究对象、制度条件、课程要求或实践问题。如果删去政策背景后研究问题完全不变，就不要把政策写进题目。`;
+    },
+    tips: '政策类选题的时效性很强。拿到选题后，追问 AI："这个政策的最新文件是什么时候发布的？政策原文中的核心关键词是什么？"——确保你引用的政策表述准确、是最新的。'
+  },
+  theory: {
+    name: '跨领域理论迁移',
+    fields: `
+      <h3>🔬 跨领域理论迁移 — 策略要素</h3>
+      <div class="hint">思考：有哪些其他学科的理论，可以为你的学科教育研究提供新视角？</div>
+      <div class="field">
+        <label>你想引入的理论/视角（可多选或自填）</label>
+        <div class="tag-group" id="theoryTags">
+          <span class="tag" onclick="toggleTag(this)">具身认知理论</span>
+          <span class="tag" onclick="toggleTag(this)">认知负荷理论</span>
+          <span class="tag" onclick="toggleTag(this)">文化记忆理论</span>
+          <span class="tag" onclick="toggleTag(this)">生态批评</span>
+          <span class="tag" onclick="toggleTag(this)">叙事学</span>
+          <span class="tag" onclick="toggleTag(this)">接受美学</span>
+          <span class="tag" onclick="toggleTag(this)">多模态话语分析</span>
+          <span class="tag" onclick="toggleTag(this)">自我决定论</span>
+          <span class="tag" onclick="toggleTag(this)">心流理论</span>
+          <span class="tag" onclick="toggleTag(this)">学习科学</span>
+        </div>
+        <input type="text" id="theoryCustom" placeholder="或自己填写想引入的理论..." style="margin-top:8px;">
+      </div>
+      <div class="field">
+        <label>你想用这个理论解释/解决的学科教育问题</label>
+        <input type="text" id="theoryProblem" placeholder="如：古诗词体验不足、阅读理解浅表化、科学错误概念难转变、实验探究流于程序...">
+      </div>
+    `,
+    buildPrompt: () => {
+      const theories = getActiveTags('theoryTags');
+      const custom = document.getElementById('theoryCustom')?.value || '';
+      const problem = document.getElementById('theoryProblem')?.value || '';
+      const allTheories = [...theories, custom].filter(Boolean).join('、') || '跨学科理论';
+      return `特别要求：请运用"跨领域理论迁移"的选题策略——将 ${allTheories} 等其他学科的理论框架，创造性地引入所选学科教育研究中，用新的理论透镜去重新审视${problem || '学科教学中的传统问题'}。
+
+参考这类立项课题的命名风格：
+· "基于生态系统理论的孤独症儿童教学策略研究（2025）"
+· "基于SOLO分类理论的ADHD小学生学业功能康教协同干预模式的实证研究（2025）"
+· "面向科学探究的具身认知追踪与生成式反馈研究（2025）"
+
+注意：理论引入不是"贴标签"，需要用该理论的核心概念去分析教育现象，构建新的解释框架。`;
+    },
+    tips: '理论迁移类选题最容易被评审质疑"为什么要用这个理论"。拿到选题后，追问 AI："请解释这个理论的核心概念是什么？它与所选学科教育的哪些现象有内在契合？不用这个理论行不行？"——如果替换成别的理论也成立，说明理论只是装饰。'
+  },
+  eval: {
+    name: '构建评价/测评体系',
+    fields: `
+      <h3>📊 构建评价/测评体系 — 策略要素</h3>
+      <div class="hint">思考：你的学科中有哪些新概念/新素养，目前还缺乏成熟的评价工具？</div>
+      <div class="field">
+        <label>你想为哪个概念/素养构建评价体系（可多选或自填）</label>
+        <div class="tag-group" id="evalTags">
+          <span class="tag" onclick="toggleTag(this)">数智读写素养</span>
+          <span class="tag" onclick="toggleTag(this)">审辩式阅读能力</span>
+          <span class="tag" onclick="toggleTag(this)">跨媒介阅读素养</span>
+          <span class="tag" onclick="toggleTag(this)">语文核心素养（过程性评价）</span>
+          <span class="tag" onclick="toggleTag(this)">整本书阅读效果</span>
+          <span class="tag" onclick="toggleTag(this)">写作创造力</span>
+          <span class="tag" onclick="toggleTag(this)">口语交际能力</span>
+          <span class="tag" onclick="toggleTag(this)">古诗词鉴赏能力</span>
+          <span class="tag" onclick="toggleTag(this)">科学素养</span>
+          <span class="tag" onclick="toggleTag(this)">科学思维</span>
+          <span class="tag" onclick="toggleTag(this)">科学探究能力</span>
+          <span class="tag" onclick="toggleTag(this)">工程思维</span>
+        </div>
+        <input type="text" id="evalCustom" placeholder="或自己填写想构建评价的概念..." style="margin-top:8px;">
+      </div>
+      <div class="field">
+        <label>你倾向的评价方法</label>
+        <div class="tag-group" id="evalMethodTags">
+          <span class="tag" onclick="toggleTag(this)">量表开发</span>
+          <span class="tag" onclick="toggleTag(this)">表现性评价</span>
+          <span class="tag" onclick="toggleTag(this)">多模态评价</span>
+          <span class="tag" onclick="toggleTag(this)">AI辅助评价</span>
+          <span class="tag" onclick="toggleTag(this)">档案袋评价</span>
+          <span class="tag" onclick="toggleTag(this)">不确定</span>
+        </div>
+      </div>
+    `,
+    buildPrompt: () => {
+      const concepts = getActiveTags('evalTags');
+      const custom = document.getElementById('evalCustom')?.value || '';
+      const methods = getActiveTags('evalMethodTags');
+      const allConcepts = [...concepts, custom].filter(Boolean).join('、') || '所选学科的新素养';
+      const methodText = methods.filter(m => m !== '不确定').join('、');
+      return `特别要求：请运用"构建评价/测评体系"的选题策略——为 ${allConcepts} 设计系统化的评价指标体系、测评工具或评估框架。${methodText ? '可探索的评价方法包括：' + methodText + '。' : ''}
+
+参考这类立项课题的命名风格：
+· "中小学生科学素养数字化追踪评价研究（2024）"
+· "新时代义务教育阶段学生数智读写素养评价体系构建及应用研究（2025）"
+· "基于问题提出的小学生关键能力表现性评价研究（2025）"
+· "初中学生跨学科实践能力测评与培养路径研究（2023）"
+· "智能时代中小学教师教研能力测评研究（2025）"
+
+面向本科生，优先把评价研究缩小到课堂可操作范围：明确评价对象→提出2—4个观察维度→设计简短量规、任务或问卷→在小样本中试用并反思。除非确有条件，不要求开发全国通用量表或复杂测评模型。`;
+    },
+    tips: '评价类选题建议从“小工具”开始：一份课堂观察表、一个表现性任务或一个简短量规即可。拿到选题后可追问 AI：“这个题目能不能用一个班级、几次课堂活动完成？需要收集哪些最基本的数据？”'
+  },
+  group: {
+    name: '聚焦特定群体',
+    fields: `
+      <h3>👥 聚焦特定群体 — 策略要素</h3>
+      <div class="hint">思考：哪个特定群体在学习中可能具有不同经验、条件或需求？</div>
+      <div class="field">
+        <label>你想关注的群体（可多选或自填）</label>
+        <div class="tag-group" id="groupTags">
+          <span class="tag" onclick="toggleTag(this)">随迁子女</span>
+          <span class="tag" onclick="toggleTag(this)">留守儿童</span>
+          <span class="tag" onclick="toggleTag(this)">民族地区学生</span>
+          <span class="tag" onclick="toggleTag(this)">阅读困难学生</span>
+          <span class="tag" onclick="toggleTag(this)">方言区学生</span>
+          <span class="tag" onclick="toggleTag(this)">乡村教师</span>
+          <span class="tag" onclick="toggleTag(this)">新手语文教师</span>
+          <span class="tag" onclick="toggleTag(this)">学优生/拔尖学生</span>
+          <span class="tag" onclick="toggleTag(this)">男生（写作弱势）</span>
+          <span class="tag" onclick="toggleTag(this)">乡村科学学习者</span>
+          <span class="tag" onclick="toggleTag(this)">科学学习困难学生</span>
+          <span class="tag" onclick="toggleTag(this)">小学科学教师</span>
+        </div>
+        <input type="text" id="groupCustom" placeholder="或自己填写想关注的群体..." style="margin-top:8px;">
+      </div>
+      <div class="field">
+        <label>这个群体面临的独特困难/需求</label>
+        <input type="text" id="groupNeed" placeholder="如：方言干扰书面语表达、缺乏课外阅读资源、文化适应困难...">
+      </div>
+    `,
+    buildPrompt: () => {
+      const groups = getActiveTags('groupTags');
+      const custom = document.getElementById('groupCustom')?.value || '';
+      const need = document.getElementById('groupNeed')?.value || '';
+      const allGroups = [...groups, custom].filter(Boolean).join('、') || '特定学生群体';
+      return `特别要求：请运用"聚焦特定群体"的选题策略——以 ${allGroups} 为研究对象，深入分析这一群体在所选学科学习中的独特需求、特殊困难，并设计针对性的教学支持方案。${need ? '该群体面临的核心困难包括：' + need + '。' : ''}
+
+参考这类立项课题的命名风格：
+· "乡村教师地方融入的维度、特征及提升路径研究（2023）"
+· "处境不利儿童积极心理品质的发展轨迹、影响因素及干预研究（2023）"
+· "未就业高校毕业生择业心态的风险排序及纾解策略研究（2024）"
+· "“双减”政策实施后流动儿童家长过度教育焦虑的生成机制与干预策略研究（2025）"
+· "教育强国战略下西部农村特岗教师留任困境与生态化治理研究（2025）"
+
+选题应说明这个群体为什么值得单独研究。面向本科生，优先选择自己能够接触到的学生、班级或教师群体，避免需要跨地区大样本的数据。`;
+    },
+    tips: '群体聚焦类选题的说服力取决于"为什么这个群体值得单独研究"。拿到选题后，追问 AI："这个群体和普通学生相比，在学习条件、经验或需求上有什么证据支持的差异？如果用通用的教学方法，会出现什么问题？"——答案越具体，选题越有价值。'
+  },
+  compare: {
+    name: '国际比较 → 条件解释与本土转化',
+    fields: `
+      <h3>🌍 国际比较 → 条件解释与本土转化 — 策略要素</h3>
+      <div class="hint">思考：其他国家/地区的相关教育经验，与中国情境有哪些可比较的差异？</div>
+      <div class="field">
+        <label>你想比较的国家/地区（可多选或自填）</label>
+        <div class="tag-group" id="compareTags">
+          <span class="tag" onclick="toggleTag(this)">美国</span>
+          <span class="tag" onclick="toggleTag(this)">英国</span>
+          <span class="tag" onclick="toggleTag(this)">芬兰</span>
+          <span class="tag" onclick="toggleTag(this)">日本</span>
+          <span class="tag" onclick="toggleTag(this)">新加坡</span>
+          <span class="tag" onclick="toggleTag(this)">法国</span>
+          <span class="tag" onclick="toggleTag(this)">OECD国家</span>
+        </div>
+        <input type="text" id="compareCustom" placeholder="或自己填写想比较的国家/地区..." style="margin-top:8px;">
+      </div>
+      <div class="field">
+        <label>你想比较的具体议题</label>
+        <input type="text" id="compareIssue" placeholder="如：母语读写标准、整本书阅读、科学课程标准、STEM课程、工程思维培养...">
+      </div>
+    `,
+    buildPrompt: () => {
+      const countries = getActiveTags('compareTags');
+      const custom = document.getElementById('compareCustom')?.value || '';
+      const issue = document.getElementById('compareIssue')?.value || '';
+      const allCountries = [...countries, custom].filter(Boolean).join('、') || '主要发达国家';
+      return `特别要求：请运用"国际比较 → 条件解释与本土转化"的选题策略——对比 ${allCountries} 等国家/地区的相关教育经验，${issue ? '聚焦 ' + issue + ' 议题，' : ''}提炼解释差异形成的条件，并判断其对中国情境的可迁移性。
+
+参考这类立项课题的命名风格：
+· "中小学生工程思维培养的国际比较研究（2024）"
+· "中小学STEM课程建设的国际经验与中国路径研究（2025）"
+· "国际比较视域下的中小学STEM教育实践模式研究（2025）"
+· "科技竞争背景下数学学科发展前沿进中小学数学教材的国际比较与中国路径研究（2025）"
+
+面向本科生，国际比较最好只比较1—2个国家或地区，并聚焦一个具体材料，例如课程标准、教材、评价要求或教学案例。允许得出“某些经验不适合直接迁移”的结论，不强制落脚为“中国路径”。`;
+    },
+    tips: '国际比较类选题的常见陷阱是"描述多、分析少"。拿到选题后，追问 AI："中国相关教育实践与XX国最本质的差异是什么？这种差异的根源是什么（文化、制度、语言特性）？哪些经验可以直接借鉴，哪些必须本土化改造？"'
+  },
+  causal: {
+    name: '教学干预 → 学习结果',
+    fields: `
+      <h3>🔗 教学干预 → 学习结果 — 策略要素</h3>
+      <div class="hint">思考：你想尝试什么教学策略，它可能改变学生的哪种学习结果？</div>
+      <div class="field"><label>教学干预/策略</label><input type="text" id="causalIntervention" placeholder="如：论证式教学、同伴互评、虚拟实验、AI学伴..."></div>
+      <div class="field"><label>希望观察的学习结果</label><input type="text" id="causalOutcome" placeholder="如：写作修改能力、科学推理、探究能力、创造力..."></div>
+    `,
+    buildPrompt: () => {
+      const intervention = document.getElementById('causalIntervention')?.value || '某种教学策略';
+      const outcome = document.getElementById('causalOutcome')?.value || '学生学习结果';
+      return `特别要求：请运用“教学干预 → 学习结果”的选题策略，围绕 ${intervention} 与 ${outcome} 的关系形成可研究的教育课题。根据实际研究设计谨慎使用“效果”“影响”“促进”“机制”等词。
+
+参考这类真实立项课题的命名风格：
+· "指向创造力发展的初中生好奇心培养机制与教学干预研究（2025）"
+· "提取练习促进儿童新知识学习的优势效应及干预研究（2024）"
+· "人工智能视角下运动-认知训练对青少年创造性思维的促进及其应用研究（2024）"
+
+对初学者，不要为了显得高级而强行加入中介效应、调节效应或复杂因果模型；优先保证问题清楚、对象明确、数据可获得。`;
+    },
+    tips: '这类选题要特别注意题目表述与研究设计相匹配。若只是课堂行动研究，可用“改进”“变化”“实践”等较稳妥的表达；只有研究设计确实支持时，再使用较强的因果措辞。'
+  },
+  practice: {
+    name: '实践问题学术化转化',
+    fields: `
+      <h3>🎯 实践问题学术化转化 — 策略要素</h3>
+      <div class="hint">思考：你在教学或学习中遇到的最值得研究的问题是什么？</div>
+      <div class="field">
+        <label>你遇到的教学实践困惑（用日常语言描述即可）</label>
+        <textarea id="practiceIssue" placeholder="如：&#10;· 学生作文千篇一律&#10;· 整本书阅读推不动&#10;· 科学实验课变成照步骤操作&#10;· 学生会背科学概念但不会解释现象&#10;· 科学探究中不会提出可检验的问题"></textarea>
+      </div>
+      <div class="field">
+        <label>你尝试过的教学方法（如果有的话）</label>
+        <input type="text" id="practiceAttempt" placeholder="如：试过小组合作但效果不好、用过思维导图但流于形式...">
+      </div>
+    `,
+    buildPrompt: () => {
+      const issue = document.getElementById('practiceIssue')?.value || '';
+      const attempt = document.getElementById('practiceAttempt')?.value || '';
+      return `特别要求：请运用"实践问题学术化转化"的选题策略——将以下一线教学困惑提升为有学术价值的研究课题：
+
+我的教学困惑：${issue || '（学科教学中的具体问题）'}
+${attempt ? '我曾尝试过：' + attempt : ''}
+
+参考这类真实立项课题如何将实践问题学术化：
+· "字里·字间·字外：核心素养导向下的字理识字价值意蕴阐发和教学实践研究（2024）"
+· "小学生科学精神培育的学习资源开发与进阶实施研究（2025）"
+· "中学跨学科教研模式研究（2023）"
+· "五育融合视域下课堂美育浸润的原理与策略研究（2024）"
+· "指向精准育人的小班化教学改革实践理路与生态格局研究（2025）"
+
+转化要点：① 先保留真实的课堂问题；② 明确学生、年级、课程或任务；③ 再决定是否需要“策略”“改进”“实践”等学术表达。不要为了显得高级而强行加入“机制”“模型”“体系”。`;
+    },
+    tips: '实践类选题也很适合本科生课程作业或毕业论文。拿到选题后，追问 AI："请帮我分析，我的教学困惑本质上是什么问题？是教学方法问题、学习动机问题、还是评价导向问题？"——找到问题的"学术归属"，才能确定理论框架。'
+  },
+};
+
+// Functions
+function selectStrategy(el) {
+  document.querySelectorAll('.strategy-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedStrategy = el.dataset.id;
+  document.getElementById('toStep2Btn').disabled = false;
+}
+
+function toggleTag(el) {
+  const parent = el.parentElement;
+  if (parent && parent.id === 'levelTags') {
+    if (el.textContent.trim() === '不限') {
+      parent.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+      return;
+    } else {
+      Array.from(parent.querySelectorAll('.tag')).filter(t => t.textContent.trim() === '不限').forEach(t => t.classList.remove('active'));
+    }
+  }
+  el.classList.toggle('active');
+}
+
+function getActiveTags(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return [];
+  return Array.from(container.querySelectorAll('.tag.active')).map(t => t.textContent);
+}
+
+function goToStep1() {
+  document.getElementById('step1').classList.remove('hidden');
+  document.getElementById('step2').classList.add('hidden');
+  document.getElementById('step3').classList.add('hidden');
+  updateStepIndicators(1);
+}
+
+function goToStep2() {
+  if (!selectedStrategy) return;
+  document.getElementById('step1').classList.add('hidden');
+  document.getElementById('step2').classList.remove('hidden');
+  document.getElementById('step3').classList.add('hidden');
+  
+  const config = strategyConfig[selectedStrategy];
+  const holder = document.getElementById('strategyFields');
+  if (holder.dataset.strategy !== selectedStrategy) {
+    holder.innerHTML = config.fields;
+    holder.dataset.strategy = selectedStrategy;
+  }
+  updateStepIndicators(2);
+}
+
+function goToStep3() {
+  document.getElementById('step1').classList.add('hidden');
+  document.getElementById('step2').classList.add('hidden');
+  document.getElementById('step3').classList.remove('hidden');
+  
+  generatePrompt();
+  updateStepIndicators(3);
+}
+
+function updateStepIndicators(current) {
+  for (let i = 1; i <= 3; i++) {
+    const el = document.getElementById(`step${i}indicator`);
+    el.classList.remove('active', 'done');
+    if (i < current) el.classList.add('done');
+    if (i === current) el.classList.add('active');
+  }
+}
+
+function generatePrompt() {
+  const config = strategyConfig[selectedStrategy];
+  const discipline = document.getElementById('fieldDiscipline')?.value.trim() || '教育学/学科教育';
+  const levels = getActiveTags('levelTags');
+  const interest = document.getElementById('fieldInterest')?.value || '';
+  
+  const levelText = levels.length > 0 ? levels.join('、') : '中小学';
+  const interestText = interest ? `，特别关注 ${interest} 方向` : '';
+  
+  const strategyBlock = config.buildPrompt();
+  
+  const prompt = `你是一位资深的教育学研究者和${discipline}教学专家，同时熟悉国内教育科学规划课题的命名规范和评审偏好。 你的首要任务是帮助本科生形成“能看懂、能进入现场、能收集数据、能在有限时间内完成”的小而实的选题。界面中的参考题目均应优先采用2023—2025年全国教育科学规划真实立项案例；教学迁移示例必须明确作为示例，不得冒充真实立项。若用户选择语文教育，优先使用语文案例与语文问题；若选择科学教育，优先使用科学探究、实验教学、科学素养、科学思维、STEM等案例与问题。
+
+我想在 ${discipline} 领域开展研究，学段聚焦于 ${levelText}${interestText}。请先发散形成 8 个候选研究问题，再进行严格审查和淘汰，最终保留 3—5 个最值得研究的选题。不要默认每个候选都具有创新性。
+
+${strategyBlock}
+
+课题命名规则（非常重要，严格遵守）：
+- 课题名称最多包含 1-3 个核心要素，不超过 30 个字。要素过多的题目不是好题目。
+- 好的示范："具身认知理念下小学生项目化学习设计与实施研究"（2个要素：具身认知 × 项目化学习）
+- 好的示范："利用移动学习终端促进高中生学习力提升的实践研究"（2个要素：移动终端 × 学习力）
+- 反面示范（不要这样写）："基于人工智能大语言模型技术的初中语文写作教学中学生批判性思维与创造力协同培养的混合方法实证研究"（要素堆砌，主题发散）
+- 原则：宁可聚焦一个点打深、打透，也不要贪多求全。每个要素都要有存在的必要性，如果删掉某个要素题目仍然成立，说明它是冗余的。
+
+评价与淘汰规则：
+- 创新不等于增加新技术、新政策、新理论或热点概念。优先寻找新问题、新证据、新解释、新关系、新情境或新解决方案。
+- 对每个候选从“问题真实性、已有研究缺口、理论必要性、方法可行性、数据可获得性、创新价值”六方面审查。
+- 如果题目只是给旧问题加上“AI、赋能、视域、机制、路径、多模态、核心素养”等装饰性词语，应降级或淘汰。
+- 做一次反向删词检查：删去某个概念后研究问题若没有实质变化，该概念不应保留。
+- 如果已有研究已经高度饱和、问题依据不足、数据难以取得或方法无法回答问题，请明确淘汰，不要强行论证其创新性。
+
+最终对保留的每个选题输出：
+1. 规范的课题名称
+2. 核心研究问题：用一句问句说明到底要回答什么
+3. 创新判断及依据：说明“新”在哪里，同时指出可能与已有研究重复之处
+4. 研究对象与边界
+5. 最适合的研究方法，并说明该方法能回答什么
+6. 可行性风险：数据、样本、工具、伦理或实施方面的主要困难
+7. 推荐等级：★★★★★，并给出一句理由
+
+最后增加“淘汰候选”小节，列出被淘汰的题目及淘汰原因。`;
+
+  document.getElementById('promptText').textContent = prompt;
+  document.getElementById('usageTips').textContent = config.tips;
+}
+
+function copyPrompt() {
+  const text = document.getElementById('promptText').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    // Fallback
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>

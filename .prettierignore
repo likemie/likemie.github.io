@@ -4,3 +4,4 @@ node_modules
 .quartz
 content
 content_backup*
+quartz/static/tools
