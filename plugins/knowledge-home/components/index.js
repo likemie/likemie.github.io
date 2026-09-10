@@ -555,25 +555,6 @@ function KnowledgeHome(userOpts = {}) {
           return page && { ...section, page, count: pool.length }
         })
         .filter(Boolean)
-      const visitorEntrances = [
-        {
-          title: "快速了解这座库",
-          href: "wiki/research-map",
-          body: "先看研究地图，知道这里有哪些房间。",
-        },
-        { title: "找一个概念", href: "bases/concepts", body: "进入概念索引，用表格和卡片筛选。" },
-        {
-          title: "找一个测量工具",
-          href: "bases/instruments",
-          body: "按工具类型浏览测验、量表、问卷与观察工具。",
-        },
-        {
-          title: "看一篇文献怎么被拆",
-          href: "wiki/arguments",
-          body: "从论证框架进入问题、证据链和结论。",
-        },
-        { title: "顺着国家或政策看", href: "wiki/facts", body: "从事实档案进入具体制度场景。" },
-      ]
       const highNodes = topLinked(
         pages.filter((page) => (page.slug ?? "").startsWith("wiki/")),
         10,
@@ -649,50 +630,24 @@ function KnowledgeHome(userOpts = {}) {
           ),
         ),
         h(
-          "div",
-          { class: "knowledge-explore-grid" },
+          "section",
+          { class: "knowledge-explore-card knowledge-explore-random" },
           h(
-            "section",
-            { class: "knowledge-explore-card knowledge-explore-random" },
-            h(
-              "div",
-              { class: "knowledge-explore-head" },
-              h("h2", null, "随机漫游"),
-              h("span", null, todayKey),
-            ),
-            h(
-              "div",
-              { class: "knowledge-explore-random-grid" },
-              randomEntries.map((entry) =>
-                h(
-                  "a",
-                  { href: hrefFor(entry.page), class: "knowledge-explore-chip" },
-                  h("span", null, entry.label),
-                  h("strong", null, titleFor(entry.page)),
-                  h("small", null, `${formatCount(entry.count)} 个候选`),
-                ),
-              ),
-            ),
+            "div",
+            { class: "knowledge-explore-head" },
+            h("h2", null, "随机漫游"),
+            h("span", null, todayKey),
           ),
           h(
-            "section",
-            { class: "knowledge-explore-card" },
-            h(
-              "div",
-              { class: "knowledge-explore-head" },
-              h("h2", null, "访客入口"),
-              h("span", null, "按目的"),
-            ),
-            h(
-              "div",
-              { class: "knowledge-explore-entrances" },
-              visitorEntrances.map((item) =>
-                h(
-                  "a",
-                  { href: hrefFor(item.href), class: "knowledge-explore-entrance" },
-                  h("strong", null, item.title),
-                  h("span", null, item.body),
-                ),
+            "div",
+            { class: "knowledge-explore-random-grid" },
+            randomEntries.map((entry) =>
+              h(
+                "a",
+                { href: hrefFor(entry.page), class: "knowledge-explore-chip" },
+                h("span", null, entry.label),
+                h("strong", null, titleFor(entry.page)),
+                h("small", null, `${formatCount(entry.count)} 个候选`),
               ),
             ),
           ),
@@ -1361,7 +1316,6 @@ body[data-slug^="explore/"] article {
 
 .knowledge-explore-stats span,
 .knowledge-explore-list-main span,
-.knowledge-explore-entrance span,
 .knowledge-explore-chip small {
   color: var(--darkgray);
 }
@@ -1503,11 +1457,10 @@ body[data-slug^="explore/"] article {
 .knowledge-explore-random-grid {
   display: grid;
   gap: 0.6rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
 }
 
-.knowledge-explore-chip,
-.knowledge-explore-entrance {
+.knowledge-explore-chip {
   color: var(--dark);
   text-decoration: none;
 }
@@ -1531,22 +1484,9 @@ body[data-slug^="explore/"] article {
   overflow: hidden;
 }
 
-.knowledge-explore-entrances,
 .knowledge-explore-list {
   display: grid;
   gap: 0.7rem;
-}
-
-.knowledge-explore-entrance {
-  border-bottom: 1px solid var(--lightgray);
-  display: grid;
-  gap: 0.25rem;
-  padding-bottom: 0.7rem;
-}
-
-.knowledge-explore-entrance:last-child {
-  border-bottom: 0;
-  padding-bottom: 0;
 }
 
 .knowledge-explore-routes {
@@ -1805,7 +1745,6 @@ body[data-slug^="explore/"] article {
 
 .knowledge-explore-chip:hover,
 .knowledge-explore-route:hover,
-.knowledge-explore-entrance:hover,
 .knowledge-explore-tool:hover {
   border-color: color-mix(in srgb, var(--secondary) 46%, var(--lightgray));
   box-shadow: 0 10px 24px color-mix(in srgb, var(--secondary) 12%, transparent);
@@ -1932,10 +1871,6 @@ body[data-slug^="explore/"] article {
   }
 
   .knowledge-home-stars {
-    grid-template-columns: 1fr;
-  }
-
-  .knowledge-explore-random-grid {
     grid-template-columns: 1fr;
   }
 
