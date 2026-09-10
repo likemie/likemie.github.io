@@ -115,7 +115,14 @@ function isExploreSlug(slug) {
 
 function exploreRouteKey(slug) {
   const key = slug?.match(/^explore\/([^/]+)$/)?.[1]
-  return ["evidence", "governance", "curriculum", "methods", "random"].includes(key)
+  return [
+    "methods",
+    "comparative-education",
+    "evidence",
+    "governance",
+    "curriculum",
+    "higher-order-assessment",
+  ].includes(key)
     ? key
     : undefined
 }
@@ -168,13 +175,6 @@ function preferredPage(index, pages, preferred, fallback, prefixes = []) {
   return pages.find((page) => prefixes.some((prefix) => (page.slug ?? "").startsWith(prefix)))
 }
 
-function preferredRoutePage(index, preferred = [], prefixes = []) {
-  for (const title of preferred) {
-    const page = pageByTitle(index, title, prefixes[0])
-    if (page) return page
-  }
-}
-
 function relatedPages(index, seedPages, maxDepth = 2) {
   const seen = new Set(seedPages.map((page) => page.slug).filter(Boolean))
   const related = new Map()
@@ -209,261 +209,226 @@ function relatedPages(index, seedPages, maxDepth = 2) {
   return [...related.values()]
 }
 
-function hashString(value) {
-  let hash = 0
-  for (const char of value) {
-    hash = (hash * 31 + char.charCodeAt(0)) >>> 0
-  }
-  return hash
-}
-
-function seededShuffle(items, seed) {
-  return [...items]
-    .map((item, index) => ({
-      item,
-      rank: hashString(`${seed}-${index}-${item.slug ?? titleFor(item)}`),
-    }))
-    .sort((a, b) => a.rank - b.rank)
-    .map(({ item }) => item)
-}
-
-function connectedPages(index, page) {
-  const slugs = [...outgoingSlugs(page), ...(index.backlinks.get(page.slug) ?? [])]
-  return slugs
-    .map((slug) => index.bySlug.get(slug))
-    .filter((connected) => connected && isListedContent(connected))
-}
-
-function randomWalkRoute({ index, pages, config, seedKey }) {
-  const seedPages = config.seeds
-    .map(
-      (seed) => pageByTitle(index, seed.title, seed.preferredPrefix) ?? index.bySlug.get(seed.slug),
-    )
-    .filter(Boolean)
-  const start = seedPages[0]
-  if (!start) return undefined
-
-  const selected = new Set([start.slug])
-  const stops = [
-    {
-      label: "固定锚点",
-      title: titleFor(start),
-      href: start.slug,
-      section: sectionFor(start),
-      source: "关键节点",
-      routeKey: config.eyebrow,
-    },
-  ]
-
-  let current = start
-  for (let step = 1; step < (config.limit ?? 5); step++) {
-    const inRouteScope = (page) =>
-      !config.routePrefixes ||
-      config.routePrefixes.some((prefix) => (page.slug ?? "").startsWith(prefix))
-    const direct = seededShuffle(
-      connectedPages(index, current).filter(
-        (page) => !selected.has(page.slug) && inRouteScope(page),
-      ),
-      `${seedKey}-${config.key}-direct-${step}`,
-    )
-    const fallback = seededShuffle(
-      relatedPages(index, seedPages, 2)
-        .map(({ page }) => page)
-        .filter((page) => !selected.has(page.slug) && inRouteScope(page)),
-      `${seedKey}-${config.key}-fallback-${step}`,
-    )
-    const chosen = direct[0] ?? fallback[0]
-    if (!chosen) break
-
-    selected.add(chosen.slug)
-    stops.push({
-      label: direct[0] ? "随机游走" : "邻域补位",
-      title: titleFor(chosen),
-      href: chosen.slug,
-      section: sectionFor(chosen),
-      source: direct[0] ? "直接连接" : "2 跳邻居",
-      routeKey: config.eyebrow,
-    })
-    current = chosen
-  }
-
-  return {
-    key: config.key,
-    href: `explore/${config.key}`,
-    eyebrow: config.eyebrow,
-    title: config.title,
-    body: config.body,
-    meta: `每日随机 · ${formatCount(relatedPages(index, seedPages, 2).length)} 个候选邻居`,
-    stops,
-  }
-}
-
-function graphRoutes(pages, routeConfigs, seedKey) {
-  const index = pageIndexFor(pages)
-
-  return routeConfigs
-    .map((config) => {
-      const variants = []
-      const seen = new Set()
-
-      for (let indexSeed = 0; indexSeed < 18; indexSeed++) {
-        const route = randomWalkRoute({
-          index,
-          pages,
-          config,
-          seedKey: `${seedKey}-${indexSeed}`,
-        })
-        if (!route) continue
-
-        const signature = route.stops.map((stop) => stop.href).join(">")
-        if (seen.has(signature)) continue
-
-        seen.add(signature)
-        variants.push(route)
-      }
-
-      const route = variants[0]
-      return (
-        route && {
-          ...route,
-          meta: `随机 · ${variants.length} 条候选路径`,
-          variants,
-        }
-      )
-    })
-    .filter(Boolean)
-    .filter((route) => route.stops.length > 1)
-}
-
-function routePathList(routeKey, variant, hidden = false) {
-  return h(
-    "ol",
-    {
-      class: "knowledge-route-path",
-      "data-route-variant": routeKey,
-      hidden: hidden ? true : undefined,
-    },
-    variant.stops.map((stop) =>
-      h(
-        "li",
-        null,
-        h("small", null, stop.label),
-        h("a", { href: hrefFor(stop.href), class: "internal" }, stop.title),
-        h("span", null, `${stop.section} · ${stop.source}`),
-      ),
-    ),
-  )
-}
-
-function routeShuffleOnClick() {
-  return `(() => { const key = this.getAttribute("data-random-route"); const board = document.querySelector("[data-route-board='" + key + "']"); if (!board) return; const variants = Array.from(board.querySelectorAll("[data-route-variant='" + key + "']")); if (variants.length === 0) return; const current = variants.findIndex((variant) => !variant.hidden && variant.style.display !== "none"); let next = Math.floor(Math.random() * variants.length); if (variants.length > 1 && next === current) next = (next + 1) % variants.length; variants.forEach((variant, index) => { const hidden = index !== next; variant.hidden = hidden; variant.style.display = hidden ? "none" : "grid"; }); this.dataset.activeRoute = String(next); const label = this.dataset.routeLabel || "换一条"; this.textContent = variants.length > 1 ? label + " · " + String(next + 1) + "/" + variants.length : label; })()`
-}
-
-function exploreRouteConfigs() {
+function exploreTopicConfigs() {
   return [
+    {
+      key: "methods",
+      eyebrow: "Research Methods",
+      title: "教育研究方法",
+      body: "把研究问题、设计、资料、分析与效度放进同一张方法地图，辨认不同证据能够支持什么结论。",
+      questions: [
+        "问题怎样转化为研究设计？",
+        "证据如何支持因果或解释？",
+        "效度与测量的边界在哪里？",
+      ],
+      anchors: [
+        "Causality",
+        "Crotty's Four Levels of Research Design",
+        "Maxwell's Interactive Model of Research Design",
+        "Mixed Methods Research",
+        "Construct Validity",
+      ],
+      prefixes: [
+        "wiki/concepts/research-methodology/",
+        "wiki/theories/research-methodology/",
+        "wiki/methods/",
+        "wiki/instruments/",
+      ],
+    },
+    {
+      key: "comparative-education",
+      eyebrow: "Comparative Education",
+      title: "比较教育学",
+      body: "围绕比较单位、历史传统、政策借鉴与知识生产，组织比较教育学的概念、人物和经典争论。",
+      questions: [
+        "比较的单位与尺度是什么？",
+        "政策如何跨境流动与变形？",
+        "谁在生产可比较的教育知识？",
+      ],
+      anchors: [
+        "Comparative Educations",
+        "Comparative History of Comparative Education",
+        "Policy Borrowing",
+        "Four Forms of Understanding of Comparative Education",
+        "1970s Methodology Debates in Comparative Education",
+      ],
+      prefixes: [
+        "wiki/concepts/comparative-education/",
+        "wiki/theories/comparative-education/",
+        "wiki/arguments/journal-articles/Comparative Education/",
+      ],
+    },
     {
       key: "evidence",
       eyebrow: "Evidence",
-      title: "循证教育路线",
-      body: "固定从 Evidence-Based Education 出发，后续节点每天从证据、方法、论证和实践邻域里随机游走。",
-      limit: 5,
-      routePrefixes: [
+      title: "循证教育",
+      body: "从“什么算证据”进入，连接清算中心、系统综述、政策实践及其批判，呈现循证教育的完整争议场。",
+      questions: [
+        "什么证据可以进入政策决策？",
+        "研究结论如何转化为实践？",
+        "循证话语遮蔽了哪些判断？",
+      ],
+      anchors: [
+        "Evidence-Based Education",
+        "Critique of Evidence-Based Education",
+        "Research-Informed Teaching Practice",
+        "EEF Teaching and Learning Toolkit",
+        "What Works Clearinghouse",
+      ],
+      prefixes: [
         "wiki/concepts/educational-policy-reform/",
-        "wiki/concepts/research-methodology/",
-        "wiki/methods/",
         "wiki/facts/uk/",
         "wiki/facts/netherlands/",
-        "wiki/arguments/",
-      ],
-      seeds: [
-        {
-          title: "Evidence-Based Education",
-          preferredPrefix: "wiki/concepts/",
-        },
       ],
     },
     {
       key: "governance",
       eyebrow: "Governance",
-      title: "全球教育治理路线",
-      body: "固定从 OECD 出发，后续节点每天沿国际组织、测量、全球话语和批判论证随机游走。",
-      limit: 5,
-      routePrefixes: [
+      title: "全球教育治理",
+      body: "追踪国际组织、指标、政策网络与全球改革话语，观察教育议程如何被比较、量化和传播。",
+      questions: [
+        "国际组织如何设定教育议程？",
+        "指标怎样成为治理工具？",
+        "全球方案如何进入地方制度？",
+      ],
+      anchors: [
+        "OECD",
+        "PISA",
+        "Network Governance",
+        "Government to Governance Shift",
+        "Global Education Reform Movement",
+      ],
+      prefixes: [
         "wiki/facts/global/",
         "wiki/concepts/comparative-education/",
         "wiki/concepts/political-economy-geopolitics/",
-        "wiki/concepts/educational-policy-reform/",
-        "wiki/arguments/",
-      ],
-      seeds: [
-        {
-          title: "OECD",
-          preferredPrefix: "wiki/facts/",
-        },
       ],
     },
     {
       key: "curriculum",
-      eyebrow: "Curriculum",
-      title: "课程政策路线",
-      body: "固定从中国基础教育课程改革出发，后续节点每天沿课程案例、理论和文献论证随机游走。",
-      limit: 5,
-      routePrefixes: [
+      eyebrow: "Curriculum & Teaching",
+      title: "课程与教学",
+      body: "连接课程知识、教学设计、课堂实践与改革案例，既看课程为何如此组织，也看它如何真正发生。",
+      questions: [
+        "什么知识值得进入课程？",
+        "课程目标如何变成教学活动？",
+        "改革文本为何会在课堂中变形？",
+      ],
+      anchors: [
+        "Didaktik",
+        "Powerful Knowledge",
+        "Constructive Alignment",
+        "Teaching and Learning Activities",
+        "China Basic Education Curriculum Reform",
+      ],
+      prefixes: [
+        "wiki/concepts/curriculum/",
+        "wiki/concepts/instruction-pedagogy/",
+        "wiki/theories/curriculum/",
+        "wiki/theories/instruction-pedagogy/",
         "wiki/facts/china/",
         "wiki/facts/finland/",
-        "wiki/facts/newzealand/",
-        "wiki/facts/australia/",
-        "wiki/facts/hongkong/",
-        "wiki/theories/curriculum/",
-        "wiki/methods/qualitative/",
-        "wiki/arguments/",
-      ],
-      seeds: [
-        {
-          title: "China Basic Education Curriculum Reform",
-          preferredPrefix: "wiki/facts/",
-        },
       ],
     },
     {
-      key: "methods",
-      eyebrow: "Methods",
-      title: "方法与证据路线",
-      body: "固定从 Causality 出发，后续节点每天沿方法、效度、测量和研究设计随机游走。",
-      limit: 5,
-      routePrefixes: [
-        "wiki/concepts/research-methodology/",
-        "wiki/methods/",
-        "wiki/instruments/",
-        "wiki/theories/research-methodology/",
-        "wiki/arguments/",
+      key: "higher-order-assessment",
+      eyebrow: "Higher-order Capabilities",
+      title: "高阶能力及其测评",
+      body: "以批判性思维与创造力为核心，把能力构念、教学培养、测评框架和具体工具放在一起比较。",
+      questions: [
+        "高阶能力由哪些构念组成？",
+        "教学能否稳定促进这些能力？",
+        "不同工具究竟测到了什么？",
       ],
-      seeds: [
-        {
-          title: "Causality",
-          preferredPrefix: "wiki/concepts/",
-        },
+      anchors: [
+        "Higher-Order Thinking Skills",
+        "Critical Thinking",
+        "Creativity",
+        "Critical Thinking Assessment",
+        "Creativity Assessment",
+        "OECD Rubrics for Creativity and Critical Thinking",
+      ],
+      prefixes: [
+        "wiki/concepts/learning-science-cognitive-science/",
+        "wiki/concepts/instruction-pedagogy/",
+        "wiki/concepts/educational-psychology/",
+        "wiki/theories/curriculum/",
+        "wiki/instruments/",
       ],
     },
   ]
 }
 
-function randomRouteConfig(todayConcept) {
-  if (!todayConcept) return undefined
+const topicBuckets = [
+  { key: "concepts", title: "核心概念", matches: (slug) => slug.startsWith("wiki/concepts/") },
+  {
+    key: "frameworks",
+    title: "理论与方法",
+    matches: (slug) => slug.startsWith("wiki/theories/") || slug.startsWith("wiki/methods/"),
+  },
+  {
+    key: "instruments",
+    title: "测量工具",
+    matches: (slug) => slug.startsWith("wiki/instruments/"),
+  },
+  {
+    key: "arguments",
+    title: "关键论证",
+    matches: (slug) => slug.startsWith("wiki/arguments/") || slug.startsWith("sources/"),
+  },
+  {
+    key: "contexts",
+    title: "人物与案例",
+    matches: (slug) => slug.startsWith("wiki/persons/") || slug.startsWith("wiki/facts/"),
+  },
+]
 
-  return {
-    key: "random",
-    eyebrow: "Random Walk",
-    title: "随机路径",
-    body: "从今日概念出发，沿真实链接随机走几步。每次打开和点击换一条，都会在知识图谱里换一条可追踪的路径。",
-    limit: 4,
-    seeds: [
-      {
-        title: titleFor(todayConcept),
-        preferredPrefix: `${todayConcept.slug?.split("/").slice(0, -1).join("/")}/`,
-      },
-    ],
+function buildTopicIndex(pages, config) {
+  const index = pageIndexFor(pages)
+  const anchors = config.anchors.map((title) => pageByTitle(index, title)).filter(Boolean)
+  const scores = new Map()
+
+  const addCandidate = (page, score) => {
+    if (!page?.slug || !isListedContent(page)) return
+    scores.set(page.slug, Math.max(scores.get(page.slug) ?? 0, score + linksFor(page)))
   }
+
+  anchors.forEach((page, position) => addCandidate(page, 2000 - position * 20))
+  pages.forEach((page) => {
+    if (config.prefixes.some((prefix) => (page.slug ?? "").startsWith(prefix))) {
+      addCandidate(page, 500)
+    }
+  })
+  relatedPages(index, anchors, 1).forEach(({ page, distance, touches }) => {
+    addCandidate(page, 300 - distance * 70 + touches * 15)
+  })
+
+  const ranked = [...scores.entries()]
+    .map(([slug, score]) => ({ page: index.bySlug.get(slug), score }))
+    .filter(({ page }) => page)
+    .sort(
+      (a, b) =>
+        b.score - a.score ||
+        linksFor(b.page) - linksFor(a.page) ||
+        titleFor(a.page).localeCompare(titleFor(b.page)),
+    )
+
+  const buckets = topicBuckets
+    .map((bucket) => ({
+      ...bucket,
+      pages: ranked
+        .filter(({ page }) => bucket.matches(page.slug ?? ""))
+        .slice(0, 6)
+        .map(({ page }) => page),
+    }))
+    .filter((bucket) => bucket.pages.length > 0)
+
+  const visibleSlugs = new Set([
+    ...anchors.map((page) => page.slug),
+    ...buckets.flatMap((bucket) => bucket.pages.map((page) => page.slug)),
+  ])
+
+  return { anchors, buckets, count: visibleSlugs.size }
 }
 
 function KnowledgeHome(userOpts = {}) {
@@ -486,53 +451,87 @@ function KnowledgeHome(userOpts = {}) {
     const todayConcept = deterministicPick(concepts, todayKey)
     const wikiCount = pages.filter((page) => (page.slug ?? "").startsWith("wiki")).length
     const totalLinks = pages.reduce((sum, page) => sum + linksFor(page), 0)
-    const routes = graphRoutes(pages, exploreRouteConfigs(), todayKey)
-    const randomConfig = randomRouteConfig(todayConcept)
-    const randomRoute = randomConfig
-      ? graphRoutes(pages, [randomConfig], `${todayKey}-random-route`)[0]
-      : undefined
-    const routePages = randomRoute ? [...routes, randomRoute] : routes
+    const topics = exploreTopicConfigs()
 
     if (currentRouteKey) {
-      const route = routePages.find((item) => item.key === currentRouteKey)
-      if (!route) return null
+      const topicConfig = topics.find((item) => item.key === currentRouteKey)
+      if (!topicConfig) return null
+      const topic = buildTopicIndex(pages, topicConfig)
 
       return h(
         "section",
         {
-          class: [displayClass, "knowledge-explore knowledge-route-page"].filter(Boolean).join(" "),
+          class: [displayClass, "knowledge-explore knowledge-topic-page"].filter(Boolean).join(" "),
         },
         h(
           "div",
-          { class: "knowledge-explore-hero knowledge-route-hero" },
-          h("a", { href: hrefFor("explore"), class: "knowledge-route-back" }, "返回探索大厅"),
-          h("p", { class: "knowledge-explore-kicker" }, route.eyebrow),
-          h("h1", null, route.title),
-          h("p", null, route.body),
-          h("em", { class: "knowledge-explore-route-meta" }, `自动：${route.meta}`),
+          { class: "knowledge-explore-hero knowledge-topic-hero" },
+          h("a", { href: hrefFor("explore"), class: "knowledge-route-back" }, "返回专题索引"),
+          h("p", { class: "knowledge-explore-kicker" }, topicConfig.eyebrow),
+          h("h1", null, topicConfig.title),
+          h("p", null, topicConfig.body),
           h(
-            "button",
-            {
-              class: "knowledge-route-shuffle",
-              type: "button",
-              "data-random-route": route.key,
-              "data-route-label": "换一条随机路线",
-              onclick: routeShuffleOnClick(),
-            },
-            "换一条随机路线",
+            "div",
+            { class: "knowledge-topic-questions", "aria-label": "专题核心问题" },
+            topicConfig.questions.map((question, index) =>
+              h(
+                "div",
+                null,
+                h("span", null, String(index + 1).padStart(2, "0")),
+                h("strong", null, question),
+              ),
+            ),
           ),
         ),
         h(
           "section",
-          { class: "knowledge-route-board", "data-route-board": route.key },
+          { class: "knowledge-topic-core" },
           h(
             "div",
             { class: "knowledge-explore-head" },
-            h("h2", null, "路线节点"),
-            h("span", null, "随机候选"),
+            h("h2", null, "推荐起点"),
+            h("span", null, `${formatCount(topic.count)} 个精选入口`),
           ),
-          route.variants.map((variant, variantIndex) =>
-            routePathList(route.key, variant, variantIndex !== 0),
+          h(
+            "div",
+            { class: "knowledge-topic-core-grid" },
+            topic.anchors.map((page, index) =>
+              h(
+                "a",
+                { href: hrefFor(page), class: "knowledge-topic-core-card internal" },
+                h("span", null, String(index + 1).padStart(2, "0")),
+                h("strong", null, titleFor(page)),
+                h("small", null, sectionFor(page)),
+              ),
+            ),
+          ),
+        ),
+        h(
+          "div",
+          { class: "knowledge-topic-shelves" },
+          topic.buckets.map((bucket) =>
+            h(
+              "section",
+              { class: `knowledge-topic-shelf topic-${bucket.key}` },
+              h(
+                "div",
+                { class: "knowledge-explore-head" },
+                h("h2", null, bucket.title),
+                h("span", null, `${bucket.pages.length} 个入口`),
+              ),
+              h(
+                "ol",
+                null,
+                bucket.pages.map((page) =>
+                  h(
+                    "li",
+                    null,
+                    h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
+                    h("span", null, `${sectionFor(page)} · ${formatCount(linksFor(page))} 个链接`),
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       )
@@ -590,7 +589,7 @@ function KnowledgeHome(userOpts = {}) {
           h(
             "p",
             null,
-            "不按文件夹排队。按心情、问题和线索进入：抽一张研究卡，走一条主题路线，或者直接跳进连接最密的节点。",
+            "不按文件夹排队。可以随机抽一张研究卡，也可以从专题进入，把概念、理论、方法、论证和案例放在一起阅读。",
           ),
           h(
             "div",
@@ -658,26 +657,30 @@ function KnowledgeHome(userOpts = {}) {
           h(
             "div",
             { class: "knowledge-explore-head" },
-            h("h2", null, "主题路线"),
-            h("span", null, "从问题进入"),
+            h("h2", null, "专题索引"),
+            h("span", null, "六个研究领域"),
           ),
           h(
             "div",
             { class: "knowledge-explore-route-grid" },
-            routes.map((route) =>
-              h(
+            topics.map((topicConfig) => {
+              const topic = buildTopicIndex(pages, topicConfig)
+              return h(
                 "a",
-                { href: hrefFor(route.href), class: "knowledge-explore-route" },
-                h("span", null, route.eyebrow),
-                h("strong", null, route.title),
-                h("p", null, route.body),
+                {
+                  href: hrefFor(`explore/${topicConfig.key}`),
+                  class: "knowledge-explore-route knowledge-explore-topic",
+                },
+                h("span", null, topicConfig.eyebrow),
+                h("strong", null, topicConfig.title),
+                h("p", null, topicConfig.body),
                 h(
                   "em",
                   { class: "knowledge-explore-route-meta" },
-                  `进入路线 · 自动：${route.meta}`,
+                  `进入专题 · ${formatCount(topic.count)} 个精选入口`,
                 ),
-              ),
-            ),
+              )
+            }),
           ),
         ),
         h(
@@ -790,12 +793,6 @@ function KnowledgeHome(userOpts = {}) {
               { class: "knowledge-home-button ghost", href: hrefFor("wiki/research-map") },
               "进入研究地图",
             ),
-            randomRoute &&
-              h(
-                "a",
-                { class: "knowledge-home-button ghost", href: hrefFor("explore/random") },
-                "随机路径",
-              ),
           ),
         ),
         h(
@@ -1522,6 +1519,10 @@ body[data-slug^="explore/"] article {
   justify-self: start;
 }
 
+.knowledge-explore-topic::after {
+  content: "打开专题";
+}
+
 .knowledge-explore-route strong {
   font-family: var(--headerFont);
   font-size: 1.18rem;
@@ -1541,82 +1542,126 @@ body[data-slug^="explore/"] article {
   line-height: 1.2;
 }
 
-.knowledge-explore-route-stops {
-  border-top: 1px solid color-mix(in srgb, var(--secondary) 18%, var(--lightgray));
-  counter-reset: route-stop;
+.knowledge-topic-page {
+  max-width: 76rem;
+}
+
+.knowledge-topic-hero {
   display: grid;
-  gap: 0.5rem;
+  gap: 0.8rem;
+}
+
+.knowledge-topic-questions {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 0.7rem;
+}
+
+.knowledge-topic-questions div {
+  background: color-mix(in srgb, var(--light) 84%, transparent);
+  border: 1px solid color-mix(in srgb, var(--secondary) 22%, var(--lightgray));
+  border-radius: 8px;
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.85rem;
+}
+
+.knowledge-topic-questions span,
+.knowledge-topic-core-card span {
+  color: var(--secondary);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.knowledge-topic-questions strong {
+  font-family: var(--headerFont);
+  line-height: 1.45;
+}
+
+.knowledge-topic-core,
+.knowledge-topic-shelf {
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.knowledge-topic-core-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+}
+
+.knowledge-topic-core-card {
+  background: color-mix(in srgb, var(--light) 94%, var(--secondary));
+  border: 1px solid color-mix(in srgb, var(--secondary) 22%, var(--lightgray));
+  border-radius: 8px;
+  color: var(--dark);
+  display: grid;
+  gap: 0.4rem;
+  min-height: 8.5rem;
+  padding: 0.85rem;
+  text-decoration: none;
+}
+
+.knowledge-topic-core-card strong {
+  font-family: var(--headerFont);
+  line-height: 1.3;
+}
+
+.knowledge-topic-core-card small {
+  align-self: end;
+  color: var(--darkgray);
+}
+
+.knowledge-topic-shelves {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+}
+
+.knowledge-topic-shelf ol {
+  display: grid;
+  gap: 0;
   list-style: none;
   margin: 0;
-  padding: 0.85rem 0.9rem 0.9rem;
-  position: relative;
+  padding: 0;
 }
 
-.knowledge-explore-route-stops::before {
-  background: color-mix(in srgb, var(--secondary) 28%, var(--lightgray));
-  bottom: 1.8rem;
-  content: "";
-  left: 1.7rem;
-  position: absolute;
-  top: 1.65rem;
-  width: 1px;
-}
-
-.knowledge-explore-route-stops li {
-  align-items: center;
-  counter-increment: route-stop;
+.knowledge-topic-shelf li {
+  border-top: 1px solid color-mix(in srgb, var(--secondary) 14%, var(--lightgray));
   display: grid;
   gap: 0.2rem;
-  grid-template-columns: 1.7rem minmax(0, 1fr);
-  position: relative;
+  padding: 0.7rem 0;
 }
 
-.knowledge-explore-route-stops li::before {
-  align-items: center;
-  background: var(--light);
-  border: 1px solid color-mix(in srgb, var(--secondary) 48%, var(--lightgray));
-  border-radius: 999px;
-  color: var(--secondary);
-  content: counter(route-stop);
-  display: flex;
-  font-size: 0.72rem;
-  font-weight: 800;
-  height: 1.7rem;
-  justify-content: center;
-  width: 1.7rem;
+.knowledge-topic-shelf li:first-child {
+  border-top: 0;
+  padding-top: 0;
 }
 
-.knowledge-explore-route-stops small {
-  color: var(--darkgray);
-  font-size: 0.72rem;
-  grid-column: 2;
-  letter-spacing: 0.02em;
+.knowledge-topic-shelf li:last-child {
+  padding-bottom: 0;
 }
 
-.knowledge-explore-route-stops span {
-  color: var(--darkgray);
-  font-size: 0.7rem;
-  grid-column: 2;
-  line-height: 1.2;
-}
-
-.knowledge-explore-route-stops a {
-  border-bottom: 1px solid color-mix(in srgb, var(--secondary) 24%, transparent);
+.knowledge-topic-shelf a {
   color: var(--dark);
   font-weight: 700;
-  grid-column: 2;
-  line-height: 1.25;
+  line-height: 1.35;
   text-decoration: none;
 }
 
-.knowledge-explore-route-stops a:hover {
-  border-color: var(--secondary);
+.knowledge-topic-shelf a:hover,
+.knowledge-topic-core-card:hover {
   color: var(--secondary);
   text-decoration: none;
 }
 
-.knowledge-route-page {
-  max-width: 70rem;
+.knowledge-topic-shelf li span {
+  color: var(--darkgray);
+  font-size: 0.76rem;
 }
 
 .knowledge-route-back {
@@ -1628,119 +1673,6 @@ body[data-slug^="explore/"] article {
 
 .knowledge-route-back:hover {
   text-decoration: underline;
-}
-
-.knowledge-route-shuffle {
-  background: var(--secondary);
-  border: 1px solid var(--secondary);
-  border-radius: 999px;
-  color: var(--light);
-  cursor: pointer;
-  font: inherit;
-  font-weight: 800;
-  justify-self: start;
-  line-height: 1.2;
-  margin-top: 0.9rem;
-  padding: 0.65rem 0.9rem;
-}
-
-.knowledge-route-shuffle:hover {
-  filter: brightness(1.08);
-}
-
-.knowledge-route-shuffle.subtle {
-  background: color-mix(in srgb, var(--light) 82%, transparent);
-  border-color: color-mix(in srgb, var(--secondary) 28%, var(--lightgray));
-  color: var(--secondary);
-  font-size: 0.82rem;
-  margin-top: 0;
-  padding: 0.45rem 0.65rem;
-}
-
-.knowledge-route-board {
-  background: var(--light);
-  border: 1px solid var(--lightgray);
-  border-radius: 8px;
-  padding: 1rem;
-}
-
-.knowledge-route-board.compact {
-  background: transparent;
-  border: 0;
-  padding: 0;
-}
-
-.knowledge-route-path {
-  counter-reset: route-stop;
-  display: grid;
-  gap: 0.8rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  position: relative;
-}
-
-.knowledge-route-path[hidden] {
-  display: none !important;
-}
-
-.knowledge-route-path::before {
-  background: color-mix(in srgb, var(--secondary) 28%, var(--lightgray));
-  bottom: 2rem;
-  content: "";
-  left: 1.25rem;
-  position: absolute;
-  top: 2rem;
-  width: 1px;
-}
-
-.knowledge-route-path li {
-  align-items: center;
-  background: color-mix(in srgb, var(--light) 94%, var(--secondary));
-  border: 1px solid color-mix(in srgb, var(--secondary) 18%, var(--lightgray));
-  border-radius: 8px;
-  counter-increment: route-stop;
-  display: grid;
-  gap: 0.2rem 0.75rem;
-  grid-template-columns: 2.5rem minmax(0, 1fr);
-  padding: 0.85rem;
-  position: relative;
-}
-
-.knowledge-route-path li::before {
-  align-items: center;
-  background: var(--light);
-  border: 1px solid color-mix(in srgb, var(--secondary) 48%, var(--lightgray));
-  border-radius: 999px;
-  color: var(--secondary);
-  content: counter(route-stop);
-  display: flex;
-  font-size: 0.8rem;
-  font-weight: 800;
-  grid-row: 1 / span 3;
-  height: 2.5rem;
-  justify-content: center;
-  width: 2.5rem;
-}
-
-.knowledge-route-path small,
-.knowledge-route-path span {
-  color: var(--darkgray);
-  font-size: 0.78rem;
-}
-
-.knowledge-route-path a {
-  color: var(--dark);
-  font-family: var(--headerFont);
-  font-size: 1.12rem;
-  font-weight: 800;
-  line-height: 1.2;
-  text-decoration: none;
-}
-
-.knowledge-route-path a:hover {
-  color: var(--secondary);
-  text-decoration: none;
 }
 
 .knowledge-explore-chip:hover,
@@ -1859,6 +1791,7 @@ body[data-slug^="explore/"] article {
   .knowledge-home-grid,
   .knowledge-explore-grid,
   .knowledge-explore-route-grid,
+  .knowledge-topic-questions,
   .knowledge-explore-tool-grid {
     grid-template-columns: 1fr;
   }
