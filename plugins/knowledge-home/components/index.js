@@ -431,6 +431,498 @@ function buildTopicIndex(pages, config) {
   return { anchors, buckets, count: visibleSlugs.size }
 }
 
+function cleanWikiText(value) {
+  return String(value ?? "")
+    .replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, "$2")
+    .replace(/\[\[([^\]]+)\]\]/g, "$1")
+}
+
+function summaryFor(page) {
+  return String(page?.frontmatter?.summary ?? "沿着条目中的概念与文献链接继续探索。")
+}
+
+function authorsFor(page) {
+  const authors = page?.frontmatter?.authors
+  if (!Array.isArray(authors)) return cleanWikiText(authors)
+  return authors.map(cleanWikiText).filter(Boolean).join(" · ")
+}
+
+function displayTitleFor(page) {
+  return page?.frontmatter?.argument_display_title ?? titleFor(page)
+}
+
+function sequentialPicks(pool, seed, limit) {
+  if (pool.length === 0) return []
+  const ordered = [...pool].sort((a, b) => titleFor(a).localeCompare(titleFor(b)))
+  const first = deterministicPick(ordered, seed)
+  const start = Math.max(0, ordered.indexOf(first))
+  return Array.from({ length: Math.min(limit, ordered.length) }, (_, index) => {
+    return ordered[(start + index) % ordered.length]
+  })
+}
+
+function methodsTopicData(pages, todayKey) {
+  const index = pageIndexFor(pages)
+  const find = (title, prefix) => pageByTitle(index, title, prefix)
+  const existing = (titles, prefix) => titles.map((title) => find(title, prefix)).filter(Boolean)
+
+  const fixed = [
+    {
+      title: "Argument_QiMei_2015_EducationalResearchMethods",
+      role: "中文入门",
+      note: "从选题、课题论证到研究报告，建立完整的教育研究流程。",
+    },
+    {
+      title: "Argument_Cohen_Manion_Morrison_2011_Routledge",
+      role: "综合工具书",
+      note: "按范式、设计、资料收集与分析方法查找具体操作路径。",
+    },
+    {
+      title: "Argument_Creswell_2022_SAGE",
+      role: "设计框架",
+      note: "比较量化、质性与混合方法，保持问题、设计和证据一致。",
+    },
+  ]
+    .map((item) => ({ ...item, page: find(item.title, "wiki/arguments/books/") }))
+    .filter((item) => item.page)
+
+  const stages = [
+    {
+      title: "选题与问题化",
+      note: "从感兴趣的主题收窄到可研究的问题与边界。",
+      links: existing(["Research Topic", "Research Problem", "Research Scope"]),
+    },
+    {
+      title: "文献检索",
+      note: "建立检索范围、关键词与材料来源。",
+      links: existing([
+        "Literature Search",
+        "Inverted Triangle Literature Search",
+        "Primary and Secondary Documents",
+      ]),
+    },
+    {
+      title: "综述与研究缺口",
+      note: "把资料组织为论证，辨认已有研究的不足。",
+      links: existing([
+        "Literature Review",
+        "Deficiencies in Past Literature",
+        "Literature Map",
+        "Research Contribution",
+      ]),
+    },
+    {
+      title: "研究目的与问题",
+      note: "明确研究要解释、描述或理解什么。",
+      links: existing([
+        "Research Purpose",
+        "Purpose Statement",
+        "Research Question",
+        "Central Question",
+        "Mixed Methods Question",
+      ]),
+    },
+    {
+      title: "提出研究假设",
+      note: "适用于量化、解释性与实验研究；质性研究可以跳过。",
+      conditional: true,
+      links: existing([
+        "Hypothesis",
+        "Null Hypothesis",
+        "Alternative Hypothesis",
+        "Directional and Non-directional Hypotheses",
+      ]),
+    },
+    {
+      title: "构念与操作化",
+      note: "定义研究对象，并建立构念、变量与测量之间的对应。",
+      links: existing([
+        "Construct",
+        "Definition of Terms",
+        "Operationalization",
+        "Variable",
+        "Scale of Measurement",
+      ]),
+    },
+    {
+      title: "选择研究设计",
+      note: "统筹范式、方法、抽样、资料收集与分析方案。",
+      links: existing([
+        "Crotty's Four Levels of Research Design",
+        "Qualitative Research",
+        "Quantitative Research",
+        "Mixed Methods Research",
+        "Study Population and Sample",
+      ]),
+    },
+    {
+      title: "效度与研究质量",
+      note: "检查推论是否成立，并说明研究结论的适用边界。",
+      links: existing([
+        "Internal Validity",
+        "External Validity",
+        "Construct Validity",
+        "Reliability",
+        "Trustworthiness",
+        "Qualitative Validity",
+      ]),
+    },
+  ]
+
+  const methods = [
+    {
+      label: "观察",
+      title: "Observation Method",
+      description: "在自然或结构化情境中记录行为、互动与过程。",
+      variants: [
+        "Participant Observation",
+        "Non-participant Observation",
+        "Structured Observation",
+      ],
+    },
+    {
+      label: "实验",
+      title: "Experimental Research",
+      description: "通过操纵、比较与控制来评估干预及其因果效果。",
+      variants: [
+        "True Experimental Design",
+        "Quasi-Experimental Designs",
+        "Pre-Experimental Designs",
+      ],
+    },
+    {
+      label: "问卷",
+      title: "Questionnaire",
+      description: "把构念转化为可回答的问题、选项与量表。",
+      variants: ["Questionnaire Wording", "Open-Ended and Closed-Ended Data", "Response Bias"],
+    },
+    {
+      label: "访谈",
+      title: "Qualitative Interview",
+      description: "借助有结构的对话理解经验、意义与行动逻辑。",
+      variants: ["Semi-structured Interview", "In-depth Interview", "Group Interview"],
+    },
+    {
+      label: "行动研究",
+      title: "Action Research",
+      description: "让研究、实践改进与参与者反思在循环中相互推进。",
+      variants: ["Participatory Action Research", "Emancipatory Action Research"],
+    },
+  ]
+    .map((method) => ({
+      ...method,
+      page: find(method.title, "wiki/methods/"),
+      variantPages: existing(method.variants, "wiki/methods/"),
+    }))
+    .filter((method) => method.page)
+
+  const ethics = existing([
+    "Research Ethics",
+    "Informed Consent",
+    "Privacy in Research",
+    "Reflexivity",
+  ])
+
+  const randomPools = [
+    { key: "concept", label: "研究概念", prefix: "wiki/concepts/research-methodology/" },
+    { key: "mixed", label: "混合方法", prefix: "wiki/methods/mixed/" },
+    { key: "qualitative", label: "质性方法", prefix: "wiki/methods/qualitative/" },
+    { key: "quantitative", label: "量化方法", prefix: "wiki/methods/quantitative/" },
+  ]
+
+  const latestPool = pages
+    .filter((page) => randomPools.some((pool) => (page.slug ?? "").startsWith(pool.prefix)))
+    .sort(byDateThenLinks)
+  const latest = latestPool.slice(0, 6)
+
+  const reserved = new Set([
+    ...fixed.map(({ page }) => page.slug),
+    ...stages.flatMap((stage) => stage.links.map((page) => page.slug)),
+    ...methods.flatMap((method) => [method.page, ...method.variantPages].map((page) => page.slug)),
+    ...latest.map((page) => page.slug),
+  ])
+
+  const random = randomPools.map((pool) => {
+    const candidates = pages.filter(
+      (page) => (page.slug ?? "").startsWith(pool.prefix) && !reserved.has(page.slug),
+    )
+    return {
+      ...pool,
+      count: candidates.length,
+      pages: sequentialPicks(candidates, `${todayKey}-${pool.key}`, 8),
+    }
+  })
+
+  return {
+    fixed,
+    stages,
+    methods,
+    ethics,
+    random,
+    latest,
+    total: randomPools.reduce(
+      (sum, pool) => sum + pages.filter((page) => (page.slug ?? "").startsWith(pool.prefix)).length,
+      0,
+    ),
+  }
+}
+
+function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) {
+  const topic = methodsTopicData(pages, todayKey)
+
+  return h(
+    "section",
+    {
+      class: [displayClass, "knowledge-explore knowledge-topic-page knowledge-methods-page"]
+        .filter(Boolean)
+        .join(" "),
+    },
+    h(
+      "header",
+      { class: "knowledge-methods-hero" },
+      h(
+        "div",
+        { class: "knowledge-methods-nav" },
+        h("a", { href: hrefFor("explore"), class: "knowledge-route-back" }, "← 返回专题索引"),
+        h("span", null, "专题 01 · Research Methods"),
+      ),
+      h(
+        "div",
+        { class: "knowledge-methods-hero-copy" },
+        h("p", { class: "knowledge-explore-kicker" }, "Research Methods"),
+        h("h1", null, "教育研究方法"),
+        h("p", null, topicConfig.body),
+      ),
+      h(
+        "div",
+        { class: "knowledge-methods-hero-meta" },
+        h("strong", null, formatCount(topic.total)),
+        h("span", null, "个方法与研究概念"),
+        h("small", null, "问题 → 设计 → 证据 → 推论"),
+      ),
+      h(
+        "div",
+        { class: "knowledge-topic-questions", "aria-label": "专题核心问题" },
+        topicConfig.questions.map((question, index) =>
+          h(
+            "div",
+            null,
+            h("span", null, String(index + 1).padStart(2, "0")),
+            h("strong", null, question),
+          ),
+        ),
+      ),
+    ),
+    h(
+      "section",
+      { class: "knowledge-methods-section knowledge-methods-foundations" },
+      h(
+        "div",
+        { class: "knowledge-methods-section-head" },
+        h("div", null, h("span", null, "Foundations"), h("h2", null, "三本基础教材")),
+        h("p", null, "固定入口 · 从概览到设计，再到具体方法"),
+      ),
+      h(
+        "div",
+        { class: "knowledge-methods-book-grid" },
+        topic.fixed.map((item, index) =>
+          h(
+            "a",
+            {
+              href: hrefFor(item.page),
+              class: `knowledge-methods-book book-${index + 1} internal`,
+            },
+            h(
+              "div",
+              { class: "knowledge-methods-book-top" },
+              h("span", null, String(index + 1).padStart(2, "0")),
+              h("em", null, item.role),
+            ),
+            h("h3", null, displayTitleFor(item.page)),
+            h("small", null, authorsFor(item.page)),
+            h("p", null, item.note),
+            h(
+              "footer",
+              null,
+              h(
+                "span",
+                null,
+                `${item.page.frontmatter?.year ?? ""} · ${formatCount(linksFor(item.page))} 个链接`,
+              ),
+              h("strong", null, "打开 ↗"),
+            ),
+          ),
+        ),
+      ),
+    ),
+    h(
+      "section",
+      { class: "knowledge-methods-roadmap" },
+      h(
+        "div",
+        { class: "knowledge-methods-roadmap-head" },
+        h("div", null, h("span", null, "Research Spine"), h("h2", null, "从选题到可信结论")),
+        h("p", null, "八个阶段不是线性配方，而是一组需要反复校准的研究决策。"),
+      ),
+      h(
+        "ol",
+        { class: "knowledge-methods-stages" },
+        topic.stages.map((stage, index) =>
+          h(
+            "li",
+            { class: stage.conditional ? "is-conditional" : undefined },
+            h(
+              "div",
+              { class: "knowledge-methods-stage-number" },
+              h("span", null, String(index + 1).padStart(2, "0")),
+              index < topic.stages.length - 1 && h("i", { "aria-hidden": "true" }),
+            ),
+            h(
+              "div",
+              { class: "knowledge-methods-stage-body" },
+              h(
+                "div",
+                { class: "knowledge-methods-stage-title" },
+                h("h3", null, stage.title),
+                stage.conditional && h("em", null, "条件步骤"),
+              ),
+              h("p", null, stage.note),
+              h(
+                "div",
+                { class: "knowledge-methods-stage-links" },
+                stage.links.map((page) =>
+                  h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+      h(
+        "aside",
+        { class: "knowledge-methods-ethics" },
+        h("span", null, "贯穿全过程"),
+        h("strong", null, "研究伦理与研究者反思"),
+        h(
+          "div",
+          null,
+          topic.ethics.map((page) =>
+            h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
+          ),
+        ),
+      ),
+    ),
+    h(
+      "section",
+      { class: "knowledge-methods-section knowledge-methods-toolkit" },
+      h(
+        "div",
+        { class: "knowledge-methods-section-head" },
+        h("div", null, h("span", null, "Field Toolkit"), h("h2", null, "五种重点方法")),
+        h("p", null, "从适用问题进入，再比较每种方法的常见变体"),
+      ),
+      h(
+        "div",
+        { class: "knowledge-methods-tool-grid" },
+        topic.methods.map((method, index) =>
+          h(
+            "article",
+            { class: `knowledge-methods-tool tool-${index + 1}` },
+            h("span", null, method.label),
+            h("h3", null, h("a", { href: hrefFor(method.page), class: "internal" }, method.label)),
+            h("p", null, method.description),
+            h(
+              "div",
+              null,
+              method.variantPages.map((page) =>
+                h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
+              ),
+            ),
+          ),
+        ),
+      ),
+    ),
+    h(
+      "section",
+      { class: "knowledge-methods-section knowledge-methods-discovery" },
+      h(
+        "div",
+        { class: "knowledge-methods-section-head" },
+        h("div", null, h("span", null, "Serendipity"), h("h2", null, "随机发现")),
+        h(
+          "button",
+          { type: "button", class: "knowledge-methods-refresh", "data-method-random-refresh": "" },
+          "换一批",
+        ),
+      ),
+      h(
+        "div",
+        { class: "knowledge-methods-random-grid" },
+        topic.random.map((group) =>
+          h(
+            "article",
+            { class: "knowledge-methods-random-card", "data-method-random-card": group.key },
+            h(
+              "header",
+              null,
+              h("span", null, group.label),
+              h("small", null, `${formatCount(group.count)} 个候选`),
+            ),
+            h(
+              "div",
+              { class: "knowledge-methods-random-items" },
+              group.pages.map((page, index) =>
+                h(
+                  "a",
+                  {
+                    href: hrefFor(page),
+                    class: "knowledge-methods-random-item internal",
+                    "data-method-random-item": group.key,
+                    hidden: index > 0 ? true : undefined,
+                  },
+                  h("strong", null, titleFor(page)),
+                  h("p", null, summaryFor(page)),
+                  h("span", null, `${sectionFor(page)} · ${formatCount(linksFor(page))} 个链接`),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    ),
+    h(
+      "section",
+      { class: "knowledge-methods-section knowledge-methods-latest" },
+      h(
+        "div",
+        { class: "knowledge-methods-section-head" },
+        h("div", null, h("span", null, "Recently Updated"), h("h2", null, "最新条目")),
+        h("p", null, "研究概念、混合、质性与量化方法中的最近更新"),
+      ),
+      h(
+        "div",
+        { class: "knowledge-methods-latest-grid" },
+        topic.latest.map((page) => {
+          const date = pageDate(page)
+          return h(
+            "a",
+            { href: hrefFor(page), class: "knowledge-methods-latest-card internal" },
+            h(
+              "header",
+              null,
+              h("span", null, sectionFor(page)),
+              date && h("time", { dateTime: date.toISOString() }, formatDate(date, "zh-CN")),
+            ),
+            h("h3", null, titleFor(page)),
+            h("p", null, summaryFor(page)),
+            h("small", null, `${formatCount(linksFor(page))} 个链接`),
+          )
+        }),
+      ),
+    ),
+  )
+}
+
 function KnowledgeHome(userOpts = {}) {
   const opts = { ...defaultOptions, ...userOpts }
 
@@ -456,6 +948,11 @@ function KnowledgeHome(userOpts = {}) {
     if (currentRouteKey) {
       const topicConfig = topics.find((item) => item.key === currentRouteKey)
       if (!topicConfig) return null
+
+      if (currentRouteKey === "methods") {
+        return renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass })
+      }
+
       const topic = buildTopicIndex(pages, topicConfig)
 
       return h(
@@ -864,68 +1361,27 @@ function KnowledgeHome(userOpts = {}) {
   }
 
   Component.afterDOMLoaded = `
-function knowledgeRouteState(routeKey) {
-  const board = document.querySelector("[data-route-board='" + routeKey + "']")
-  const variants = board
-    ? Array.from(board.querySelectorAll("[data-route-variant='" + routeKey + "']"))
-    : []
-  return { board, variants }
-}
-
-function setKnowledgeRoute(routeKey, index) {
-  const { variants } = knowledgeRouteState(routeKey)
-  const button = document.querySelector("[data-random-route='" + routeKey + "']")
-  if (variants.length === 0) return
-
-  const safeIndex = ((index % variants.length) + variants.length) % variants.length
-  variants.forEach((variant, variantIndex) => {
-    const hidden = variantIndex !== safeIndex
-    variant.hidden = hidden
-    variant.style.display = hidden ? "none" : "grid"
-  })
-
-  if (button) {
-    button.dataset.activeRoute = String(safeIndex)
-    const label = button.dataset.routeLabel || "换一条"
-    button.textContent = variants.length > 1 ? label + " · " + String(safeIndex + 1) + "/" + variants.length : label
+function rotateMethodsRandomCards() {
+  const cards = Array.from(document.querySelectorAll("[data-method-random-card]"))
+  for (const card of cards) {
+    const items = Array.from(card.querySelectorAll("[data-method-random-item]"))
+    if (items.length < 2) continue
+    const current = items.findIndex((item) => !item.hidden)
+    let next = Math.floor(Math.random() * items.length)
+    if (next === current) next = (next + 1) % items.length
+    items.forEach((item, index) => { item.hidden = index !== next })
   }
 }
 
-function initKnowledgeRandomRoutes() {
-  const boards = Array.from(document.querySelectorAll("[data-route-board]"))
-
-  for (const board of boards) {
-    const routeKey = board.getAttribute("data-route-board")
-    const { variants } = knowledgeRouteState(routeKey)
-    if (variants.length === 0) continue
-
-    let current = variants.findIndex((variant) => !variant.hidden)
-    if (current < 0) current = 0
-    const initial = Math.floor(Math.random() * variants.length)
-    setKnowledgeRoute(routeKey, variants.length > 1 && initial === current ? (initial + 1) % variants.length : initial)
-  }
-}
-
-if (window.knowledgeRouteShuffleBound !== true) {
-  window.knowledgeRouteShuffleBound = true
+if (window.knowledgeMethodsRandomBound !== true) {
+  window.knowledgeMethodsRandomBound = true
   document.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-random-route]")
+    const button = event.target.closest("[data-method-random-refresh]")
     if (!button) return
-
     event.preventDefault()
-    const routeKey = button.getAttribute("data-random-route")
-    const { variants } = knowledgeRouteState(routeKey)
-    if (variants.length === 0) return
-
-    const current = variants.findIndex((variant) => !variant.hidden && variant.style.display !== "none")
-    let next = Math.floor(Math.random() * variants.length)
-    if (variants.length > 1 && next === current) next = (next + 1) % variants.length
-    setKnowledgeRoute(routeKey, next)
+    rotateMethodsRandomCards()
   })
 }
-
-document.addEventListener("nav", initKnowledgeRandomRoutes)
-initKnowledgeRandomRoutes()
 `
 
   Component.css = `
@@ -1667,6 +2123,670 @@ body[data-slug^="explore/"] article {
   font-size: 0.76rem;
 }
 
+.knowledge-methods-page {
+  --methods-navy: #14232d;
+  --methods-navy-soft: #203744;
+  --methods-ice: #dceaf0;
+  --methods-gold: #c8a86b;
+  gap: clamp(1.25rem, 2vw, 2rem);
+  max-width: 80rem;
+}
+
+.knowledge-methods-hero {
+  background:
+    radial-gradient(circle at 86% 12%, color-mix(in srgb, var(--secondary) 22%, transparent), transparent 28%),
+    linear-gradient(135deg, color-mix(in srgb, var(--light) 96%, var(--secondary)), var(--light));
+  border: 1px solid color-mix(in srgb, var(--secondary) 28%, var(--lightgray));
+  border-radius: 14px;
+  display: grid;
+  gap: 1.4rem 2rem;
+  grid-template-columns: minmax(0, 1fr) minmax(13rem, 0.28fr);
+  overflow: hidden;
+  padding: clamp(1.25rem, 4vw, 3rem);
+  position: relative;
+}
+
+.knowledge-methods-hero::before {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--secondary) 10%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--secondary) 10%, transparent) 1px, transparent 1px);
+  background-size: 32px 32px;
+  content: "";
+  inset: 0;
+  mask-image: linear-gradient(110deg, transparent 12%, black 60%, transparent 94%);
+  opacity: 0.55;
+  pointer-events: none;
+  position: absolute;
+}
+
+.knowledge-methods-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.knowledge-methods-nav {
+  align-items: center;
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: space-between;
+}
+
+.knowledge-methods-nav > span,
+.knowledge-methods-section-head > div > span,
+.knowledge-methods-roadmap-head > div > span {
+  color: var(--secondary);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.knowledge-methods-nav > span {
+  color: var(--darkgray);
+}
+
+.knowledge-methods-hero-copy {
+  align-self: end;
+  max-width: 48rem;
+}
+
+.knowledge-methods-hero-copy h1 {
+  font-size: clamp(2.7rem, 6vw, 5.7rem);
+  letter-spacing: -0.045em;
+  line-height: 0.96;
+  margin: 0.35rem 0 1rem;
+}
+
+.knowledge-methods-hero-copy > p:last-child {
+  color: var(--darkgray);
+  font-size: clamp(1rem, 1.7vw, 1.2rem);
+  line-height: 1.75;
+  margin: 0;
+  max-width: 42rem;
+}
+
+.knowledge-methods-hero-meta {
+  align-self: end;
+  border-left: 1px solid color-mix(in srgb, var(--secondary) 28%, var(--lightgray));
+  display: grid;
+  padding: 0.4rem 0 0.4rem 1.25rem;
+}
+
+.knowledge-methods-hero-meta strong {
+  font-family: var(--headerFont);
+  font-size: clamp(2.6rem, 5vw, 4.4rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.knowledge-methods-hero-meta span {
+  color: var(--darkgray);
+  font-size: 0.86rem;
+  margin-top: 0.45rem;
+}
+
+.knowledge-methods-hero-meta small {
+  border-top: 1px solid var(--lightgray);
+  color: var(--secondary);
+  font-size: 0.74rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+}
+
+.knowledge-methods-hero .knowledge-topic-questions {
+  grid-column: 1 / -1;
+  margin-top: 0;
+}
+
+.knowledge-methods-hero .knowledge-topic-questions div {
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  min-height: 5.6rem;
+}
+
+.knowledge-methods-section {
+  display: grid;
+  gap: 1rem;
+}
+
+.knowledge-methods-section-head,
+.knowledge-methods-roadmap-head {
+  align-items: end;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.knowledge-methods-section-head h2,
+.knowledge-methods-roadmap-head h2 {
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin: 0.25rem 0 0;
+}
+
+.knowledge-methods-section-head > p,
+.knowledge-methods-roadmap-head > p {
+  color: var(--darkgray);
+  font-size: 0.82rem;
+  margin: 0;
+  max-width: 27rem;
+  text-align: right;
+}
+
+.knowledge-methods-book-grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.knowledge-methods-book {
+  --book-tone: var(--secondary);
+  background:
+    radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--book-tone) 20%, transparent), transparent 30%),
+    color-mix(in srgb, var(--light) 96%, var(--book-tone));
+  border: 1px solid color-mix(in srgb, var(--book-tone) 28%, var(--lightgray));
+  border-radius: 12px;
+  color: var(--dark);
+  display: flex;
+  flex-direction: column;
+  min-height: 18.5rem;
+  padding: clamp(1rem, 2vw, 1.35rem);
+  text-decoration: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.knowledge-methods-book.book-2 {
+  --book-tone: #708a86;
+}
+
+.knowledge-methods-book.book-3 {
+  --book-tone: #8b7658;
+}
+
+.knowledge-methods-book:hover {
+  border-color: color-mix(in srgb, var(--book-tone) 62%, var(--lightgray));
+  box-shadow: 0 18px 42px color-mix(in srgb, var(--book-tone) 13%, transparent);
+  text-decoration: none;
+  transform: translateY(-3px);
+}
+
+.knowledge-methods-book-top {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.knowledge-methods-book-top > span {
+  color: var(--book-tone);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.knowledge-methods-book-top em {
+  border: 1px solid color-mix(in srgb, var(--book-tone) 34%, var(--lightgray));
+  border-radius: 999px;
+  color: var(--book-tone);
+  font-size: 0.7rem;
+  font-style: normal;
+  font-weight: 700;
+  padding: 0.22rem 0.5rem;
+}
+
+.knowledge-methods-book h3 {
+  font-family: var(--headerFont);
+  font-size: clamp(1.35rem, 2.6vw, 2rem);
+  letter-spacing: -0.025em;
+  line-height: 1.14;
+  margin: 2rem 0 0.45rem;
+}
+
+.knowledge-methods-book > small {
+  color: var(--darkgray);
+  font-size: 0.76rem;
+  min-height: 2.2em;
+}
+
+.knowledge-methods-book > p {
+  color: var(--darkgray);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  margin: 1rem 0;
+}
+
+.knowledge-methods-book footer {
+  align-items: center;
+  border-top: 1px solid color-mix(in srgb, var(--book-tone) 18%, var(--lightgray));
+  display: flex;
+  font-size: 0.74rem;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 0.75rem;
+}
+
+.knowledge-methods-book footer span {
+  color: var(--darkgray);
+}
+
+.knowledge-methods-book footer strong {
+  color: var(--book-tone);
+}
+
+.knowledge-methods-roadmap {
+  background:
+    radial-gradient(circle at 86% 0%, rgba(120, 173, 198, 0.24), transparent 28%),
+    linear-gradient(145deg, var(--methods-navy-soft), var(--methods-navy) 45%, #0f1b22);
+  border: 1px solid rgba(184, 214, 228, 0.22);
+  border-radius: 14px;
+  color: #f6f8f8;
+  display: grid;
+  gap: 1.6rem;
+  overflow: hidden;
+  padding: clamp(1.2rem, 3.5vw, 2.5rem);
+  position: relative;
+}
+
+.knowledge-methods-roadmap::after {
+  border: 1px solid rgba(220, 234, 240, 0.08);
+  border-radius: 50%;
+  content: "";
+  height: 22rem;
+  pointer-events: none;
+  position: absolute;
+  right: -12rem;
+  top: -12rem;
+  width: 22rem;
+}
+
+.knowledge-methods-roadmap-head {
+  position: relative;
+  z-index: 1;
+}
+
+.knowledge-methods-roadmap-head > div > span {
+  color: #a9d2e5;
+}
+
+.knowledge-methods-roadmap-head > p {
+  color: rgba(239, 246, 248, 0.68);
+}
+
+.knowledge-methods-stages {
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.knowledge-methods-stages > li {
+  border-top: 1px solid rgba(220, 234, 240, 0.15);
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 2rem 1fr;
+  min-height: 13.5rem;
+  padding: 1.25rem 1.25rem 1.25rem 0;
+}
+
+.knowledge-methods-stages > li:nth-child(even) {
+  border-left: 1px solid rgba(220, 234, 240, 0.15);
+  padding-left: 1.25rem;
+}
+
+.knowledge-methods-stage-number {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.knowledge-methods-stage-number span {
+  align-items: center;
+  background: rgba(220, 234, 240, 0.08);
+  border: 1px solid rgba(220, 234, 240, 0.28);
+  border-radius: 50%;
+  color: #b5d8e8;
+  display: flex;
+  flex: 0 0 2rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  height: 2rem;
+  justify-content: center;
+  letter-spacing: 0.06em;
+  width: 2rem;
+}
+
+.knowledge-methods-stage-number i {
+  background: linear-gradient(rgba(181, 216, 232, 0.32), transparent);
+  flex: 1;
+  margin-top: 0.4rem;
+  width: 1px;
+}
+
+.knowledge-methods-stage-title {
+  align-items: center;
+  display: flex;
+  gap: 0.55rem;
+}
+
+.knowledge-methods-stage-title h3 {
+  color: #f6f8f8;
+  font-family: var(--headerFont);
+  font-size: 1.18rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.knowledge-methods-stage-title em {
+  background: rgba(200, 168, 107, 0.14);
+  border: 1px solid rgba(224, 194, 136, 0.36);
+  border-radius: 999px;
+  color: #e0c288;
+  font-size: 0.64rem;
+  font-style: normal;
+  font-weight: 700;
+  padding: 0.18rem 0.42rem;
+  white-space: nowrap;
+}
+
+.knowledge-methods-stage-body > p {
+  color: rgba(239, 246, 248, 0.66);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  margin: 0.45rem 0 0.8rem;
+}
+
+.knowledge-methods-stage-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.knowledge-methods-stage-links a,
+.knowledge-methods-ethics a {
+  background: rgba(238, 246, 249, 0.07);
+  border: 1px solid rgba(220, 234, 240, 0.14);
+  border-radius: 5px;
+  color: #dceaf0;
+  font-size: 0.68rem;
+  line-height: 1.25;
+  padding: 0.3rem 0.45rem;
+  text-decoration: none;
+}
+
+.knowledge-methods-stage-links a:hover,
+.knowledge-methods-ethics a:hover {
+  background: rgba(220, 234, 240, 0.14);
+  border-color: rgba(220, 234, 240, 0.36);
+  color: white;
+  text-decoration: none;
+}
+
+.knowledge-methods-ethics {
+  align-items: center;
+  background: rgba(4, 11, 15, 0.25);
+  border: 1px solid rgba(220, 234, 240, 0.15);
+  border-radius: 9px;
+  display: grid;
+  gap: 0.35rem 1rem;
+  grid-template-columns: auto auto 1fr;
+  padding: 0.8rem 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.knowledge-methods-ethics > span {
+  color: #a9d2e5;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.knowledge-methods-ethics > strong {
+  color: #f6f8f8;
+  font-family: var(--headerFont);
+  font-size: 0.95rem;
+}
+
+.knowledge-methods-ethics > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: flex-end;
+}
+
+.knowledge-methods-tool-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.knowledge-methods-tool {
+  --tool-tone: #557a8a;
+  background: color-mix(in srgb, var(--light) 96%, var(--tool-tone));
+  border: 1px solid color-mix(in srgb, var(--tool-tone) 28%, var(--lightgray));
+  border-radius: 11px;
+  display: flex;
+  flex-direction: column;
+  min-height: 17rem;
+  overflow: hidden;
+  padding: 1rem;
+  position: relative;
+}
+
+.knowledge-methods-tool::before {
+  background: var(--tool-tone);
+  content: "";
+  height: 3px;
+  inset: 0 0 auto;
+  opacity: 0.75;
+  position: absolute;
+}
+
+.knowledge-methods-tool.tool-2 { --tool-tone: #816b60; }
+.knowledge-methods-tool.tool-3 { --tool-tone: #6f8062; }
+.knowledge-methods-tool.tool-4 { --tool-tone: #746d91; }
+.knowledge-methods-tool.tool-5 { --tool-tone: #937456; }
+
+.knowledge-methods-tool > span {
+  color: var(--tool-tone);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.knowledge-methods-tool h3 {
+  font-size: 1.35rem;
+  margin: 1.15rem 0 0.65rem;
+}
+
+.knowledge-methods-tool h3 a {
+  color: var(--dark);
+  text-decoration: none;
+}
+
+.knowledge-methods-tool > p {
+  color: var(--darkgray);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  margin: 0 0 1rem;
+}
+
+.knowledge-methods-tool > div {
+  border-top: 1px solid color-mix(in srgb, var(--tool-tone) 18%, var(--lightgray));
+  display: grid;
+  gap: 0.4rem;
+  margin-top: auto;
+  padding-top: 0.75rem;
+}
+
+.knowledge-methods-tool > div a {
+  color: var(--darkgray);
+  font-size: 0.68rem;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.knowledge-methods-tool > div a:hover,
+.knowledge-methods-tool h3 a:hover {
+  color: var(--secondary);
+}
+
+.knowledge-methods-random-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.knowledge-methods-refresh {
+  background: var(--dark);
+  border: 1px solid var(--dark);
+  border-radius: 7px;
+  color: var(--light);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.48rem 0.75rem;
+}
+
+.knowledge-methods-refresh:hover {
+  background: var(--secondary);
+  border-color: var(--secondary);
+}
+
+.knowledge-methods-random-card {
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 10px;
+  display: grid;
+  min-height: 14rem;
+  overflow: hidden;
+}
+
+.knowledge-methods-random-card > header {
+  align-items: center;
+  border-bottom: 1px solid var(--lightgray);
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0.85rem;
+}
+
+.knowledge-methods-random-card > header span {
+  color: var(--secondary);
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.knowledge-methods-random-card > header small {
+  color: var(--darkgray);
+  font-size: 0.64rem;
+}
+
+.knowledge-methods-random-items {
+  display: grid;
+}
+
+.knowledge-methods-random-item {
+  color: var(--dark);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.knowledge-methods-random-item[hidden] {
+  display: none;
+}
+
+.knowledge-methods-random-item strong {
+  font-family: var(--headerFont);
+  font-size: 1.15rem;
+  line-height: 1.25;
+}
+
+.knowledge-methods-random-item p,
+.knowledge-methods-latest-card p {
+  color: var(--darkgray);
+  display: -webkit-box;
+  font-size: 0.78rem;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.55;
+  overflow: hidden;
+}
+
+.knowledge-methods-random-item > span {
+  color: var(--darkgray);
+  font-size: 0.65rem;
+  margin-top: auto;
+}
+
+.knowledge-methods-random-item:hover {
+  background: color-mix(in srgb, var(--light) 96%, var(--secondary));
+  text-decoration: none;
+}
+
+.knowledge-methods-latest-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.knowledge-methods-latest-card {
+  border-top: 1px solid color-mix(in srgb, var(--secondary) 32%, var(--lightgray));
+  color: var(--dark);
+  display: flex;
+  flex-direction: column;
+  min-height: 12rem;
+  padding: 0.9rem 0.2rem 0.2rem;
+  text-decoration: none;
+}
+
+.knowledge-methods-latest-card > header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.knowledge-methods-latest-card > header span,
+.knowledge-methods-latest-card > header time,
+.knowledge-methods-latest-card > small {
+  color: var(--darkgray);
+  font-size: 0.66rem;
+}
+
+.knowledge-methods-latest-card > header span {
+  color: var(--secondary);
+  font-weight: 800;
+}
+
+.knowledge-methods-latest-card h3 {
+  font-size: 1rem;
+  line-height: 1.3;
+  margin: 1rem 0 0;
+}
+
+.knowledge-methods-latest-card p {
+  margin: 0.55rem 0 0.8rem;
+}
+
+.knowledge-methods-latest-card > small {
+  margin-top: auto;
+}
+
+.knowledge-methods-latest-card:hover {
+  border-color: var(--secondary);
+  color: var(--secondary);
+  text-decoration: none;
+}
+
 .knowledge-route-back {
   color: var(--secondary);
   font-size: 0.86rem;
@@ -1789,6 +2909,16 @@ body[data-slug^="explore/"] article {
   }
 }
 
+@media all and (max-width: 1100px) {
+  .knowledge-methods-tool-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .knowledge-methods-random-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media all and (max-width: 900px) {
   .knowledge-home-hero,
   .knowledge-home-grid,
@@ -1811,6 +2941,58 @@ body[data-slug^="explore/"] article {
   }
 
   .knowledge-explore-random-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .knowledge-methods-hero,
+  .knowledge-methods-book-grid,
+  .knowledge-methods-stages {
+    grid-template-columns: 1fr;
+  }
+
+  .knowledge-methods-hero-meta {
+    border-left: 0;
+    border-top: 1px solid color-mix(in srgb, var(--secondary) 28%, var(--lightgray));
+    grid-template-columns: auto 1fr;
+    padding: 1rem 0 0;
+  }
+
+  .knowledge-methods-hero-meta strong {
+    grid-row: 1 / 3;
+    margin-right: 1rem;
+  }
+
+  .knowledge-methods-hero-meta small {
+    border-top: 0;
+    margin: 0.2rem 0 0;
+    padding: 0;
+  }
+
+  .knowledge-methods-book {
+    min-height: 15rem;
+  }
+
+  .knowledge-methods-stages > li,
+  .knowledge-methods-stages > li:nth-child(even) {
+    border-left: 0;
+    min-height: 0;
+    padding: 1.15rem 0;
+  }
+
+  .knowledge-methods-stage-number i {
+    background: rgba(181, 216, 232, 0.25);
+  }
+
+  .knowledge-methods-ethics {
+    align-items: start;
+    grid-template-columns: 1fr;
+  }
+
+  .knowledge-methods-ethics > div {
+    justify-content: flex-start;
+  }
+
+  .knowledge-methods-latest-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1844,6 +3026,33 @@ body[data-slug^="explore/"] article {
 
   .knowledge-explore-random-grid {
     grid-template-columns: 1fr;
+  }
+
+  .knowledge-methods-nav > span {
+    display: none;
+  }
+
+  .knowledge-methods-section-head,
+  .knowledge-methods-roadmap-head {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .knowledge-methods-section-head > p,
+  .knowledge-methods-roadmap-head > p {
+    text-align: left;
+  }
+
+  .knowledge-methods-tool-grid,
+  .knowledge-methods-random-grid,
+  .knowledge-methods-latest-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .knowledge-methods-tool,
+  .knowledge-methods-random-card,
+  .knowledge-methods-latest-card {
+    min-height: 0;
   }
 }
 `
