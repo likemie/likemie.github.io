@@ -546,6 +546,7 @@ function KnowledgeHome(userOpts = {}) {
         { label: "理论", prefix: "wiki/theories/", seed: "theory" },
         { label: "方法", prefix: "wiki/methods/", seed: "method" },
         { label: "测量工具", prefix: "wiki/instruments/", seed: "instrument" },
+        { label: "文献", prefix: "sources/", seed: "source" },
       ]
       const randomEntries = sections
         .map((section) => {
@@ -624,29 +625,6 @@ function KnowledgeHome(userOpts = {}) {
                 h("strong", null, tool.title),
                 h("p", null, tool.body),
                 h("em", null, tool.action),
-              ),
-            ),
-          ),
-        ),
-        h(
-          "section",
-          { class: "knowledge-explore-card knowledge-explore-random" },
-          h(
-            "div",
-            { class: "knowledge-explore-head" },
-            h("h2", null, "随机漫游"),
-            h("span", null, todayKey),
-          ),
-          h(
-            "div",
-            { class: "knowledge-explore-random-grid" },
-            randomEntries.map((entry) =>
-              h(
-                "a",
-                { href: hrefFor(entry.page), class: "knowledge-explore-chip" },
-                h("span", null, entry.label),
-                h("strong", null, titleFor(entry.page)),
-                h("small", null, `${formatCount(entry.count)} 个候选`),
               ),
             ),
           ),
@@ -754,6 +732,29 @@ function KnowledgeHome(userOpts = {}) {
                     ),
                 )
               }),
+            ),
+          ),
+        ),
+        h(
+          "section",
+          { class: "knowledge-explore-card knowledge-explore-random" },
+          h(
+            "div",
+            { class: "knowledge-explore-head" },
+            h("h2", null, "随机漫游"),
+            h("span", null, todayKey),
+          ),
+          h(
+            "div",
+            { class: "knowledge-explore-random-grid" },
+            randomEntries.map((entry) =>
+              h(
+                "a",
+                { href: hrefFor(entry.page), class: "knowledge-explore-chip" },
+                h("span", null, entry.label),
+                h("strong", null, titleFor(entry.page)),
+                h("small", null, `${formatCount(entry.count)} 个候选`),
+              ),
             ),
           ),
         ),
@@ -1216,10 +1217,12 @@ body[data-slug="explore"] .breadcrumb-container,
 body[data-slug="explore"] .article-title,
 body[data-slug="explore"] .content-meta,
 body[data-slug="explore"] article,
+body[data-slug="explore"] .page-listing,
 body[data-slug="explore/index"] .breadcrumb-container,
 body[data-slug="explore/index"] .article-title,
 body[data-slug="explore/index"] .content-meta,
 body[data-slug="explore/index"] article,
+body[data-slug="explore/index"] .page-listing,
 body[data-slug^="explore/"] .breadcrumb-container,
 body[data-slug^="explore/"] .article-title,
 body[data-slug^="explore/"] .content-meta,
@@ -1454,7 +1457,7 @@ body[data-slug^="explore/"] article {
 .knowledge-explore-random-grid {
   display: grid;
   gap: 0.6rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .knowledge-explore-chip {
@@ -1807,6 +1810,10 @@ body[data-slug^="explore/"] article {
     grid-template-columns: 1fr;
   }
 
+  .knowledge-explore-random-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .knowledge-explore-panel {
     height: auto;
     max-height: none;
@@ -1832,6 +1839,10 @@ body[data-slug^="explore/"] article {
 
 @media all and (max-width: 520px) {
   .knowledge-home-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .knowledge-explore-random-grid {
     grid-template-columns: 1fr;
   }
 }
