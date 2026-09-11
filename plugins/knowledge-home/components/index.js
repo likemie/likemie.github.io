@@ -469,16 +469,20 @@ function methodsTopicData(pages, todayKey) {
   const fixed = [
     {
       title: "Argument_QiMei_2015_EducationalResearchMethods",
+      displayTitle: "教育研究方法",
       role: "中文入门",
       note: "从选题、课题论证到研究报告，建立完整的教育研究流程。",
     },
     {
       title: "Argument_Cohen_Manion_Morrison_2011_Routledge",
+      displayTitle: "Research Methods in Education",
       role: "综合工具书",
       note: "按范式、设计、资料收集与分析方法查找具体操作路径。",
     },
     {
       title: "Argument_Creswell_2022_SAGE",
+      displayTitle: "Research Design",
+      subtitle: "Qualitative, Quantitative, and Mixed Methods Approaches",
       role: "设计框架",
       note: "比较量化、质性与混合方法，保持问题、设计和证据一致。",
     },
@@ -621,6 +625,9 @@ function methodsTopicData(pages, todayKey) {
     "Informed Consent",
     "Privacy in Research",
     "Reflexivity",
+    "Responsible Conduct of Research",
+    "Confidentiality",
+    "Anonymity in Research",
   ])
 
   const randomPools = [
@@ -738,7 +745,8 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
               h("span", null, String(index + 1).padStart(2, "0")),
               h("em", null, item.role),
             ),
-            h("h3", null, displayTitleFor(item.page)),
+            h("h3", null, item.displayTitle ?? displayTitleFor(item.page)),
+            item.subtitle && h("p", { class: "knowledge-methods-book-subtitle" }, item.subtitle),
             h("small", null, authorsFor(item.page)),
             h("p", null, item.note),
             h(
@@ -826,10 +834,11 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
         { class: "knowledge-methods-tool-grid" },
         topic.methods.map((method, index) =>
           h(
-            "article",
+            "div",
             { class: `knowledge-methods-tool tool-${index + 1}` },
-            h("span", null, method.label),
+            h("span", null, `Method ${String(index + 1).padStart(2, "0")}`),
             h("h3", null, h("a", { href: hrefFor(method.page), class: "internal" }, method.label)),
+            h("small", null, titleFor(method.page)),
             h("p", null, method.description),
             h(
               "div",
@@ -860,7 +869,7 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
         { class: "knowledge-methods-random-grid" },
         topic.random.map((group) =>
           h(
-            "article",
+            "div",
             { class: "knowledge-methods-random-card", "data-method-random-card": group.key },
             h(
               "header",
@@ -2291,8 +2300,8 @@ body[data-slug^="explore/"] article {
   color: var(--dark);
   display: flex;
   flex-direction: column;
-  min-height: 18.5rem;
-  padding: clamp(1rem, 2vw, 1.35rem);
+  min-height: 14.25rem;
+  padding: 1rem;
   text-decoration: none;
   transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
@@ -2337,23 +2346,29 @@ body[data-slug^="explore/"] article {
 
 .knowledge-methods-book h3 {
   font-family: var(--headerFont);
-  font-size: clamp(1.35rem, 2.6vw, 2rem);
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
   letter-spacing: -0.025em;
-  line-height: 1.14;
-  margin: 2rem 0 0.45rem;
+  line-height: 1.18;
+  margin: 1.15rem 0 0.35rem;
+}
+
+.knowledge-methods-book-subtitle {
+  color: var(--darkgray);
+  font-size: 0.72rem !important;
+  line-height: 1.35 !important;
+  margin: -0.1rem 0 0.35rem !important;
 }
 
 .knowledge-methods-book > small {
   color: var(--darkgray);
-  font-size: 0.76rem;
-  min-height: 2.2em;
+  font-size: 0.7rem;
 }
 
 .knowledge-methods-book > p {
   color: var(--darkgray);
-  font-size: 0.88rem;
-  line-height: 1.6;
-  margin: 1rem 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  margin: 0.7rem 0;
 }
 
 .knowledge-methods-book footer {
@@ -2563,7 +2578,7 @@ body[data-slug^="explore/"] article {
 .knowledge-methods-tool-grid {
   display: grid;
   gap: 0.75rem;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
 .knowledge-methods-tool {
@@ -2573,10 +2588,15 @@ body[data-slug^="explore/"] article {
   border-radius: 11px;
   display: flex;
   flex-direction: column;
-  min-height: 17rem;
+  grid-column: span 2;
+  min-height: 15rem;
   overflow: hidden;
   padding: 1rem;
   position: relative;
+}
+
+.knowledge-methods-tool:nth-last-child(-n + 2) {
+  grid-column: span 3;
 }
 
 .knowledge-methods-tool::before {
@@ -2603,7 +2623,7 @@ body[data-slug^="explore/"] article {
 
 .knowledge-methods-tool h3 {
   font-size: 1.35rem;
-  margin: 1.15rem 0 0.65rem;
+  margin: 0.9rem 0 0.2rem;
 }
 
 .knowledge-methods-tool h3 a {
@@ -2611,11 +2631,17 @@ body[data-slug^="explore/"] article {
   text-decoration: none;
 }
 
+.knowledge-methods-tool > small {
+  color: var(--darkgray);
+  font-size: 0.68rem;
+  line-height: 1.3;
+}
+
 .knowledge-methods-tool > p {
   color: var(--darkgray);
   font-size: 0.8rem;
   line-height: 1.55;
-  margin: 0 0 1rem;
+  margin: 0.8rem 0 1rem;
 }
 
 .knowledge-methods-tool > div {
@@ -2740,13 +2766,16 @@ body[data-slug^="explore/"] article {
 }
 
 .knowledge-methods-latest-card {
-  border-top: 1px solid color-mix(in srgb, var(--secondary) 32%, var(--lightgray));
+  background: color-mix(in srgb, var(--light) 97%, var(--secondary));
+  border: 1px solid color-mix(in srgb, var(--secondary) 25%, var(--lightgray));
+  border-radius: 10px;
   color: var(--dark);
   display: flex;
   flex-direction: column;
   min-height: 12rem;
-  padding: 0.9rem 0.2rem 0.2rem;
+  padding: 1rem 1.05rem;
   text-decoration: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
 .knowledge-methods-latest-card > header {
@@ -2771,6 +2800,7 @@ body[data-slug^="explore/"] article {
   font-size: 1rem;
   line-height: 1.3;
   margin: 1rem 0 0;
+  overflow-wrap: anywhere;
 }
 
 .knowledge-methods-latest-card p {
@@ -2783,8 +2813,10 @@ body[data-slug^="explore/"] article {
 
 .knowledge-methods-latest-card:hover {
   border-color: var(--secondary);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--secondary) 10%, transparent);
   color: var(--secondary);
   text-decoration: none;
+  transform: translateY(-2px);
 }
 
 .knowledge-route-back {
@@ -2911,7 +2943,12 @@ body[data-slug^="explore/"] article {
 
 @media all and (max-width: 1100px) {
   .knowledge-methods-tool-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .knowledge-methods-tool,
+  .knowledge-methods-tool:nth-last-child(-n + 2) {
+    grid-column: span 1;
   }
 
   .knowledge-methods-random-grid {
@@ -2969,7 +3006,7 @@ body[data-slug^="explore/"] article {
   }
 
   .knowledge-methods-book {
-    min-height: 15rem;
+    min-height: 12.5rem;
   }
 
   .knowledge-methods-stages > li,
