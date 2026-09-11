@@ -1,0 +1,208 @@
+/*
+ * Quartz-only callout adaptation.
+ *
+ * The Obsidian snippet and Quartz expose different theme tokens. Keep the
+ * online contrast and browser layout fixes here so the local vault remains
+ * visually independent.
+ */
+
+.callout {
+  --web-callout-prose: var(--darkgray);
+  --web-callout-strong: var(--dark);
+  --web-callout-surface: color-mix(in srgb, var(--light) 96%, var(--dark) 4%);
+  --web-callout-line: color-mix(in srgb, var(--darkgray) 18%, transparent);
+}
+
+.callout > .callout-content,
+.callout > .callout-content :is(p, li, dd, blockquote, figcaption, td) {
+  color: var(--web-callout-prose);
+}
+
+.callout > .callout-content :is(strong, b),
+.callout > .callout-title .callout-title-inner {
+  color: var(--web-callout-strong);
+}
+
+.callout > .callout-content a.internal {
+  background-color: color-mix(in srgb, var(--secondary) 11%, transparent);
+  color: color-mix(in srgb, var(--secondary) 76%, var(--dark));
+  text-decoration-color: color-mix(in srgb, var(--secondary) 38%, transparent);
+}
+
+/* Debate evidence was tied to Obsidian-only text tokens and became too dim. */
+.callout[data-callout="debates"] > .callout-content > .callout > .callout-content > ul > li {
+  color: var(--web-callout-prose) !important;
+}
+
+.callout[data-callout="debates"]
+  > .callout-content
+  > .callout
+  > .callout-content
+  > ul
+  > li
+  > strong:first-of-type {
+  color: var(--web-callout-strong) !important;
+}
+
+.callout[data-callout="debates"] > .callout-title .callout-title-inner {
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.callout[data-callout="debates"] > .callout-content > .callout,
+.callout[data-callout="axis"] {
+  background-color: var(--web-callout-surface);
+  border-color: var(--web-callout-line);
+}
+
+.callout[data-callout="axis"] > .callout-title .callout-title-inner {
+  color: color-mix(in srgb, rgb(var(--callout-color)) 62%, var(--dark));
+}
+
+/* Feature headings use a saturated jade panel: keep all inline content legible. */
+.callout[data-callout="feature"] .callout-content > ul > li {
+  background-color: color-mix(in srgb, var(--light) 92%, rgb(20, 148, 108) 8%);
+}
+
+.callout[data-callout="feature"]
+  .callout-content
+  > ul
+  > li
+  :is(strong:first-of-type, p:first-of-type > strong:first-of-type),
+.callout[data-callout="feature"]
+  .callout-content
+  > ul
+  > li
+  :is(strong:first-of-type, p:first-of-type > strong:first-of-type)
+  * {
+  color: rgb(238, 255, 248) !important;
+}
+
+.callout[data-callout="feature"]
+  .callout-content
+  > ul
+  > li
+  :is(strong:first-of-type, p:first-of-type > strong:first-of-type)
+  a.internal {
+  background: rgba(255, 255, 255, 0.13);
+  text-decoration-color: rgba(255, 255, 255, 0.42);
+}
+
+/*
+ * MA tables exist in both seven-column data form and four-column synthesis
+ * form. The inherited seven-column widths left a four-column table using only
+ * 51% of its available width, which made KaTeX spill into the final column.
+ */
+.callout[data-callout="ma-table"] > .callout-content {
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-color: color-mix(in srgb, rgb(var(--callout-color)) 58%, transparent) transparent;
+  scrollbar-width: thin;
+}
+
+.callout[data-callout="ma-table"] .table-container {
+  max-width: 100%;
+  overflow: visible;
+  width: 100%;
+}
+
+.callout[data-callout="ma-table"] table:has(tr > :nth-child(4):last-child) {
+  min-width: 920px;
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* Second-order synthesis needs a wide heterogeneity column for one-line math. */
+.callout[data-callout="ma-table"]:has(.concept-second-order-meta-table-marker) table {
+  min-width: 1640px !important;
+}
+
+.callout[data-callout="ma-table"]:has(.concept-second-order-meta-table-marker)
+  :is(th, td):nth-child(1) {
+  width: 10% !important;
+}
+
+.callout[data-callout="ma-table"]:has(.concept-second-order-meta-table-marker)
+  :is(th, td):nth-child(2) {
+  width: 13% !important;
+}
+
+.callout[data-callout="ma-table"]:has(.concept-second-order-meta-table-marker)
+  :is(th, td):nth-child(3) {
+  width: 13% !important;
+}
+
+.callout[data-callout="ma-table"]:has(.concept-second-order-meta-table-marker)
+  :is(th, td):nth-child(4) {
+  width: 10% !important;
+}
+
+.callout[data-callout="ma-table"]:has(.concept-second-order-meta-table-marker)
+  :is(th, td):nth-child(5) {
+  width: 12% !important;
+}
+
+.callout[data-callout="ma-table"]:has(.concept-second-order-meta-table-marker)
+  :is(th, td):nth-child(6) {
+  width: 25% !important;
+}
+
+.callout[data-callout="ma-table"]:has(.concept-second-order-meta-table-marker)
+  :is(th, td):nth-child(7) {
+  width: 17% !important;
+}
+
+.callout[data-callout="ma-table"]
+  table:has(tr > :nth-child(4):last-child)
+  :is(th, td):nth-child(1) {
+  width: 24%;
+}
+
+.callout[data-callout="ma-table"]
+  table:has(tr > :nth-child(4):last-child)
+  :is(th, td):nth-child(2) {
+  width: 30%;
+}
+
+.callout[data-callout="ma-table"]
+  table:has(tr > :nth-child(4):last-child)
+  :is(th, td):nth-child(3) {
+  width: 25%;
+}
+
+.callout[data-callout="ma-table"]
+  table:has(tr > :nth-child(4):last-child)
+  :is(th, td):nth-child(4) {
+  width: 21%;
+}
+
+.callout[data-callout="ma-table"] :is(th, td) {
+  box-sizing: border-box;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.callout[data-callout="ma-table"] td .katex {
+  display: inline-block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  vertical-align: middle;
+}
+
+[saved-theme="dark"] .callout {
+  --web-callout-surface: color-mix(in srgb, var(--light) 93%, var(--dark) 7%);
+  --web-callout-line: color-mix(in srgb, var(--darkgray) 22%, transparent);
+}
+
+@media (forced-colors: active) {
+  .callout,
+  .callout[data-callout="debates"] > .callout-content > .callout,
+  .callout[data-callout="axis"] {
+    border-color: CanvasText;
+  }
+}
+
