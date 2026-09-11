@@ -206,3 +206,65 @@
   }
 }
 
+/*
+ * Pre-experimental design diagrams are plain fenced code in the source note.
+ * Give those notation rows the same teal design language as the local
+ * design-notation callout and keep scrolling on one axis only.
+ */
+body[data-slug="wiki/methods/quantitative/pre-experimental-designs"]
+  article
+  pre:has(> code:not([class])) {
+  --web-design-notation: 27, 121, 130;
+
+  background:
+    radial-gradient(circle at 1px 1px, rgba(var(--web-design-notation), 0.1) 1px, transparent 1px),
+    linear-gradient(
+      135deg,
+      rgba(var(--web-design-notation), 0.08),
+      rgba(var(--web-design-notation), 0.015)
+    ),
+    var(--light);
+  background-size:
+    14px 14px,
+    100% 100%,
+    100% 100%;
+  border: 1px solid rgba(var(--web-design-notation), 0.24);
+  border-left: 5px solid rgb(var(--web-design-notation));
+  border-radius: 10px;
+  box-shadow:
+    inset 0 1px 0 rgba(var(--web-design-notation), 0.08),
+    0 5px 16px rgba(var(--web-design-notation), 0.07);
+  box-sizing: border-box;
+  margin: 0.65rem 0 1rem;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: clip;
+  padding: 0.65rem 0.9rem 0.65rem 1rem;
+  scrollbar-color: rgba(var(--web-design-notation), 0.44) transparent;
+  scrollbar-width: thin;
+}
+
+body[data-slug="wiki/methods/quantitative/pre-experimental-designs"]
+  article
+  pre:has(> code:not([class]))
+  > code {
+  background: transparent;
+  box-sizing: border-box;
+  color: var(--dark);
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 650;
+  letter-spacing: 0.035em;
+  line-height: 1.75;
+  min-width: 100%;
+  overflow: visible;
+  padding: 0;
+  width: max-content;
+}
+
+[saved-theme="dark"]
+  body[data-slug="wiki/methods/quantitative/pre-experimental-designs"]
+  article
+  pre:has(> code:not([class])) {
+  --web-design-notation: 92, 209, 214;
+}
