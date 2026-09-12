@@ -268,3 +268,86 @@ body[data-slug="wiki/methods/quantitative/pre-experimental-designs"]
   pre:has(> code:not([class])) {
   --web-design-notation: 92, 209, 214;
 }
+
+/*
+ * The time-series comparison contains five dense columns and long KaTeX
+ * sequences. Give the notation column enough physical width and let the
+ * complete table scroll instead of allowing math to cross a cell boundary.
+ */
+body[data-slug="wiki/methods/quantitative/time-series-design"]
+  .callout[data-callout="framework-table"]
+  > .callout-content {
+  min-width: 0;
+}
+
+body[data-slug="wiki/methods/quantitative/time-series-design"]
+  .callout[data-callout="framework-table"]
+  .table-container {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-color: rgba(var(--callout-color), 0.42) transparent;
+  scrollbar-width: thin;
+}
+
+body[data-slug="wiki/methods/quantitative/time-series-design"]
+  .callout[data-callout="framework-table"]
+  table:has(thead th:nth-child(5):last-child) {
+  min-width: 0 !important;
+  table-layout: fixed !important;
+  width: max(100%, 1640px) !important;
+}
+
+body[data-slug="wiki/methods/quantitative/time-series-design"]
+  .callout[data-callout="framework-table"]
+  table:has(thead th:nth-child(5):last-child)
+  :is(th, td):nth-child(1) {
+  width: 18% !important;
+}
+
+body[data-slug="wiki/methods/quantitative/time-series-design"]
+  .callout[data-callout="framework-table"]
+  table:has(thead th:nth-child(5):last-child)
+  :is(th, td):nth-child(2) {
+  width: 28% !important;
+}
+
+body[data-slug="wiki/methods/quantitative/time-series-design"]
+  .callout[data-callout="framework-table"]
+  table:has(thead th:nth-child(5):last-child)
+  :is(th, td):nth-child(3) {
+  width: 24% !important;
+}
+
+body[data-slug="wiki/methods/quantitative/time-series-design"]
+  .callout[data-callout="framework-table"]
+  table:has(thead th:nth-child(5):last-child)
+  :is(th, td):nth-child(4) {
+  width: 16% !important;
+}
+
+body[data-slug="wiki/methods/quantitative/time-series-design"]
+  .callout[data-callout="framework-table"]
+  table:has(thead th:nth-child(5):last-child)
+  :is(th, td):nth-child(5) {
+  width: 14% !important;
+}
+
+body[data-slug="wiki/methods/quantitative/time-series-design"]
+  .callout[data-callout="framework-table"]
+  :is(th, td) {
+  box-sizing: border-box;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+body[data-slug="wiki/methods/quantitative/time-series-design"]
+  .callout[data-callout="framework-table"]
+  td
+  .katex {
+  display: inline-block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  vertical-align: middle;
+}
