@@ -861,8 +861,9 @@ function comparativeTopicData(pages, todayKey) {
   const themes = [
     {
       number: "01",
+      scope: "WORLD ORDER · PEACE",
       title: "全球化、文明与和平",
-      note: "从文明冲突走向国际理解与和平教育",
+      note: "考察文明叙事如何塑造国际理解，和平教育如何成为跨国规范，以及全球政策空间如何转译这些理念。",
       links: existing([
         "Perpetual Peace",
         "International Mind",
@@ -872,10 +873,12 @@ function comparativeTopicData(pages, todayKey) {
     },
     {
       number: "02",
+      scope: "CURRICULUM · CITIZENSHIP · STRATIFICATION",
       title: "课程、公民与教育分层",
-      note: "追踪全球课程、身份形成与机会分配",
+      note: "连接全球课程、国际文凭、公民身份与教育分层，观察课程设计如何影响身份形成和机会分配。",
       links: existing([
-        "Curriculum as Praxis",
+        "International Baccalaureate",
+        "IB Diploma Programme",
         "Global Citizenship",
         "Educated Identity",
         "Discursive Stratification",
@@ -883,8 +886,9 @@ function comparativeTopicData(pages, todayKey) {
     },
     {
       number: "03",
+      scope: "MOBILITY · RANKING · STATE STRATEGY",
       title: "教育国际化与国家战略",
-      note: "理解大学排名、跨境教育与国家竞争",
+      note: "以大学排名、教育枢纽与跨境流动为入口，分析高等教育国际化与国家竞争之间的关系。",
       links: existing([
         "Internationalization of Higher Education",
         "Academic Ranking of World Universities",
@@ -896,46 +900,40 @@ function comparativeTopicData(pages, todayKey) {
 
   const methodologies = [
     {
-      code: "EMPIRICAL",
+      code: "01 · EMPIRICAL",
       title: "科学—实证比较",
       question: "能否通过跨国数据检验一般性解释？",
+      description: "以变量、假设检验和大规模跨国测量建立可比较的经验基础。",
       lead: find("Scientific Paradigm"),
-      links: existing(["Marc-Antoine Jullien", "Harold Noah", "Max Eckstein", "IEA", "PISA"]),
+      links: existing(["Harold Noah", "Max Eckstein", "IEA", "PISA"]),
     },
     {
-      code: "CONTEXT",
+      code: "02 · CONTEXT",
       title: "因素分析与历史—情境比较",
       question: "教育制度为什么形成今天的样子？",
+      description: "把制度放回历史、文化与国家形成过程，解释差异背后的持续性力量。",
       lead: find("Factorial Interpretive Framework") ?? find("National Character"),
       links: existing(["Michael Sadler", "Isaac Kandel", "Nicholas Hans"]),
     },
     {
-      code: "PROBLEM",
-      title: "问题法",
-      question: "不同社会如何回应相似的教育问题？",
-      lead: find("Problem Approach", "wiki/methods/"),
-      links: existing(["Brian Holmes"]),
-    },
-    {
-      code: "FOUR STEPS",
-      title: "四步比较法",
-      question: "怎样把多国材料转化为可比较的对象？",
-      lead: find("George Bereday", "wiki/persons/"),
-      links: existing(["Description", "Interpretation", "Juxtaposition", "Comparison"]),
-    },
-    {
-      code: "CRITICAL",
+      code: "03 · CRITICAL",
       title: "批判主义比较",
       question: "国际比较隐藏了怎样的权力与中心—边缘关系？",
+      description: "追踪世界体系、依附关系与知识权力如何规定比较的尺度和解释方向。",
       lead: find("Dependency Theory", "wiki/theories/"),
       links: existing(["World Society Theory", "World Culture Theory", "Postcolonialism"]),
     },
     {
-      code: "MULTI-SCALAR",
+      code: "04 · MULTI-SCALAR",
       title: "多维比较设计",
       question: "如何同时处理地点、尺度、群体与历史变化？",
+      description: "沿水平、垂直与横贯三个轴组织案例，保持地点、尺度和时间之间的关联。",
       lead: find("Comparative Case Study", "wiki/methods/"),
-      links: existing(["Unit of Analysis", "The Nation-State as the Unit of Comparison"]),
+      links: existing([
+        "Unit of Analysis",
+        "Methodological Transnationalism",
+        "International Education Hubs",
+      ]),
     },
   ].filter((method) => method.lead)
 
@@ -1379,7 +1377,12 @@ function renderComparativeTopicPage({ pages, topicConfig, todayKey, displayClass
         h(
           "article",
           { class: "knowledge-comparative-field field-overview", id: "comparative-field-1" },
-          h("header", null, h("span", null, "01 · DISCIPLINE"), h("h3", null, "比较教育学概述")),
+          h(
+            "header",
+            null,
+            h("div", null, h("span", null, "01 · DISCIPLINE"), h("h3", null, "比较教育学概述")),
+            h("p", null, "沿学科史、分析范式、教育转移和政治地理，建立比较教育的基本坐标。"),
+          ),
           h(
             "div",
             { class: "knowledge-comparative-overview-list" },
@@ -1400,16 +1403,22 @@ function renderComparativeTopicPage({ pages, topicConfig, todayKey, displayClass
             ),
           ),
           h(
-            "footer",
+            "div",
             { class: "knowledge-comparative-field-footer" },
             h("span", null, "A FIELD GUIDE TO COMPARATIVE EDUCATION"),
+            h("p", null, "先辨认比较单位与知识传统，再判断概念、政策和制度如何跨境移动。"),
             h("strong", null, "从学科史进入问题现场 ↗"),
           ),
         ),
         h(
           "article",
           { class: "knowledge-comparative-field field-organizations", id: "comparative-field-2" },
-          h("header", null, h("span", null, "02 · ACTORS"), h("h3", null, "国际组织")),
+          h(
+            "header",
+            null,
+            h("div", null, h("span", null, "02 · ACTORS"), h("h3", null, "国际组织")),
+            h("p", null, "比较它们如何借助报告、指标、资金与资格框架影响教育政策。"),
+          ),
           h(
             "div",
             { class: "knowledge-comparative-organization-list" },
@@ -1473,7 +1482,13 @@ function renderComparativeTopicPage({ pages, topicConfig, todayKey, displayClass
           h(
             "header",
             null,
-            h("div", null, h("span", null, "03 · PLACES"), h("h3", null, "国别研究")),
+            h(
+              "div",
+              null,
+              h("span", null, "03 · PLACES"),
+              h("h3", null, "国别研究"),
+              h("p", null, "每组六个国家或地区，以一项制度、政策或历史事件作为比较起点。"),
+            ),
             h("button", { type: "button", "data-comparative-country-refresh": "" }, "换一组"),
           ),
           h(
@@ -1489,9 +1504,20 @@ function renderComparativeTopicPage({ pages, topicConfig, todayKey, displayClass
                   "data-comparative-country": "",
                   hidden: index >= 6 ? true : undefined,
                 },
-                h("span", null, country.label),
+                h(
+                  "header",
+                  null,
+                  h("span", null, country.label),
+                  h("b", null, String(index + 1).padStart(2, "0")),
+                ),
                 h("strong", null, titleFor(page)),
-                h("small", null, `${formatCount(country.count)} 项国家事实`),
+                h("p", null, summaryFor(page)),
+                h(
+                  "div",
+                  null,
+                  h("small", null, `${formatCount(country.count)} 项国家事实`),
+                  h("em", null, "查看案例 ↗"),
+                ),
               )
             }),
           ),
@@ -1499,7 +1525,12 @@ function renderComparativeTopicPage({ pages, topicConfig, todayKey, displayClass
         h(
           "article",
           { class: "knowledge-comparative-field field-themes", id: "comparative-field-4" },
-          h("header", null, h("span", null, "04 · QUESTIONS"), h("h3", null, "主题探讨")),
+          h(
+            "header",
+            null,
+            h("div", null, h("span", null, "04 · QUESTIONS"), h("h3", null, "主题探讨")),
+            h("p", null, "从规范理念、课程制度与高等教育竞争进入三个跨国议题网络。"),
+          ),
           h(
             "div",
             { class: "knowledge-comparative-theme-list" },
@@ -1508,14 +1539,25 @@ function renderComparativeTopicPage({ pages, topicConfig, todayKey, displayClass
                 "div",
                 { class: `knowledge-comparative-theme-row theme-row-${index + 1}` },
                 h("span", null, theme.number),
-                h("section", null, h("strong", null, theme.title), h("p", null, theme.note)),
+                h(
+                  "section",
+                  null,
+                  h("small", null, theme.scope),
+                  h("strong", null, theme.title),
+                  h("p", null, theme.note),
+                ),
                 h(
                   "nav",
                   null,
                   theme.links
-                    .slice(0, 3)
-                    .map((page) =>
-                      h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
+                    .slice(0, 5)
+                    .map((page, linkIndex) =>
+                      h(
+                        "a",
+                        { href: hrefFor(page), class: "internal" },
+                        h("span", null, String(linkIndex + 1).padStart(2, "0")),
+                        h("strong", null, titleFor(page)),
+                      ),
                     ),
                 ),
               ),
@@ -1531,7 +1573,7 @@ function renderComparativeTopicPage({ pages, topicConfig, todayKey, displayClass
         "div",
         { class: "knowledge-comparative-section-head" },
         h("div", null, h("span", null, "Ways of Comparing"), h("h2", null, "比较方法论")),
-        h("p", null, "六条传统回答六种不同的比较难题"),
+        h("p", null, "四种取向分别处理规律、情境、权力与多尺度案例"),
       ),
       h(
         "div",
@@ -1543,25 +1585,15 @@ function renderComparativeTopicPage({ pages, topicConfig, todayKey, displayClass
             h("span", null, method.code),
             h("h3", null, h("a", { href: hrefFor(method.lead), class: "internal" }, method.title)),
             h("p", null, method.question),
+            h("small", null, method.description),
             h(
-              "footer",
-              null,
+              "div",
+              { class: "knowledge-comparative-method-links" },
               method.links.map((page) =>
                 h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
               ),
             ),
           ),
-        ),
-      ),
-      h(
-        "aside",
-        { class: "knowledge-comparative-scale-note" },
-        h("span", null, "多维比较设计"),
-        h("strong", null, "Bray–Thomas 立方体 ≠ 比较案例研究三轴"),
-        h(
-          "p",
-          null,
-          "前者组织地理层级、人口群体与教育面向；后者沿水平、垂直与横贯三个方向追踪案例。",
         ),
       ),
     ),
@@ -1621,15 +1653,21 @@ function renderComparativeTopicPage({ pages, topicConfig, todayKey, displayClass
         ),
         h(
           "div",
-          { class: "knowledge-comparative-latest-list" },
-          topic.latest.map((page, index) => {
+          { class: "knowledge-methods-latest-grid" },
+          topic.latest.map((page) => {
             const date = pageDate(page)
             return h(
               "a",
-              { href: hrefFor(page), class: "internal" },
-              h("span", null, String(index + 1).padStart(2, "0")),
-              h("div", null, h("strong", null, titleFor(page)), h("small", null, summaryFor(page))),
-              date && h("time", { dateTime: date.toISOString() }, formatDate(date, "zh-CN")),
+              { href: hrefFor(page), class: "knowledge-methods-latest-card internal" },
+              h(
+                "header",
+                null,
+                h("span", null, sectionFor(page)),
+                date && h("time", { dateTime: date.toISOString() }, formatDate(date, "zh-CN")),
+              ),
+              h("h3", null, titleFor(page)),
+              h("p", null, summaryFor(page)),
+              h("small", null, `${formatCount(linksFor(page))} 个链接`),
             )
           }),
         ),
@@ -3272,14 +3310,29 @@ body[data-slug^="explore/"] .center > article {
 }
 
 .knowledge-comparative-field > header {
-  align-items: start;
+  align-items: end;
   display: flex;
+  gap: 2rem;
   justify-content: space-between;
+  padding-bottom: 0.85rem;
 }
 
 .knowledge-comparative-field > header h3 {
   font-size: clamp(1.45rem, 2.5vw, 2rem);
   margin: 0.35rem 0 0;
+}
+
+.knowledge-comparative-field > header > p,
+.knowledge-comparative-field > header > div > p {
+  color: var(--darkgray);
+  font-size: 0.73rem;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 28rem;
+}
+
+.knowledge-comparative-field > header > p {
+  text-align: right;
 }
 
 .knowledge-comparative-overview-list {
@@ -3377,7 +3430,7 @@ body[data-slug^="explore/"] .center > article {
   padding: 0.9rem;
 }
 
-.knowledge-comparative-country > span {
+.knowledge-comparative-country > header > span {
   color: var(--atlas-sea);
   font-size: 0.69rem;
   font-weight: 800;
@@ -3390,7 +3443,8 @@ body[data-slug^="explore/"] .center > article {
   margin-top: 0.75rem;
 }
 
-.knowledge-comparative-country > small { color: var(--darkgray); font-size: 0.65rem; margin-top: auto; }
+.knowledge-comparative-country > div { margin-top: auto; }
+.knowledge-comparative-country > div > small { color: var(--darkgray); font-size: 0.65rem; }
 
 .knowledge-comparative-theme-list {
   border-top: 1px solid var(--lightgray);
@@ -3426,20 +3480,21 @@ body[data-slug^="explore/"] .center > article {
 
 .knowledge-comparative-method-grid {
   display: grid;
-  gap: 0;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .knowledge-comparative-method {
-  border-left: 1px solid rgba(220, 234, 228, 0.14);
-  border-top: 1px solid rgba(220, 234, 228, 0.14);
+  background: rgba(223, 238, 232, 0.035);
+  border: 1px solid rgba(220, 234, 228, 0.14);
+  border-radius: 14px;
   display: flex;
   flex-direction: column;
-  min-height: 17rem;
-  padding: 1.25rem;
+  min-height: 15rem;
+  padding: 1.35rem;
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
 }
 
-.knowledge-comparative-method:nth-child(3n + 1) { border-left: 0; }
 .knowledge-comparative-method > span { color: #8ec0b6; font-size: 0.63rem; font-weight: 850; letter-spacing: 0.12em; }
 
 .knowledge-comparative-method h3 {
@@ -3451,7 +3506,14 @@ body[data-slug^="explore/"] .center > article {
 .knowledge-comparative-method h3 a { color: #f4f1ea; }
 .knowledge-comparative-method > p { color: rgba(238, 243, 239, 0.6); font-size: 0.76rem; line-height: 1.55; margin: 0; }
 
-.knowledge-comparative-method footer {
+.knowledge-comparative-method > small {
+  color: rgba(238, 243, 239, 0.76);
+  font-size: 0.7rem;
+  line-height: 1.55;
+  margin-top: 0.85rem;
+}
+
+.knowledge-comparative-method-links {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
@@ -3459,7 +3521,7 @@ body[data-slug^="explore/"] .center > article {
   padding-top: 1rem;
 }
 
-.knowledge-comparative-method footer a {
+.knowledge-comparative-method-links a {
   border: 1px solid rgba(220, 234, 228, 0.16);
   border-radius: 999px;
   color: #b7d7d0;
@@ -3467,20 +3529,11 @@ body[data-slug^="explore/"] .center > article {
   padding: 0.26rem 0.45rem;
 }
 
-.knowledge-comparative-scale-note {
-  align-items: center;
-  background: rgba(4, 13, 12, 0.35);
-  border: 1px solid rgba(220, 234, 228, 0.14);
-  border-radius: 10px;
-  display: grid;
-  gap: 0.3rem 1rem;
-  grid-template-columns: auto auto 1fr;
-  padding: 0.9rem 1rem;
+.knowledge-comparative-method:hover {
+  background: rgba(223, 238, 232, 0.07);
+  border-color: rgba(174, 215, 203, 0.36);
+  transform: translateY(-2px);
 }
-
-.knowledge-comparative-scale-note > span { color: #8ec0b6; font-size: 0.65rem; font-weight: 850; }
-.knowledge-comparative-scale-note > strong { color: #f3f1ea; font-family: var(--headerFont); font-size: 0.9rem; }
-.knowledge-comparative-scale-note > p { color: rgba(238, 243, 239, 0.56); font-size: 0.67rem; line-height: 1.45; margin: 0; text-align: right; }
 
 .knowledge-comparative-random-grid {
   display: grid;
@@ -3556,8 +3609,6 @@ body[data-slug^="explore/"] .center > article {
   .knowledge-comparative-field-grid { grid-template-columns: 1fr; }
   .knowledge-comparative-field { min-height: 0; }
   .knowledge-comparative-method-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .knowledge-comparative-method:nth-child(3n + 1) { border-left: 1px solid rgba(220, 234, 228, 0.14); }
-  .knowledge-comparative-method:nth-child(2n + 1) { border-left: 0; }
   .knowledge-comparative-random-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
@@ -3571,13 +3622,10 @@ body[data-slug^="explore/"] .center > article {
   .knowledge-comparative-overview-list,
   .knowledge-comparative-method-grid,
   .knowledge-comparative-random-grid { grid-template-columns: 1fr; }
-  .knowledge-comparative-overview-list > div:nth-child(even),
-  .knowledge-comparative-method,
-  .knowledge-comparative-method:nth-child(3n + 1) { border-left: 0; padding-left: 0; }
+  .knowledge-comparative-overview-list > div:nth-child(even) { border-left: 0; padding-left: 0; }
+  .knowledge-comparative-method { min-height: 0; }
   .knowledge-comparative-theme-list > div { grid-template-columns: 1.6rem 1fr; }
   .knowledge-comparative-theme-list nav { grid-column: 2; }
-  .knowledge-comparative-scale-note { align-items: start; grid-template-columns: 1fr; }
-  .knowledge-comparative-scale-note > p { text-align: left; }
   .knowledge-comparative-latest-list > a { align-items: start; grid-template-columns: 1.5rem 1fr; }
   .knowledge-comparative-latest-list time { grid-column: 2; }
 }
@@ -3612,6 +3660,10 @@ body[data-slug^="explore/"] .center > article {
 .knowledge-comparative-field > header h3 {
   font-size: clamp(1.85rem, 4vw, 3.2rem);
   letter-spacing: -0.045em;
+}
+
+.knowledge-comparative-field > header > p {
+  max-width: 31rem;
 }
 
 .knowledge-comparative-field > header > span,
@@ -3719,9 +3771,9 @@ body[data-slug^="explore/"] .center > article {
 .knowledge-comparative-field-footer {
   align-items: center;
   border-top: 1px solid rgba(220, 234, 228, 0.16);
-  display: flex;
+  display: grid;
   gap: 1rem;
-  justify-content: space-between;
+  grid-template-columns: auto minmax(12rem, 1fr) auto;
   padding-top: 1rem;
 }
 
@@ -3735,6 +3787,15 @@ body[data-slug^="explore/"] .center > article {
 .knowledge-comparative-field-footer strong {
   color: #a8d1c6;
   font-size: 0.72rem;
+  text-align: right;
+}
+
+.knowledge-comparative-field-footer p {
+  color: rgba(238, 243, 239, 0.62);
+  font-size: 0.68rem;
+  line-height: 1.5;
+  margin: 0;
+  text-align: center;
 }
 
 .field-organizations {
@@ -3744,7 +3805,7 @@ body[data-slug^="explore/"] .center > article {
   border-color: color-mix(in srgb, var(--atlas-copper) 28%, var(--lightgray));
 }
 
-.field-organizations > header > span { color: var(--atlas-copper); }
+.field-organizations > header > div > span { color: var(--atlas-copper); }
 
 .knowledge-comparative-organization-list {
   border-top: 1px solid color-mix(in srgb, var(--atlas-copper) 24%, var(--lightgray));
@@ -3882,20 +3943,85 @@ body[data-slug^="explore/"] .center > article {
 }
 
 .knowledge-comparative-country {
-  background: color-mix(in srgb, var(--light) 88%, var(--atlas-sea));
-  border-radius: 14px;
-  min-height: 11.5rem;
-  padding: 1.1rem;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--light) 92%, var(--atlas-sea)), var(--light));
+  border-radius: 15px;
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--atlas-sea) 5%, transparent);
+  min-height: 14rem;
+  overflow: hidden;
+  padding: 1.05rem 1.1rem 1rem;
+  position: relative;
+  text-decoration: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
-.knowledge-comparative-country > span {
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
+.knowledge-comparative-country::before {
+  background: linear-gradient(90deg, var(--atlas-sea), color-mix(in srgb, var(--atlas-sea) 12%, transparent));
+  content: "";
+  height: 3px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.knowledge-comparative-country > header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.knowledge-comparative-country > header > span {
+  font-family: var(--headerFont);
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+}
+
+.knowledge-comparative-country > header > b {
+  color: color-mix(in srgb, var(--atlas-sea) 48%, var(--darkgray));
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
 }
 
 .knowledge-comparative-country > strong {
-  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
-  margin-top: 0.95rem;
+  font-family: var(--bodyFont);
+  font-size: clamp(0.96rem, 1.45vw, 1.16rem);
+  font-weight: 750;
+  line-height: 1.28;
+  margin-top: 0.8rem;
+  overflow-wrap: anywhere;
+}
+
+.knowledge-comparative-country > p {
+  color: var(--darkgray);
+  display: -webkit-box;
+  font-size: 0.7rem;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.5;
+  margin: 0.55rem 0 0.9rem;
+  overflow: hidden;
+}
+
+.knowledge-comparative-country > div {
+  align-items: center;
+  border-top: 1px solid color-mix(in srgb, var(--atlas-sea) 16%, var(--lightgray));
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0.65rem;
+}
+
+.knowledge-comparative-country > div > em {
+  color: var(--atlas-sea);
+  font-size: 0.62rem;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.knowledge-comparative-country:hover {
+  border-color: color-mix(in srgb, var(--atlas-sea) 56%, var(--lightgray));
+  box-shadow: 0 16px 34px color-mix(in srgb, var(--atlas-sea) 12%, transparent);
+  transform: translateY(-2px);
 }
 
 .field-themes {
@@ -3908,7 +4034,7 @@ body[data-slug^="explore/"] .center > article {
   border-color: rgba(209, 224, 216, 0.18);
 }
 
-.field-themes > header > span { color: var(--atlas-copper); }
+.field-themes > header > div > span { color: var(--atlas-copper); }
 
 .knowledge-comparative-theme-list {
   border-top-color: color-mix(in srgb, var(--atlas-copper) 28%, var(--lightgray));
@@ -3916,27 +4042,57 @@ body[data-slug^="explore/"] .center > article {
 
 .knowledge-comparative-theme-list > div,
 .knowledge-comparative-theme-list > div + div {
+  align-items: start;
   border-top-color: color-mix(in srgb, var(--atlas-copper) 18%, var(--lightgray));
   display: grid;
   gap: 1.25rem;
-  grid-template-columns: 3rem minmax(13rem, 0.65fr) minmax(0, 1.35fr);
-  padding: 1.35rem 0;
+  grid-template-columns: 3rem minmax(14rem, 0.62fr) minmax(0, 1.38fr);
+  padding: 1.55rem 0;
 }
 
 .knowledge-comparative-theme-list > div > span { color: var(--atlas-copper); font-size: 0.72rem; }
-.knowledge-comparative-theme-list section strong { font-size: clamp(1.2rem, 2vw, 1.6rem); }
+.knowledge-comparative-theme-list section > small {
+  color: color-mix(in srgb, var(--atlas-copper) 72%, var(--darkgray));
+  display: block;
+  font-size: 0.57rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.45rem;
+}
+.knowledge-comparative-theme-list section strong { display: block; font-size: clamp(1.2rem, 2vw, 1.6rem); }
 .knowledge-comparative-theme-list section p { font-size: 0.76rem; line-height: 1.55; }
 
 .knowledge-comparative-theme-list nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.42rem;
+  display: grid;
+  gap: 0.48rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0;
 }
 
 .knowledge-comparative-theme-list nav a {
+  align-items: center;
+  background: color-mix(in srgb, var(--light) 90%, var(--atlas-copper));
   border-color: color-mix(in srgb, var(--atlas-copper) 25%, var(--lightgray));
+  border-radius: 11px;
   color: var(--atlas-copper);
+  display: grid;
+  gap: 0.55rem;
+  grid-template-columns: 1.45rem minmax(0, 1fr);
+  min-height: 3.35rem;
+  padding: 0.58rem 0.68rem;
+}
+
+.knowledge-comparative-theme-list nav a > span {
+  color: color-mix(in srgb, var(--atlas-copper) 62%, var(--darkgray));
+  font-size: 0.56rem;
+  letter-spacing: 0.08em;
+}
+
+.knowledge-comparative-theme-list nav a > strong {
+  color: inherit;
+  font-family: var(--bodyFont);
+  font-size: 0.67rem;
+  line-height: 1.3;
 }
 
 @media all and (max-width: 900px) {
@@ -3948,13 +4104,25 @@ body[data-slug^="explore/"] .center > article {
 }
 
 @media all and (max-width: 680px) {
+  .knowledge-comparative-field > header {
+    align-items: start;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+  .knowledge-comparative-field > header > p { text-align: left; }
   .knowledge-comparative-overview-list > div,
   .knowledge-comparative-overview-list > div:nth-child(even) {
     gap: 0.75rem;
     grid-template-columns: 2rem 1fr;
   }
   .knowledge-comparative-overview-list nav { grid-column: 2; }
-  .knowledge-comparative-field-footer { align-items: start; flex-direction: column; gap: 0.45rem; }
+  .knowledge-comparative-field-footer {
+    align-items: start;
+    gap: 0.45rem;
+    grid-template-columns: 1fr;
+  }
+  .knowledge-comparative-field-footer p,
+  .knowledge-comparative-field-footer strong { text-align: left; }
   .knowledge-comparative-organization-list > .knowledge-comparative-organization {
     gap: 0.7rem;
     grid-template-columns: 2rem 1fr auto;
@@ -3974,7 +4142,10 @@ body[data-slug^="explore/"] .center > article {
     gap: 0.75rem;
     grid-template-columns: 2rem 1fr;
   }
-  .knowledge-comparative-theme-list nav { grid-column: 2; }
+  .knowledge-comparative-theme-list nav {
+    grid-column: 2;
+    grid-template-columns: 1fr;
+  }
 }
 
 .knowledge-methods-page {
