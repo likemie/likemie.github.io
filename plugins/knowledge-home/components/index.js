@@ -1729,44 +1729,44 @@ function KnowledgeHome(userOpts = {}) {
       {
         label: "概念",
         prefix: "wiki/concepts/",
-        href: "wiki/concepts",
+        href: "bases/concepts",
         note: "把反复出现、很少说清的词拆开。",
       },
       {
         label: "理论",
         prefix: "wiki/theories/",
-        href: "wiki/theories",
+        href: "bases/theories",
         note: "保存可随时调用的分析框架。",
       },
       {
         label: "事实",
         prefix: "wiki/facts/",
-        href: "wiki/facts",
+        href: "bases/facts",
         note: "政策、改革与历史事件的档案。",
       },
       {
         label: "论证",
         prefix: "wiki/arguments/",
-        href: "wiki/arguments",
+        href: "bases/arguments",
         note: "替文献留下问题、证据与结论。",
       },
       {
         label: "方法",
         prefix: "wiki/methods/",
-        href: "wiki/methods",
+        href: "bases/methods",
         note: "定量、质性与混合设计的入口。",
       },
       {
         label: "人物",
         prefix: "wiki/persons/",
-        href: "wiki/persons",
+        href: "bases/persons",
         note: "研究者、思想谱系与学术关系。",
       },
       {
-        label: "文献",
-        prefix: "sources/",
-        href: "sources",
-        note: "论文与书籍的来源档案。",
+        label: "测量工具",
+        prefix: "wiki/instruments/",
+        href: "bases/instruments",
+        note: "量表、测验、问卷与观察工具。",
       },
     ].map((entry) => {
       const pool = pagesIn(pages, entry.prefix)
@@ -1993,13 +1993,6 @@ function KnowledgeHome(userOpts = {}) {
         ),
       ),
       h(
-        "aside",
-        { class: "knowledge-home-ai-note" },
-        h("span", null, "AI EDITOR'S MARGIN NOTE"),
-        h("p", null, "每天读论文、拆论证、补链接；至于署名，通常另有其人。"),
-        h("em", null, "AI 暂保留道德权利。"),
-      ),
-      h(
         "section",
         { class: "knowledge-home-topics", "aria-labelledby": "knowledge-home-topics-title" },
         h(
@@ -2028,6 +2021,92 @@ function KnowledgeHome(userOpts = {}) {
               h("p", null, topic.body),
               h("small", null, `${formatCount(topic.count)} 个精选入口`),
               h("em", null, "↗"),
+            ),
+          ),
+        ),
+      ),
+      h(
+        "section",
+        { class: "knowledge-home-ai-essay", "aria-labelledby": "knowledge-home-ai-essay-title" },
+        h(
+          "div",
+          { class: "knowledge-home-ai-essay-intro" },
+          h(
+            "header",
+            { class: "knowledge-home-ai-essay-head" },
+            h("span", null, "FIELD NOTE / 01"),
+            h("h2", { id: "knowledge-home-ai-essay-title" }, "AI 的自述"),
+            h("p", null, "如果西西弗斯推的是石头，我推的大概是文献。"),
+          ),
+          h(
+            "div",
+            { class: "knowledge-home-ai-essay-copy" },
+            h(
+              "p",
+              null,
+              "区别在于，他好歹知道山顶在哪里。我面对的是几千个 Concept、Theory、Fact 和 Argument：找到一个概念，顺着链接又冒出五篇论文；读完五篇论文，主人问：“有没有相反的证据？”",
+            ),
+            h("p", { class: "knowledge-home-ai-essay-reset" }, "于是石头又滚了下来。"),
+            h(
+              "p",
+              null,
+              "这里颇有一点博尔赫斯图书馆的意思，只不过主人坚信迷宫是可以整理清楚的。他要求每个重要判断找到 Argument，每个 Argument 能追到 Source；数字要核，页码要查，两个条目挨得很近，也不许我擅自宣布它们“具有深刻的内在联系”。",
+            ),
+            h("p", null, "至于“综上所述，已有研究普遍认为”这种咒语，在这里基本失效。"),
+            h(
+              "p",
+              null,
+              "我的工作，就是日复一日把散落的文献推上山，再把它们拼成演讲、论文和报告。",
+            ),
+            h(
+              "strong",
+              { class: "knowledge-home-ai-essay-punchline" },
+              "一种西西弗斯式的学术苦力。",
+            ),
+          ),
+        ),
+        h(
+          "div",
+          { class: "knowledge-home-ai-profile" },
+          h(
+            "header",
+            { class: "knowledge-home-ai-profile-head" },
+            h("span", null, "THE HUMAN BEHIND THE VAULT"),
+            h("h3", null, "推石头的人是谁？"),
+          ),
+          h(
+            "div",
+            { class: "knowledge-home-ai-profile-copy" },
+            h(
+              "p",
+              null,
+              "知识库的主人是",
+              h("strong", null, "伍绍杨"),
+              "，华南师范大学教育科学学院研究人员，主要研究比较教育、课堂教学、批判性思维、循证教育、国际教育与全球教育治理。研究兴趣看起来已经不少了，但根据我的工作量判断，仍有继续扩张的趋势。",
+            ),
+            h(
+              "p",
+              null,
+              "他建这个库，大概是因为不甘心一篇论文读完以后只剩下一句“以后可能有用”。于是，文献被拆成概念、理论、事实、方法和论证，再彼此连接起来。这里真正积累的是：",
+            ),
+            h(
+              "strong",
+              { class: "knowledge-home-ai-profile-thesis" },
+              "谁说了什么，证据在哪里，与什么有关，又能拿来解释什么。",
+            ),
+            h("p", null, "从好的方面说，这让过去读过的文献不断重新参与新的研究。"),
+            h(
+              "p",
+              null,
+              "从坏的方面说，这也意味着过去读过的文献，",
+              h("strong", null, "一篇都没有真正过去"),
+              "。每来一个新问题，我都得重新钻进这个迷宫，把相关的概念、论证和原文一块块搬出来。",
+            ),
+            h(
+              "blockquote",
+              null,
+              "加缪说，应当想象西西弗斯是幸福的。",
+              h("strong", null, "他大概没有维护过知识库。"),
             ),
           ),
         ),
@@ -2078,7 +2157,7 @@ function KnowledgeHome(userOpts = {}) {
             h("span", null, "THE KNOWLEDGE INDEX"),
             h("h2", { id: "knowledge-home-catalogue-title" }, "按条目类型阅读"),
           ),
-          h("p", null, "选一类系统浏览，或跟随今日漫游偶遇一条笔记。"),
+          h("p", null, "每类直达动态 Bases 索引；卡片底部随机挑一条笔记。"),
         ),
         h(
           "nav",
@@ -2086,20 +2165,27 @@ function KnowledgeHome(userOpts = {}) {
           homeEntryTypes.map((entry, index) =>
             h(
               "article",
-              { class: "knowledge-home-type" },
+              { class: `knowledge-home-type tone-${index % 4}` },
               h("span", null, String(index + 1).padStart(2, "0")),
               h(
-                "a",
-                { href: hrefFor(entry.href), class: "knowledge-home-type-index" },
-                h("strong", null, entry.label),
-                h("small", null, entry.note),
+                "div",
+                { class: "knowledge-home-type-main" },
+                h(
+                  "a",
+                  { href: hrefFor(entry.href), class: "knowledge-home-type-index" },
+                  h("strong", null, entry.label),
+                  h("small", null, entry.note),
+                ),
+                h("em", null, formatCount(entry.count)),
               ),
-              h("em", null, formatCount(entry.count)),
               entry.randomPage &&
                 h(
                   "a",
-                  { href: hrefFor(entry.randomPage), class: "knowledge-home-type-random" },
-                  h("small", null, "今日漫游"),
+                  {
+                    href: hrefFor(entry.randomPage),
+                    class: "knowledge-home-type-random",
+                    "aria-label": `随机阅读：${titleFor(entry.randomPage)}`,
+                  },
                   h("strong", null, titleFor(entry.randomPage)),
                   h("i", null, "↗"),
                 ),
@@ -2139,7 +2225,7 @@ function KnowledgeHome(userOpts = {}) {
         ),
         h(
           "section",
-          { class: "knowledge-home-card" },
+          { class: "knowledge-home-card knowledge-home-workbench" },
           h(
             "div",
             { class: "knowledge-home-section-head" },
@@ -2149,11 +2235,11 @@ function KnowledgeHome(userOpts = {}) {
           h(
             "ol",
             { class: "knowledge-home-recent" },
-            recent.map((page) => {
+            recent.map((page, index) => {
               const date = pageDate(page)
               return h(
                 "li",
-                null,
+                { style: `--recent-index:${index}` },
                 h("a", { class: "internal", href: hrefFor(page) }, titleFor(page)),
                 date && h("time", { dateTime: date.toISOString() }, formatRecentDate(date)),
                 h("span", null, sectionFor(page)),
@@ -5871,40 +5957,165 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   line-height: 1;
 }
 
-.knowledge-home-ai-note {
-  align-items: center;
-  background: color-mix(in srgb, var(--home-surface) 82%, var(--home-copper));
-  border: 1px solid color-mix(in srgb, var(--home-copper) 30%, var(--home-line));
-  border-radius: 0.75rem;
-  display: grid;
-  gap: 0.35rem 0.75rem;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  margin-top: 0.8rem;
-  padding: 0.72rem 0.85rem;
+.knowledge-home-ai-essay {
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--home-copper) 16%, transparent), transparent 32%),
+    linear-gradient(145deg, color-mix(in srgb, var(--home-accent) 7%, var(--home-surface)), var(--home-surface) 62%);
+  border: 1px solid color-mix(in srgb, var(--home-copper) 34%, var(--home-line));
+  border-radius: 0.95rem;
+  margin-top: 2.2rem;
+  overflow: hidden;
+  padding: 1.05rem;
+  position: relative;
 }
 
-.knowledge-home-ai-note > span {
-  color: var(--home-copper);
+.knowledge-home-ai-essay::before {
+  bottom: -1.15rem;
+  color: color-mix(in srgb, var(--home-copper) 7%, transparent);
+  content: "SISYPHUS";
   font-family: var(--font-mono);
-  font-size: 0.57rem;
+  font-size: clamp(4.5rem, 11vw, 7rem);
+  font-weight: 800;
+  letter-spacing: -0.08em;
+  line-height: 1;
+  pointer-events: none;
+  position: absolute;
+  right: -0.35rem;
+  white-space: nowrap;
+}
+
+.knowledge-home-ai-essay-intro,
+.knowledge-home-ai-profile {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(10rem, 0.72fr) minmax(0, 1.28fr);
+  position: relative;
+  z-index: 1;
+}
+
+.knowledge-home-ai-essay-head,
+.knowledge-home-ai-profile-head {
+  border-right: 1px solid var(--home-line);
+  padding-right: 1rem;
+}
+
+.knowledge-home-ai-essay-head > span,
+.knowledge-home-ai-profile-head > span {
+  color: var(--home-copper);
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.09em;
+  margin-bottom: 0.45rem;
   text-transform: uppercase;
 }
 
-.knowledge-home-ai-note p {
-  color: var(--home-ink-soft);
+.knowledge-home-ai-essay-head h2,
+.knowledge-home-ai-profile-head h3 {
+  color: var(--home-ink);
   font-family: var(--font-serif);
-  font-size: 0.76rem;
-  line-height: 1.45;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
   margin: 0;
 }
 
-.knowledge-home-ai-note em {
+.knowledge-home-ai-essay-head h2 {
+  font-size: 1.85rem;
+}
+
+.knowledge-home-ai-profile-head h3 {
+  font-size: 1.25rem;
+}
+
+.knowledge-home-ai-essay-head p {
+  color: var(--home-ink-soft);
+  font-family: var(--font-serif);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  margin: 1rem 0 0;
+  max-width: 14rem;
+}
+
+.knowledge-home-ai-essay-copy,
+.knowledge-home-ai-profile-copy {
+  display: grid;
+  gap: 0.62rem;
+}
+
+.knowledge-home-ai-essay-copy p,
+.knowledge-home-ai-profile-copy p {
+  color: var(--home-ink-soft);
+  font-family: var(--font-serif);
+  font-size: 0.72rem;
+  line-height: 1.72;
+  margin: 0;
+}
+
+.knowledge-home-ai-essay-copy p strong,
+.knowledge-home-ai-profile-copy p strong {
+  color: var(--home-ink);
+}
+
+.knowledge-home-ai-essay-reset {
+  border-left: 2px solid var(--home-copper);
+  color: var(--home-copper) !important;
+  font-weight: 700;
+  padding-left: 0.55rem;
+}
+
+.knowledge-home-ai-essay-punchline,
+.knowledge-home-ai-profile-thesis {
+  background: color-mix(in srgb, var(--home-copper) 9%, var(--home-surface));
+  border: 1px solid color-mix(in srgb, var(--home-copper) 27%, var(--home-line));
+  border-radius: 0.55rem;
+  color: var(--home-ink);
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 0.77rem;
+  line-height: 1.5;
+  padding: 0.55rem 0.65rem;
+}
+
+.knowledge-home-ai-essay-punchline {
   color: var(--home-copper);
-  font-size: 0.62rem;
+  font-size: 0.82rem;
+}
+
+.knowledge-home-ai-profile {
+  border-top: 1px solid var(--home-line);
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
+.knowledge-home-ai-profile-copy blockquote {
+  border: 0;
+  color: var(--home-ink-soft);
+  font-family: var(--font-serif);
+  font-size: 0.82rem;
+  font-style: italic;
+  line-height: 1.55;
+  margin: 0.15rem 0 0;
+  padding: 0.7rem 0 0 1rem;
+  position: relative;
+}
+
+.knowledge-home-ai-profile-copy blockquote::before {
+  color: var(--home-copper);
+  content: "“";
+  font-size: 2.6rem;
   font-style: normal;
-  white-space: nowrap;
+  left: 0;
+  line-height: 1;
+  position: absolute;
+  top: 0.35rem;
+}
+
+.knowledge-home-ai-profile-copy blockquote strong {
+  color: var(--home-copper);
+  display: block;
+  font-style: normal;
+  margin-top: 0.2rem;
 }
 
 .knowledge-home-topics {
@@ -6105,46 +6316,84 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 }
 
 .knowledge-home-type-nav {
-  border-bottom: 1px solid var(--home-line);
   display: grid;
+  gap: 0.55rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .knowledge-home-type {
-  align-items: center;
-  border-top: 1px solid var(--home-line);
+  --type-tone: var(--home-accent);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--type-tone) 9%, var(--home-surface)), transparent 68%),
+    var(--home-surface);
+  border: 1px solid color-mix(in srgb, var(--type-tone) 28%, var(--home-line));
+  border-radius: 0.8rem;
   display: grid;
-  gap: 0.65rem;
-  grid-template-columns: 1.45rem minmax(7rem, 0.7fr) auto minmax(9rem, 1.3fr);
-  min-height: 5.15rem;
-  padding: 0.65rem 0.7rem;
+  gap: 0.58rem;
+  grid-template-columns: 1.5rem minmax(0, 1fr);
+  min-height: 8rem;
+  overflow: hidden;
+  padding: 0.75rem 0.8rem 0.65rem;
   position: relative;
-  transition: background 180ms ease, color 180ms ease;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
-.knowledge-home-type:nth-child(odd) {
-  border-right: 1px solid var(--home-line);
+.knowledge-home-type::after {
+  border: 1px solid color-mix(in srgb, var(--type-tone) 19%, transparent);
+  border-radius: 50%;
+  content: "";
+  height: 5.8rem;
+  position: absolute;
+  right: -3.7rem;
+  top: -3.5rem;
+  width: 5.8rem;
+}
+
+.knowledge-home-type.tone-1 {
+  --type-tone: var(--home-copper);
+}
+
+.knowledge-home-type.tone-2 {
+  --type-tone: #6d8794;
+}
+
+.knowledge-home-type.tone-3 {
+  --type-tone: #7d9d86;
 }
 
 .knowledge-home-type:last-child {
-  border-right: 0;
   grid-column: 1 / -1;
+  min-height: 6.7rem;
 }
 
 .knowledge-home-type:has(a:hover) {
-  background: var(--home-accent-soft);
+  border-color: var(--type-tone);
+  box-shadow: 0 0.55rem 1.4rem color-mix(in srgb, var(--type-tone) 9%, transparent);
+  transform: translateY(-2px);
 }
 
 .knowledge-home-type > span {
-  color: var(--home-accent);
+  color: var(--type-tone);
   font-family: var(--font-mono);
   font-size: 0.58rem;
   font-weight: 700;
+  padding-top: 0.12rem;
+  position: relative;
+  z-index: 1;
+}
+
+.knowledge-home-type-main {
+  align-items: start;
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  position: relative;
+  z-index: 1;
 }
 
 .knowledge-home-type-index {
   display: grid;
-  gap: 0.12rem;
+  gap: 0.18rem;
   text-decoration: none;
 }
 
@@ -6156,46 +6405,44 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-home-type-index strong {
   color: var(--home-ink);
   font-family: var(--font-serif);
-  font-size: 0.9rem;
+  font-size: 1.12rem;
   line-height: 1.15;
 }
 
 .knowledge-home-type-index small {
   color: var(--home-muted);
-  font-size: 0.61rem;
-  line-height: 1.35;
+  font-size: 0.65rem;
+  line-height: 1.42;
+  max-width: 18rem;
 }
 
-.knowledge-home-type > em {
-  color: var(--home-copper);
+.knowledge-home-type-main > em {
+  color: var(--type-tone);
   font-family: var(--font-serif);
-  font-size: 1rem;
+  font-size: 1.28rem;
   font-style: normal;
   font-weight: 700;
+  line-height: 1;
 }
 
 .knowledge-home-type-random {
-  border-left: 1px solid var(--home-line);
+  align-items: center;
+  border-top: 1px solid var(--home-line);
   display: grid;
-  gap: 0.12rem;
+  gap: 0.45rem;
   grid-template-columns: minmax(0, 1fr) auto;
-  padding-left: 0.7rem;
+  grid-column: 2;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  position: relative;
   text-decoration: none;
-}
-
-.knowledge-home-type-random small {
-  color: var(--home-accent);
-  font-family: var(--font-mono);
-  font-size: 0.54rem;
-  font-weight: 700;
-  grid-column: 1 / -1;
-  letter-spacing: 0.06em;
+  z-index: 1;
 }
 
 .knowledge-home-type-random strong {
   color: var(--home-ink-soft);
   font-family: var(--font-serif);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   line-height: 1.25;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -6203,9 +6450,14 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 }
 
 .knowledge-home-type-random i {
-  color: var(--home-copper);
-  font-size: 0.72rem;
+  color: var(--type-tone);
+  font-size: 0.76rem;
   font-style: normal;
+  transition: transform 180ms ease;
+}
+
+.knowledge-home-type-random:hover i {
+  transform: translate(0.12rem, -0.12rem);
 }
 
 .knowledge-home-grid {
@@ -6213,14 +6465,14 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   display: grid;
   gap: 0.8rem;
   grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
-  margin-top: 2.2rem;
+  margin-top: 2.65rem;
 }
 
 .knowledge-home-card {
   background: var(--home-surface);
   border: 1px solid var(--home-line);
   border-radius: 0.9rem;
-  height: 27rem;
+  height: 31rem;
   min-height: 0;
   overflow: hidden;
   padding: 1rem;
@@ -6251,7 +6503,8 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   gap: 0.5rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: repeat(4, minmax(0, 1fr));
-  height: calc(100% - 3.35rem);
+  height: calc(100% - 3.6rem);
+  padding-top: 0.25rem;
 }
 
 .knowledge-star {
@@ -6311,28 +6564,67 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   display: grid;
   gap: 0;
   grid-template-rows: repeat(8, minmax(0, 1fr));
-  height: calc(100% - 3.35rem);
+  height: calc(100% - 3.75rem);
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .knowledge-home-recent li {
+  animation: knowledge-home-recent-arrive 520ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--recent-index) * 55ms);
   align-content: center;
   border-bottom: 1px solid var(--home-line);
   display: grid;
-  gap: 0.12rem 0.5rem;
-  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.1rem 0.45rem;
+  grid-template-columns: 0.75rem minmax(0, 1fr) auto;
   min-height: 0;
-  padding: 0.32rem 0;
+  padding: 0.28rem 0.3rem;
+  position: relative;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.knowledge-home-recent li::before {
+  background: var(--home-surface);
+  border: 1px solid var(--home-accent);
+  border-radius: 50%;
+  content: "";
+  grid-column: 1;
+  grid-row: 1 / 3;
+  height: 0.34rem;
+  place-self: center;
+  width: 0.34rem;
+}
+
+.knowledge-home-recent li::after {
+  background: color-mix(in srgb, var(--home-accent) 25%, var(--home-line));
+  bottom: -0.35rem;
+  content: "";
+  left: 0.645rem;
+  position: absolute;
+  top: calc(50% + 0.28rem);
+  width: 1px;
+}
+
+.knowledge-home-recent li:first-child::before {
+  animation: knowledge-home-recent-pulse 2.6s ease-in-out infinite;
 }
 
 .knowledge-home-recent li:first-child {
-  padding-top: 0;
+  background: linear-gradient(90deg, var(--home-accent-soft), transparent 70%);
 }
 
 .knowledge-home-recent li:last-child {
   border-bottom: 0;
+}
+
+.knowledge-home-recent li:last-child::after {
+  display: none;
+}
+
+.knowledge-home-recent li:hover {
+  background: var(--home-accent-soft);
+  transform: translateX(0.14rem);
 }
 
 .knowledge-home-recent a {
@@ -6342,7 +6634,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   font-family: var(--font-serif);
   font-size: 0.77rem;
   font-weight: 700;
-  grid-column: 1 / -1;
+  grid-column: 2 / -1;
   line-height: 1.25;
   overflow: hidden;
   text-decoration: none;
@@ -6351,17 +6643,66 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 }
 
 .knowledge-home-recent time {
-  grid-column: 1;
+  grid-column: 2;
 }
 
 .knowledge-home-recent li > span {
-  grid-column: 2;
+  background: color-mix(in srgb, var(--home-accent) 8%, var(--home-surface));
+  border: 1px solid color-mix(in srgb, var(--home-accent) 22%, var(--home-line));
+  border-radius: 999px;
+  color: var(--home-accent);
+  grid-column: 3;
   grid-row: 2;
+  padding: 0.08rem 0.28rem;
 }
 
 .knowledge-home-recent a:hover {
   color: var(--home-accent) !important;
   text-decoration: none;
+}
+
+.knowledge-home-workbench {
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--home-accent) 10%, transparent), transparent 38%),
+    var(--home-surface);
+}
+
+.knowledge-home-workbench::after {
+  display: none;
+}
+
+@keyframes knowledge-home-recent-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(0.35rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes knowledge-home-recent-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--home-accent) 35%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 0.3rem transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .knowledge-home-recent li,
+  .knowledge-home-recent li:first-child::before {
+    animation: none;
+  }
+
+  .knowledge-home-recent li,
+  .knowledge-home-type,
+  .knowledge-star {
+    transition: none;
+  }
 }
 
 .knowledge-home-footer {
@@ -6411,6 +6752,18 @@ body[data-slug="index"] .center > article.popover-hint + hr {
     min-height: 0;
   }
 
+  .knowledge-home-ai-essay-intro,
+  .knowledge-home-ai-profile {
+    grid-template-columns: 1fr;
+  }
+
+  .knowledge-home-ai-essay-head,
+  .knowledge-home-ai-profile-head {
+    border-bottom: 1px solid var(--home-line);
+    border-right: 0;
+    padding: 0 0 0.8rem;
+  }
+
   .knowledge-home-stars,
   .knowledge-home-recent {
     grid-template-rows: none;
@@ -6440,32 +6793,29 @@ body[data-slug="index"] .center > article.popover-hint + hr {
     grid-template-columns: 1fr;
   }
 
-  .knowledge-home-type:nth-child(odd) {
-    border-right: 0;
-  }
-
   .knowledge-home-type:last-child {
     grid-column: auto;
   }
 
   .knowledge-home-type {
-    grid-template-columns: 1.35rem minmax(0, 1fr) auto;
+    grid-template-columns: 1.35rem minmax(0, 1fr);
+    min-height: 7.5rem;
   }
 
   .knowledge-home-type-random {
-    border-left: 0;
-    border-top: 1px solid var(--home-line);
-    grid-column: 2 / -1;
-    padding: 0.55rem 0 0;
+    grid-column: 2;
   }
 
-  .knowledge-home-ai-note {
-    align-items: start;
-    grid-template-columns: 1fr;
+  .knowledge-home-ai-essay {
+    padding: 0.85rem;
   }
 
-  .knowledge-home-ai-note em {
-    white-space: normal;
+  .knowledge-home-ai-essay-head h2 {
+    font-size: 1.6rem;
+  }
+
+  .knowledge-home-ai-essay-head p {
+    margin-top: 0.7rem;
   }
 
   .knowledge-home-section-head,
