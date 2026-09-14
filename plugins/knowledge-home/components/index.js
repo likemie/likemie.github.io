@@ -905,7 +905,14 @@ function comparativeTopicData(pages, todayKey) {
       question: "能否通过跨国数据检验一般性解释？",
       description: "以变量、假设检验和大规模跨国测量建立可比较的经验基础。",
       lead: find("Scientific Paradigm"),
-      links: existing(["Harold Noah", "Max Eckstein", "IEA", "PISA"]),
+      links: existing([
+        "Marc-Antoine Jullien",
+        "Harold Noah",
+        "Max Eckstein",
+        "IEA",
+        "PISA",
+        "Measurement Invariance",
+      ]),
     },
     {
       code: "02 · CONTEXT",
@@ -913,7 +920,13 @@ function comparativeTopicData(pages, todayKey) {
       question: "教育制度为什么形成今天的样子？",
       description: "把制度放回历史、文化与国家形成过程，解释差异背后的持续性力量。",
       lead: find("Factorial Interpretive Framework") ?? find("National Character"),
-      links: existing(["Michael Sadler", "Isaac Kandel", "Nicholas Hans"]),
+      links: existing([
+        "Michael Sadler",
+        "Isaac Kandel",
+        "Nicholas Hans",
+        "Historical-Comparative Method",
+        "National Character",
+      ]),
     },
     {
       code: "03 · CRITICAL",
@@ -921,7 +934,13 @@ function comparativeTopicData(pages, todayKey) {
       question: "国际比较隐藏了怎样的权力与中心—边缘关系？",
       description: "追踪世界体系、依附关系与知识权力如何规定比较的尺度和解释方向。",
       lead: find("Dependency Theory", "wiki/theories/"),
-      links: existing(["World Society Theory", "World Culture Theory", "Postcolonialism"]),
+      links: existing([
+        "World Society Theory",
+        "Post-colonial Theory",
+        "Epistemic Coloniality",
+        "Decolonial Paradox",
+        "Decolonial Geopolitics of Knowledge",
+      ]),
     },
     {
       code: "04 · MULTI-SCALAR",
@@ -933,6 +952,8 @@ function comparativeTopicData(pages, todayKey) {
         "Unit of Analysis",
         "Methodological Transnationalism",
         "International Education Hubs",
+        "Mixed Methods Case Study Design",
+        "Comparative Textbook Analysis",
       ]),
     },
   ].filter((method) => method.lead)
