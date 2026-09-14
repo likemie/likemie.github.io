@@ -1,8 +1,8 @@
 import { h } from "preact"
 
 const defaultOptions = {
-  recentLimit: 12,
-  constellationLimit: 12,
+  recentLimit: 8,
+  constellationLimit: 8,
 }
 
 function isListedContent(page) {
@@ -1032,7 +1032,7 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
       h(
         "div",
         { class: "knowledge-methods-nav" },
-        h("a", { href: hrefFor("explore"), class: "knowledge-route-back" }, "← 返回专题索引"),
+        h("a", { href: "/", class: "knowledge-route-back" }, "← 返回首页"),
         h("span", null, "专题 01 · Research Methods"),
       ),
       h(
@@ -1292,7 +1292,7 @@ function renderComparativeTopicPage({ pages, topicConfig, todayKey, displayClass
       h(
         "nav",
         { class: "knowledge-comparative-nav" },
-        h("a", { href: hrefFor("explore"), class: "knowledge-route-back" }, "← 返回专题索引"),
+        h("a", { href: "/", class: "knowledge-route-back" }, "← 返回首页"),
         h("span", null, "专题 02 · Comparative Education"),
       ),
       h(
@@ -1725,6 +1725,75 @@ function KnowledgeHome(userOpts = {}) {
         lead: topic.anchors[0],
       }
     })
+    const homeEntryTypes = [
+      {
+        label: "概念",
+        prefix: "wiki/concepts/",
+        href: "wiki/concepts",
+        note: "把反复出现、很少说清的词拆开。",
+      },
+      {
+        label: "理论",
+        prefix: "wiki/theories/",
+        href: "wiki/theories",
+        note: "保存可随时调用的分析框架。",
+      },
+      {
+        label: "事实",
+        prefix: "wiki/facts/",
+        href: "wiki/facts",
+        note: "政策、改革与历史事件的档案。",
+      },
+      {
+        label: "论证",
+        prefix: "wiki/arguments/",
+        href: "wiki/arguments",
+        note: "替文献留下问题、证据与结论。",
+      },
+      {
+        label: "方法",
+        prefix: "wiki/methods/",
+        href: "wiki/methods",
+        note: "定量、质性与混合设计的入口。",
+      },
+      {
+        label: "人物",
+        prefix: "wiki/persons/",
+        href: "wiki/persons",
+        note: "研究者、思想谱系与学术关系。",
+      },
+      {
+        label: "文献",
+        prefix: "sources/",
+        href: "sources",
+        note: "论文与书籍的来源档案。",
+      },
+    ].map((entry) => {
+      const pool = pagesIn(pages, entry.prefix)
+      return {
+        ...entry,
+        count: pool.length,
+        randomPage: deterministicPick(pool, `${todayKey}-home-${entry.label}`),
+      }
+    })
+    const practicalTools = [
+      {
+        eyebrow: "选题指南",
+        title: "教育科研选题策略指南",
+        body: "用九类策略梳理研究问题、理论视角与可行性，适合循序阅读。",
+        href: "/static/tools/topic_strategy_guide_undergrad.html",
+        action: "打开指南",
+        tone: "guide",
+      },
+      {
+        eyebrow: "Prompt 生成器",
+        title: "教育科研选题 Prompt 生成器",
+        body: "选择策略并填写研究线索，生成可继续打磨的选题提示词。",
+        href: "/static/tools/topic_prompt_generator_undergrad.html",
+        action: "开始生成",
+        tone: "generator",
+      },
+    ]
 
     if (currentRouteKey) {
       const topicConfig = topics.find((item) => item.key === currentRouteKey)
@@ -1748,7 +1817,7 @@ function KnowledgeHome(userOpts = {}) {
         h(
           "div",
           { class: "knowledge-explore-hero knowledge-topic-hero" },
-          h("a", { href: hrefFor("explore"), class: "knowledge-route-back" }, "返回专题索引"),
+          h("a", { href: "/", class: "knowledge-route-back" }, "返回首页"),
           h("p", { class: "knowledge-explore-kicker" }, topicConfig.eyebrow),
           h("h1", null, topicConfig.title),
           h("p", null, topicConfig.body),
@@ -1820,226 +1889,12 @@ function KnowledgeHome(userOpts = {}) {
     }
 
     if (isExploreSlug(fileData.slug)) {
-      const sections = [
-        { label: "概念", prefix: "wiki/concepts/", seed: "concept" },
-        { label: "论证", prefix: "wiki/arguments/", seed: "argument" },
-        { label: "人物", prefix: "wiki/persons/", seed: "person" },
-        { label: "事实", prefix: "wiki/facts/", seed: "fact" },
-        { label: "理论", prefix: "wiki/theories/", seed: "theory" },
-        { label: "方法", prefix: "wiki/methods/", seed: "method" },
-        { label: "测量工具", prefix: "wiki/instruments/", seed: "instrument" },
-        { label: "文献", prefix: "sources/", seed: "source" },
-      ]
-      const randomEntries = sections
-        .map((section) => {
-          const pool = pagesIn(pages, section.prefix)
-          const page = deterministicPick(pool, `${todayKey}-${section.seed}`)
-          return page && { ...section, page, count: pool.length }
-        })
-        .filter(Boolean)
-      const highNodes = topLinked(
-        pages.filter((page) => (page.slug ?? "").startsWith("wiki/")),
-        10,
-      )
-      const workbench = recent.slice(0, 8)
-      const practicalTools = [
-        {
-          eyebrow: "选题指南",
-          title: "教育科研选题策略指南",
-          body: "用九类选题策略梳理研究问题、理论视角与可行性，适合本科生逐步阅读。",
-          href: "/static/tools/topic_strategy_guide_undergrad.html",
-          action: "打开指南",
-          tone: "guide",
-        },
-        {
-          eyebrow: "Prompt 生成器",
-          title: "教育科研选题 Prompt 生成器",
-          body: "选择策略、填写研究线索，组合出可直接交给 AI 继续打磨的选题提示词。",
-          href: "/static/tools/topic_prompt_generator_undergrad.html",
-          action: "开始生成",
-          tone: "generator",
-        },
-      ]
-
       return h(
         "section",
-        { class: [displayClass, "knowledge-explore"].filter(Boolean).join(" ") },
-        h(
-          "div",
-          { class: "knowledge-explore-hero" },
-          h("p", { class: "knowledge-explore-kicker" }, "Explore"),
-          h("h1", null, "探索大厅"),
-          h(
-            "p",
-            null,
-            "不按文件夹排队。可以随机抽一张研究卡，也可以从专题进入，把概念、理论、方法、论证和案例放在一起阅读。",
-          ),
-          h(
-            "div",
-            { class: "knowledge-explore-stats", "aria-label": "探索页统计" },
-            h("div", null, h("span", null, "条目"), h("strong", null, formatCount(pages.length))),
-            h("div", null, h("span", null, "Wiki"), h("strong", null, formatCount(wikiCount))),
-            h("div", null, h("span", null, "链接"), h("strong", null, formatCount(totalLinks))),
-          ),
-        ),
-        h(
-          "section",
-          { class: "knowledge-explore-tools", "aria-labelledby": "practical-tools-title" },
-          h(
-            "div",
-            { class: "knowledge-explore-head" },
-            h("h2", { id: "practical-tools-title" }, "实用工具"),
-            h("span", null, "研究选题辅助"),
-          ),
-          h(
-            "div",
-            { class: "knowledge-explore-tool-grid" },
-            practicalTools.map((tool) =>
-              h(
-                "a",
-                {
-                  href: tool.href,
-                  class: `knowledge-explore-tool ${tool.tone}`,
-                  target: "_blank",
-                  rel: "noopener noreferrer",
-                },
-                h("span", { class: "knowledge-explore-tool-eyebrow" }, tool.eyebrow),
-                h("strong", null, tool.title),
-                h("p", null, tool.body),
-                h("em", null, tool.action),
-              ),
-            ),
-          ),
-        ),
-        h(
-          "section",
-          { class: "knowledge-explore-routes" },
-          h(
-            "div",
-            { class: "knowledge-explore-head" },
-            h("h2", null, "专题索引"),
-            h("span", null, "六个研究领域"),
-          ),
-          h(
-            "div",
-            { class: "knowledge-explore-route-grid" },
-            topics.map((topicConfig) => {
-              const topic = buildTopicIndex(pages, topicConfig)
-              return h(
-                "a",
-                {
-                  href: hrefFor(`explore/${topicConfig.key}`),
-                  class: "knowledge-explore-route knowledge-explore-topic",
-                },
-                h("span", null, topicConfig.eyebrow),
-                h("strong", null, topicConfig.title),
-                h("p", null, topicConfig.body),
-                h(
-                  "em",
-                  { class: "knowledge-explore-route-meta" },
-                  `进入专题 · ${formatCount(topic.count)} 个精选入口`,
-                ),
-              )
-            }),
-          ),
-        ),
-        h(
-          "div",
-          { class: "knowledge-explore-grid bottom" },
-          h(
-            "section",
-            { class: "knowledge-explore-card knowledge-explore-panel knowledge-explore-hubs" },
-            h(
-              "div",
-              { class: "knowledge-explore-head" },
-              h("h2", null, "高连接节点"),
-              h("span", null, "按链接密度"),
-            ),
-            h(
-              "ol",
-              { class: "knowledge-explore-list" },
-              highNodes.map((page, index) =>
-                h(
-                  "li",
-                  null,
-                  h(
-                    "span",
-                    { class: "knowledge-explore-rank" },
-                    String(index + 1).padStart(2, "0"),
-                  ),
-                  h(
-                    "div",
-                    { class: "knowledge-explore-list-main" },
-                    h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
-                    h("span", null, sectionFor(page)),
-                  ),
-                  h("strong", { class: "knowledge-explore-score" }, linksFor(page)),
-                ),
-              ),
-            ),
-          ),
-          h(
-            "section",
-            { class: "knowledge-explore-card knowledge-explore-panel knowledge-explore-workbench" },
-            h(
-              "div",
-              { class: "knowledge-explore-head" },
-              h("h2", null, "最近工作台"),
-              h("span", null, "按提交/修改时间"),
-            ),
-            h(
-              "ol",
-              { class: "knowledge-explore-list" },
-              workbench.map((page, index) => {
-                const date = pageDate(page)
-                return h(
-                  "li",
-                  null,
-                  h(
-                    "span",
-                    { class: "knowledge-explore-rank" },
-                    String(index + 1).padStart(2, "0"),
-                  ),
-                  h(
-                    "div",
-                    { class: "knowledge-explore-list-main" },
-                    h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
-                    h("span", null, sectionFor(page)),
-                  ),
-                  date &&
-                    h(
-                      "time",
-                      { class: "knowledge-explore-date", dateTime: date.toISOString() },
-                      formatRecentDate(date),
-                    ),
-                )
-              }),
-            ),
-          ),
-        ),
-        h(
-          "section",
-          { class: "knowledge-explore-card knowledge-explore-random" },
-          h(
-            "div",
-            { class: "knowledge-explore-head" },
-            h("h2", null, "随机漫游"),
-            h("span", null, todayKey),
-          ),
-          h(
-            "div",
-            { class: "knowledge-explore-random-grid" },
-            randomEntries.map((entry) =>
-              h(
-                "a",
-                { href: hrefFor(entry.page), class: "knowledge-explore-chip" },
-                h("span", null, entry.label),
-                h("strong", null, titleFor(entry.page)),
-                h("small", null, `${formatCount(entry.count)} 个候选`),
-              ),
-            ),
-          ),
-        ),
+        { class: [displayClass, "knowledge-explore-redirect"].filter(Boolean).join(" ") },
+        h("p", null, "EXPLORE HAS MOVED"),
+        h("h1", null, "探索内容已并入首页"),
+        h("a", { href: "/" }, "返回首页 ↗"),
       )
     }
 
@@ -2057,8 +1912,8 @@ function KnowledgeHome(userOpts = {}) {
         ),
         h(
           "a",
-          { href: hrefFor("explore"), class: "knowledge-home-masthead-link" },
-          "进入探索",
+          { href: "#knowledge-home-catalogue-title", class: "knowledge-home-masthead-link" },
+          "知识索引",
           h("span", null, "↗"),
         ),
       ),
@@ -2078,7 +1933,11 @@ function KnowledgeHome(userOpts = {}) {
           h(
             "div",
             { class: "knowledge-home-actions" },
-            h("a", { class: "knowledge-home-button", href: hrefFor("explore") }, "开始探索"),
+            h(
+              "a",
+              { class: "knowledge-home-button", href: "#knowledge-home-topics-title" },
+              "从问题进入",
+            ),
             h(
               "a",
               { class: "knowledge-home-button ghost", href: hrefFor("wiki/research-map") },
@@ -2113,7 +1972,7 @@ function KnowledgeHome(userOpts = {}) {
           "a",
           {
             class: "knowledge-home-today",
-            href: todayConcept ? hrefFor(todayConcept) : hrefFor("explore"),
+            href: todayConcept ? hrefFor(todayConcept) : hrefFor("wiki/concepts"),
           },
           h("span", null, "TODAY'S SIGNAL · 今日信号"),
           h(
@@ -2132,6 +1991,13 @@ function KnowledgeHome(userOpts = {}) {
           h("div", null, h("span", null, "概念"), h("strong", null, formatCount(concepts.length))),
           h("div", null, h("span", null, "链接"), h("strong", null, formatCount(totalLinks))),
         ),
+      ),
+      h(
+        "aside",
+        { class: "knowledge-home-ai-note" },
+        h("span", null, "AI EDITOR'S MARGIN NOTE"),
+        h("p", null, "每天读论文、拆论证、补链接；至于署名，通常另有其人。"),
+        h("em", null, "AI 暂保留道德权利。"),
       ),
       h(
         "section",
@@ -2162,6 +2028,81 @@ function KnowledgeHome(userOpts = {}) {
               h("p", null, topic.body),
               h("small", null, `${formatCount(topic.count)} 个精选入口`),
               h("em", null, "↗"),
+            ),
+          ),
+        ),
+      ),
+      h(
+        "section",
+        { class: "knowledge-home-tools", "aria-labelledby": "knowledge-home-tools-title" },
+        h(
+          "div",
+          { class: "knowledge-home-section-head" },
+          h(
+            "div",
+            null,
+            h("span", null, "RESEARCH UTILITIES"),
+            h("h2", { id: "knowledge-home-tools-title" }, "实用工具"),
+          ),
+          h("p", null, "从找问题到写出第一版提示词。"),
+        ),
+        h(
+          "div",
+          { class: "knowledge-home-tool-grid" },
+          practicalTools.map((tool) =>
+            h(
+              "a",
+              {
+                href: tool.href,
+                class: `knowledge-home-tool ${tool.tone}`,
+                target: "_blank",
+                rel: "noopener noreferrer",
+              },
+              h("span", null, tool.eyebrow),
+              h("strong", null, tool.title),
+              h("p", null, tool.body),
+              h("em", null, `${tool.action} ↗`),
+            ),
+          ),
+        ),
+      ),
+      h(
+        "section",
+        { class: "knowledge-home-catalogue", "aria-labelledby": "knowledge-home-catalogue-title" },
+        h(
+          "div",
+          { class: "knowledge-home-section-head" },
+          h(
+            "div",
+            null,
+            h("span", null, "THE KNOWLEDGE INDEX"),
+            h("h2", { id: "knowledge-home-catalogue-title" }, "按条目类型阅读"),
+          ),
+          h("p", null, "选一类系统浏览，或跟随今日漫游偶遇一条笔记。"),
+        ),
+        h(
+          "nav",
+          { class: "knowledge-home-type-nav", "aria-label": "知识库条目类型" },
+          homeEntryTypes.map((entry, index) =>
+            h(
+              "article",
+              { class: "knowledge-home-type" },
+              h("span", null, String(index + 1).padStart(2, "0")),
+              h(
+                "a",
+                { href: hrefFor(entry.href), class: "knowledge-home-type-index" },
+                h("strong", null, entry.label),
+                h("small", null, entry.note),
+              ),
+              h("em", null, formatCount(entry.count)),
+              entry.randomPage &&
+                h(
+                  "a",
+                  { href: hrefFor(entry.randomPage), class: "knowledge-home-type-random" },
+                  h("small", null, "今日漫游"),
+                  h("strong", null, titleFor(entry.randomPage)),
+                  h("i", null, "↗"),
+                ),
             ),
           ),
         ),
@@ -2221,25 +2162,15 @@ function KnowledgeHome(userOpts = {}) {
           ),
         ),
       ),
-      h(
-        "footer",
-        { class: "knowledge-home-footer" },
-        h(
-          "div",
-          null,
-          h("span", null, "A NOTE ON THIS LIBRARY"),
-          h(
-            "p",
-            null,
-            "这是一个持续生长的教育研究知识库：从问题出发，经过阅读、拆解、连接，再回到新的问题。",
-          ),
-        ),
-        h("a", { href: hrefFor("wiki/research-map") }, "沿研究地图继续 ↗"),
-      ),
     )
   }
 
   Component.afterDOMLoaded = `
+const knowledgeHomeSlug = document.body.dataset.slug
+if (knowledgeHomeSlug === "explore" || knowledgeHomeSlug === "explore/index") {
+  window.location.replace(new URL("/", window.location.origin).toString())
+}
+
 function rotateMethodsRandomCards() {
   const cards = Array.from(document.querySelectorAll("[data-method-random-card]"))
   for (const card of cards) {
@@ -5571,6 +5502,11 @@ body[data-slug^="explore/"] .center > article {
 
 /* Homepage editorial system: a quieter research atlas that keeps the
    knowledge graph useful without making the landing page feel like a dashboard. */
+body[data-slug="index"] .center > article.popover-hint,
+body[data-slug="index"] .center > article.popover-hint + hr {
+  display: none;
+}
+
 .knowledge-home {
   --home-ink: #193235;
   --home-ink-soft: #30494b;
@@ -5935,6 +5871,42 @@ body[data-slug^="explore/"] .center > article {
   line-height: 1;
 }
 
+.knowledge-home-ai-note {
+  align-items: center;
+  background: color-mix(in srgb, var(--home-surface) 82%, var(--home-copper));
+  border: 1px solid color-mix(in srgb, var(--home-copper) 30%, var(--home-line));
+  border-radius: 0.75rem;
+  display: grid;
+  gap: 0.35rem 0.75rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  margin-top: 0.8rem;
+  padding: 0.72rem 0.85rem;
+}
+
+.knowledge-home-ai-note > span {
+  color: var(--home-copper);
+  font-family: var(--font-mono);
+  font-size: 0.57rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.knowledge-home-ai-note p {
+  color: var(--home-ink-soft);
+  font-family: var(--font-serif);
+  font-size: 0.76rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.knowledge-home-ai-note em {
+  color: var(--home-copper);
+  font-size: 0.62rem;
+  font-style: normal;
+  white-space: nowrap;
+}
+
 .knowledge-home-topics {
   margin-top: 2.2rem;
 }
@@ -6043,7 +6015,201 @@ body[data-slug^="explore/"] .center > article {
   top: 0.75rem;
 }
 
+.knowledge-home-tools {
+  margin-top: 2.2rem;
+}
+
+.knowledge-home-tool-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.knowledge-home-tool {
+  --tool-tone: var(--home-accent);
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, var(--tool-tone) 8%, var(--home-surface)),
+    var(--home-surface) 74%
+  );
+  border: 1px solid color-mix(in srgb, var(--tool-tone) 34%, var(--home-line));
+  border-radius: 0.8rem;
+  color: var(--home-ink) !important;
+  display: grid;
+  gap: 0.45rem;
+  min-height: 10.2rem;
+  overflow: hidden;
+  padding: 1rem;
+  position: relative;
+  text-decoration: none;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+
+.knowledge-home-tool::after {
+  border: 1px solid color-mix(in srgb, var(--tool-tone) 26%, transparent);
+  border-radius: 50%;
+  content: "";
+  height: 8rem;
+  position: absolute;
+  right: -4.2rem;
+  top: -4.7rem;
+  width: 8rem;
+}
+
+.knowledge-home-tool.generator {
+  --tool-tone: var(--home-copper);
+}
+
+.knowledge-home-tool:hover {
+  border-color: var(--tool-tone);
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.knowledge-home-tool > span {
+  color: var(--tool-tone);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.knowledge-home-tool > strong {
+  color: var(--home-ink);
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  line-height: 1.18;
+  max-width: 23rem;
+}
+
+.knowledge-home-tool > p {
+  color: var(--home-muted);
+  font-size: 0.72rem;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 22rem;
+}
+
+.knowledge-home-tool > em {
+  align-self: end;
+  color: var(--tool-tone);
+  font-size: 0.68rem;
+  font-style: normal;
+  font-weight: 700;
+  margin-top: auto;
+}
+
+.knowledge-home-catalogue {
+  margin-top: 2.2rem;
+}
+
+.knowledge-home-type-nav {
+  border-bottom: 1px solid var(--home-line);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.knowledge-home-type {
+  align-items: center;
+  border-top: 1px solid var(--home-line);
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: 1.45rem minmax(7rem, 0.7fr) auto minmax(9rem, 1.3fr);
+  min-height: 5.15rem;
+  padding: 0.65rem 0.7rem;
+  position: relative;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.knowledge-home-type:nth-child(odd) {
+  border-right: 1px solid var(--home-line);
+}
+
+.knowledge-home-type:last-child {
+  border-right: 0;
+  grid-column: 1 / -1;
+}
+
+.knowledge-home-type:has(a:hover) {
+  background: var(--home-accent-soft);
+}
+
+.knowledge-home-type > span {
+  color: var(--home-accent);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+}
+
+.knowledge-home-type-index {
+  display: grid;
+  gap: 0.12rem;
+  text-decoration: none;
+}
+
+.knowledge-home-type-index:hover,
+.knowledge-home-type-random:hover {
+  text-decoration: none;
+}
+
+.knowledge-home-type-index strong {
+  color: var(--home-ink);
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  line-height: 1.15;
+}
+
+.knowledge-home-type-index small {
+  color: var(--home-muted);
+  font-size: 0.61rem;
+  line-height: 1.35;
+}
+
+.knowledge-home-type > em {
+  color: var(--home-copper);
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.knowledge-home-type-random {
+  border-left: 1px solid var(--home-line);
+  display: grid;
+  gap: 0.12rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding-left: 0.7rem;
+  text-decoration: none;
+}
+
+.knowledge-home-type-random small {
+  color: var(--home-accent);
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  font-weight: 700;
+  grid-column: 1 / -1;
+  letter-spacing: 0.06em;
+}
+
+.knowledge-home-type-random strong {
+  color: var(--home-ink-soft);
+  font-family: var(--font-serif);
+  font-size: 0.72rem;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.knowledge-home-type-random i {
+  color: var(--home-copper);
+  font-size: 0.72rem;
+  font-style: normal;
+}
+
 .knowledge-home-grid {
+  align-items: stretch;
   display: grid;
   gap: 0.8rem;
   grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
@@ -6054,8 +6220,8 @@ body[data-slug^="explore/"] .center > article {
   background: var(--home-surface);
   border: 1px solid var(--home-line);
   border-radius: 0.9rem;
-  height: auto;
-  min-height: 25rem;
+  height: 27rem;
+  min-height: 0;
   overflow: hidden;
   padding: 1rem;
   position: relative;
@@ -6084,6 +6250,8 @@ body[data-slug^="explore/"] .center > article {
   display: grid;
   gap: 0.5rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  height: calc(100% - 3.35rem);
 }
 
 .knowledge-star {
@@ -6094,6 +6262,7 @@ body[data-slug^="explore/"] .center > article {
   color: var(--home-ink) !important;
   display: grid;
   gap: 0.22rem;
+  min-height: 0;
   padding: 0.65rem;
   text-decoration: none;
   transition: border-color 180ms ease, transform 180ms ease;
@@ -6131,6 +6300,7 @@ body[data-slug^="explore/"] .center > article {
   color: var(--home-muted);
   font-family: var(--font-mono);
   font-size: 0.58rem;
+  line-height: 1.2;
 }
 
 .knowledge-star.tone-1 { --tone: var(--home-copper); }
@@ -6140,16 +6310,21 @@ body[data-slug^="explore/"] .center > article {
 .knowledge-home-recent {
   display: grid;
   gap: 0;
+  grid-template-rows: repeat(8, minmax(0, 1fr));
+  height: calc(100% - 3.35rem);
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .knowledge-home-recent li {
+  align-content: center;
   border-bottom: 1px solid var(--home-line);
   display: grid;
-  gap: 0.18rem;
-  padding: 0.58rem 0;
+  gap: 0.12rem 0.5rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-height: 0;
+  padding: 0.32rem 0;
 }
 
 .knowledge-home-recent li:first-child {
@@ -6163,15 +6338,25 @@ body[data-slug^="explore/"] .center > article {
 .knowledge-home-recent a {
   background: transparent !important;
   color: var(--home-ink) !important;
-  display: -webkit-box;
+  display: block;
   font-family: var(--font-serif);
-  font-size: 0.82rem;
+  font-size: 0.77rem;
   font-weight: 700;
+  grid-column: 1 / -1;
   line-height: 1.25;
   overflow: hidden;
   text-decoration: none;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.knowledge-home-recent time {
+  grid-column: 1;
+}
+
+.knowledge-home-recent li > span {
+  grid-column: 2;
+  grid-row: 2;
 }
 
 .knowledge-home-recent a:hover {
@@ -6222,7 +6407,14 @@ body[data-slug^="explore/"] .center > article {
   }
 
   .knowledge-home-card {
+    height: auto;
     min-height: 0;
+  }
+
+  .knowledge-home-stars,
+  .knowledge-home-recent {
+    grid-template-rows: none;
+    height: auto;
   }
 }
 
@@ -6242,8 +6434,38 @@ body[data-slug^="explore/"] .center > article {
   }
 
   .knowledge-home-topic-grid,
-  .knowledge-home-stars {
+  .knowledge-home-tool-grid,
+  .knowledge-home-stars,
+  .knowledge-home-type-nav {
     grid-template-columns: 1fr;
+  }
+
+  .knowledge-home-type:nth-child(odd) {
+    border-right: 0;
+  }
+
+  .knowledge-home-type:last-child {
+    grid-column: auto;
+  }
+
+  .knowledge-home-type {
+    grid-template-columns: 1.35rem minmax(0, 1fr) auto;
+  }
+
+  .knowledge-home-type-random {
+    border-left: 0;
+    border-top: 1px solid var(--home-line);
+    grid-column: 2 / -1;
+    padding: 0.55rem 0 0;
+  }
+
+  .knowledge-home-ai-note {
+    align-items: start;
+    grid-template-columns: 1fr;
+  }
+
+  .knowledge-home-ai-note em {
+    white-space: normal;
   }
 
   .knowledge-home-section-head,

@@ -1,4 +1,9 @@
 import { loadQuartzConfig, loadQuartzLayout } from "./quartz/plugins/loader/config-loader"
+import { componentRegistry } from "./quartz/components/registry"
+
+componentRegistry.setOptionOverrides("explorer", {
+  filterFn: (node: { slugSegment?: string }) => node.slugSegment !== "explore",
+})
 
 const config = await loadQuartzConfig()
 export default config
