@@ -5129,6 +5129,343 @@ body[data-slug^="explore/"] .center > article {
     min-height: 0;
   }
 }
+
+/* Theme-aware atlas surfaces.
+   The topic pages previously kept their dark editorial panels in light mode,
+   which made the page feel like two unrelated themes. Keep the visual
+   hierarchy, but let every foreground, border, and surface follow the active
+   Quartz theme. */
+.knowledge-comparative-page {
+  --atlas-ink: #e8f1ed;
+  --atlas-ink-soft: #f4f8f6;
+  --atlas-sea: #21685f;
+  --atlas-copper: #a76538;
+  --atlas-sand: #7c572c;
+  --atlas-hero-bg: linear-gradient(142deg, #f1f7f4, #e8f1ed 55%, #dfece7);
+  --atlas-panel-bg: linear-gradient(125deg, #e8f3ef, #f0f6f4 58%, #e2eeeb);
+  --atlas-panel-fg: #18312e;
+  --atlas-panel-muted: #506760;
+  --atlas-panel-border: rgba(33, 104, 95, 0.22);
+  --atlas-panel-line: rgba(33, 104, 95, 0.17);
+  --atlas-panel-accent: #21685f;
+  --atlas-panel-accent-soft: #d9ebe4;
+  --atlas-panel-orbit: rgba(33, 104, 95, 0.075);
+  --atlas-hero-fg: #18312e;
+  --atlas-hero-muted: #4f655f;
+  --atlas-hero-line: rgba(33, 104, 95, 0.2);
+  --atlas-hero-border: rgba(33, 104, 95, 0.25);
+}
+
+.theme-dark .knowledge-comparative-page {
+  --atlas-ink: #102321;
+  --atlas-ink-soft: #19322f;
+  --atlas-sea: #2f6f68;
+  --atlas-copper: #c78654;
+  --atlas-sand: #e8d9bd;
+  --atlas-hero-bg: linear-gradient(142deg, #183632, #102321 55%, #0b1818);
+  --atlas-panel-bg: linear-gradient(125deg, #18302f, #102523 58%, #0b191b);
+  --atlas-panel-fg: #f3f2ec;
+  --atlas-panel-muted: rgba(238, 243, 239, 0.62);
+  --atlas-panel-border: rgba(215, 232, 225, 0.18);
+  --atlas-panel-line: rgba(220, 234, 228, 0.16);
+  --atlas-panel-accent: #a8d1c6;
+  --atlas-panel-accent-soft: rgba(168, 209, 198, 0.16);
+  --atlas-panel-orbit: rgba(182, 215, 203, 0.06);
+  --atlas-hero-fg: #f3f0e9;
+  --atlas-hero-muted: rgba(236, 242, 238, 0.68);
+  --atlas-hero-line: rgba(221, 234, 228, 0.16);
+  --atlas-hero-border: rgba(211, 230, 223, 0.18);
+}
+
+.knowledge-comparative-hero {
+  background:
+    radial-gradient(circle at 78% 12%, rgba(86, 151, 139, 0.2), transparent 27%),
+    radial-gradient(circle at 8% 95%, rgba(199, 134, 84, 0.12), transparent 28%),
+    var(--atlas-hero-bg);
+  border-color: var(--atlas-hero-border);
+  color: var(--atlas-hero-fg);
+}
+
+.knowledge-comparative-hero::before,
+.knowledge-comparative-hero::after {
+  border-color: var(--atlas-hero-line);
+}
+
+.knowledge-comparative-orbit {
+  color: var(--atlas-panel-orbit);
+}
+
+.knowledge-comparative-nav .knowledge-route-back,
+.knowledge-comparative-nav > span,
+.knowledge-comparative-hero-copy > p:last-child,
+.knowledge-comparative-hero-aside p {
+  color: var(--atlas-hero-muted);
+}
+
+.knowledge-comparative-hero-copy .knowledge-explore-kicker,
+.knowledge-comparative-hero-aside span,
+.knowledge-comparative-compass span {
+  color: var(--atlas-panel-accent);
+}
+
+.knowledge-comparative-hero-copy h1,
+.knowledge-comparative-compass a {
+  color: var(--atlas-hero-fg);
+}
+
+.knowledge-comparative-hero-aside {
+  border-left-color: var(--atlas-hero-line);
+}
+
+.knowledge-comparative-hero-aside strong {
+  color: var(--atlas-sand);
+}
+
+.knowledge-comparative-hero-aside p,
+.knowledge-comparative-compass {
+  border-color: var(--atlas-hero-line);
+}
+
+.knowledge-comparative-compass a + a {
+  border-left-color: var(--atlas-hero-line);
+}
+
+.knowledge-comparative-handbook {
+  background:
+    linear-gradient(120deg, rgba(33, 104, 95, 0.1), transparent 35%),
+    var(--atlas-ink);
+  border-color: var(--atlas-panel-border);
+  color: var(--atlas-panel-fg);
+}
+
+.knowledge-comparative-handbook > span,
+.knowledge-comparative-handbook footer strong {
+  color: var(--atlas-panel-accent);
+}
+
+.knowledge-comparative-handbook h3 {
+  color: var(--atlas-panel-fg);
+}
+
+.knowledge-comparative-handbook > p,
+.knowledge-comparative-handbook footer small {
+  color: var(--atlas-panel-muted);
+}
+
+.knowledge-comparative-handbook footer {
+  border-top-color: var(--atlas-panel-line);
+}
+
+.field-overview {
+  background: var(--atlas-panel-bg);
+  border-color: var(--atlas-panel-border);
+  color: var(--atlas-panel-fg);
+}
+
+.field-overview::after {
+  color: var(--atlas-panel-orbit);
+}
+
+.field-overview > header > span,
+.knowledge-comparative-overview-list > div > span {
+  color: var(--atlas-panel-accent);
+}
+
+.field-overview > header h3,
+.knowledge-comparative-overview-list section strong {
+  color: var(--atlas-panel-fg);
+}
+
+.knowledge-comparative-overview-list,
+.knowledge-comparative-overview-list > div + div,
+.knowledge-comparative-field-footer {
+  border-color: var(--atlas-panel-line);
+}
+
+.knowledge-comparative-overview-list p,
+.knowledge-comparative-field-footer p,
+.knowledge-comparative-field-footer span {
+  color: var(--atlas-panel-muted);
+}
+
+.knowledge-comparative-overview-list nav a,
+.knowledge-comparative-theme-list nav a {
+  background: var(--atlas-panel-accent-soft);
+  border-color: var(--atlas-panel-border);
+  color: var(--atlas-panel-accent);
+}
+
+.knowledge-comparative-overview-list nav a:hover,
+.knowledge-comparative-theme-list nav a:hover {
+  background: var(--atlas-panel-accent);
+  color: var(--atlas-ink-soft);
+}
+
+.knowledge-comparative-field-footer strong {
+  color: var(--atlas-panel-accent);
+}
+
+.knowledge-comparative-methodologies {
+  background:
+    radial-gradient(circle at 8% 10%, rgba(83, 137, 126, 0.14), transparent 25%),
+    var(--atlas-panel-bg);
+  border-color: var(--atlas-panel-border);
+  color: var(--atlas-panel-fg);
+}
+
+.knowledge-comparative-methodologies .knowledge-comparative-section-head > div > span,
+.knowledge-comparative-method > span {
+  color: var(--atlas-panel-accent);
+}
+
+.knowledge-comparative-methodologies .knowledge-comparative-section-head h2,
+.knowledge-comparative-method h3 a {
+  color: var(--atlas-panel-fg);
+}
+
+.knowledge-comparative-methodologies .knowledge-comparative-section-head > p,
+.knowledge-comparative-method > p,
+.knowledge-comparative-method > small {
+  color: var(--atlas-panel-muted);
+}
+
+.knowledge-comparative-method {
+  background: rgba(33, 104, 95, 0.055);
+  border-color: var(--atlas-panel-border);
+}
+
+.knowledge-comparative-method-links a {
+  background: var(--atlas-panel-accent-soft);
+  border-color: var(--atlas-panel-border);
+  color: var(--atlas-panel-accent);
+}
+
+.knowledge-comparative-method:hover {
+  background: rgba(33, 104, 95, 0.1);
+  border-color: var(--atlas-panel-accent);
+}
+
+.theme-dark .knowledge-comparative-hero-copy .knowledge-explore-kicker,
+.theme-dark .knowledge-comparative-compass span,
+.theme-dark .knowledge-comparative-handbook > span {
+  color: #a9d7ce;
+}
+
+.theme-dark .knowledge-comparative-hero-copy h1,
+.theme-dark .knowledge-comparative-compass a,
+.theme-dark .knowledge-comparative-handbook h3,
+.theme-dark .field-overview > header h3,
+.theme-dark .knowledge-comparative-overview-list section strong,
+.theme-dark .knowledge-comparative-methodologies .knowledge-comparative-section-head h2,
+.theme-dark .knowledge-comparative-method h3 a {
+  color: #f3f1ea;
+}
+
+.theme-dark .knowledge-comparative-hero-aside span,
+.theme-dark .knowledge-comparative-overview-list > div > span,
+.theme-dark .knowledge-comparative-methodologies .knowledge-comparative-section-head > div > span,
+.theme-dark .knowledge-comparative-method > span {
+  color: #91c5ba;
+}
+
+.knowledge-methods-page {
+  --methods-panel-bg: linear-gradient(145deg, #f0f7f8, #eaf1f3 45%, #e4eef1);
+  --methods-panel-fg: #1d2f36;
+  --methods-panel-muted: #50646c;
+  --methods-panel-border: rgba(67, 108, 123, 0.25);
+  --methods-panel-line: rgba(67, 108, 123, 0.18);
+  --methods-panel-accent: #356f82;
+  --methods-panel-accent-soft: rgba(67, 128, 149, 0.1);
+  --methods-panel-chip-bg: rgba(67, 128, 149, 0.09);
+  --methods-panel-chip-border: rgba(67, 108, 123, 0.2);
+  --methods-panel-chip-fg: #356276;
+}
+
+.theme-dark .knowledge-methods-page {
+  --methods-panel-bg: linear-gradient(145deg, #203744, #14232d 45%, #0f1b22);
+  --methods-panel-fg: #f6f8f8;
+  --methods-panel-muted: rgba(239, 246, 248, 0.66);
+  --methods-panel-border: rgba(184, 214, 228, 0.22);
+  --methods-panel-line: rgba(220, 234, 240, 0.15);
+  --methods-panel-accent: #a9d2e5;
+  --methods-panel-accent-soft: rgba(238, 246, 249, 0.07);
+  --methods-panel-chip-bg: rgba(238, 246, 249, 0.07);
+  --methods-panel-chip-border: rgba(220, 234, 240, 0.14);
+  --methods-panel-chip-fg: #dceaf0;
+}
+
+.knowledge-methods-roadmap {
+  background:
+    radial-gradient(circle at 86% 0%, rgba(120, 173, 198, 0.16), transparent 28%),
+    var(--methods-panel-bg);
+  border-color: var(--methods-panel-border);
+  color: var(--methods-panel-fg);
+}
+
+.knowledge-methods-roadmap-head > div > span,
+.knowledge-methods-ethics > span {
+  color: var(--methods-panel-accent);
+}
+
+.knowledge-methods-roadmap-head h2 {
+  color: var(--methods-panel-fg);
+}
+
+.knowledge-methods-roadmap-head > p,
+.knowledge-methods-stage-body > p {
+  color: var(--methods-panel-muted);
+}
+
+.knowledge-methods-stages > li,
+.knowledge-methods-stages > li:nth-child(even) {
+  border-color: var(--methods-panel-line);
+}
+
+.knowledge-methods-stage-number span {
+  background: var(--methods-panel-chip-bg);
+  border-color: var(--methods-panel-border);
+  color: var(--methods-panel-accent);
+}
+
+.knowledge-methods-stage-number i {
+  background: linear-gradient(var(--methods-panel-accent), transparent);
+  opacity: 0.35;
+}
+
+.knowledge-methods-stage-title h3,
+.knowledge-methods-ethics > strong {
+  color: var(--methods-panel-fg);
+}
+
+.knowledge-methods-stage-title em {
+  background: rgba(200, 168, 107, 0.14);
+  border-color: rgba(167, 126, 55, 0.34);
+  color: #9b6b2e;
+}
+
+.knowledge-methods-stage-links a,
+.knowledge-methods-ethics a {
+  background: var(--methods-panel-chip-bg);
+  border-color: var(--methods-panel-chip-border);
+  color: var(--methods-panel-chip-fg);
+}
+
+.knowledge-methods-stage-links a:hover,
+.knowledge-methods-ethics a:hover {
+  background: var(--methods-panel-accent-soft);
+  border-color: var(--methods-panel-accent);
+  color: var(--methods-panel-fg);
+}
+
+.knowledge-methods-ethics {
+  background: var(--methods-panel-chip-bg);
+  border-color: var(--methods-panel-line);
+}
+
+.theme-dark .knowledge-methods-stage-title em {
+  border-color: rgba(224, 194, 136, 0.36);
+  color: #e0c288;
+}
 `
 
   return Component
