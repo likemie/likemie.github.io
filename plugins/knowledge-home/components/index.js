@@ -802,6 +802,7 @@ function comparativeTopicData(pages, todayKey) {
     },
   ]
   for (const organization of organizations) {
+    organization.flagshipPage = find(organization.flagship)
     organization.toolPages = (organization.tools ?? []).map((title) => find(title)).filter(Boolean)
   }
 
@@ -863,10 +864,10 @@ function comparativeTopicData(pages, todayKey) {
       title: "全球化、文明与和平",
       note: "从文明冲突走向国际理解与和平教育",
       links: existing([
-        "Globalization",
-        "International Understanding Education",
-        "Peace Education",
-        "Civilizational Clash",
+        "Perpetual Peace",
+        "International Mind",
+        "Readings of the Global",
+        "Global Policy Space",
       ]),
     },
     {
@@ -874,10 +875,10 @@ function comparativeTopicData(pages, todayKey) {
       title: "课程、公民与教育分层",
       note: "追踪全球课程、身份形成与机会分配",
       links: existing([
-        "International Curriculum",
-        "Global Citizenship Education",
+        "Curriculum as Praxis",
+        "Global Citizenship",
         "Educated Identity",
-        "Global Education Stratification",
+        "Discursive Stratification",
       ]),
     },
     {
@@ -887,8 +888,8 @@ function comparativeTopicData(pages, todayKey) {
       links: existing([
         "Internationalization of Higher Education",
         "Academic Ranking of World Universities",
-        "Belt and Road Initiative",
         "International Education Hubs",
+        "Global Universities Rankings",
       ]),
     },
   ]
@@ -1437,11 +1438,25 @@ function renderComparativeTopicPage({ pages, topicConfig, todayKey, displayClass
                     h("small", null, item.themes),
                   ),
                   h("p", null, item.tagline),
+                ),
+                h(
+                  "div",
+                  { class: "knowledge-comparative-organization-tools" },
+                  h(
+                    "header",
+                    null,
+                    h("span", null, "旗舰工具"),
+                    item.flagshipPage
+                      ? h(
+                          "a",
+                          { href: hrefFor(item.flagshipPage), class: "internal" },
+                          item.flagship,
+                        )
+                      : h("b", null, item.flagship),
+                  ),
                   h(
                     "nav",
                     null,
-                    h("em", null, "旗舰 · "),
-                    h("b", null, item.flagship),
                     (item.toolPages ?? []).map((page) =>
                       h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
                     ),
@@ -1472,7 +1487,7 @@ function renderComparativeTopicPage({ pages, topicConfig, todayKey, displayClass
                   href: hrefFor(page),
                   class: "knowledge-comparative-country internal",
                   "data-comparative-country": "",
-                  hidden: index >= 4 ? true : undefined,
+                  hidden: index >= 6 ? true : undefined,
                 },
                 h("span", null, country.label),
                 h("strong", null, titleFor(page)),
@@ -2090,13 +2105,14 @@ function rotateComparativeItems(selector, itemSelector) {
 
 function rotateComparativeCountries() {
   const items = Array.from(document.querySelectorAll("[data-comparative-country]"))
-  if (items.length <= 4) return
+  const batchSize = 6
+  if (items.length <= batchSize) return
   const visible = items.findIndex((item) => !item.hidden)
-  const batchCount = Math.ceil(items.length / 4)
-  const currentBatch = Math.max(0, Math.floor(visible / 4))
+  const batchCount = Math.ceil(items.length / batchSize)
+  const currentBatch = Math.max(0, Math.floor(visible / batchSize))
   const nextBatch = (currentBatch + 1) % batchCount
   items.forEach((item, index) => {
-    item.hidden = Math.floor(index / 4) !== nextBatch
+    item.hidden = Math.floor(index / batchSize) !== nextBatch
   })
 }
 
@@ -3780,11 +3796,57 @@ body[data-slug^="explore/"] .center > article {
   margin: 0.32rem 0 0;
 }
 
-.knowledge-comparative-organization-copy > nav {
+.knowledge-comparative-organization-tools {
+  align-self: stretch;
+  border-left: 1px solid color-mix(in srgb, var(--atlas-copper) 22%, var(--lightgray));
+  display: grid;
+  gap: 0.65rem;
+  padding-left: 1.25rem;
+}
+
+.knowledge-comparative-organization-tools > header {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.knowledge-comparative-organization-tools > header > span {
+  color: var(--atlas-copper);
+  font-size: 0.61rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.knowledge-comparative-organization-tools > header > a,
+.knowledge-comparative-organization-tools > header > b {
+  color: var(--dark);
+  font-family: var(--headerFont);
+  font-size: clamp(0.95rem, 1.6vw, 1.18rem);
+  line-height: 1.2;
+}
+
+.knowledge-comparative-organization-tools > nav {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
   gap: 0.42rem;
+}
+
+.knowledge-comparative-organization-tools > nav a {
+  border: 1px solid color-mix(in srgb, var(--atlas-copper) 25%, var(--lightgray));
+  border-radius: 999px;
+  color: var(--darkgray);
+  font-size: 0.63rem;
+  line-height: 1.25;
+  padding: 0.3rem 0.5rem;
+  text-decoration: none;
+}
+
+.knowledge-comparative-organization-tools > nav a:hover {
+  background: var(--atlas-copper);
+  color: white;
 }
 
 .knowledge-comparative-organization-copy > nav em {
@@ -3792,27 +3854,6 @@ body[data-slug^="explore/"] .center > article {
   font-size: 0.64rem;
   font-style: normal;
   font-weight: 800;
-}
-
-.knowledge-comparative-organization-copy > nav b {
-  color: var(--dark);
-  font-family: var(--headerFont);
-  font-size: 0.76rem;
-  margin-right: 0.15rem;
-}
-
-.knowledge-comparative-organization-copy > nav a {
-  border: 1px solid color-mix(in srgb, var(--atlas-copper) 25%, var(--lightgray));
-  border-radius: 999px;
-  color: var(--darkgray);
-  font-size: 0.63rem;
-  padding: 0.3rem 0.5rem;
-  text-decoration: none;
-}
-
-.knowledge-comparative-organization-copy > nav a:hover {
-  background: var(--atlas-copper);
-  color: white;
 }
 
 .knowledge-comparative-organization > em {
@@ -3902,6 +3943,7 @@ body[data-slug^="explore/"] .center > article {
   .knowledge-comparative-organization-list > .knowledge-comparative-organization {
     grid-template-columns: 2.3rem minmax(12rem, 0.7fr) minmax(0, 1.3fr) auto;
   }
+  .knowledge-comparative-organization-tools { padding-left: 0.85rem; }
   .knowledge-comparative-country-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
@@ -3918,6 +3960,12 @@ body[data-slug^="explore/"] .center > article {
     grid-template-columns: 2rem 1fr auto;
   }
   .knowledge-comparative-organization-copy { grid-column: 2 / -1; }
+  .knowledge-comparative-organization-tools {
+    border-left: 0;
+    border-top: 1px solid color-mix(in srgb, var(--atlas-copper) 22%, var(--lightgray));
+    grid-column: 2 / -1;
+    padding: 0.85rem 0 0;
+  }
   .knowledge-comparative-organization > em { grid-column: 3; grid-row: 1; }
   .knowledge-comparative-organization-copy > nav { margin-top: 0.7rem; }
   .knowledge-comparative-country-grid { grid-template-columns: 1fr; }
