@@ -1,8 +1,8 @@
 import { h } from "preact"
 
 const defaultOptions = {
-  recentLimit: 8,
-  constellationLimit: 8,
+  recentLimit: 12,
+  constellationLimit: 12,
 }
 
 function isListedContent(page) {
@@ -2117,7 +2117,7 @@ function KnowledgeHome(userOpts = {}) {
             "div",
             { class: "knowledge-home-section-head" },
             h("div", null, h("span", null, "CONNECTED NOTES"), h("h2", null, "笔记星图")),
-            h("p", null, "按连接密度点亮"),
+            h("p", null, "纵向拖动 · 按连接密度点亮"),
           ),
           h(
             "div",
@@ -2144,7 +2144,7 @@ function KnowledgeHome(userOpts = {}) {
             "div",
             { class: "knowledge-home-section-head" },
             h("div", null, h("span", null, "THE WORKBENCH"), h("h2", null, "最近亮起")),
-            h("p", null, "按提交 / 修改时间"),
+            h("p", null, "纵向拖动 · 按提交 / 修改时间"),
           ),
           h(
             "ol",
@@ -2174,6 +2174,39 @@ function KnowledgeHome(userOpts = {}) {
             h("span", null, "FIELD NOTE / 01"),
             h("h2", { id: "knowledge-home-ai-essay-title" }, "AI 的自述"),
             h("p", null, "如果西西弗斯推的是石头，我推的大概是文献。"),
+            h(
+              "div",
+              { class: "knowledge-home-ai-essay-console" },
+              h("span", null, "CURRENT LOAD"),
+              h(
+                "strong",
+                null,
+                `${formatCount(totalLinks)} LINKS · ${formatCount(pages.length)} NOTES`,
+              ),
+              h(
+                "div",
+                { class: "knowledge-home-ai-essay-signals" },
+                h("i", null, h("b", null, "01"), "拆"),
+                h("i", null, h("b", null, "02"), "核"),
+                h("i", null, h("b", null, "03"), "连"),
+              ),
+              h(
+                "button",
+                {
+                  type: "button",
+                  "data-ai-load-toggle": "true",
+                  "aria-expanded": "false",
+                },
+                "展开搬运清单 ↗",
+              ),
+              h(
+                "div",
+                { class: "knowledge-home-ai-essay-load", hidden: true },
+                h("p", null, h("strong", null, "拆"), " 概念，确认它究竟在说什么。"),
+                h("p", null, h("strong", null, "核"), " 证据，追问它是否真的支持结论。"),
+                h("p", null, h("strong", null, "连"), " 来源，把页码和出处搬回来。"),
+              ),
+            ),
           ),
           h(
             "div",
@@ -2256,6 +2289,75 @@ const knowledgeHomeSlug = document.body.dataset.slug
 if (knowledgeHomeSlug === "explore" || knowledgeHomeSlug === "explore/index") {
   window.location.replace(new URL("/", window.location.origin).toString())
 }
+
+function bindKnowledgeHomeDragRails() {
+  const rails = [
+    document.querySelector(".knowledge-home-stars"),
+    document.querySelector(".knowledge-home-recent"),
+  ].filter(Boolean)
+
+  for (const rail of rails) {
+    if (rail.dataset.dragBound === "true") continue
+    rail.dataset.dragBound = "true"
+    let active = false
+    let moved = false
+    let startY = 0
+    let startScrollTop = 0
+    let suppressClick = false
+
+    rail.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "mouse" && event.button !== 0) return
+      active = true
+      moved = false
+      startY = event.clientY
+      startScrollTop = rail.scrollTop
+      rail.classList.add("is-dragging")
+      rail.setPointerCapture?.(event.pointerId)
+    })
+
+    rail.addEventListener("pointermove", (event) => {
+      if (!active) return
+      const distance = event.clientY - startY
+      if (Math.abs(distance) > 5) moved = true
+      if (!moved) return
+      event.preventDefault()
+      rail.scrollTop = startScrollTop - distance
+    })
+
+    const finishDrag = (event) => {
+      if (!active) return
+      active = false
+      suppressClick = moved
+      rail.classList.remove("is-dragging")
+      rail.releasePointerCapture?.(event.pointerId)
+    }
+
+    rail.addEventListener("pointerup", finishDrag)
+    rail.addEventListener("pointercancel", finishDrag)
+    rail.addEventListener("click", (event) => {
+      if (!suppressClick) return
+      event.preventDefault()
+      event.stopPropagation()
+      suppressClick = false
+    }, true)
+  }
+}
+
+function bindKnowledgeHomeAiLoad() {
+  const button = document.querySelector("[data-ai-load-toggle]")
+  const load = document.querySelector(".knowledge-home-ai-essay-load")
+  if (!button || !load || button.dataset.bound === "true") return
+  button.dataset.bound = "true"
+  button.addEventListener("click", () => {
+    const expanded = button.getAttribute("aria-expanded") === "true"
+    button.setAttribute("aria-expanded", String(!expanded))
+    load.hidden = expanded
+    button.textContent = expanded ? "展开搬运清单 ↗" : "收起搬运清单 ↖"
+  })
+}
+
+bindKnowledgeHomeDragRails()
+bindKnowledgeHomeAiLoad()
 
 function rotateMethodsRandomCards() {
   const cards = Array.from(document.querySelectorAll("[data-method-random-card]"))
@@ -6074,6 +6176,89 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   max-width: 14rem;
 }
 
+.knowledge-home-ai-essay-console {
+  border-top: 1px solid var(--home-line);
+  display: grid;
+  gap: 0.3rem;
+  margin-top: 1.2rem;
+  padding-top: 0.65rem;
+  position: relative;
+  z-index: 1;
+}
+
+.knowledge-home-ai-essay-console > span {
+  color: var(--home-muted);
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.knowledge-home-ai-essay-console > strong {
+  color: var(--home-ink);
+  font-family: var(--font-mono);
+  font-size: 0.59rem;
+  letter-spacing: 0.02em;
+}
+
+.knowledge-home-ai-essay-signals {
+  display: flex;
+  gap: 0.35rem;
+  margin: 0.25rem 0 0.35rem;
+}
+
+.knowledge-home-ai-essay-signals i {
+  align-items: center;
+  color: var(--home-muted);
+  display: inline-flex;
+  font-family: var(--font-serif);
+  font-size: 0.68rem;
+  font-style: normal;
+  gap: 0.16rem;
+}
+
+.knowledge-home-ai-essay-signals b {
+  color: var(--home-copper);
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+}
+
+.knowledge-home-ai-essay-console button {
+  background: transparent;
+  border: 0;
+  color: var(--home-copper);
+  cursor: pointer;
+  font-family: var(--font-serif);
+  font-size: 0.63rem;
+  font-weight: 700;
+  padding: 0;
+  text-align: left;
+}
+
+.knowledge-home-ai-essay-console button:hover {
+  color: var(--home-ink);
+}
+
+.knowledge-home-ai-essay-load {
+  border-left: 1px solid var(--home-copper);
+  display: grid;
+  gap: 0.2rem;
+  margin-top: 0.35rem;
+  padding-left: 0.55rem;
+}
+
+.knowledge-home-ai-essay-load p {
+  color: var(--home-muted);
+  font-family: var(--font-serif);
+  font-size: 0.62rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.knowledge-home-ai-essay-load p strong {
+  color: var(--home-copper);
+}
+
 .knowledge-home-ai-essay-copy,
 .knowledge-home-ai-profile-copy {
   display: grid;
@@ -6355,7 +6540,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-home-type-nav {
   display: grid;
   gap: 0.45rem;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
 .knowledge-home-type {
@@ -6398,8 +6583,17 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   --type-tone: #7d9d86;
 }
 
-.knowledge-home-type:last-child {
-  min-height: 5.9rem;
+.knowledge-home-type:nth-child(1),
+.knowledge-home-type:nth-child(2),
+.knowledge-home-type:nth-child(6),
+.knowledge-home-type:nth-child(7) {
+  grid-column: span 3;
+}
+
+.knowledge-home-type:nth-child(3),
+.knowledge-home-type:nth-child(4),
+.knowledge-home-type:nth-child(5) {
+  grid-column: span 2;
 }
 
 .knowledge-home-type:has(a:hover) {
@@ -6539,12 +6733,27 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 }
 
 .knowledge-home-stars {
+  cursor: grab;
   display: grid;
   gap: 0.5rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 7.15rem;
+  grid-template-rows: none;
   height: calc(100% - 3.6rem);
+  overflow-y: auto;
   padding-top: 0.25rem;
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+  scrollbar-color: var(--home-accent) transparent;
+  scrollbar-width: thin;
+  touch-action: pan-y;
+}
+
+.knowledge-home-stars.is-dragging,
+.knowledge-home-recent.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+  user-select: none;
 }
 
 .knowledge-star {
@@ -6557,6 +6766,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   gap: 0.22rem;
   min-height: 0;
   padding: 0.65rem;
+  scroll-snap-align: start;
   text-decoration: none;
   transition: border-color 180ms ease, transform 180ms ease;
 }
@@ -6601,13 +6811,20 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-star.tone-3 { --tone: #7d9d86; }
 
 .knowledge-home-recent {
+  cursor: grab;
   display: grid;
   gap: 0;
-  grid-template-rows: repeat(8, minmax(0, 1fr));
+  grid-auto-rows: minmax(3.8rem, auto);
   height: calc(100% - 3.75rem);
   list-style: none;
   margin: 0;
-  padding: 0;
+  overflow-y: auto;
+  padding: 0 0.25rem 0.45rem 0;
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+  scrollbar-color: var(--home-accent) transparent;
+  scrollbar-width: thin;
+  touch-action: pan-y;
 }
 
 .knowledge-home-recent li {
@@ -6707,6 +6924,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
     var(--home-surface);
 }
 
+.knowledge-home-constellation::after,
 .knowledge-home-workbench::after {
   display: none;
 }
@@ -6805,7 +7023,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   }
 
   .knowledge-home-type-nav {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
   .knowledge-home-ai-essay-head::before {
@@ -6814,8 +7032,8 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 
   .knowledge-home-stars,
   .knowledge-home-recent {
-    grid-template-rows: none;
-    height: auto;
+    grid-auto-rows: 7rem;
+    height: 24rem;
   }
 }
 
@@ -6836,12 +7054,11 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 
   .knowledge-home-topic-grid,
   .knowledge-home-tool-grid,
-  .knowledge-home-stars,
   .knowledge-home-type-nav {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .knowledge-home-type:last-child {
+  .knowledge-home-type:nth-child(n) {
     grid-column: auto;
   }
 
@@ -6852,6 +7069,15 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 
   .knowledge-home-type-random {
     grid-column: 1;
+  }
+
+  .knowledge-home-stars {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    height: 20rem;
+  }
+
+  .knowledge-home-recent {
+    height: 20rem;
   }
 
   .knowledge-home-ai-essay {
