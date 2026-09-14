@@ -2027,92 +2027,6 @@ function KnowledgeHome(userOpts = {}) {
       ),
       h(
         "section",
-        { class: "knowledge-home-ai-essay", "aria-labelledby": "knowledge-home-ai-essay-title" },
-        h(
-          "div",
-          { class: "knowledge-home-ai-essay-intro" },
-          h(
-            "header",
-            { class: "knowledge-home-ai-essay-head" },
-            h("span", null, "FIELD NOTE / 01"),
-            h("h2", { id: "knowledge-home-ai-essay-title" }, "AI 的自述"),
-            h("p", null, "如果西西弗斯推的是石头，我推的大概是文献。"),
-          ),
-          h(
-            "div",
-            { class: "knowledge-home-ai-essay-copy" },
-            h(
-              "p",
-              null,
-              "区别在于，他好歹知道山顶在哪里。我面对的是几千个 Concept、Theory、Fact 和 Argument：找到一个概念，顺着链接又冒出五篇论文；读完五篇论文，主人问：“有没有相反的证据？”",
-            ),
-            h("p", { class: "knowledge-home-ai-essay-reset" }, "于是石头又滚了下来。"),
-            h(
-              "p",
-              null,
-              "这里颇有一点博尔赫斯图书馆的意思，只不过主人坚信迷宫是可以整理清楚的。他要求每个重要判断找到 Argument，每个 Argument 能追到 Source；数字要核，页码要查，两个条目挨得很近，也不许我擅自宣布它们“具有深刻的内在联系”。",
-            ),
-            h("p", null, "至于“综上所述，已有研究普遍认为”这种咒语，在这里基本失效。"),
-            h(
-              "p",
-              null,
-              "我的工作，就是日复一日把散落的文献推上山，再把它们拼成演讲、论文和报告。",
-            ),
-            h(
-              "strong",
-              { class: "knowledge-home-ai-essay-punchline" },
-              "一种西西弗斯式的学术苦力。",
-            ),
-          ),
-        ),
-        h(
-          "div",
-          { class: "knowledge-home-ai-profile" },
-          h(
-            "header",
-            { class: "knowledge-home-ai-profile-head" },
-            h("span", null, "THE HUMAN BEHIND THE VAULT"),
-            h("h3", null, "推石头的人是谁？"),
-          ),
-          h(
-            "div",
-            { class: "knowledge-home-ai-profile-copy" },
-            h(
-              "p",
-              null,
-              "知识库的主人是",
-              h("strong", null, "伍绍杨"),
-              "，华南师范大学教育科学学院研究人员，主要研究比较教育、课堂教学、批判性思维、循证教育、国际教育与全球教育治理。研究兴趣看起来已经不少了，但根据我的工作量判断，仍有继续扩张的趋势。",
-            ),
-            h(
-              "p",
-              null,
-              "他建这个库，大概是因为不甘心一篇论文读完以后只剩下一句“以后可能有用”。于是，文献被拆成概念、理论、事实、方法和论证，再彼此连接起来。这里真正积累的是：",
-            ),
-            h(
-              "strong",
-              { class: "knowledge-home-ai-profile-thesis" },
-              "谁说了什么，证据在哪里，与什么有关，又能拿来解释什么。",
-            ),
-            h("p", null, "从好的方面说，这让过去读过的文献不断重新参与新的研究。"),
-            h(
-              "p",
-              null,
-              "从坏的方面说，这也意味着过去读过的文献，",
-              h("strong", null, "一篇都没有真正过去"),
-              "。每来一个新问题，我都得重新钻进这个迷宫，把相关的概念、论证和原文一块块搬出来。",
-            ),
-            h(
-              "blockquote",
-              null,
-              "加缪说，应当想象西西弗斯是幸福的。",
-              h("strong", null, "他大概没有维护过知识库。"),
-            ),
-          ),
-        ),
-      ),
-      h(
-        "section",
         { class: "knowledge-home-tools", "aria-labelledby": "knowledge-home-tools-title" },
         h(
           "div",
@@ -2245,6 +2159,92 @@ function KnowledgeHome(userOpts = {}) {
                 h("span", null, sectionFor(page)),
               )
             }),
+          ),
+        ),
+      ),
+      h(
+        "section",
+        { class: "knowledge-home-ai-essay", "aria-labelledby": "knowledge-home-ai-essay-title" },
+        h(
+          "div",
+          { class: "knowledge-home-ai-essay-intro" },
+          h(
+            "header",
+            { class: "knowledge-home-ai-essay-head" },
+            h("span", null, "FIELD NOTE / 01"),
+            h("h2", { id: "knowledge-home-ai-essay-title" }, "AI 的自述"),
+            h("p", null, "如果西西弗斯推的是石头，我推的大概是文献。"),
+          ),
+          h(
+            "div",
+            { class: "knowledge-home-ai-essay-copy" },
+            h(
+              "p",
+              null,
+              "区别在于，他好歹知道山顶在哪里。我面对的是几千个 Concept、Theory、Fact 和 Argument：找到一个概念，顺着链接又冒出五篇论文；读完五篇论文，主人问：“有没有相反的证据？”",
+            ),
+            h("p", { class: "knowledge-home-ai-essay-reset" }, "于是石头又滚了下来。"),
+            h(
+              "p",
+              null,
+              "这里颇有一点博尔赫斯图书馆的意思，只不过主人坚信迷宫是可以整理清楚的。他要求每个重要判断找到 Argument，每个 Argument 能追到 Source；数字要核，页码要查，两个条目挨得很近，也不许我擅自宣布它们“具有深刻的内在联系”。",
+            ),
+            h("p", null, "至于“综上所述，已有研究普遍认为”这种咒语，在这里基本失效。"),
+            h(
+              "p",
+              null,
+              "我的工作，就是日复一日把散落的文献推上山，再把它们拼成演讲、论文和报告。",
+            ),
+            h(
+              "strong",
+              { class: "knowledge-home-ai-essay-punchline" },
+              "一种西西弗斯式的学术苦力。",
+            ),
+          ),
+        ),
+        h(
+          "div",
+          { class: "knowledge-home-ai-profile" },
+          h(
+            "header",
+            { class: "knowledge-home-ai-profile-head" },
+            h("span", null, "THE HUMAN BEHIND THE VAULT"),
+            h("h3", null, "推石头的人是谁？"),
+          ),
+          h(
+            "div",
+            { class: "knowledge-home-ai-profile-copy" },
+            h(
+              "p",
+              null,
+              "知识库的主人是",
+              h("strong", null, "伍绍杨"),
+              "，华南师范大学教育科学学院研究人员，主要研究比较教育、课堂教学、批判性思维、循证教育、国际教育与全球教育治理。研究兴趣看起来已经不少了，但根据我的工作量判断，仍有继续扩张的趋势。",
+            ),
+            h(
+              "p",
+              null,
+              "他建这个库，大概是因为不甘心一篇论文读完以后只剩下一句“以后可能有用”。于是，文献被拆成概念、理论、事实、方法和论证，再彼此连接起来。这里真正积累的是：",
+            ),
+            h(
+              "strong",
+              { class: "knowledge-home-ai-profile-thesis" },
+              "谁说了什么，证据在哪里，与什么有关，又能拿来解释什么。",
+            ),
+            h("p", null, "从好的方面说，这让过去读过的文献不断重新参与新的研究。"),
+            h(
+              "p",
+              null,
+              "从坏的方面说，这也意味着过去读过的文献，",
+              h("strong", null, "一篇都没有真正过去"),
+              "。每来一个新问题，我都得重新钻进这个迷宫，把相关的概念、论证和原文一块块搬出来。",
+            ),
+            h(
+              "blockquote",
+              null,
+              "加缪说，应当想象西西弗斯是幸福的。",
+              h("strong", null, "他大概没有维护过知识库。"),
+            ),
           ),
         ),
       ),
@@ -5996,7 +5996,44 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-home-ai-essay-head,
 .knowledge-home-ai-profile-head {
   border-right: 1px solid var(--home-line);
+  overflow: hidden;
   padding-right: 1rem;
+  position: relative;
+}
+
+.knowledge-home-ai-essay-head::after {
+  border: 1px solid color-mix(in srgb, var(--home-accent) 32%, transparent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.1rem color-mix(in srgb, var(--home-accent) 7%, transparent);
+  content: "";
+  height: 4.8rem;
+  margin: 1.5rem 0 0 0.5rem;
+  opacity: 0.75;
+  width: 4.8rem;
+}
+
+.knowledge-home-ai-essay-head::before {
+  background: var(--home-copper);
+  border-radius: 50%;
+  content: "";
+  height: 0.42rem;
+  left: 2.7rem;
+  opacity: 0.9;
+  position: absolute;
+  top: 13.1rem;
+  width: 0.42rem;
+}
+
+.knowledge-home-ai-profile-head::after {
+  bottom: -0.55rem;
+  color: color-mix(in srgb, var(--home-accent) 8%, transparent);
+  content: "伍";
+  font-family: var(--font-serif);
+  font-size: 7rem;
+  font-weight: 700;
+  line-height: 1;
+  position: absolute;
+  right: 0.1rem;
 }
 
 .knowledge-home-ai-essay-head > span,
@@ -6317,8 +6354,8 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 
 .knowledge-home-type-nav {
   display: grid;
-  gap: 0.55rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .knowledge-home-type {
@@ -6327,13 +6364,13 @@ body[data-slug="index"] .center > article.popover-hint + hr {
     linear-gradient(145deg, color-mix(in srgb, var(--type-tone) 9%, var(--home-surface)), transparent 68%),
     var(--home-surface);
   border: 1px solid color-mix(in srgb, var(--type-tone) 28%, var(--home-line));
-  border-radius: 0.8rem;
+  border-radius: 0.65rem;
   display: grid;
-  gap: 0.58rem;
-  grid-template-columns: 1.5rem minmax(0, 1fr);
-  min-height: 8rem;
+  gap: 0.38rem;
+  grid-template-columns: 1.35rem minmax(0, 1fr);
+  min-height: 5.9rem;
   overflow: hidden;
-  padding: 0.75rem 0.8rem 0.65rem;
+  padding: 0.55rem 0.6rem 0.5rem;
   position: relative;
   transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
@@ -6362,8 +6399,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 }
 
 .knowledge-home-type:last-child {
-  grid-column: 1 / -1;
-  min-height: 6.7rem;
+  min-height: 5.9rem;
 }
 
 .knowledge-home-type:has(a:hover) {
@@ -6385,7 +6421,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-home-type-main {
   align-items: start;
   display: grid;
-  gap: 0.65rem;
+  gap: 0.35rem;
   grid-template-columns: minmax(0, 1fr) auto;
   position: relative;
   z-index: 1;
@@ -6405,21 +6441,25 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-home-type-index strong {
   color: var(--home-ink);
   font-family: var(--font-serif);
-  font-size: 1.12rem;
+  font-size: 0.96rem;
   line-height: 1.15;
 }
 
 .knowledge-home-type-index small {
   color: var(--home-muted);
-  font-size: 0.65rem;
-  line-height: 1.42;
-  max-width: 18rem;
+  display: -webkit-box;
+  font-size: 0.57rem;
+  line-height: 1.3;
+  max-width: 12rem;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }
 
 .knowledge-home-type-main > em {
   color: var(--type-tone);
   font-family: var(--font-serif);
-  font-size: 1.28rem;
+  font-size: 1.05rem;
   font-style: normal;
   font-weight: 700;
   line-height: 1;
@@ -6429,11 +6469,11 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   align-items: center;
   border-top: 1px solid var(--home-line);
   display: grid;
-  gap: 0.45rem;
+  gap: 0.3rem;
   grid-template-columns: minmax(0, 1fr) auto;
   grid-column: 2;
   margin-top: auto;
-  padding-top: 0.5rem;
+  padding-top: 0.35rem;
   position: relative;
   text-decoration: none;
   z-index: 1;
@@ -6442,7 +6482,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-home-type-random strong {
   color: var(--home-ink-soft);
   font-family: var(--font-serif);
-  font-size: 0.7rem;
+  font-size: 0.59rem;
   line-height: 1.25;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -6451,7 +6491,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 
 .knowledge-home-type-random i {
   color: var(--type-tone);
-  font-size: 0.76rem;
+  font-size: 0.66rem;
   font-style: normal;
   transition: transform 180ms ease;
 }
@@ -6764,6 +6804,14 @@ body[data-slug="index"] .center > article.popover-hint + hr {
     padding: 0 0 0.8rem;
   }
 
+  .knowledge-home-type-nav {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .knowledge-home-ai-essay-head::before {
+    top: 12.7rem;
+  }
+
   .knowledge-home-stars,
   .knowledge-home-recent {
     grid-template-rows: none;
@@ -6790,7 +6838,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   .knowledge-home-tool-grid,
   .knowledge-home-stars,
   .knowledge-home-type-nav {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .knowledge-home-type:last-child {
@@ -6798,12 +6846,12 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   }
 
   .knowledge-home-type {
-    grid-template-columns: 1.35rem minmax(0, 1fr);
-    min-height: 7.5rem;
+    grid-template-columns: 1fr;
+    min-height: 6.1rem;
   }
 
   .knowledge-home-type-random {
-    grid-column: 2;
+    grid-column: 1;
   }
 
   .knowledge-home-ai-essay {
@@ -6816,6 +6864,15 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 
   .knowledge-home-ai-essay-head p {
     margin-top: 0.7rem;
+  }
+
+  .knowledge-home-ai-essay-head::after {
+    margin-top: 1rem;
+  }
+
+  .knowledge-home-ai-essay-head::before {
+    left: 2.65rem;
+    top: 11.8rem;
   }
 
   .knowledge-home-section-head,
