@@ -492,84 +492,49 @@ function methodsTopicData(pages, todayKey) {
 
   const stages = [
     {
-      title: "选题与问题化",
-      note: "从感兴趣的主题收窄到可研究的问题与边界。",
-      links: existing(["Research Topic", "Research Problem", "Research Scope"]),
+      title: "选题与收窄",
+      note: "判断问题是否重要、独特且可行，再把宽泛兴趣收窄为明确边界。",
+      links: existing(["Research Topic", "Research Scope", "Problem Finding"]),
     },
     {
-      title: "文献检索",
-      note: "建立检索范围、关键词与材料来源。",
+      title: "检索与综述",
+      note: "优先追踪第一手材料，把已有发现组织成问题背景而非资料堆积。",
       links: existing([
         "Literature Search",
-        "Inverted Triangle Literature Search",
         "Primary and Secondary Documents",
-      ]),
-    },
-    {
-      title: "综述与研究缺口",
-      note: "把资料组织为论证，辨认已有研究的不足。",
-      links: existing([
         "Literature Review",
-        "Deficiencies in Past Literature",
-        "Literature Map",
-        "Research Contribution",
       ]),
     },
     {
-      title: "研究目的与问题",
-      note: "明确研究要解释、描述或理解什么。",
-      links: existing([
-        "Research Purpose",
-        "Purpose Statement",
-        "Research Question",
-        "Central Question",
-        "Mixed Methods Question",
-      ]),
+      title: "课题论证",
+      note: "说明为什么值得研究、准备回答什么，以及研究成果可能贡献在哪里。",
+      links: existing(["Research Proposal", "Research Purpose", "Research Contribution"]),
     },
     {
-      title: "提出研究假设",
-      note: "适用于量化、解释性与实验研究；质性研究可以跳过。",
+      title: "变量、问题与假设",
+      note: "把问题写成可回答的关系；需要检验时，再提出方向清楚的研究假设。",
       conditional: true,
-      links: existing([
-        "Hypothesis",
-        "Null Hypothesis",
-        "Alternative Hypothesis",
-        "Directional and Non-directional Hypotheses",
-      ]),
+      links: existing(["Research Question", "Variable", "Hypothesis"]),
     },
     {
-      title: "构念与操作化",
-      note: "定义研究对象，并建立构念、变量与测量之间的对应。",
-      links: existing([
-        "Construct",
-        "Definition of Terms",
-        "Operationalization",
-        "Variable",
-        "Scale of Measurement",
-      ]),
+      title: "界定与操作化",
+      note: "从概念性定义走向可观察、可测量或可编码的操作程序。",
+      links: existing(["Definition of Terms", "Operationalization", "Scale of Measurement"]),
     },
     {
-      title: "选择研究设计",
-      note: "统筹范式、方法、抽样、资料收集与分析方案。",
-      links: existing([
-        "Crotty's Four Levels of Research Design",
-        "Qualitative Research",
-        "Quantitative Research",
-        "Mixed Methods Research",
-        "Study Population and Sample",
-      ]),
+      title: "设计与取样",
+      note: "让研究问题、方法路径与样本选择彼此一致，并提前检查可执行性。",
+      links: existing(["Quantitative Research", "Qualitative Research", "Mixed Methods Research"]),
     },
     {
-      title: "效度与研究质量",
-      note: "检查推论是否成立，并说明研究结论的适用边界。",
-      links: existing([
-        "Internal Validity",
-        "External Validity",
-        "Construct Validity",
-        "Reliability",
-        "Trustworthiness",
-        "Qualitative Validity",
-      ]),
+      title: "收集与分析",
+      note: "使用与设计匹配的工具取得资料，并以透明的规则完成整理与分析。",
+      links: existing(["Observation Method", "Questionnaire", "Descriptive Analysis"]),
+    },
+    {
+      title: "质检、推论与报告",
+      note: "核查结果能支持多强的判断、适用于何种情境，并留下可复查的研究报告。",
+      links: existing(["Internal Validity", "External Validity", "Research Writing Script"]),
     },
   ]
 
@@ -1112,7 +1077,47 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
         "div",
         { class: "knowledge-methods-roadmap-head" },
         h("div", null, h("span", null, "Research Spine"), h("h2", null, "从选题到可信结论")),
-        h("p", null, "八个阶段不是线性配方，而是一组需要反复校准的研究决策。"),
+        h(
+          "p",
+          null,
+          "八个节点不是线性配方，而是一组需要来回校准的研究决策。",
+          topic.fixed[0]?.page &&
+            h(
+              "a",
+              { href: hrefFor(topic.fixed[0].page), class: "internal" },
+              "依据齐梅《教育研究方法》精选 ↗",
+            ),
+        ),
+      ),
+      h(
+        "div",
+        { class: "knowledge-methods-spine-console" },
+        h(
+          "div",
+          { class: "knowledge-methods-spine-status" },
+          h("span", null, "Decision Loop"),
+          h("strong", { "data-method-stage-readout": "" }, "01 · 选题与收窄"),
+          h("small", null, "点击节点定位；悬停卡片观察路径响应"),
+        ),
+        h(
+          "nav",
+          { class: "knowledge-methods-spine-rail", "aria-label": "研究阶段快速导航" },
+          h("i", { class: "knowledge-methods-spine-tracer", "aria-hidden": "true" }),
+          topic.stages.map((stage, index) =>
+            h(
+              "button",
+              {
+                type: "button",
+                class: index === 0 ? "is-active" : undefined,
+                "data-method-stage-target": String(index),
+                "aria-controls": `knowledge-method-stage-${index + 1}`,
+                "aria-label": `${String(index + 1).padStart(2, "0")} ${stage.title}`,
+              },
+              h("span", null, String(index + 1).padStart(2, "0")),
+              h("small", null, stage.title),
+            ),
+          ),
+        ),
       ),
       h(
         "ol",
@@ -1120,7 +1125,14 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
         topic.stages.map((stage, index) =>
           h(
             "li",
-            { class: stage.conditional ? "is-conditional" : undefined },
+            {
+              id: `knowledge-method-stage-${index + 1}`,
+              class: [stage.conditional ? "is-conditional" : "", index === 0 ? "is-active" : ""]
+                .filter(Boolean)
+                .join(" "),
+              "data-method-stage": String(index),
+              style: `--stage-delay:${index * 55}ms`,
+            },
             h(
               "div",
               { class: "knowledge-methods-stage-number" },
@@ -2963,12 +2975,68 @@ function bindKnowledgeHomeTypeMotion() {
   }
 }
 
+function bindKnowledgeMethodsRoadmap() {
+  const roadmaps = Array.from(document.querySelectorAll(".knowledge-methods-roadmap"))
+  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+
+  for (const roadmap of roadmaps) {
+    if (roadmap.dataset.spineBound === "true") continue
+    roadmap.dataset.spineBound = "true"
+    const stages = Array.from(roadmap.querySelectorAll("[data-method-stage]"))
+    const controls = Array.from(roadmap.querySelectorAll("[data-method-stage-target]"))
+    const readout = roadmap.querySelector("[data-method-stage-readout]")
+
+    const activate = (index) => {
+      const safeIndex = Math.max(0, Math.min(stages.length - 1, index))
+      roadmap.style.setProperty(
+        "--spine-progress",
+        stages.length > 1 ? ((safeIndex / (stages.length - 1)) * 100).toString() + "%" : "0%",
+      )
+      stages.forEach((stage, stageIndex) => stage.classList.toggle("is-active", stageIndex === safeIndex))
+      controls.forEach((control, controlIndex) => {
+        const active = controlIndex === safeIndex
+        control.classList.toggle("is-active", active)
+        control.setAttribute("aria-current", active ? "step" : "false")
+      })
+      if (readout) {
+        const label = stages[safeIndex]?.querySelector("h3")?.textContent?.trim() ?? "研究决策"
+        readout.textContent = String(safeIndex + 1).padStart(2, "0") + " · " + label
+      }
+    }
+
+    controls.forEach((control, index) => {
+      control.addEventListener("click", () => {
+        activate(index)
+        stages[index]?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" })
+      })
+    })
+
+    stages.forEach((stage, index) => {
+      stage.addEventListener("pointerenter", () => activate(index))
+      if (reduceMotion) return
+      stage.addEventListener("pointermove", (event) => {
+        if (event.pointerType === "touch") return
+        const rect = stage.getBoundingClientRect()
+        stage.style.setProperty("--stage-spot-x", (event.clientX - rect.left).toString() + "px")
+        stage.style.setProperty("--stage-spot-y", (event.clientY - rect.top).toString() + "px")
+      })
+      stage.addEventListener("pointerleave", () => {
+        stage.style.removeProperty("--stage-spot-x")
+        stage.style.removeProperty("--stage-spot-y")
+      })
+    })
+
+    activate(0)
+  }
+}
+
 bindKnowledgeHomeDragRails()
 bindKnowledgeHomeTypeMotion()
 bindKnowledgeHomeTransitions()
 bindKnowledgeHomeAiHill()
 bindKnowledgeHomeHumanDrop()
 bindKnowledgeHomeOrbitStars()
+bindKnowledgeMethodsRoadmap()
 
 function rotateMethodsRandomCards() {
   const cards = Array.from(document.querySelectorAll("[data-method-random-card]"))
@@ -6297,6 +6365,436 @@ body[data-slug^="explore/"] .center > article {
 .theme-dark .knowledge-methods-stage-title em {
   border-color: rgba(224, 194, 136, 0.36);
   color: #e0c288;
+}
+
+/* Interactive research spine: the roadmap behaves like a calibrated instrument
+   instead of a static taxonomy wall. */
+.knowledge-methods-hero::before {
+  animation: knowledge-methods-grid-drift 28s linear infinite;
+}
+
+.knowledge-methods-hero::after {
+  animation: knowledge-methods-orbit-turn 38s linear infinite;
+  border: 1px dashed color-mix(in srgb, var(--secondary) 18%, transparent);
+  border-radius: 50%;
+  content: "";
+  height: 17rem;
+  pointer-events: none;
+  position: absolute;
+  right: -8rem;
+  top: -8rem;
+  width: 17rem;
+}
+
+.knowledge-methods-book {
+  overflow: hidden;
+  position: relative;
+}
+
+.knowledge-methods-book::after {
+  border: 1px solid color-mix(in srgb, var(--book-tone) 20%, transparent);
+  border-radius: 50%;
+  content: "";
+  height: 7rem;
+  position: absolute;
+  right: -4.5rem;
+  top: -4.5rem;
+  transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  width: 7rem;
+}
+
+.knowledge-methods-book:hover::after {
+  transform: rotate(50deg) scale(1.12);
+}
+
+.knowledge-methods-tool {
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.knowledge-methods-tool::after {
+  background: radial-gradient(circle, color-mix(in srgb, var(--tool-tone) 18%, transparent), transparent 70%);
+  content: "";
+  height: 9rem;
+  opacity: 0;
+  position: absolute;
+  right: -3rem;
+  top: -3rem;
+  transform: scale(0.65);
+  transition: opacity 240ms ease, transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+  width: 9rem;
+}
+
+.knowledge-methods-tool:hover {
+  border-color: color-mix(in srgb, var(--tool-tone) 58%, var(--lightgray));
+  box-shadow: 0 1rem 2.2rem color-mix(in srgb, var(--tool-tone) 11%, transparent);
+  transform: translateY(-0.2rem);
+}
+
+.knowledge-methods-tool:hover::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.knowledge-methods-tool > * {
+  position: relative;
+  z-index: 1;
+}
+
+.knowledge-methods-roadmap {
+  --spine-progress: 0%;
+  gap: clamp(1.15rem, 2.5vw, 2rem);
+  isolation: isolate;
+}
+
+.knowledge-methods-roadmap::before {
+  animation: knowledge-methods-grid-drift 24s linear infinite;
+  background-image:
+    linear-gradient(var(--methods-panel-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--methods-panel-line) 1px, transparent 1px);
+  background-size: 2.5rem 2.5rem;
+  content: "";
+  inset: 0;
+  mask-image: linear-gradient(115deg, transparent 8%, black 48%, transparent 96%);
+  opacity: 0.24;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.knowledge-methods-roadmap::after {
+  animation: knowledge-methods-orbit-turn 34s linear infinite;
+  border-style: dashed;
+}
+
+.knowledge-methods-roadmap-head > p {
+  display: grid;
+  gap: 0.45rem;
+  justify-items: end;
+}
+
+.knowledge-methods-roadmap-head > p a {
+  color: var(--methods-panel-accent);
+  font-size: 0.68rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.knowledge-methods-roadmap-head > p a:hover {
+  color: var(--methods-panel-fg);
+}
+
+.knowledge-methods-spine-console {
+  align-items: center;
+  background: color-mix(in srgb, var(--methods-panel-chip-bg) 72%, transparent);
+  border: 1px solid var(--methods-panel-line);
+  border-radius: 0.8rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(11rem, 0.32fr) minmax(0, 1fr);
+  padding: 0.8rem 0.95rem;
+  position: relative;
+  z-index: 2;
+}
+
+.knowledge-methods-spine-status {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.knowledge-methods-spine-status > span {
+  color: var(--methods-panel-accent);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.knowledge-methods-spine-status > strong {
+  color: var(--methods-panel-fg);
+  font-family: var(--headerFont);
+  font-size: 0.92rem;
+}
+
+.knowledge-methods-spine-status > small {
+  color: var(--methods-panel-muted);
+  font-size: 0.6rem;
+}
+
+.knowledge-methods-spine-rail {
+  align-items: start;
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  isolation: isolate;
+  position: relative;
+}
+
+.knowledge-methods-spine-rail::before,
+.knowledge-methods-spine-rail::after {
+  border-radius: 999px;
+  content: "";
+  height: 1px;
+  left: 6.25%;
+  position: absolute;
+  top: 0.8rem;
+}
+
+.knowledge-methods-spine-rail::before {
+  background: var(--methods-panel-line);
+  right: 6.25%;
+}
+
+.knowledge-methods-spine-rail::after {
+  background: linear-gradient(90deg, var(--methods-panel-accent), #d4aa6e);
+  box-shadow: 0 0 0.8rem color-mix(in srgb, var(--methods-panel-accent) 48%, transparent);
+  transition: width 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  width: calc(var(--spine-progress) * 0.875);
+  z-index: 0;
+}
+
+.knowledge-methods-spine-tracer {
+  animation: knowledge-methods-tracer 9s ease-in-out infinite alternate;
+  background: #dca86d;
+  border: 3px solid color-mix(in srgb, #dca86d 24%, transparent);
+  border-radius: 50%;
+  box-shadow: 0 0 1rem rgba(220, 168, 109, 0.7);
+  height: 0.7rem;
+  left: 6.25%;
+  pointer-events: none;
+  position: absolute;
+  top: 0.45rem;
+  width: 0.7rem;
+  z-index: 3;
+}
+
+.knowledge-methods-spine-rail button {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--methods-panel-muted);
+  cursor: pointer;
+  display: grid;
+  font: inherit;
+  gap: 0.32rem;
+  justify-items: center;
+  padding: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.knowledge-methods-spine-rail button > span {
+  align-items: center;
+  background: color-mix(in srgb, var(--methods-panel-bg) 92%, transparent);
+  border: 1px solid var(--methods-panel-border);
+  border-radius: 50%;
+  display: flex;
+  font-size: 0.55rem;
+  height: 1.6rem;
+  justify-content: center;
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+  width: 1.6rem;
+}
+
+.knowledge-methods-spine-rail button > small {
+  font-size: 0.52rem;
+  line-height: 1.2;
+  max-width: 4.7rem;
+}
+
+.knowledge-methods-spine-rail button:hover > span,
+.knowledge-methods-spine-rail button:focus-visible > span,
+.knowledge-methods-spine-rail button.is-active > span {
+  background: var(--methods-panel-accent);
+  border-color: var(--methods-panel-accent);
+  color: #10242c;
+  transform: scale(1.12);
+}
+
+.knowledge-methods-spine-rail button.is-active > small {
+  color: var(--methods-panel-fg);
+}
+
+.knowledge-methods-stages {
+  gap: 0.7rem;
+}
+
+.knowledge-methods-stages > li,
+.knowledge-methods-stages > li:nth-child(even) {
+  animation: knowledge-methods-stage-enter 560ms both;
+  animation-delay: var(--stage-delay);
+  background:
+    radial-gradient(
+      circle 10rem at var(--stage-spot-x, 78%) var(--stage-spot-y, 12%),
+      var(--methods-panel-accent-soft),
+      transparent 72%
+    ),
+    color-mix(in srgb, var(--methods-panel-chip-bg) 54%, transparent);
+  border: 1px solid var(--methods-panel-line);
+  border-radius: 0.75rem;
+  min-height: 11.4rem;
+  overflow: hidden;
+  padding: 1rem;
+  position: relative;
+  scroll-margin-block: 8rem;
+  transition: background 220ms ease, border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+}
+
+.knowledge-methods-stages > li::after {
+  background: linear-gradient(90deg, var(--methods-panel-accent), transparent);
+  content: "";
+  height: 1px;
+  left: 3rem;
+  opacity: 0;
+  position: absolute;
+  right: 1rem;
+  top: 3.5rem;
+  transform: scaleX(0.2);
+  transform-origin: left;
+  transition: opacity 220ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.knowledge-methods-stages > li:hover,
+.knowledge-methods-stages > li.is-active {
+  border-color: var(--methods-panel-border);
+  box-shadow: 0 1rem 2.4rem color-mix(in srgb, #061013 18%, transparent);
+  transform: translateY(-0.18rem);
+}
+
+.knowledge-methods-stages > li:hover::after,
+.knowledge-methods-stages > li.is-active::after {
+  opacity: 0.55;
+  transform: scaleX(1);
+}
+
+.knowledge-methods-stages > li.is-conditional {
+  border-style: dashed;
+}
+
+.knowledge-methods-stages > li > * {
+  position: relative;
+  z-index: 1;
+}
+
+.knowledge-methods-stages > li.is-active .knowledge-methods-stage-number span {
+  animation: knowledge-methods-node-pulse 2.4s ease-in-out infinite;
+  background: var(--methods-panel-accent);
+  color: #10242c;
+}
+
+.knowledge-methods-stage-number i {
+  border-radius: 999px;
+}
+
+.knowledge-methods-stage-links a {
+  border-radius: 999px;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.knowledge-methods-stage-links a:hover {
+  transform: translateY(-0.1rem);
+}
+
+.knowledge-methods-ethics {
+  backdrop-filter: blur(0.7rem);
+}
+
+@keyframes knowledge-methods-grid-drift {
+  to {
+    background-position: 2.5rem 2.5rem;
+  }
+}
+
+@keyframes knowledge-methods-orbit-turn {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes knowledge-methods-tracer {
+  from {
+    left: 6.25%;
+  }
+  to {
+    left: calc(93.75% - 0.7rem);
+  }
+}
+
+@keyframes knowledge-methods-stage-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.65rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes knowledge-methods-node-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--methods-panel-accent) 38%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 0.32rem transparent;
+  }
+}
+
+@media all and (max-width: 900px) {
+  .knowledge-methods-spine-console {
+    grid-template-columns: 1fr;
+  }
+
+  .knowledge-methods-spine-rail button > small {
+    display: none;
+  }
+
+  .knowledge-methods-stages {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media all and (max-width: 520px) {
+  .knowledge-methods-roadmap-head > p {
+    justify-items: start;
+  }
+
+  .knowledge-methods-spine-console {
+    padding: 0.75rem;
+  }
+
+  .knowledge-methods-spine-rail button > span {
+    font-size: 0.48rem;
+    height: 1.35rem;
+    width: 1.35rem;
+  }
+
+  .knowledge-methods-spine-rail::before,
+  .knowledge-methods-spine-rail::after {
+    top: 0.68rem;
+  }
+
+  .knowledge-methods-spine-tracer {
+    top: 0.33rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .knowledge-methods-hero::before,
+  .knowledge-methods-hero::after,
+  .knowledge-methods-roadmap::before,
+  .knowledge-methods-roadmap::after,
+  .knowledge-methods-spine-tracer,
+  .knowledge-methods-stages > li,
+  .knowledge-methods-stages > li.is-active .knowledge-methods-stage-number span {
+    animation: none;
+  }
+
+  .knowledge-methods-stages > li,
+  .knowledge-methods-spine-rail::after,
+  .knowledge-methods-spine-rail button > span {
+    transition: none;
+  }
 }
 
 /* Homepage editorial system: a quieter research atlas that keeps the
