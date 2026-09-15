@@ -1696,70 +1696,12 @@ function renderComparativeTopicPage({ pages, topicConfig, todayKey, displayClass
   )
 }
 
-function renderStoneCourse(extraClass = "") {
+function renderAiStoneHill() {
   return h(
     "div",
     {
-      class: ["knowledge-home-stone-course", extraClass].filter(Boolean).join(" "),
-      "data-stone-course": "true",
-      "data-stage": "0",
-    },
-    h(
-      "svg",
-      {
-        viewBox: "0 0 320 180",
-        preserveAspectRatio: "none",
-        "aria-hidden": "true",
-      },
-      h("path", { d: "M18 132 H82 V101 H151 V70 H220 V39 H302" }),
-    ),
-    [
-      ["拆", "拆开概念"],
-      ["核", "核对证据"],
-      ["连", "连回来源"],
-      ["上", "运上山顶"],
-    ].map(([short, label], index) =>
-      h(
-        "button",
-        {
-          type: "button",
-          class: "knowledge-home-stone-stage",
-          "data-stone-stage": String(index),
-          "aria-label": label,
-          "aria-pressed": index === 0 ? "true" : "false",
-        },
-        h("b", null, String(index + 1).padStart(2, "0")),
-        h("span", null, short),
-      ),
-    ),
-    h(
-      "button",
-      {
-        type: "button",
-        class: "knowledge-home-stone",
-        "data-stone": "true",
-        "aria-label": "推动石头：当前在拆开概念",
-      },
-      h("span", { "aria-hidden": "true" }),
-    ),
-    h(
-      "p",
-      {
-        class: "knowledge-home-stone-status",
-        "data-stone-status": "true",
-        "aria-live": "polite",
-      },
-      "山脚 · 先把概念拆开。",
-    ),
-  )
-}
-
-function renderHumanStoneHill() {
-  return h(
-    "div",
-    {
-      class: "knowledge-home-human-hill",
-      "data-human-hill": "true",
+      class: "knowledge-home-stone-hill knowledge-home-ai-hill",
+      "data-ai-hill": "true",
       "data-progress": "0",
     },
     h(
@@ -1767,34 +1709,79 @@ function renderHumanStoneHill() {
       { viewBox: "0 0 320 180", preserveAspectRatio: "none", "aria-hidden": "true" },
       h("path", { d: "M14 148 C76 151 112 128 156 96 C205 61 252 34 307 29" }),
       h("path", {
-        class: "knowledge-home-human-hill-shadow",
+        class: "knowledge-home-stone-hill-shadow",
         d: "M14 154 C76 157 112 134 156 102 C205 67 252 40 307 35",
       }),
     ),
     h(
       "div",
-      { class: "knowledge-home-human-hill-fragments", "aria-hidden": "true" },
+      { class: "knowledge-home-stone-hill-fragments", "aria-hidden": "true" },
       h("span", null, "p.42"),
       h("span", null, "ARG"),
       h("span", null, "↗"),
     ),
-    h("span", { class: "knowledge-home-human-pusher", "aria-hidden": "true" }, h("i", null)),
+    h(
+      "span",
+      { class: "knowledge-home-stone-pusher", "aria-hidden": "true" },
+      h("i", null),
+      h("b", null, "AI"),
+    ),
     h(
       "button",
       {
         type: "button",
-        class: "knowledge-home-human-boulder",
-        "data-human-boulder": "true",
-        "aria-label": "沿研究山坡推动石头",
+        class: "knowledge-home-stone-boulder",
+        "data-ai-boulder": "true",
+        "aria-label": "帮助 AI 沿研究山坡推动文献石头",
+      },
+      h("span", { "aria-hidden": "true" }),
+    ),
+    h("p", { "data-ai-hill-status": "true", "aria-live": "polite" }, "山脚 · 一个问题刚刚出现。"),
+    h("small", null, "AI PUSHES UP · GRAVITY REPLIES"),
+  )
+}
+
+function renderHumanStoneDrop() {
+  return h(
+    "div",
+    {
+      class: "knowledge-home-stone-hill knowledge-home-human-drop",
+      "data-human-drop": "true",
+      "data-progress": "0",
+    },
+    h(
+      "svg",
+      { viewBox: "0 0 320 180", preserveAspectRatio: "none", "aria-hidden": "true" },
+      h("path", { d: "M14 29 C75 33 116 54 158 86 C207 123 258 148 307 151" }),
+      h("path", {
+        class: "knowledge-home-stone-hill-shadow",
+        d: "M14 35 C75 39 116 60 158 92 C207 129 258 154 307 157",
+      }),
+    ),
+    h(
+      "div",
+      { class: "knowledge-home-stone-hill-fragments", "aria-hidden": "true" },
+      h("span", null, "WHY?"),
+      h("span", null, "COUNTER"),
+      h("span", null, "?"),
+    ),
+    h("span", { class: "knowledge-home-stone-pusher", "aria-hidden": "true" }, h("i", null)),
+    h(
+      "button",
+      {
+        type: "button",
+        class: "knowledge-home-stone-boulder",
+        "data-human-drop-boulder": "true",
+        "aria-label": "提出新问题，让石头滚下山",
       },
       h("span", { "aria-hidden": "true" }),
     ),
     h(
       "p",
-      { "data-human-hill-status": "true", "aria-live": "polite" },
-      "山脚 · 一个问题刚刚出现。",
+      { "data-human-drop-status": "true", "aria-live": "polite" },
+      "山顶 · “有没有相反的证据？”",
     ),
-    h("small", null, "PUSH UP · RELEASE · REPEAT"),
+    h("small", null, "ASK AGAIN · LET IT ROLL"),
   )
 }
 
@@ -1839,6 +1826,9 @@ function KnowledgeHome(userOpts = {}) {
       .slice(0, opts.constellationLimit)
     const todayKey = new Date().toISOString().slice(0, 10)
     const concepts = pages.filter((page) => (page.slug ?? "").startsWith("wiki/concepts/"))
+    const argumentsCount = pages.filter((page) =>
+      (page.slug ?? "").startsWith("wiki/arguments/"),
+    ).length
     const todayConcept = deterministicPick(concepts, todayKey)
     const wikiCount = pages.filter((page) => (page.slug ?? "").startsWith("wiki")).length
     const totalLinks = pages.reduce((sum, page) => sum + linksFor(page), 0)
@@ -2081,6 +2071,25 @@ function KnowledgeHome(userOpts = {}) {
             { class: "knowledge-home-hero-orbit" },
             h("i", { class: "orbit-outer", "aria-hidden": "true" }),
             h("i", { class: "orbit-inner", "aria-hidden": "true" }),
+            [
+              [50, 7],
+              [84, 31],
+              [72, 76],
+              [28, 79],
+              [14, 36],
+            ].map(([x, y], index) =>
+              h(
+                "button",
+                {
+                  type: "button",
+                  class: "knowledge-home-orbit-star",
+                  "data-orbit-star": "true",
+                  "aria-label": `拖动第 ${index + 1} 颗知识星`,
+                  style: `--star-x:${x}%;--star-y:${y}%;--star-delay:${index * -0.7}s`,
+                },
+                h("span", { "aria-hidden": "true" }, "✦"),
+              ),
+            ),
             h(
               "a",
               {
@@ -2105,7 +2114,7 @@ function KnowledgeHome(userOpts = {}) {
               class: "knowledge-home-metrics knowledge-home-hero-metrics",
               "aria-label": "知识库统计",
             },
-            h("div", null, h("span", null, "条目"), h("strong", null, formatCount(pages.length))),
+            h("div", null, h("span", null, "论证"), h("strong", null, formatCount(argumentsCount))),
             h("div", null, h("span", null, "Wiki"), h("strong", null, formatCount(wikiCount))),
             h(
               "div",
@@ -2323,7 +2332,7 @@ function KnowledgeHome(userOpts = {}) {
                 null,
                 `${formatCount(totalLinks)} LINKS · ${formatCount(pages.length)} NOTES`,
               ),
-              renderStoneCourse(),
+              renderAiStoneHill(),
             ),
           ),
           h(
@@ -2369,7 +2378,7 @@ function KnowledgeHome(userOpts = {}) {
               h("i", null, "课堂教学"),
               h("i", null, "证据与治理"),
             ),
-            renderHumanStoneHill(),
+            renderHumanStoneDrop(),
           ),
           h(
             "div",
@@ -2470,139 +2479,41 @@ function bindKnowledgeHomeDragRails() {
   }
 }
 
-function bindKnowledgeHomeStone() {
-  const courses = Array.from(document.querySelectorAll("[data-stone-course]"))
-  for (const course of courses) {
-    const stone = course.querySelector("[data-stone]")
-    const status = course.querySelector("[data-stone-status]")
-    const stages = Array.from(course.querySelectorAll("[data-stone-stage]"))
-    if (!stone || !status || stages.length === 0 || course.dataset.bound === "true") continue
-    course.dataset.bound = "true"
-
-    const positions = [
-      { x: 12, y: 73 },
-      { x: 35, y: 56 },
-      { x: 58, y: 39 },
-      { x: 83, y: 22 },
-    ]
-    const messages = [
-      "山脚 · 先把概念拆开。",
-      "第二格 · 核对证据是否站得住。",
-      "第三格 · 把判断连回页码与来源。",
-      "山顶 · 终于可以拼成一份成稿。",
-    ]
-    const labels = ["拆开概念", "核对证据", "连回来源", "运上山顶"]
-    let currentStage = Number(course.dataset.stage || 0)
-    let pointerActive = false
-    let moved = false
-    let suppressClick = false
-    let animationTimer
-
-    const setStage = (nextStage, motion = "push") => {
-      currentStage = Math.max(0, Math.min(positions.length - 1, nextStage))
-      course.dataset.stage = String(currentStage)
-      status.textContent = messages[currentStage]
-      stone.setAttribute("aria-label", "推动石头：当前在" + labels[currentStage])
-      stages.forEach((stage, index) => {
-        stage.setAttribute("aria-pressed", String(index === currentStage))
-      })
-      course.classList.remove("is-pushing", "is-falling")
-      void course.offsetWidth
-      course.classList.add(motion === "fall" ? "is-falling" : "is-pushing")
-      window.clearTimeout(animationTimer)
-      animationTimer = window.setTimeout(() => {
-        course.classList.remove("is-pushing", "is-falling")
-      }, 680)
-    }
-
-    stages.forEach((stage, index) => {
-      stage.addEventListener("click", () => setStage(index, index < currentStage ? "fall" : "push"))
-    })
-
-    stone.addEventListener("pointerdown", (event) => {
-    if (event.pointerType === "mouse" && event.button !== 0) return
-    pointerActive = true
-    moved = false
-    course.classList.add("is-dragging")
-    stone.setPointerCapture?.(event.pointerId)
-    })
-
-    stone.addEventListener("pointermove", (event) => {
-    if (!pointerActive) return
-    const rect = course.getBoundingClientRect()
-    const x = Math.max(7, Math.min(90, ((event.clientX - rect.left) / rect.width) * 100))
-    const y = Math.max(13, Math.min(80, ((event.clientY - rect.top) / rect.height) * 100))
-    const current = positions[currentStage]
-    if (Math.abs(x - current.x) > 2 || Math.abs(y - current.y) > 2) moved = true
-    if (!moved) return
-    event.preventDefault()
-    stone.style.left = x + "%"
-    stone.style.top = y + "%"
-    })
-
-    const finishStoneDrag = (event) => {
-    if (!pointerActive) return
-    pointerActive = false
-    course.classList.remove("is-dragging")
-    if (stone.hasPointerCapture?.(event.pointerId)) stone.releasePointerCapture(event.pointerId)
-    if (!moved) return
-
-    const rect = course.getBoundingClientRect()
-    if (!Number.isFinite(event.clientX) || !Number.isFinite(event.clientY)) {
-      stone.style.removeProperty("left")
-      stone.style.removeProperty("top")
-      return
-    }
-    const x = ((event.clientX - rect.left) / rect.width) * 100
-    const y = ((event.clientY - rect.top) / rect.height) * 100
-    let nearestStage = 0
-    let nearestDistance = Infinity
-    positions.forEach((position, index) => {
-      const distance = Math.hypot(position.x - x, position.y - y)
-      if (distance < nearestDistance) {
-        nearestDistance = distance
-        nearestStage = index
-      }
-    })
-    stone.style.removeProperty("left")
-    stone.style.removeProperty("top")
-    suppressClick = true
-    setStage(nearestStage, nearestStage < currentStage ? "fall" : "push")
-    }
-
-    stone.addEventListener("pointerup", finishStoneDrag)
-    stone.addEventListener("pointercancel", finishStoneDrag)
-    stone.addEventListener("click", (event) => {
-    if (suppressClick) {
-      event.preventDefault()
-      suppressClick = false
-      return
-    }
-    const atSummit = currentStage === positions.length - 1
-    setStage(atSummit ? 0 : currentStage + 1, atSummit ? "fall" : "push")
-    })
-    stone.addEventListener("keydown", (event) => {
-    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return
-    event.preventDefault()
-    const direction = event.key === "ArrowRight" ? 1 : -1
-    const nextStage = Math.max(0, Math.min(positions.length - 1, currentStage + direction))
-    setStage(nextStage, direction < 0 ? "fall" : "push")
-    })
-  }
-}
-
 function bindKnowledgeHomeTransitions() {
   const tracks = Array.from(document.querySelectorAll("[data-transition-track]"))
+  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
   for (const track of tracks) {
     if (track.dataset.bound === "true") continue
     track.dataset.bound = "true"
+    let progress = 8 + Math.random() * 84
+    let direction = Math.random() > 0.5 ? 1 : -1
+    let speed = 5 + Math.random() * 9
+    let running = !reduceMotion
     let dragging = false
+    let moved = false
+    let suppressClick = false
+    let startX = 0
+    let previousTime = performance.now()
 
     const setProgress = (value) => {
-      const progress = Math.max(0, Math.min(100, value))
-      track.classList.add("is-controlled")
+      progress = Math.max(0, Math.min(100, value))
       track.style.setProperty("--route-progress", progress + "%")
       track.setAttribute("aria-valuenow", String(Math.round(progress)))
+    }
+
+    const setRunning = (nextRunning) => {
+      running = !reduceMotion && nextRunning
+      track.classList.toggle("is-paused", !running)
+      track.dataset.motion = running ? "running" : "paused"
+      track.setAttribute(
+        "aria-label",
+        running ? "路径节点移动中；点击暂停，或拖动定位" : "路径节点已暂停；点击恢复移动",
+      )
+      if (running) {
+        speed = 5 + Math.random() * 9
+        track.dataset.speed = speed.toFixed(2)
+        previousTime = performance.now()
+      }
     }
 
     const setFromPointer = (event) => {
@@ -2613,35 +2524,70 @@ function bindKnowledgeHomeTransitions() {
     track.addEventListener("pointerdown", (event) => {
       if (event.pointerType === "mouse" && event.button !== 0) return
       dragging = true
+      moved = false
+      startX = event.clientX
       track.classList.add("is-dragging")
       track.setPointerCapture?.(event.pointerId)
-      setFromPointer(event)
     })
     track.addEventListener("pointermove", (event) => {
       if (!dragging) return
+      if (Math.abs(event.clientX - startX) > 3) moved = true
+      if (!moved) return
       event.preventDefault()
+      setRunning(false)
       setFromPointer(event)
     })
     const finish = (event) => {
       dragging = false
+      suppressClick = moved
       track.classList.remove("is-dragging")
       if (track.hasPointerCapture?.(event.pointerId)) track.releasePointerCapture(event.pointerId)
     }
     track.addEventListener("pointerup", finish)
     track.addEventListener("pointercancel", finish)
+    track.addEventListener("click", (event) => {
+      if (suppressClick) {
+        event.preventDefault()
+        suppressClick = false
+        return
+      }
+      setRunning(!running)
+    })
     track.addEventListener("keydown", (event) => {
       if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return
       event.preventDefault()
-      const current = Number(track.getAttribute("aria-valuenow") || 58)
-      setProgress(current + (event.key === "ArrowRight" ? 5 : -5))
+      setRunning(false)
+      setProgress(progress + (event.key === "ArrowRight" ? 5 : -5))
     })
+
+    const animate = (time) => {
+      const elapsed = Math.min(64, time - previousTime)
+      previousTime = time
+      if (running) {
+        progress += direction * speed * (elapsed / 1000)
+        if (progress >= 100 || progress <= 0) {
+          progress = Math.max(0, Math.min(100, progress))
+          direction *= -1
+          speed = 5 + Math.random() * 9
+          track.dataset.speed = speed.toFixed(2)
+          track.dataset.direction = direction > 0 ? "forward" : "backward"
+        }
+        setProgress(progress)
+      }
+      window.requestAnimationFrame(animate)
+    }
+
+    setProgress(progress)
+    setRunning(running)
+    track.dataset.direction = direction > 0 ? "forward" : "backward"
+    window.requestAnimationFrame(animate)
   }
 }
 
-function bindKnowledgeHomeHumanHill() {
-  const hill = document.querySelector("[data-human-hill]")
-  const boulder = hill?.querySelector("[data-human-boulder]")
-  const status = hill?.querySelector("[data-human-hill-status]")
+function bindKnowledgeHomeAiHill() {
+  const hill = document.querySelector("[data-ai-hill]")
+  const boulder = hill?.querySelector("[data-ai-boulder]")
+  const status = hill?.querySelector("[data-ai-hill-status]")
   if (!hill || !boulder || !status || hill.dataset.bound === "true") return
   hill.dataset.bound = "true"
 
@@ -2652,10 +2598,10 @@ function bindKnowledgeHomeHumanHill() {
     { progress: 100, x: 88, y: 21 },
   ]
   const messages = [
-    "山脚 · 一个问题刚刚出现。",
-    "半坡 · 开始搬运证据。",
-    "再往上 · 让证据承担解释。",
-    "山顶 · 暂时拼成一份成稿。",
+    "山脚 · AI 抱起第一块文献。",
+    "半坡 · 页码、论证与来源一起搬。",
+    "再往上 · 把证据拼成解释。",
+    "山顶 · 暂时得到一份成稿。",
   ]
   let progress = Number(hill.dataset.progress || 0)
   let dragging = false
@@ -2686,8 +2632,8 @@ function bindKnowledgeHomeHumanHill() {
     const messageIndex = progress >= 99 ? 3 : progress >= 66 ? 2 : progress >= 33 ? 1 : 0
     status.textContent = hill.classList.contains("is-rolling")
       ? progress <= 1
-        ? "山脚 · 石头回来了，文献还在。"
-        : "松手 · 它正在滚回山脚。"
+        ? "山脚 · 石头回来了，AI 继续。"
+        : "重力提醒：研究还没有结束。"
       : messages[messageIndex]
     boulder.setAttribute("aria-label", messages[messageIndex])
   }
@@ -2707,7 +2653,7 @@ function bindKnowledgeHomeHumanHill() {
         setProgress(0, false)
         stopRolling()
         hill.classList.remove("is-free")
-        status.textContent = "山脚 · 石头回来了，文献还在。"
+        status.textContent = "山脚 · 石头回来了，AI 继续。"
         return
       }
       let velocity = 0.12
@@ -2723,7 +2669,7 @@ function bindKnowledgeHomeHumanHill() {
         } else {
           stopRolling()
           hill.classList.remove("is-free")
-          status.textContent = "山脚 · 石头回来了，文献还在。"
+          status.textContent = "山脚 · 石头回来了，AI 继续。"
         }
       }
       rollFrame = window.requestAnimationFrame(roll)
@@ -2775,6 +2721,186 @@ function bindKnowledgeHomeHumanHill() {
   setProgress(progress)
 }
 
+function bindKnowledgeHomeHumanDrop() {
+  const hill = document.querySelector("[data-human-drop]")
+  const boulder = hill?.querySelector("[data-human-drop-boulder]")
+  const status = hill?.querySelector("[data-human-drop-status]")
+  if (!hill || !boulder || !status || hill.dataset.bound === "true") return
+  hill.dataset.bound = "true"
+
+  const points = [
+    { progress: 0, x: 12, y: 20 },
+    { progress: 34, x: 38, y: 34 },
+    { progress: 68, x: 65, y: 59 },
+    { progress: 100, x: 89, y: 80 },
+  ]
+  let progress = Number(hill.dataset.progress || 0)
+  let dragging = false
+  let moved = false
+  let rollFrame
+  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+
+  const setProgress = (nextProgress, animate = true) => {
+    progress = Math.max(0, Math.min(100, nextProgress))
+    let start = points[0]
+    let end = points[1]
+    for (let index = 1; index < points.length; index += 1) {
+      if (progress <= points[index].progress) {
+        start = points[index - 1]
+        end = points[index]
+        break
+      }
+    }
+    const ratio = (progress - start.progress) / (end.progress - start.progress || 1)
+    hill.dataset.progress = String(Math.round(progress))
+    hill.style.setProperty("--hill-x", start.x + (end.x - start.x) * ratio + "%")
+    hill.style.setProperty("--hill-y", start.y + (end.y - start.y) * ratio + "%")
+    hill.style.setProperty("--boulder-turn", progress * 7.2 + "deg")
+    hill.classList.toggle("is-free", !animate)
+    hill.classList.toggle("is-bottom", progress >= 99)
+  }
+
+  const stopRoll = () => {
+    window.cancelAnimationFrame(rollFrame)
+    hill.classList.remove("is-rolling")
+  }
+
+  const rollDown = () => {
+    stopRoll()
+    hill.classList.add("is-rolling")
+    status.textContent = "他只问了一句，石头就滚了下来。"
+    if (reduceMotion) {
+      setProgress(100, false)
+      stopRoll()
+      hill.classList.remove("is-free")
+      status.textContent = "山脚 · AI 又要把它捡起来。"
+      return
+    }
+    let velocity = 0.14
+    let lastTime = performance.now()
+    const roll = (time) => {
+      const frame = Math.min(32, time - lastTime)
+      lastTime = time
+      velocity += frame * 0.0022
+      setProgress(progress + velocity * (frame / 16.67), false)
+      if (progress < 100) {
+        rollFrame = window.requestAnimationFrame(roll)
+      } else {
+        stopRoll()
+        hill.classList.remove("is-free")
+        status.textContent = "山脚 · AI 又要把它捡起来。"
+      }
+    }
+    rollFrame = window.requestAnimationFrame(roll)
+  }
+
+  boulder.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return
+    stopRoll()
+    dragging = true
+    moved = false
+    hill.classList.add("is-dragging")
+    boulder.setPointerCapture?.(event.pointerId)
+  })
+  boulder.addEventListener("pointermove", (event) => {
+    if (!dragging) return
+    const rect = hill.getBoundingClientRect()
+    const next = ((event.clientX - rect.left) / rect.width) * 118 - 9
+    if (Math.abs(next - progress) > 1.5) moved = true
+    if (!moved) return
+    event.preventDefault()
+    setProgress(next, false)
+  })
+  const finish = (event) => {
+    dragging = false
+    hill.classList.remove("is-dragging", "is-free")
+    if (boulder.hasPointerCapture?.(event.pointerId)) boulder.releasePointerCapture(event.pointerId)
+    if (moved && progress < 100) rollDown()
+  }
+  boulder.addEventListener("pointerup", finish)
+  boulder.addEventListener("pointercancel", finish)
+  boulder.addEventListener("click", () => {
+    if (moved) {
+      moved = false
+      return
+    }
+    if (progress >= 99) {
+      setProgress(0)
+      status.textContent = "山顶 · “有没有相反的证据？”"
+      return
+    }
+    rollDown()
+  })
+  boulder.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return
+    event.preventDefault()
+    stopRoll()
+    setProgress(progress + (event.key === "ArrowRight" ? 10 : -10))
+  })
+
+  setProgress(progress)
+}
+
+function bindKnowledgeHomeOrbitStars() {
+  const orbit = document.querySelector(".knowledge-home-hero-orbit")
+  const stars = Array.from(orbit?.querySelectorAll("[data-orbit-star]") || [])
+  if (!orbit || stars.length === 0) return
+
+  for (const star of stars) {
+    if (star.dataset.bound === "true") continue
+    star.dataset.bound = "true"
+    let dragging = false
+    let moved = false
+
+    const moveTo = (x, y) => {
+      star.style.setProperty("--star-x", Math.max(5, Math.min(95, x)) + "%")
+      star.style.setProperty("--star-y", Math.max(5, Math.min(95, y)) + "%")
+      star.classList.add("is-placed")
+    }
+
+    star.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "mouse" && event.button !== 0) return
+      dragging = true
+      moved = false
+      star.classList.add("is-grabbed")
+      star.setPointerCapture?.(event.pointerId)
+    })
+    star.addEventListener("pointermove", (event) => {
+      if (!dragging) return
+      const rect = orbit.getBoundingClientRect()
+      const x = ((event.clientX - rect.left) / rect.width) * 100
+      const y = ((event.clientY - rect.top) / rect.height) * 100
+      moved = true
+      event.preventDefault()
+      moveTo(x, y)
+    })
+    const finish = (event) => {
+      dragging = false
+      star.classList.remove("is-grabbed")
+      if (star.hasPointerCapture?.(event.pointerId)) star.releasePointerCapture(event.pointerId)
+    }
+    star.addEventListener("pointerup", finish)
+    star.addEventListener("pointercancel", finish)
+    star.addEventListener("click", () => {
+      if (moved) {
+        moved = false
+        return
+      }
+      const angle = Math.random() * Math.PI * 2
+      const radius = 25 + Math.random() * 18
+      moveTo(50 + Math.cos(angle) * radius, 50 + Math.sin(angle) * radius)
+    })
+    star.addEventListener("keydown", (event) => {
+      if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) return
+      event.preventDefault()
+      const styles = getComputedStyle(star)
+      const x = parseFloat(styles.getPropertyValue("--star-x")) || 50
+      const y = parseFloat(styles.getPropertyValue("--star-y")) || 50
+      moveTo(x + (event.key === "ArrowRight" ? 4 : event.key === "ArrowLeft" ? -4 : 0), y + (event.key === "ArrowDown" ? 4 : event.key === "ArrowUp" ? -4 : 0))
+    })
+  }
+}
+
 function bindKnowledgeHomeTypeMotion() {
   const cards = Array.from(document.querySelectorAll(".knowledge-home-type"))
   const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
@@ -2806,10 +2932,11 @@ function bindKnowledgeHomeTypeMotion() {
 }
 
 bindKnowledgeHomeDragRails()
-bindKnowledgeHomeStone()
 bindKnowledgeHomeTypeMotion()
 bindKnowledgeHomeTransitions()
-bindKnowledgeHomeHumanHill()
+bindKnowledgeHomeAiHill()
+bindKnowledgeHomeHumanDrop()
+bindKnowledgeHomeOrbitStars()
 
 function rotateMethodsRandomCards() {
   const cards = Array.from(document.querySelectorAll("[data-method-random-card]"))
@@ -6354,34 +6481,67 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   animation: knowledge-home-orbit-breathe 4.8s ease-in-out infinite;
 }
 
-.knowledge-home-hero-orbit i {
+.knowledge-home-hero-orbit > i {
   border: 1px solid var(--home-line);
   border-radius: 50%;
   position: absolute;
 }
 
-.knowledge-home-hero-orbit i::after {
-  background: var(--home-copper);
-  border: 2px solid var(--home-surface);
-  border-radius: 50%;
-  box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--home-copper) 12%, transparent);
-  content: "";
-  height: 0.48rem;
-  left: 50%;
-  position: absolute;
-  top: -0.31rem;
-  transform: translateX(-50%);
-  width: 0.48rem;
-}
-
 .knowledge-home-hero-orbit .orbit-outer {
   animation: knowledge-home-orbit-spin 10s linear infinite;
+  border-style: dashed;
   inset: 16%;
 }
 
 .knowledge-home-hero-orbit .orbit-inner {
   animation: knowledge-home-orbit-spin 6.8s linear infinite reverse;
+  border-style: dotted;
   inset: 35%;
+}
+
+.knowledge-home-orbit-star {
+  animation: knowledge-home-orbit-star-twinkle 3.4s ease-in-out infinite;
+  animation-delay: var(--star-delay);
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--home-copper);
+  cursor: grab;
+  display: grid;
+  height: 1.45rem;
+  left: var(--star-x);
+  padding: 0;
+  place-items: center;
+  position: absolute;
+  top: var(--star-y);
+  transform: translate(-50%, -50%);
+  touch-action: none;
+  width: 1.45rem;
+  z-index: 3;
+}
+
+.knowledge-home-orbit-star span {
+  filter: drop-shadow(0 0 0.28rem color-mix(in srgb, var(--home-copper) 50%, transparent));
+  font-size: 0.72rem;
+  line-height: 1;
+  pointer-events: none;
+  transition: transform 160ms ease;
+}
+
+.knowledge-home-orbit-star:hover span,
+.knowledge-home-orbit-star:focus-visible span,
+.knowledge-home-orbit-star.is-grabbed span {
+  transform: scale(1.55) rotate(18deg);
+}
+
+.knowledge-home-orbit-star.is-grabbed {
+  animation: none;
+  cursor: grabbing;
+}
+
+.knowledge-home-orbit-star:focus-visible {
+  outline: 1px dashed var(--home-copper);
+  outline-offset: -0.1rem;
 }
 
 .knowledge-home-hero-orbit-link {
@@ -6451,6 +6611,17 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   50% {
     opacity: 0.58;
     transform: scale(1.04);
+  }
+}
+
+@keyframes knowledge-home-orbit-star-twinkle {
+  0%,
+  100% {
+    opacity: 0.58;
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.12);
   }
 }
 
@@ -6699,7 +6870,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   padding: 0.2rem 0.35rem;
 }
 
-.knowledge-home-human-hill {
+.knowledge-home-stone-hill {
   --boulder-turn: 0deg;
   --hill-x: 10%;
   --hill-y: 78%;
@@ -6720,7 +6891,22 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   z-index: 1;
 }
 
-.knowledge-home-human-hill svg {
+.knowledge-home-ai-hill {
+  margin-top: 0.55rem;
+}
+
+.knowledge-home-human-drop {
+  --hill-x: 12%;
+  --hill-y: 20%;
+  background:
+    radial-gradient(circle at 16% 16%, color-mix(in srgb, var(--home-copper) 11%, transparent), transparent 24%),
+    linear-gradient(var(--home-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--home-grid) 1px, transparent 1px),
+    color-mix(in srgb, var(--home-accent) 6%, var(--home-surface));
+  background-size: auto, 18px 18px, 18px 18px, auto;
+}
+
+.knowledge-home-stone-hill svg {
   height: 100%;
   inset: 0;
   pointer-events: none;
@@ -6728,7 +6914,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   width: 100%;
 }
 
-.knowledge-home-human-hill svg path {
+.knowledge-home-stone-hill svg path {
   fill: none;
   stroke: color-mix(in srgb, var(--home-copper) 78%, var(--home-line));
   stroke-linecap: round;
@@ -6736,12 +6922,12 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   vector-effect: non-scaling-stroke;
 }
 
-.knowledge-home-human-hill svg .knowledge-home-human-hill-shadow {
+.knowledge-home-stone-hill svg .knowledge-home-stone-hill-shadow {
   opacity: 0.18;
   stroke-dasharray: 2 5;
 }
 
-.knowledge-home-human-hill-fragments span {
+.knowledge-home-stone-hill-fragments span {
   background: color-mix(in srgb, var(--home-surface) 82%, transparent);
   border: 1px solid var(--home-line);
   color: var(--home-muted);
@@ -6752,24 +6938,39 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   transform: rotate(-7deg);
 }
 
-.knowledge-home-human-hill-fragments span:first-child {
+.knowledge-home-stone-hill-fragments span:first-child {
   left: 30%;
   top: 63%;
 }
 
-.knowledge-home-human-hill-fragments span:nth-child(2) {
+.knowledge-home-stone-hill-fragments span:nth-child(2) {
   left: 54%;
   top: 38%;
   transform: rotate(6deg);
 }
 
-.knowledge-home-human-hill-fragments span:nth-child(3) {
+.knowledge-home-stone-hill-fragments span:nth-child(3) {
   left: 77%;
   top: 18%;
   transform: rotate(-12deg);
 }
 
-.knowledge-home-human-boulder {
+.knowledge-home-human-drop .knowledge-home-stone-hill-fragments span:first-child {
+  left: 28%;
+  top: 27%;
+}
+
+.knowledge-home-human-drop .knowledge-home-stone-hill-fragments span:nth-child(2) {
+  left: 52%;
+  top: 49%;
+}
+
+.knowledge-home-human-drop .knowledge-home-stone-hill-fragments span:nth-child(3) {
+  left: 76%;
+  top: 70%;
+}
+
+.knowledge-home-stone-boulder {
   background:
     radial-gradient(circle at 32% 29%, rgba(255, 255, 255, 0.42) 0 8%, transparent 9%),
     radial-gradient(circle at 66% 65%, rgba(42, 33, 28, 0.22) 0 12%, transparent 13%),
@@ -6793,22 +6994,22 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   z-index: 4;
 }
 
-.knowledge-home-human-boulder:focus-visible {
+.knowledge-home-stone-boulder:focus-visible {
   outline: 2px solid var(--home-accent);
   outline-offset: 3px;
 }
 
-.knowledge-home-human-hill.is-free .knowledge-home-human-boulder,
-.knowledge-home-human-hill.is-free .knowledge-home-human-pusher {
+.knowledge-home-stone-hill.is-free .knowledge-home-stone-boulder,
+.knowledge-home-stone-hill.is-free .knowledge-home-stone-pusher {
   transition: none;
 }
 
-.knowledge-home-human-hill.is-dragging .knowledge-home-human-boulder {
+.knowledge-home-stone-hill.is-dragging .knowledge-home-stone-boulder {
   cursor: grabbing;
   filter: brightness(1.08);
 }
 
-.knowledge-home-human-pusher {
+.knowledge-home-stone-pusher {
   height: 1.7rem;
   left: calc(var(--hill-x) - 7%);
   opacity: 0.72;
@@ -6821,7 +7022,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   z-index: 3;
 }
 
-.knowledge-home-human-pusher::before {
+.knowledge-home-stone-pusher::before {
   background: var(--home-accent);
   border-radius: 50%;
   content: "";
@@ -6832,9 +7033,9 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   width: 0.36rem;
 }
 
-.knowledge-home-human-pusher > i,
-.knowledge-home-human-pusher > i::before,
-.knowledge-home-human-pusher > i::after {
+.knowledge-home-stone-pusher > i,
+.knowledge-home-stone-pusher > i::before,
+.knowledge-home-stone-pusher > i::after {
   background: var(--home-accent);
   content: "";
   height: 1px;
@@ -6846,21 +7047,52 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   width: 0.75rem;
 }
 
-.knowledge-home-human-pusher > i::before {
+.knowledge-home-stone-pusher > b {
+  background: var(--home-accent-soft);
+  border: 1px solid color-mix(in srgb, var(--home-accent) 35%, var(--home-line));
+  border-radius: 999px;
+  color: var(--home-accent);
+  font-family: var(--font-mono);
+  font-size: 0.34rem;
+  font-weight: 800;
+  left: -0.34rem;
+  padding: 0.06rem 0.14rem;
+  position: absolute;
+  top: -0.18rem;
+}
+
+.knowledge-home-human-drop .knowledge-home-stone-pusher {
+  left: 5%;
+  top: 18%;
+  transform: translate(-50%, -50%) rotate(14deg);
+}
+
+.knowledge-home-human-drop.is-rolling .knowledge-home-stone-pusher {
+  animation: knowledge-home-human-shove 520ms ease-out both;
+  opacity: 0.72;
+}
+
+@keyframes knowledge-home-human-shove {
+  0%,
+  100% { transform: translate(-50%, -50%) rotate(14deg); }
+  45% { transform: translate(0.15rem, 0.08rem) rotate(24deg); }
+}
+
+.knowledge-home-stone-pusher > i::before {
   transform: rotate(-46deg);
   width: 0.68rem;
 }
 
-.knowledge-home-human-pusher > i::after {
+.knowledge-home-stone-pusher > i::after {
   transform: rotate(40deg);
   width: 0.62rem;
 }
 
-.knowledge-home-human-hill.is-rolling .knowledge-home-human-pusher {
+.knowledge-home-stone-hill.is-rolling .knowledge-home-stone-pusher {
   opacity: 0.18;
 }
 
-.knowledge-home-human-hill > p {
+.knowledge-home-stone-hill > p {
   bottom: 0.38rem;
   color: var(--home-muted);
   font-family: var(--font-serif);
@@ -6870,7 +7102,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   position: absolute;
 }
 
-.knowledge-home-human-hill > small {
+.knowledge-home-stone-hill > small {
   color: var(--home-copper);
   font-family: var(--font-mono);
   font-size: 0.39rem;
@@ -6941,183 +7173,6 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   font-family: var(--font-mono);
   font-size: 0.59rem;
   letter-spacing: 0.02em;
-}
-
-.knowledge-home-stone-course {
-  --stone-left: 12%;
-  --stone-top: 73%;
-  background:
-    linear-gradient(var(--home-grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--home-grid) 1px, transparent 1px),
-    color-mix(in srgb, var(--home-accent) 5%, var(--home-surface));
-  background-size: 18px 18px;
-  border: 1px solid var(--home-line);
-  border-radius: 0.7rem;
-  height: 11.2rem;
-  margin-top: 0.55rem;
-  overflow: hidden;
-  position: relative;
-  touch-action: pan-y;
-}
-
-.knowledge-home-stone-course::after {
-  color: var(--home-muted);
-  content: "PUSH / DRAG";
-  font-family: var(--font-mono);
-  font-size: 0.44rem;
-  letter-spacing: 0.08em;
-  position: absolute;
-  right: 0.5rem;
-  top: 0.4rem;
-}
-
-.knowledge-home-stone-course[data-stage="1"] {
-  --stone-left: 35%;
-  --stone-top: 56%;
-}
-
-.knowledge-home-stone-course[data-stage="2"] {
-  --stone-left: 58%;
-  --stone-top: 39%;
-}
-
-.knowledge-home-stone-course[data-stage="3"] {
-  --stone-left: 83%;
-  --stone-top: 22%;
-}
-
-.knowledge-home-stone-course svg {
-  height: 100%;
-  inset: 0;
-  overflow: visible;
-  pointer-events: none;
-  position: absolute;
-  width: 100%;
-}
-
-.knowledge-home-stone-course svg path {
-  fill: none;
-  stroke: color-mix(in srgb, var(--home-copper) 64%, var(--home-line));
-  stroke-dasharray: 3 4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 1.4;
-  vector-effect: non-scaling-stroke;
-}
-
-.knowledge-home-stone-stage {
-  align-items: center;
-  background: var(--home-surface);
-  border: 1px solid color-mix(in srgb, var(--home-accent) 32%, var(--home-line));
-  border-radius: 0.42rem;
-  color: var(--home-ink);
-  cursor: pointer;
-  display: grid;
-  height: 1.8rem;
-  justify-items: center;
-  padding: 0.12rem;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
-  width: 1.8rem;
-  z-index: 2;
-}
-
-.knowledge-home-stone-stage[data-stone-stage="0"] { left: 12%; top: 73%; }
-.knowledge-home-stone-stage[data-stone-stage="1"] { left: 35%; top: 56%; }
-.knowledge-home-stone-stage[data-stone-stage="2"] { left: 58%; top: 39%; }
-.knowledge-home-stone-stage[data-stone-stage="3"] { left: 83%; top: 22%; }
-
-.knowledge-home-stone-stage b {
-  color: var(--home-muted);
-  font-family: var(--font-mono);
-  font-size: 0.38rem;
-  line-height: 1;
-}
-
-.knowledge-home-stone-stage span {
-  color: var(--home-accent);
-  font-family: var(--font-serif);
-  font-size: 0.61rem;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.knowledge-home-stone-stage:hover,
-.knowledge-home-stone-stage[aria-pressed="true"] {
-  background: var(--home-accent-soft);
-  border-color: var(--home-accent);
-  transform: translate(-50%, -50%) scale(1.08);
-}
-
-.knowledge-home-stone {
-  background:
-    radial-gradient(circle at 34% 30%, rgba(255, 255, 255, 0.42) 0 8%, transparent 9%),
-    radial-gradient(circle at 67% 64%, rgba(42, 33, 28, 0.2) 0 11%, transparent 12%),
-    linear-gradient(145deg, #c69668, #8d5e43 62%, #644033);
-  border: 1px solid color-mix(in srgb, var(--home-copper) 65%, var(--home-line));
-  border-radius: 47% 53% 46% 54%;
-  box-shadow: 0 0.35rem 0.75rem rgba(42, 33, 28, 0.25);
-  cursor: grab;
-  height: 2rem;
-  left: var(--stone-left);
-  padding: 0;
-  position: absolute;
-  top: var(--stone-top);
-  touch-action: none;
-  transform: translate(-50%, -50%);
-  transition:
-    left 560ms cubic-bezier(0.25, 0.8, 0.25, 1),
-    top 560ms cubic-bezier(0.25, 0.8, 0.25, 1),
-    filter 180ms ease;
-  width: 2rem;
-  z-index: 4;
-}
-
-.knowledge-home-stone:hover {
-  filter: brightness(1.08);
-}
-
-.knowledge-home-stone:focus-visible {
-  outline: 2px solid var(--home-accent);
-  outline-offset: 3px;
-}
-
-.knowledge-home-stone-course.is-dragging .knowledge-home-stone {
-  cursor: grabbing;
-  transition: none;
-}
-
-.knowledge-home-stone-course.is-pushing .knowledge-home-stone {
-  animation: knowledge-home-stone-push 620ms ease-out;
-}
-
-.knowledge-home-stone-course.is-falling .knowledge-home-stone {
-  animation: knowledge-home-stone-fall 620ms ease-in;
-}
-
-.knowledge-home-stone-status {
-  bottom: 0.38rem;
-  color: var(--home-muted);
-  font-family: var(--font-serif) !important;
-  font-size: 0.53rem !important;
-  left: 0.55rem;
-  line-height: 1.25 !important;
-  margin: 0 !important;
-  max-width: calc(100% - 1.1rem) !important;
-  position: absolute;
-}
-
-@keyframes knowledge-home-stone-push {
-  0% { transform: translate(-50%, -50%) rotate(0); }
-  46% { transform: translate(-50%, calc(-50% - 0.5rem)) rotate(130deg); }
-  100% { transform: translate(-50%, -50%) rotate(250deg); }
-}
-
-@keyframes knowledge-home-stone-fall {
-  0% { transform: translate(-50%, -50%) rotate(0); }
-  42% { transform: translate(-50%, calc(-50% - 0.7rem)) rotate(-150deg); }
-  100% { transform: translate(-50%, -50%) rotate(-330deg); }
 }
 
 .knowledge-home-ai-essay-copy,
@@ -7253,7 +7308,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   background: linear-gradient(90deg, var(--home-copper), color-mix(in srgb, var(--home-copper) 18%, var(--home-line)));
   height: 1px;
   left: 0;
-  opacity: 0;
+  opacity: 1;
   position: absolute;
   top: 50%;
   transition: opacity 180ms ease, width 180ms ease;
@@ -7262,14 +7317,13 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 }
 
 .knowledge-home-transition-track::before {
-  animation: knowledge-home-route-travel 5.2s ease-in-out infinite;
   background: var(--home-copper);
   border: 2px solid var(--home-paper);
   border-radius: 50%;
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--home-copper) 42%, var(--home-line));
   content: "";
   height: 0.35rem;
-  left: 0;
+  left: var(--route-progress);
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -7292,13 +7346,12 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   outline-offset: 0.2rem;
 }
 
-.knowledge-home-transition-track.is-controlled::before {
-  animation: none;
-  left: var(--route-progress);
-}
-
-.knowledge-home-transition-track.is-controlled > i {
-  opacity: 1;
+.knowledge-home-transition-track.is-paused::before {
+  background: var(--home-surface);
+  border-color: var(--home-copper);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--home-copper) 52%, var(--home-line)),
+    0 0 0 0.25rem color-mix(in srgb, var(--home-copper) 10%, transparent);
 }
 
 .knowledge-home-transition + .knowledge-home-topics,
@@ -7307,15 +7360,6 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-home-transition + .knowledge-home-grid,
 .knowledge-home-transition + .knowledge-home-ai-essay {
   margin-top: 0;
-}
-
-@keyframes knowledge-home-route-travel {
-  0%,
-  8% { left: 0; }
-  48%,
-  58% { left: 58%; }
-  92%,
-  100% { left: 100%; }
 }
 
 .knowledge-home-topics {
@@ -8022,10 +8066,10 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   .knowledge-home-recent li,
   .knowledge-home-recent li:first-child::before,
   .knowledge-home-transition-track::before,
-  .knowledge-home-stone-course.is-pushing .knowledge-home-stone,
-  .knowledge-home-stone-course.is-falling .knowledge-home-stone,
   .knowledge-home-hero-orbit::before,
   .knowledge-home-hero-orbit > i,
+  .knowledge-home-orbit-star,
+  .knowledge-home-human-drop.is-rolling .knowledge-home-stone-pusher,
   .knowledge-home-type-motion {
     animation: none;
   }
@@ -8180,7 +8224,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
     display: none;
   }
 
-  .knowledge-home-stone-course {
+  .knowledge-home-stone-hill {
     height: 10.5rem;
   }
 
