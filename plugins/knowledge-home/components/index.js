@@ -6268,6 +6268,321 @@ body[data-slug^="explore/"] .center > article {
   color: #91c5ba;
 }
 
+/* Comparative Atlas motion pass: each chapter gets its own visual rhythm. */
+.knowledge-comparative-page {
+  gap: clamp(2.8rem, 6vw, 5.4rem);
+}
+
+.knowledge-comparative-hero {
+  box-shadow: 0 24px 70px rgba(7, 25, 23, 0.16);
+}
+
+.knowledge-comparative-hero::before {
+  animation: comparative-orbit-drift 18s linear infinite;
+}
+
+.knowledge-comparative-hero::after {
+  animation: comparative-orbit-drift 12s linear infinite reverse;
+}
+
+.knowledge-comparative-orbit {
+  animation: comparative-word-breathe 8s ease-in-out infinite;
+}
+
+.knowledge-comparative-hero-aside strong {
+  display: inline-block;
+  text-shadow: 0 0 32px color-mix(in srgb, var(--atlas-sand) 24%, transparent);
+}
+
+.knowledge-comparative-compass a {
+  overflow: hidden;
+  position: relative;
+  transition: color 220ms ease, padding-left 220ms ease;
+}
+
+.knowledge-comparative-compass a::after {
+  background: var(--atlas-panel-accent);
+  bottom: 0;
+  content: "";
+  height: 2px;
+  left: 0;
+  position: absolute;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 280ms ease;
+  width: 100%;
+}
+
+.knowledge-comparative-compass a:hover {
+  padding-left: 0.35rem;
+}
+
+.knowledge-comparative-compass a:hover::after {
+  transform: scaleX(1);
+}
+
+.knowledge-comparative-section-head {
+  border-bottom: 1px solid color-mix(in srgb, var(--atlas-sea) 20%, var(--lightgray));
+  padding-bottom: 0.85rem;
+}
+
+.knowledge-comparative-section-head > div > span {
+  display: inline-flex;
+  gap: 0.45rem;
+}
+
+.knowledge-comparative-section-head > div > span::before {
+  background: currentColor;
+  border-radius: 50%;
+  content: "";
+  height: 0.45rem;
+  margin-top: 0.22rem;
+  width: 0.45rem;
+}
+
+.knowledge-comparative-handbook,
+.knowledge-comparative-journal,
+.knowledge-comparative-field,
+.knowledge-comparative-methodologies,
+.knowledge-comparative-random,
+.knowledge-comparative-latest-list {
+  box-shadow: 0 18px 52px rgba(12, 39, 35, 0.075);
+}
+
+.knowledge-comparative-handbook {
+  isolation: isolate;
+  position: relative;
+  transition: border-color 260ms ease, box-shadow 260ms ease, transform 260ms ease;
+}
+
+.knowledge-comparative-handbook::after {
+  border: 1px solid var(--atlas-panel-border);
+  border-radius: 50%;
+  content: "";
+  height: 13rem;
+  position: absolute;
+  right: -6rem;
+  top: -6rem;
+  transition: transform 700ms cubic-bezier(.2,.8,.2,1);
+  width: 13rem;
+  z-index: -1;
+}
+
+.knowledge-comparative-handbook:hover {
+  box-shadow: 0 24px 64px rgba(12, 39, 35, 0.16);
+  transform: translateY(-4px);
+}
+
+.knowledge-comparative-handbook:hover::after {
+  transform: scale(1.28) translate(-8%, 8%);
+}
+
+.knowledge-comparative-journal {
+  transition: border-color 250ms ease, box-shadow 250ms ease;
+}
+
+.knowledge-comparative-journal:hover {
+  border-color: color-mix(in srgb, var(--atlas-copper) 64%, var(--lightgray));
+  box-shadow: 0 24px 64px color-mix(in srgb, var(--atlas-copper) 12%, transparent);
+}
+
+.knowledge-comparative-journal-item:not([hidden]),
+.knowledge-comparative-random-item:not([hidden]),
+.knowledge-comparative-country:not([hidden]) {
+  animation: comparative-reveal 520ms cubic-bezier(.2,.75,.2,1) both;
+}
+
+.knowledge-comparative-journal button,
+.knowledge-comparative-field button,
+.knowledge-comparative-section-head button {
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.knowledge-comparative-journal button:hover,
+.knowledge-comparative-field button:hover,
+.knowledge-comparative-section-head button:hover {
+  transform: rotate(-2deg) translateY(-2px);
+}
+
+.knowledge-comparative-field {
+  position: relative;
+  transition: border-color 260ms ease, box-shadow 260ms ease, transform 260ms ease;
+}
+
+.knowledge-comparative-field::before {
+  background: linear-gradient(90deg, var(--atlas-sea), var(--atlas-copper));
+  content: "";
+  height: 2px;
+  left: 1.5rem;
+  position: absolute;
+  right: 1.5rem;
+  top: 0;
+  transform: scaleX(.18);
+  transform-origin: left;
+  transition: transform 500ms cubic-bezier(.2,.75,.2,1);
+}
+
+.knowledge-comparative-field:hover {
+  border-color: color-mix(in srgb, var(--atlas-sea) 45%, var(--lightgray));
+  box-shadow: 0 24px 64px rgba(12, 39, 35, 0.11);
+  transform: translateY(-3px);
+}
+
+.knowledge-comparative-field:hover::before {
+  transform: scaleX(1);
+}
+
+.knowledge-comparative-overview-row,
+.knowledge-comparative-organization,
+.knowledge-comparative-theme-row {
+  transition: background 200ms ease, padding-left 200ms ease, transform 200ms ease;
+}
+
+.knowledge-comparative-overview-row:hover,
+.knowledge-comparative-organization:hover,
+.knowledge-comparative-theme-row:hover {
+  background: color-mix(in srgb, var(--atlas-sea) 6%, transparent);
+  padding-left: 0.55rem;
+}
+
+.knowledge-comparative-overview-list nav a,
+.knowledge-comparative-theme-list nav a,
+.knowledge-comparative-organization-tools > nav a,
+.knowledge-comparative-method-links a {
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.knowledge-comparative-overview-list nav a:hover,
+.knowledge-comparative-theme-list nav a:hover,
+.knowledge-comparative-organization-tools > nav a:hover,
+.knowledge-comparative-method-links a:hover {
+  transform: translateX(3px);
+}
+
+.knowledge-comparative-country {
+  overflow: hidden;
+  position: relative;
+  transition: border-color 240ms ease, box-shadow 240ms ease, transform 240ms ease;
+}
+
+.knowledge-comparative-country::after {
+  background: radial-gradient(circle, color-mix(in srgb, var(--atlas-copper) 25%, transparent), transparent 68%);
+  content: "";
+  height: 8rem;
+  opacity: 0;
+  position: absolute;
+  right: -3rem;
+  top: -3rem;
+  transform: scale(.6);
+  transition: opacity 300ms ease, transform 500ms ease;
+  width: 8rem;
+}
+
+.knowledge-comparative-country:hover {
+  box-shadow: 0 16px 34px rgba(12, 39, 35, 0.13);
+  transform: translateY(-5px) rotate(-.35deg);
+}
+
+.knowledge-comparative-country:hover::after {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.knowledge-comparative-method-grid {
+  perspective: 1000px;
+}
+
+.knowledge-comparative-method {
+  overflow: hidden;
+  position: relative;
+}
+
+.knowledge-comparative-method::after {
+  background: linear-gradient(115deg, transparent 28%, rgba(255,255,255,.12) 48%, transparent 68%);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-120%);
+  transition: transform 650ms ease;
+}
+
+.knowledge-comparative-method:hover {
+  transform: translateY(-5px) rotateX(1.5deg);
+}
+
+.knowledge-comparative-method:hover::after {
+  transform: translateX(120%);
+}
+
+.knowledge-comparative-random {
+  --random-tone: var(--atlas-sea);
+  background:
+    radial-gradient(circle at 100% 0, color-mix(in srgb, var(--random-tone) 15%, transparent), transparent 38%),
+    var(--light);
+  border-radius: 16px;
+  transition: border-color 230ms ease, box-shadow 230ms ease, transform 230ms ease;
+}
+
+.knowledge-comparative-random:nth-child(even) { --random-tone: var(--atlas-copper); }
+.knowledge-comparative-random:nth-child(3n) { --random-tone: #718b74; }
+
+.knowledge-comparative-random:hover {
+  border-color: color-mix(in srgb, var(--random-tone) 52%, var(--lightgray));
+  box-shadow: 0 18px 42px color-mix(in srgb, var(--random-tone) 13%, transparent);
+  transform: translateY(-5px);
+}
+
+.knowledge-comparative-latest-list > a {
+  position: relative;
+  transition: background 190ms ease, padding-left 190ms ease;
+}
+
+.knowledge-comparative-latest-list > a::before {
+  background: var(--atlas-copper);
+  bottom: .7rem;
+  content: "";
+  left: 0;
+  position: absolute;
+  top: .7rem;
+  transform: scaleY(0);
+  transition: transform 220ms ease;
+  width: 2px;
+}
+
+.knowledge-comparative-latest-list > a:hover {
+  background: color-mix(in srgb, var(--atlas-sea) 6%, transparent);
+  padding-left: 1.45rem;
+}
+
+.knowledge-comparative-latest-list > a:hover::before {
+  transform: scaleY(1);
+}
+
+@keyframes comparative-orbit-drift {
+  50% { transform: translate(-1.2rem, 1rem) rotate(8deg); }
+}
+
+@keyframes comparative-word-breathe {
+  50% { letter-spacing: -0.045em; opacity: .72; }
+}
+
+@keyframes comparative-reveal {
+  from { filter: blur(5px); opacity: 0; transform: translateY(12px); }
+  to { filter: blur(0); opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .knowledge-comparative-page *,
+  .knowledge-comparative-page *::before,
+  .knowledge-comparative-page *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
+
 .knowledge-methods-page {
   --methods-panel-bg: linear-gradient(145deg, #f0f7f8, #eaf1f3 45%, #e4eef1);
   --methods-panel-fg: #1d2f36;
