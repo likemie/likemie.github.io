@@ -14,6 +14,22 @@ configuration:
     - "**/templates/**"
     - templater
     - "**/templater/**"
+    - raw
+    - "**/raw/**"
+    - schema
+    - "**/schema/**"
+    - "Tag Index"
+    - "**/Tag Index/**"
+    - AGENTS.md
+    - "**/AGENTS.md"
+    - CLAUDE.md
+    - "**/CLAUDE.md"
+    - GEMINI.md
+    - "**/GEMINI.md"
+    - vault-schema.md
+    - "**/vault-schema.md"
+    - vault-use.md
+    - "**/vault-use.md"
     - .obsidian
     - information
     - scratch
