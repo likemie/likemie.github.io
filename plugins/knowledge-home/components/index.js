@@ -1931,18 +1931,19 @@ function KnowledgeHome(userOpts = {}) {
             "一个由论文、概念、理论、论证与 AI 劳动痕迹搭起来的开放书房。沿着问题进入，顺着链接继续，把分散的知识读成一条研究路径。",
           ),
           h(
-            "div",
-            { class: "knowledge-home-actions" },
+            "a",
+            {
+              class: "knowledge-home-today knowledge-home-today-inline",
+              href: todayConcept ? hrefFor(todayConcept) : hrefFor("wiki/concepts"),
+            },
+            h("span", null, "TODAY'S SIGNAL · 今日信号"),
             h(
-              "a",
-              { class: "knowledge-home-button", href: "#knowledge-home-topics-title" },
-              "从问题进入",
+              "strong",
+              { id: "knowledge-home-signal-title" },
+              todayConcept ? titleFor(todayConcept) : "进入知识库",
             ),
-            h(
-              "a",
-              { class: "knowledge-home-button ghost", href: hrefFor("wiki/research-map") },
-              "查看研究地图",
-            ),
+            h("small", null, `${todayKey} · 从 ${formatCount(concepts.length)} 个概念里抽取`),
+            h("em", null, "打开条目 ↗"),
           ),
         ),
         h(
@@ -1951,10 +1952,19 @@ function KnowledgeHome(userOpts = {}) {
           h("span", null, "THE LIBRARY / 2026"),
           h(
             "div",
-            { class: "knowledge-home-hero-orbit", "aria-hidden": "true" },
-            h("i", null),
-            h("i", null),
-            h("b", null, "↗"),
+            { class: "knowledge-home-hero-orbit" },
+            h("i", { class: "orbit-outer", "aria-hidden": "true" }),
+            h("i", { class: "orbit-inner", "aria-hidden": "true" }),
+            h(
+              "a",
+              {
+                class: "knowledge-home-hero-orbit-link",
+                href: hrefFor("wiki/research-map"),
+                "aria-label": "打开研究地图",
+              },
+              h("b", null, "↗"),
+              h("span", null, "研究地图"),
+            ),
           ),
           h(
             "div",
@@ -1963,33 +1973,22 @@ function KnowledgeHome(userOpts = {}) {
             h("span", null, "connected notes"),
           ),
           h("p", null, "每个条目都是一个入口，每条链接都是一条尚未走完的路径。"),
-        ),
-      ),
-      h(
-        "section",
-        { class: "knowledge-home-signal", "aria-labelledby": "knowledge-home-signal-title" },
-        h(
-          "a",
-          {
-            class: "knowledge-home-today",
-            href: todayConcept ? hrefFor(todayConcept) : hrefFor("wiki/concepts"),
-          },
-          h("span", null, "TODAY'S SIGNAL · 今日信号"),
           h(
-            "strong",
-            { id: "knowledge-home-signal-title" },
-            todayConcept ? titleFor(todayConcept) : "进入知识库",
+            "div",
+            {
+              class: "knowledge-home-metrics knowledge-home-hero-metrics",
+              "aria-label": "知识库统计",
+            },
+            h("div", null, h("span", null, "条目"), h("strong", null, formatCount(pages.length))),
+            h("div", null, h("span", null, "Wiki"), h("strong", null, formatCount(wikiCount))),
+            h(
+              "div",
+              null,
+              h("span", null, "概念"),
+              h("strong", null, formatCount(concepts.length)),
+            ),
+            h("div", null, h("span", null, "链接"), h("strong", null, formatCount(totalLinks))),
           ),
-          h("small", null, `${todayKey} · 从 ${formatCount(concepts.length)} 个概念里抽取`),
-          h("em", null, "打开条目 ↗"),
-        ),
-        h(
-          "div",
-          { class: "knowledge-home-metrics", "aria-label": "知识库统计" },
-          h("div", null, h("span", null, "条目"), h("strong", null, formatCount(pages.length))),
-          h("div", null, h("span", null, "Wiki"), h("strong", null, formatCount(wikiCount))),
-          h("div", null, h("span", null, "概念"), h("strong", null, formatCount(concepts.length))),
-          h("div", null, h("span", null, "链接"), h("strong", null, formatCount(totalLinks))),
         ),
       ),
       h(
@@ -2100,8 +2099,18 @@ function KnowledgeHome(userOpts = {}) {
           homeEntryTypes.map((entry, index) =>
             h(
               "article",
-              { class: `knowledge-home-type tone-${index % 4}` },
+              {
+                class: `knowledge-home-type tone-${index % 4}`,
+                style: `--type-seed:${index};--type-duration:${8 + index * 0.6}s`,
+              },
               h("span", null, String(index + 1).padStart(2, "0")),
+              h(
+                "div",
+                { class: "knowledge-home-type-motion", "aria-hidden": "true" },
+                h("i", null),
+                h("i", null),
+                h("i", null),
+              ),
               h(
                 "div",
                 { class: "knowledge-home-type-main" },
@@ -2317,6 +2326,15 @@ function KnowledgeHome(userOpts = {}) {
               h("i", null, "比较教育"),
               h("i", null, "课堂教学"),
               h("i", null, "证据与治理"),
+            ),
+            h(
+              "div",
+              { class: "knowledge-home-human-orbit", "aria-hidden": "true" },
+              h("span", null, "伍"),
+              h("i", { class: "orbit-one" }, h("b", null, "比较")),
+              h("i", { class: "orbit-two" }, h("b", null, "课堂")),
+              h("i", { class: "orbit-three" }, h("b", null, "证据")),
+              h("small", null, "ASK · TRACE · CONNECT"),
             ),
           ),
           h(
@@ -2537,8 +2555,39 @@ function bindKnowledgeHomeStone() {
   })
 }
 
+function bindKnowledgeHomeTypeMotion() {
+  const cards = Array.from(document.querySelectorAll(".knowledge-home-type"))
+  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+  for (const card of cards) {
+    if (card.dataset.motionBound === "true") continue
+    card.dataset.motionBound = "true"
+    if (reduceMotion) continue
+
+    card.addEventListener("pointermove", (event) => {
+      if (event.pointerType === "touch") return
+      const rect = card.getBoundingClientRect()
+      const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width))
+      const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height))
+      card.style.setProperty("--spot-x", x * 100 + "%")
+      card.style.setProperty("--spot-y", y * 100 + "%")
+      card.style.setProperty("--tilt-x", (x - 0.5) * 3.2 + "deg")
+      card.style.setProperty("--tilt-y", (0.5 - y) * 3.2 + "deg")
+      card.classList.add("is-tilting")
+    })
+
+    card.addEventListener("pointerleave", () => {
+      card.classList.remove("is-tilting")
+      card.style.removeProperty("--spot-x")
+      card.style.removeProperty("--spot-y")
+      card.style.removeProperty("--tilt-x")
+      card.style.removeProperty("--tilt-y")
+    })
+  }
+}
+
 bindKnowledgeHomeDragRails()
 bindKnowledgeHomeStone()
+bindKnowledgeHomeTypeMotion()
 
 function rotateMethodsRandomCards() {
   const cards = Array.from(document.querySelectorAll("[data-method-random-card]"))
@@ -5970,9 +6019,9 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   border: 1px solid var(--home-line);
   border-radius: 1.15rem;
   display: grid;
-  gap: 1rem;
-  grid-template-columns: minmax(0, 1.18fr) minmax(10rem, 0.82fr);
-  min-height: 22rem;
+  gap: clamp(1rem, 3vw, 2rem);
+  grid-template-columns: minmax(0, 1.08fr) minmax(15rem, 0.92fr);
+  min-height: 27rem;
   overflow: hidden;
   padding: clamp(1.15rem, 4vw, 1.8rem);
   position: relative;
@@ -5994,6 +6043,11 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-home-hero-aside {
   position: relative;
   z-index: 1;
+}
+
+.knowledge-home-copy {
+  display: flex;
+  flex-direction: column;
 }
 
 .knowledge-home-kicker {
@@ -6025,47 +6079,24 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   max-width: 22rem;
 }
 
-.knowledge-home-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  margin-top: 1.15rem;
-}
-
-.knowledge-home-button {
-  align-items: center;
-  background: var(--home-accent);
-  border: 1px solid var(--home-accent);
-  border-radius: 999px;
-  color: var(--home-paper) !important;
-  display: inline-flex;
-  font-size: 0.78rem;
-  font-weight: 700;
-  line-height: 1.2;
-  padding: 0.62rem 0.85rem;
-  text-decoration: none;
-  transition: transform 180ms ease, filter 180ms ease;
-}
-
-.knowledge-home-button:hover {
-  filter: brightness(1.08);
-  text-decoration: none;
-  transform: translateY(-2px);
-}
-
-.knowledge-home-button.ghost {
-  background: transparent;
-  color: var(--home-accent) !important;
-}
-
 .knowledge-home-hero-aside {
   align-self: stretch;
   border-left: 1px solid var(--home-line);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 18rem;
+  display: grid;
+  gap: 0.45rem 0.75rem;
+  grid-template-areas:
+    "eyebrow eyebrow"
+    "count orbit"
+    "copy orbit"
+    "metrics metrics";
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto auto 1fr;
+  min-height: 0;
   padding-left: 1rem;
+}
+
+.knowledge-home-hero-aside > span {
+  grid-area: eyebrow;
 }
 
 .knowledge-home-hero-aside > span,
@@ -6083,50 +6114,127 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   border: 1px solid var(--home-line);
   border-radius: 50%;
   display: flex;
+  grid-area: orbit;
   justify-content: center;
-  margin: 0.7rem auto 0.5rem;
-  max-width: 9rem;
+  margin: 0.2rem 0 0;
+  overflow: visible;
   position: relative;
-  width: 72%;
+  width: clamp(6.8rem, 12vw, 8.8rem);
 }
 
-.knowledge-home-hero-orbit::before,
-.knowledge-home-hero-orbit::after {
-  border: 1px solid var(--home-line);
+.knowledge-home-hero-orbit::before {
+  background: radial-gradient(circle, color-mix(in srgb, var(--home-accent) 12%, transparent), transparent 66%);
   border-radius: 50%;
   content: "";
-  inset: 17%;
+  inset: -15%;
+  opacity: 0.45;
   position: absolute;
-}
-
-.knowledge-home-hero-orbit::after {
-  inset: 38%;
+  animation: knowledge-home-orbit-breathe 4.8s ease-in-out infinite;
 }
 
 .knowledge-home-hero-orbit i {
-  background: var(--home-copper);
+  border: 1px solid var(--home-line);
   border-radius: 50%;
-  height: 0.45rem;
   position: absolute;
-  width: 0.45rem;
 }
 
-.knowledge-home-hero-orbit i:first-child {
-  right: 7%;
-  top: 23%;
+.knowledge-home-hero-orbit i::after {
+  background: var(--home-copper);
+  border: 2px solid var(--home-surface);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--home-copper) 12%, transparent);
+  content: "";
+  height: 0.48rem;
+  left: 50%;
+  position: absolute;
+  top: -0.31rem;
+  transform: translateX(-50%);
+  width: 0.48rem;
 }
 
-.knowledge-home-hero-orbit i:nth-child(2) {
-  bottom: 13%;
-  left: 19%;
+.knowledge-home-hero-orbit .orbit-outer {
+  animation: knowledge-home-orbit-spin 10s linear infinite;
+  inset: 16%;
 }
 
-.knowledge-home-hero-orbit b {
+.knowledge-home-hero-orbit .orbit-inner {
+  animation: knowledge-home-orbit-spin 6.8s linear infinite reverse;
+  inset: 35%;
+}
+
+.knowledge-home-hero-orbit-link {
+  align-items: center;
+  background: color-mix(in srgb, var(--home-surface) 88%, transparent);
+  border: 1px solid var(--home-line);
+  border-radius: 50%;
+  display: flex;
+  height: 2.7rem;
+  justify-content: center;
+  position: relative;
+  text-decoration: none;
+  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+  width: 2.7rem;
+  z-index: 2;
+}
+
+.knowledge-home-hero-orbit-link:hover {
+  background: var(--home-accent-soft);
+  border-color: var(--home-accent);
+  text-decoration: none;
+  transform: scale(1.08);
+}
+
+.knowledge-home-hero-orbit-link b {
   color: var(--home-accent);
   font-size: 1.25rem;
   font-weight: 400;
-  position: relative;
-  z-index: 1;
+  line-height: 1;
+}
+
+.knowledge-home-hero-orbit-link span {
+  background: var(--home-ink);
+  border-radius: 999px;
+  color: var(--home-paper);
+  font-size: 0.58rem;
+  font-weight: 700;
+  left: 50%;
+  opacity: 0;
+  padding: 0.28rem 0.42rem;
+  pointer-events: none;
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  transform: translate(-50%, -0.2rem);
+  transition: opacity 160ms ease, transform 160ms ease;
+  white-space: nowrap;
+}
+
+.knowledge-home-hero-orbit-link:hover span,
+.knowledge-home-hero-orbit-link:focus-visible span {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@keyframes knowledge-home-orbit-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes knowledge-home-orbit-breathe {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.94);
+  }
+  50% {
+    opacity: 0.58;
+    transform: scale(1.04);
+  }
+}
+
+.knowledge-home-hero-aside-count {
+  align-self: end;
+  grid-area: count;
 }
 
 .knowledge-home-hero-aside-count strong {
@@ -6142,15 +6250,9 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-home-hero-aside p {
   color: var(--home-muted);
   font-size: 0.76rem;
+  grid-area: copy;
   line-height: 1.55;
-  margin: 0.6rem 0 0;
-}
-
-.knowledge-home-signal {
-  display: grid;
-  gap: 0.8rem;
-  grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.72fr);
-  margin-top: 0.8rem;
+  margin: 0;
 }
 
 .knowledge-home-today {
@@ -6164,6 +6266,26 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   position: relative;
   text-decoration: none;
   transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.knowledge-home-today-inline {
+  margin-top: auto;
+  max-width: 22rem;
+  overflow: hidden;
+}
+
+.knowledge-home-today-inline::after {
+  background: linear-gradient(100deg, transparent, color-mix(in srgb, var(--home-accent) 12%, transparent), transparent);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-110%);
+  transition: transform 540ms ease;
+}
+
+.knowledge-home-today-inline:hover::after {
+  transform: translateX(110%);
 }
 
 .knowledge-home-today:hover {
@@ -6240,6 +6362,22 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   line-height: 1;
 }
 
+.knowledge-home-hero-metrics {
+  align-self: end;
+  background: color-mix(in srgb, var(--home-surface) 72%, transparent);
+  grid-area: metrics;
+  margin-top: 0.55rem;
+  width: 100%;
+}
+
+.knowledge-home-hero-metrics div {
+  padding: 0.48rem 0.55rem;
+}
+
+.knowledge-home-hero-metrics strong {
+  font-size: clamp(0.95rem, 2vw, 1.12rem);
+}
+
 .knowledge-home-ai-essay {
   background:
     radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--home-copper) 16%, transparent), transparent 32%),
@@ -6293,15 +6431,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 }
 
 .knowledge-home-ai-profile-head::after {
-  bottom: -0.55rem;
-  color: color-mix(in srgb, var(--home-accent) 8%, transparent);
-  content: "伍";
-  font-family: var(--font-serif);
-  font-size: 7rem;
-  font-weight: 700;
-  line-height: 1;
-  position: absolute;
-  right: 0.1rem;
+  display: none;
 }
 
 .knowledge-home-ai-profile-index {
@@ -6334,6 +6464,118 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   font-size: 0.55rem;
   font-style: normal;
   padding: 0.2rem 0.35rem;
+}
+
+.knowledge-home-human-orbit {
+  aspect-ratio: 1;
+  margin: 1.15rem auto 1.5rem;
+  max-width: 11rem;
+  position: relative;
+  width: min(92%, 11rem);
+}
+
+.knowledge-home-human-orbit::before,
+.knowledge-home-human-orbit::after {
+  background: linear-gradient(90deg, transparent, var(--home-line), transparent);
+  content: "";
+  left: 5%;
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  height: 1px;
+}
+
+.knowledge-home-human-orbit::after {
+  transform: rotate(90deg);
+}
+
+.knowledge-home-human-orbit > span {
+  align-items: center;
+  background: color-mix(in srgb, var(--home-copper) 12%, var(--home-surface));
+  border: 1px solid color-mix(in srgb, var(--home-copper) 48%, var(--home-line));
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 0.55rem color-mix(in srgb, var(--home-copper) 6%, transparent),
+    0 0.55rem 1.4rem color-mix(in srgb, var(--home-copper) 13%, transparent);
+  color: var(--home-copper);
+  display: flex;
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  height: 3.1rem;
+  justify-content: center;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 3.1rem;
+  z-index: 3;
+}
+
+.knowledge-home-human-orbit > i {
+  --orbit-direction: normal;
+  --orbit-duration: 13s;
+  animation: knowledge-home-human-spin var(--orbit-duration) linear infinite;
+  animation-direction: var(--orbit-direction);
+  border: 1px solid color-mix(in srgb, var(--home-accent) 24%, var(--home-line));
+  border-radius: 50%;
+  inset: 5%;
+  position: absolute;
+}
+
+.knowledge-home-human-orbit > i.orbit-two {
+  --orbit-direction: reverse;
+  --orbit-duration: 9s;
+  inset: 19%;
+}
+
+.knowledge-home-human-orbit > i.orbit-three {
+  --orbit-duration: 6.5s;
+  border-style: dashed;
+  inset: 32%;
+}
+
+.knowledge-home-human-orbit > i > b {
+  animation: knowledge-home-human-counter-spin var(--orbit-duration) linear infinite;
+  animation-direction: var(--orbit-direction);
+  background: var(--home-surface);
+  border: 1px solid color-mix(in srgb, var(--home-accent) 32%, var(--home-line));
+  border-radius: 999px;
+  color: var(--home-accent);
+  font-family: var(--font-serif);
+  font-size: 0.48rem;
+  font-style: normal;
+  font-weight: 700;
+  left: 50%;
+  padding: 0.13rem 0.28rem;
+  position: absolute;
+  top: -0.46rem;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.knowledge-home-human-orbit > small {
+  bottom: -1.15rem;
+  color: var(--home-muted);
+  font-family: var(--font-mono);
+  font-size: 0.42rem;
+  left: 50%;
+  letter-spacing: 0.08em;
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.knowledge-home-human-orbit:hover > i,
+.knowledge-home-human-orbit:hover > i > b {
+  animation-play-state: paused;
+}
+
+@keyframes knowledge-home-human-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes knowledge-home-human-counter-spin {
+  to { transform: translateX(-50%) rotate(-360deg); }
 }
 
 .knowledge-home-ai-essay-head > span,
@@ -6663,7 +6905,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   display: grid;
   gap: 0.6rem;
   grid-template-columns: auto minmax(2rem, 1fr) auto;
-  margin: 1.65rem 0.15rem 0.85rem;
+  margin: 2.7rem 0.15rem 1.35rem;
 }
 
 .knowledge-home-transition > span,
@@ -6927,7 +7169,16 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 
 .knowledge-home-type {
   --type-tone: var(--home-accent);
+  --spot-x: 84%;
+  --spot-y: 18%;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
   background:
+    radial-gradient(
+      circle at var(--spot-x) var(--spot-y),
+      color-mix(in srgb, var(--type-tone) 17%, transparent),
+      transparent 28%
+    ),
     linear-gradient(145deg, color-mix(in srgb, var(--type-tone) 9%, var(--home-surface)), transparent 68%),
     var(--home-surface);
   border: 1px solid color-mix(in srgb, var(--type-tone) 28%, var(--home-line));
@@ -6939,7 +7190,27 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   overflow: hidden;
   padding: 0.55rem 0.6rem 0.5rem;
   position: relative;
-  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  transform: perspective(50rem) rotateX(var(--tilt-y)) rotateY(var(--tilt-x));
+  transform-style: preserve-3d;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 160ms ease;
+  will-change: transform;
+}
+
+.knowledge-home-type::before {
+  background: linear-gradient(
+    108deg,
+    transparent 24%,
+    color-mix(in srgb, var(--type-tone) 14%, transparent) 47%,
+    color-mix(in srgb, var(--home-ink) 8%, transparent) 50%,
+    transparent 74%
+  );
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-125%);
+  transition: transform 720ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  z-index: 0;
 }
 
 .knowledge-home-type::after {
@@ -6981,7 +7252,12 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-home-type:has(a:hover) {
   border-color: var(--type-tone);
   box-shadow: 0 0.55rem 1.4rem color-mix(in srgb, var(--type-tone) 9%, transparent);
-  transform: translateY(-2px);
+  transform: perspective(50rem) rotateX(var(--tilt-y)) rotateY(var(--tilt-x)) translateY(-0.12rem);
+}
+
+.knowledge-home-type:hover::before,
+.knowledge-home-type:focus-within::before {
+  transform: translateX(125%);
 }
 
 .knowledge-home-type > span {
@@ -6992,6 +7268,62 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   padding-top: 0.12rem;
   position: relative;
   z-index: 1;
+}
+
+.knowledge-home-type-motion {
+  animation: knowledge-home-type-orbit var(--type-duration) linear infinite;
+  border: 1px solid color-mix(in srgb, var(--type-tone) 26%, transparent);
+  border-radius: 50%;
+  height: 2.8rem;
+  pointer-events: none;
+  position: absolute;
+  right: 0.42rem;
+  top: 0.35rem;
+  width: 2.8rem;
+  z-index: 1;
+}
+
+.knowledge-home-type-motion::before {
+  border: 1px dashed color-mix(in srgb, var(--type-tone) 20%, transparent);
+  border-radius: 50%;
+  content: "";
+  inset: 24%;
+  position: absolute;
+}
+
+.knowledge-home-type-motion i {
+  background: var(--type-tone);
+  border: 1px solid var(--home-surface);
+  border-radius: 50%;
+  height: 0.28rem;
+  left: 50%;
+  position: absolute;
+  top: -0.14rem;
+  transform: translateX(-50%);
+  width: 0.28rem;
+}
+
+.knowledge-home-type-motion i:nth-child(2) {
+  left: auto;
+  right: 8%;
+  top: 70%;
+}
+
+.knowledge-home-type-motion i:nth-child(3) {
+  bottom: 11%;
+  left: 12%;
+  opacity: 0.55;
+  top: auto;
+}
+
+.knowledge-home-type:hover .knowledge-home-type-motion,
+.knowledge-home-type:focus-within .knowledge-home-type-motion {
+  animation-duration: 2.8s;
+  filter: drop-shadow(0 0 0.35rem color-mix(in srgb, var(--type-tone) 38%, transparent));
+}
+
+@keyframes knowledge-home-type-orbit {
+  to { transform: rotate(360deg); }
 }
 
 .knowledge-home-type-main {
@@ -7337,7 +7669,12 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   .knowledge-home-recent li:first-child::before,
   .knowledge-home-transition > i::before,
   .knowledge-home-stone-course.is-pushing .knowledge-home-stone,
-  .knowledge-home-stone-course.is-falling .knowledge-home-stone {
+  .knowledge-home-stone-course.is-falling .knowledge-home-stone,
+  .knowledge-home-hero-orbit::before,
+  .knowledge-home-hero-orbit > i,
+  .knowledge-home-human-orbit > i,
+  .knowledge-home-human-orbit > i > b,
+  .knowledge-home-type-motion {
     animation: none;
   }
 
@@ -7345,6 +7682,11 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   .knowledge-home-type,
   .knowledge-star {
     transition: none;
+  }
+
+  .knowledge-home-type,
+  .knowledge-home-type:has(a:hover) {
+    transform: none;
   }
 }
 
@@ -7368,7 +7710,6 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 
 @media all and (max-width: 900px) {
   .knowledge-home-hero,
-  .knowledge-home-signal,
   .knowledge-home-grid {
     grid-template-columns: 1fr;
   }
@@ -7376,13 +7717,18 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   .knowledge-home-hero-aside {
     border-left: 0;
     border-top: 1px solid var(--home-line);
+    grid-template-areas:
+      "eyebrow eyebrow"
+      "count orbit"
+      "copy orbit"
+      "metrics metrics";
     min-height: 0;
     padding: 1rem 0 0;
   }
 
   .knowledge-home-hero-orbit {
-    margin: 0.8rem 0;
-    max-width: 7rem;
+    justify-self: end;
+    margin: 0.3rem 0 0;
     width: 7rem;
   }
 
@@ -7475,6 +7821,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 
   .knowledge-home-transition {
     grid-template-columns: auto minmax(2rem, 1fr);
+    margin: 2.1rem 0.1rem 1.1rem;
   }
 
   .knowledge-home-transition > em {
