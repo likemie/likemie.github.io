@@ -2072,12 +2072,37 @@ function KnowledgeHome(userOpts = {}) {
             h("i", { class: "orbit-outer", "aria-hidden": "true" }),
             h("i", { class: "orbit-inner", "aria-hidden": "true" }),
             [
-              [50, 7],
-              [84, 31],
-              [72, 76],
-              [28, 79],
-              [14, 36],
-            ].map(([x, y], index) =>
+              {
+                angle: 0,
+                radius: "clamp(2.6rem, 5.2vw, 3.8rem)",
+                duration: 26,
+                direction: "normal",
+              },
+              {
+                angle: 72,
+                radius: "clamp(2rem, 4.2vw, 3.1rem)",
+                duration: 21,
+                direction: "reverse",
+              },
+              {
+                angle: 144,
+                radius: "clamp(2.45rem, 4.9vw, 3.6rem)",
+                duration: 29,
+                direction: "normal",
+              },
+              {
+                angle: 216,
+                radius: "clamp(1.75rem, 3.6vw, 2.65rem)",
+                duration: 24,
+                direction: "reverse",
+              },
+              {
+                angle: 288,
+                radius: "clamp(2.25rem, 4.6vw, 3.35rem)",
+                duration: 32,
+                direction: "normal",
+              },
+            ].map((star, index) =>
               h(
                 "button",
                 {
@@ -2085,7 +2110,7 @@ function KnowledgeHome(userOpts = {}) {
                   class: "knowledge-home-orbit-star",
                   "data-orbit-star": "true",
                   "aria-label": `拖动第 ${index + 1} 颗知识星`,
-                  style: `--star-x:${x}%;--star-y:${y}%;--star-delay:${index * -0.7}s`,
+                  style: `--star-x:50%;--star-y:50%;--star-angle:${star.angle}deg;--star-radius:${star.radius};--star-duration:${star.duration}s;--star-direction:${star.direction};--star-delay:${index * -3.7}s`,
                 },
                 h("span", { "aria-hidden": "true" }, "✦"),
               ),
@@ -2178,12 +2203,13 @@ function KnowledgeHome(userOpts = {}) {
         h(
           "div",
           { class: "knowledge-home-tool-grid" },
-          practicalTools.map((tool) =>
+          practicalTools.map((tool, index) =>
             h(
               "a",
               {
                 href: tool.href,
                 class: `knowledge-home-tool ${tool.tone}`,
+                style: `--tool-delay:${index * -4.2}s`,
                 target: "_blank",
                 rel: "noopener noreferrer",
               },
@@ -2860,6 +2886,12 @@ function bindKnowledgeHomeOrbitStars() {
 
     star.addEventListener("pointerdown", (event) => {
       if (event.pointerType === "mouse" && event.button !== 0) return
+      const orbitRect = orbit.getBoundingClientRect()
+      const starRect = star.getBoundingClientRect()
+      moveTo(
+        ((starRect.left + starRect.width / 2 - orbitRect.left) / orbitRect.width) * 100,
+        ((starRect.top + starRect.height / 2 - orbitRect.top) / orbitRect.height) * 100,
+      )
       dragging = true
       moved = false
       star.classList.add("is-grabbed")
@@ -2886,9 +2918,9 @@ function bindKnowledgeHomeOrbitStars() {
         moved = false
         return
       }
-      const angle = Math.random() * Math.PI * 2
-      const radius = 25 + Math.random() * 18
-      moveTo(50 + Math.cos(angle) * radius, 50 + Math.sin(angle) * radius)
+      star.classList.remove("is-placed")
+      star.style.removeProperty("--star-x")
+      star.style.removeProperty("--star-y")
     })
     star.addEventListener("keydown", (event) => {
       if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) return
@@ -6500,8 +6532,9 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 }
 
 .knowledge-home-orbit-star {
-  animation: knowledge-home-orbit-star-twinkle 3.4s ease-in-out infinite;
+  animation: knowledge-home-orbit-star-round var(--star-duration) linear infinite;
   animation-delay: var(--star-delay);
+  animation-direction: var(--star-direction);
   appearance: none;
   background: transparent;
   border: 0;
@@ -6509,18 +6542,19 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   cursor: grab;
   display: grid;
   height: 1.45rem;
-  left: var(--star-x);
+  left: 50%;
   padding: 0;
   place-items: center;
   position: absolute;
-  top: var(--star-y);
-  transform: translate(-50%, -50%);
+  top: 50%;
   touch-action: none;
   width: 1.45rem;
   z-index: 3;
 }
 
 .knowledge-home-orbit-star span {
+  animation: knowledge-home-orbit-star-twinkle 3.4s ease-in-out infinite;
+  animation-delay: var(--star-delay);
   filter: drop-shadow(0 0 0.28rem color-mix(in srgb, var(--home-copper) 50%, transparent));
   font-size: 0.72rem;
   line-height: 1;
@@ -6537,6 +6571,13 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-home-orbit-star.is-grabbed {
   animation: none;
   cursor: grabbing;
+}
+
+.knowledge-home-orbit-star.is-placed {
+  animation: none;
+  left: var(--star-x);
+  top: var(--star-y);
+  transform: translate(-50%, -50%);
 }
 
 .knowledge-home-orbit-star:focus-visible {
@@ -6621,7 +6662,16 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   }
   50% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1.12);
+    transform: scale(1.12);
+  }
+}
+
+@keyframes knowledge-home-orbit-star-round {
+  from {
+    transform: rotate(var(--star-angle)) translateX(var(--star-radius));
+  }
+  to {
+    transform: rotate(calc(var(--star-angle) + 1turn)) translateX(var(--star-radius));
   }
 }
 
@@ -7492,6 +7542,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   color: var(--home-ink) !important;
   display: grid;
   gap: 0.45rem;
+  isolation: isolate;
   min-height: 10.2rem;
   overflow: hidden;
   padding: 1rem;
@@ -7500,9 +7551,29 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   transition: border-color 180ms ease, transform 180ms ease;
 }
 
+.knowledge-home-tool::before {
+  background: linear-gradient(
+    105deg,
+    transparent 24%,
+    color-mix(in srgb, var(--tool-tone) 13%, transparent) 48%,
+    transparent 72%
+  );
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-115%);
+  transition: transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 0;
+}
+
 .knowledge-home-tool::after {
+  animation: knowledge-home-tool-orbit 14s linear infinite;
+  animation-delay: var(--tool-delay);
   border: 1px solid color-mix(in srgb, var(--tool-tone) 26%, transparent);
   border-radius: 50%;
+  border-style: dashed;
+  box-shadow: 0 0 1.8rem color-mix(in srgb, var(--tool-tone) 8%, transparent);
   content: "";
   height: 8rem;
   position: absolute;
@@ -7515,10 +7586,27 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   --tool-tone: var(--home-copper);
 }
 
+.knowledge-home-tool.generator::after {
+  animation-direction: reverse;
+}
+
 .knowledge-home-tool:hover {
   border-color: var(--tool-tone);
   text-decoration: none;
   transform: translateY(-2px);
+}
+
+.knowledge-home-tool:hover::before,
+.knowledge-home-tool:focus-visible::before {
+  transform: translateX(115%);
+}
+
+.knowledge-home-tool > span,
+.knowledge-home-tool > strong,
+.knowledge-home-tool > p,
+.knowledge-home-tool > em {
+  position: relative;
+  z-index: 1;
 }
 
 .knowledge-home-tool > span {
@@ -7553,6 +7641,19 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   font-style: normal;
   font-weight: 700;
   margin-top: auto;
+  transition: letter-spacing 180ms ease, transform 180ms ease;
+}
+
+.knowledge-home-tool:hover > em,
+.knowledge-home-tool:focus-visible > em {
+  letter-spacing: 0.035em;
+  transform: translateX(0.16rem);
+}
+
+@keyframes knowledge-home-tool-orbit {
+  to {
+    transform: rotate(1turn);
+  }
 }
 
 .knowledge-home-catalogue {
@@ -8069,7 +8170,9 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   .knowledge-home-hero-orbit::before,
   .knowledge-home-hero-orbit > i,
   .knowledge-home-orbit-star,
+  .knowledge-home-orbit-star span,
   .knowledge-home-human-drop.is-rolling .knowledge-home-stone-pusher,
+  .knowledge-home-tool::after,
   .knowledge-home-type-motion {
     animation: none;
   }
