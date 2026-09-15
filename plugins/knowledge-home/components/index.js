@@ -6490,15 +6490,17 @@ body[data-slug^="explore/"] .center > article {
   border-radius: 0.8rem;
   display: grid;
   gap: 1rem;
-  grid-template-columns: minmax(11rem, 0.32fr) minmax(0, 1fr);
+  grid-template-columns: 1fr;
   padding: 0.8rem 0.95rem;
   position: relative;
   z-index: 2;
 }
 
 .knowledge-methods-spine-status {
-  display: grid;
-  gap: 0.18rem;
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.75rem;
 }
 
 .knowledge-methods-spine-status > span {
@@ -6518,6 +6520,7 @@ body[data-slug^="explore/"] .center > article {
 .knowledge-methods-spine-status > small {
   color: var(--methods-panel-muted);
   font-size: 0.6rem;
+  margin-left: auto;
 }
 
 .knowledge-methods-spine-rail {
@@ -6596,9 +6599,9 @@ body[data-slug^="explore/"] .center > article {
 }
 
 .knowledge-methods-spine-rail button > small {
-  font-size: 0.52rem;
+  font-size: 0.55rem;
   line-height: 1.2;
-  max-width: 4.7rem;
+  max-width: 5.5rem;
 }
 
 .knowledge-methods-spine-rail button:hover > span,
@@ -6641,13 +6644,13 @@ body[data-slug^="explore/"] .center > article {
 
 .knowledge-methods-stages > li::after {
   background: linear-gradient(90deg, var(--methods-panel-accent), transparent);
+  bottom: 0;
   content: "";
-  height: 1px;
-  left: 3rem;
+  height: 2px;
+  left: 0;
   opacity: 0;
   position: absolute;
-  right: 1rem;
-  top: 3.5rem;
+  right: 0;
   transform: scaleX(0.2);
   transform-origin: left;
   transition: opacity 220ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -6698,6 +6701,165 @@ body[data-slug^="explore/"] .center > article {
   backdrop-filter: blur(0.7rem);
 }
 
+.knowledge-methods-tool-grid,
+.knowledge-methods-random-grid,
+.knowledge-methods-latest-grid {
+  gap: clamp(0.7rem, 1.2vw, 1rem);
+}
+
+.knowledge-methods-tool {
+  background:
+    radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--tool-tone) 14%, transparent), transparent 28%),
+    color-mix(in srgb, var(--light) 97%, var(--tool-tone));
+  border-radius: 0.85rem;
+}
+
+.knowledge-methods-tool h3 a {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0;
+  padding: 0 !important;
+}
+
+.knowledge-methods-tool > div {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.knowledge-methods-tool > div a {
+  background: color-mix(in srgb, var(--tool-tone) 9%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--tool-tone) 22%, transparent);
+  border-radius: 999px;
+  padding: 0.28rem 0.48rem;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+  width: fit-content;
+}
+
+.knowledge-methods-tool > div a:hover {
+  background: color-mix(in srgb, var(--tool-tone) 17%, transparent) !important;
+  border-color: color-mix(in srgb, var(--tool-tone) 56%, transparent);
+  transform: translateY(-0.1rem);
+}
+
+.knowledge-methods-refresh {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--secondary) 48%, var(--lightgray));
+  border-radius: 999px;
+  color: var(--secondary);
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.knowledge-methods-refresh:hover {
+  color: var(--light);
+  transform: rotate(-2deg) translateY(-0.1rem);
+}
+
+.knowledge-methods-random-card {
+  --random-tone: var(--secondary);
+  background:
+    radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--random-tone) 13%, transparent), transparent 34%),
+    color-mix(in srgb, var(--light) 97%, var(--random-tone));
+  border-color: color-mix(in srgb, var(--random-tone) 24%, var(--lightgray));
+  border-radius: 0.85rem;
+  min-height: 13rem;
+  position: relative;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.knowledge-methods-random-card:nth-child(2) {
+  --random-tone: #7f748f;
+}
+
+.knowledge-methods-random-card:nth-child(3) {
+  --random-tone: #71866b;
+}
+
+.knowledge-methods-random-card:nth-child(4) {
+  --random-tone: #9a7457;
+}
+
+.knowledge-methods-random-card:hover {
+  border-color: color-mix(in srgb, var(--random-tone) 58%, var(--lightgray));
+  box-shadow: 0 1rem 2rem color-mix(in srgb, var(--random-tone) 10%, transparent);
+  transform: translateY(-0.2rem);
+}
+
+.knowledge-methods-random-card > header {
+  border-color: color-mix(in srgb, var(--random-tone) 18%, var(--lightgray));
+}
+
+.knowledge-methods-random-card > header span {
+  color: var(--random-tone);
+}
+
+.knowledge-methods-random-item,
+.knowledge-methods-random-item:hover {
+  background: transparent !important;
+}
+
+.knowledge-methods-random-item:not([hidden]) {
+  animation: knowledge-methods-content-reveal 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.knowledge-methods-random-item strong {
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  overflow-wrap: anywhere;
+}
+
+.knowledge-methods-latest-card {
+  --latest-tone: var(--secondary);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--latest-tone) 8%, var(--light)), var(--light) 68%);
+  border-color: color-mix(in srgb, var(--latest-tone) 28%, var(--lightgray));
+  border-radius: 0.8rem;
+  min-height: 11.5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.knowledge-methods-latest-card:nth-child(2),
+.knowledge-methods-latest-card:nth-child(5) {
+  animation-delay: 70ms;
+}
+
+.knowledge-methods-latest-card:nth-child(3),
+.knowledge-methods-latest-card:nth-child(6) {
+  animation-delay: 140ms;
+}
+
+.knowledge-methods-latest-card:nth-child(3n + 2) {
+  --latest-tone: #7f748f;
+}
+
+.knowledge-methods-latest-card:nth-child(3n) {
+  --latest-tone: #71866b;
+}
+
+.knowledge-methods-latest-card::before {
+  background: linear-gradient(90deg, var(--latest-tone), transparent);
+  content: "";
+  height: 2px;
+  inset: 0 0 auto;
+  opacity: 0.72;
+  transform: scaleX(0.28);
+  transform-origin: left;
+  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.knowledge-methods-latest-card {
+  animation: knowledge-methods-content-reveal 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.knowledge-methods-latest-card:hover {
+  border-color: color-mix(in srgb, var(--latest-tone) 62%, var(--lightgray));
+  color: var(--latest-tone);
+}
+
+.knowledge-methods-latest-card:hover::before {
+  transform: scaleX(1);
+}
+
 @keyframes knowledge-methods-grid-drift {
   to {
     background-position: 2.5rem 2.5rem;
@@ -6740,6 +6902,17 @@ body[data-slug^="explore/"] .center > article {
   }
 }
 
+@keyframes knowledge-methods-content-reveal {
+  from {
+    filter: blur(0.18rem);
+    opacity: 0;
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
 @media all and (max-width: 900px) {
   .knowledge-methods-spine-console {
     grid-template-columns: 1fr;
@@ -6761,6 +6934,11 @@ body[data-slug^="explore/"] .center > article {
 
   .knowledge-methods-spine-console {
     padding: 0.75rem;
+  }
+
+  .knowledge-methods-spine-status > small {
+    margin-left: 0;
+    width: 100%;
   }
 
   .knowledge-methods-spine-rail button > span {
@@ -6785,6 +6963,8 @@ body[data-slug^="explore/"] .center > article {
   .knowledge-methods-roadmap::before,
   .knowledge-methods-roadmap::after,
   .knowledge-methods-spine-tracer,
+  .knowledge-methods-random-item:not([hidden]),
+  .knowledge-methods-latest-card,
   .knowledge-methods-stages > li,
   .knowledge-methods-stages > li.is-active .knowledge-methods-stage-number span {
     animation: none;
