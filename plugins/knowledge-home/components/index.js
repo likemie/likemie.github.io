@@ -1696,6 +1696,132 @@ function renderComparativeTopicPage({ pages, topicConfig, todayKey, displayClass
   )
 }
 
+function renderStoneCourse(extraClass = "") {
+  return h(
+    "div",
+    {
+      class: ["knowledge-home-stone-course", extraClass].filter(Boolean).join(" "),
+      "data-stone-course": "true",
+      "data-stage": "0",
+    },
+    h(
+      "svg",
+      {
+        viewBox: "0 0 320 180",
+        preserveAspectRatio: "none",
+        "aria-hidden": "true",
+      },
+      h("path", { d: "M18 132 H82 V101 H151 V70 H220 V39 H302" }),
+    ),
+    [
+      ["拆", "拆开概念"],
+      ["核", "核对证据"],
+      ["连", "连回来源"],
+      ["上", "运上山顶"],
+    ].map(([short, label], index) =>
+      h(
+        "button",
+        {
+          type: "button",
+          class: "knowledge-home-stone-stage",
+          "data-stone-stage": String(index),
+          "aria-label": label,
+          "aria-pressed": index === 0 ? "true" : "false",
+        },
+        h("b", null, String(index + 1).padStart(2, "0")),
+        h("span", null, short),
+      ),
+    ),
+    h(
+      "button",
+      {
+        type: "button",
+        class: "knowledge-home-stone",
+        "data-stone": "true",
+        "aria-label": "推动石头：当前在拆开概念",
+      },
+      h("span", { "aria-hidden": "true" }),
+    ),
+    h(
+      "p",
+      {
+        class: "knowledge-home-stone-status",
+        "data-stone-status": "true",
+        "aria-live": "polite",
+      },
+      "山脚 · 先把概念拆开。",
+    ),
+  )
+}
+
+function renderHumanStoneHill() {
+  return h(
+    "div",
+    {
+      class: "knowledge-home-human-hill",
+      "data-human-hill": "true",
+      "data-progress": "0",
+    },
+    h(
+      "svg",
+      { viewBox: "0 0 320 180", preserveAspectRatio: "none", "aria-hidden": "true" },
+      h("path", { d: "M14 148 C76 151 112 128 156 96 C205 61 252 34 307 29" }),
+      h("path", {
+        class: "knowledge-home-human-hill-shadow",
+        d: "M14 154 C76 157 112 134 156 102 C205 67 252 40 307 35",
+      }),
+    ),
+    h(
+      "div",
+      { class: "knowledge-home-human-hill-fragments", "aria-hidden": "true" },
+      h("span", null, "p.42"),
+      h("span", null, "ARG"),
+      h("span", null, "↗"),
+    ),
+    h("span", { class: "knowledge-home-human-pusher", "aria-hidden": "true" }, h("i", null)),
+    h(
+      "button",
+      {
+        type: "button",
+        class: "knowledge-home-human-boulder",
+        "data-human-boulder": "true",
+        "aria-label": "沿研究山坡推动石头",
+      },
+      h("span", { "aria-hidden": "true" }),
+    ),
+    h(
+      "p",
+      { "data-human-hill-status": "true", "aria-live": "polite" },
+      "山脚 · 一个问题刚刚出现。",
+    ),
+    h("small", null, "PUSH UP · RELEASE · REPEAT"),
+  )
+}
+
+function renderTransition(index, label) {
+  return h(
+    "div",
+    { class: "knowledge-home-transition" },
+    h("span", null, String(index).padStart(2, "0")),
+    h(
+      "button",
+      {
+        type: "button",
+        class: "knowledge-home-transition-track",
+        "data-transition-track": "true",
+        role: "slider",
+        "aria-label": `拖动第 ${index} 段路径节点`,
+        "aria-orientation": "horizontal",
+        "aria-valuemin": "0",
+        "aria-valuemax": "100",
+        "aria-valuenow": "58",
+      },
+      h("i", { "aria-hidden": "true" }),
+    ),
+    h("em", null, label),
+  )
+}
+
 function KnowledgeHome(userOpts = {}) {
   const opts = { ...defaultOptions, ...userOpts }
 
@@ -1991,13 +2117,7 @@ function KnowledgeHome(userOpts = {}) {
           ),
         ),
       ),
-      h(
-        "div",
-        { class: "knowledge-home-transition", "aria-hidden": "true" },
-        h("span", null, "01"),
-        h("i", null),
-        h("em", null, "SIGNAL → QUESTIONS"),
-      ),
+      renderTransition(1, "SIGNAL → QUESTIONS"),
       h(
         "section",
         { class: "knowledge-home-topics", "aria-labelledby": "knowledge-home-topics-title" },
@@ -2031,13 +2151,7 @@ function KnowledgeHome(userOpts = {}) {
           ),
         ),
       ),
-      h(
-        "div",
-        { class: "knowledge-home-transition", "aria-hidden": "true" },
-        h("span", null, "02"),
-        h("i", null),
-        h("em", null, "QUESTIONS → TOOLS"),
-      ),
+      renderTransition(2, "QUESTIONS → TOOLS"),
       h(
         "section",
         { class: "knowledge-home-tools", "aria-labelledby": "knowledge-home-tools-title" },
@@ -2072,13 +2186,7 @@ function KnowledgeHome(userOpts = {}) {
           ),
         ),
       ),
-      h(
-        "div",
-        { class: "knowledge-home-transition", "aria-hidden": "true" },
-        h("span", null, "03"),
-        h("i", null),
-        h("em", null, "TOOLS → INDEX"),
-      ),
+      renderTransition(3, "TOOLS → INDEX"),
       h(
         "section",
         { class: "knowledge-home-catalogue", "aria-labelledby": "knowledge-home-catalogue-title" },
@@ -2137,13 +2245,7 @@ function KnowledgeHome(userOpts = {}) {
           ),
         ),
       ),
-      h(
-        "div",
-        { class: "knowledge-home-transition", "aria-hidden": "true" },
-        h("span", null, "04"),
-        h("i", null),
-        h("em", null, "INDEX → CONNECTIONS"),
-      ),
+      renderTransition(4, "INDEX → CONNECTIONS"),
       h(
         "div",
         { class: "knowledge-home-grid" },
@@ -2199,13 +2301,7 @@ function KnowledgeHome(userOpts = {}) {
           ),
         ),
       ),
-      h(
-        "div",
-        { class: "knowledge-home-transition", "aria-hidden": "true" },
-        h("span", null, "05"),
-        h("i", null),
-        h("em", null, "CONNECTIONS → FIELD NOTE"),
-      ),
+      renderTransition(5, "CONNECTIONS → FIELD NOTE"),
       h(
         "section",
         { class: "knowledge-home-ai-essay", "aria-labelledby": "knowledge-home-ai-essay-title" },
@@ -2227,61 +2323,7 @@ function KnowledgeHome(userOpts = {}) {
                 null,
                 `${formatCount(totalLinks)} LINKS · ${formatCount(pages.length)} NOTES`,
               ),
-              h(
-                "div",
-                {
-                  class: "knowledge-home-stone-course",
-                  "data-stone-course": "true",
-                  "data-stage": "0",
-                },
-                h(
-                  "svg",
-                  {
-                    viewBox: "0 0 320 180",
-                    preserveAspectRatio: "none",
-                    "aria-hidden": "true",
-                  },
-                  h("path", { d: "M18 132 H82 V101 H151 V70 H220 V39 H302" }),
-                ),
-                [
-                  ["拆", "拆开概念"],
-                  ["核", "核对证据"],
-                  ["连", "连回来源"],
-                  ["上", "运上山顶"],
-                ].map(([short, label], index) =>
-                  h(
-                    "button",
-                    {
-                      type: "button",
-                      class: "knowledge-home-stone-stage",
-                      "data-stone-stage": String(index),
-                      "aria-label": label,
-                      "aria-pressed": index === 0 ? "true" : "false",
-                    },
-                    h("b", null, String(index + 1).padStart(2, "0")),
-                    h("span", null, short),
-                  ),
-                ),
-                h(
-                  "button",
-                  {
-                    type: "button",
-                    class: "knowledge-home-stone",
-                    "data-stone": "true",
-                    "aria-label": "推动石头：当前在拆开概念",
-                  },
-                  h("span", { "aria-hidden": "true" }),
-                ),
-                h(
-                  "p",
-                  {
-                    class: "knowledge-home-stone-status",
-                    "data-stone-status": "true",
-                    "aria-live": "polite",
-                  },
-                  "山脚 · 先把概念拆开。",
-                ),
-              ),
+              renderStoneCourse(),
             ),
           ),
           h(
@@ -2327,15 +2369,7 @@ function KnowledgeHome(userOpts = {}) {
               h("i", null, "课堂教学"),
               h("i", null, "证据与治理"),
             ),
-            h(
-              "div",
-              { class: "knowledge-home-human-orbit", "aria-hidden": "true" },
-              h("span", null, "伍"),
-              h("i", { class: "orbit-one" }, h("b", null, "比较")),
-              h("i", { class: "orbit-two" }, h("b", null, "课堂")),
-              h("i", { class: "orbit-three" }, h("b", null, "证据")),
-              h("small", null, "ASK · TRACE · CONNECT"),
-            ),
+            renderHumanStoneHill(),
           ),
           h(
             "div",
@@ -2437,62 +2471,63 @@ function bindKnowledgeHomeDragRails() {
 }
 
 function bindKnowledgeHomeStone() {
-  const course = document.querySelector("[data-stone-course]")
-  const stone = course?.querySelector("[data-stone]")
-  const status = course?.querySelector("[data-stone-status]")
-  const stages = Array.from(course?.querySelectorAll("[data-stone-stage]") || [])
-  if (!course || !stone || !status || stages.length === 0 || course.dataset.bound === "true") return
-  course.dataset.bound = "true"
+  const courses = Array.from(document.querySelectorAll("[data-stone-course]"))
+  for (const course of courses) {
+    const stone = course.querySelector("[data-stone]")
+    const status = course.querySelector("[data-stone-status]")
+    const stages = Array.from(course.querySelectorAll("[data-stone-stage]"))
+    if (!stone || !status || stages.length === 0 || course.dataset.bound === "true") continue
+    course.dataset.bound = "true"
 
-  const positions = [
-    { x: 12, y: 73 },
-    { x: 35, y: 56 },
-    { x: 58, y: 39 },
-    { x: 83, y: 22 },
-  ]
-  const messages = [
-    "山脚 · 先把概念拆开。",
-    "第二格 · 核对证据是否站得住。",
-    "第三格 · 把判断连回页码与来源。",
-    "山顶 · 终于可以拼成一份成稿。",
-  ]
-  const labels = ["拆开概念", "核对证据", "连回来源", "运上山顶"]
-  let currentStage = Number(course.dataset.stage || 0)
-  let pointerActive = false
-  let moved = false
-  let suppressClick = false
-  let animationTimer
+    const positions = [
+      { x: 12, y: 73 },
+      { x: 35, y: 56 },
+      { x: 58, y: 39 },
+      { x: 83, y: 22 },
+    ]
+    const messages = [
+      "山脚 · 先把概念拆开。",
+      "第二格 · 核对证据是否站得住。",
+      "第三格 · 把判断连回页码与来源。",
+      "山顶 · 终于可以拼成一份成稿。",
+    ]
+    const labels = ["拆开概念", "核对证据", "连回来源", "运上山顶"]
+    let currentStage = Number(course.dataset.stage || 0)
+    let pointerActive = false
+    let moved = false
+    let suppressClick = false
+    let animationTimer
 
-  const setStage = (nextStage, motion = "push") => {
-    currentStage = Math.max(0, Math.min(positions.length - 1, nextStage))
-    course.dataset.stage = String(currentStage)
-    status.textContent = messages[currentStage]
-    stone.setAttribute("aria-label", "推动石头：当前在" + labels[currentStage])
-    stages.forEach((stage, index) => {
-      stage.setAttribute("aria-pressed", String(index === currentStage))
-    })
-    course.classList.remove("is-pushing", "is-falling")
-    void course.offsetWidth
-    course.classList.add(motion === "fall" ? "is-falling" : "is-pushing")
-    window.clearTimeout(animationTimer)
-    animationTimer = window.setTimeout(() => {
+    const setStage = (nextStage, motion = "push") => {
+      currentStage = Math.max(0, Math.min(positions.length - 1, nextStage))
+      course.dataset.stage = String(currentStage)
+      status.textContent = messages[currentStage]
+      stone.setAttribute("aria-label", "推动石头：当前在" + labels[currentStage])
+      stages.forEach((stage, index) => {
+        stage.setAttribute("aria-pressed", String(index === currentStage))
+      })
       course.classList.remove("is-pushing", "is-falling")
-    }, 680)
-  }
+      void course.offsetWidth
+      course.classList.add(motion === "fall" ? "is-falling" : "is-pushing")
+      window.clearTimeout(animationTimer)
+      animationTimer = window.setTimeout(() => {
+        course.classList.remove("is-pushing", "is-falling")
+      }, 680)
+    }
 
-  stages.forEach((stage, index) => {
-    stage.addEventListener("click", () => setStage(index, index < currentStage ? "fall" : "push"))
-  })
+    stages.forEach((stage, index) => {
+      stage.addEventListener("click", () => setStage(index, index < currentStage ? "fall" : "push"))
+    })
 
-  stone.addEventListener("pointerdown", (event) => {
+    stone.addEventListener("pointerdown", (event) => {
     if (event.pointerType === "mouse" && event.button !== 0) return
     pointerActive = true
     moved = false
     course.classList.add("is-dragging")
     stone.setPointerCapture?.(event.pointerId)
-  })
+    })
 
-  stone.addEventListener("pointermove", (event) => {
+    stone.addEventListener("pointermove", (event) => {
     if (!pointerActive) return
     const rect = course.getBoundingClientRect()
     const x = Math.max(7, Math.min(90, ((event.clientX - rect.left) / rect.width) * 100))
@@ -2503,9 +2538,9 @@ function bindKnowledgeHomeStone() {
     event.preventDefault()
     stone.style.left = x + "%"
     stone.style.top = y + "%"
-  })
+    })
 
-  const finishStoneDrag = (event) => {
+    const finishStoneDrag = (event) => {
     if (!pointerActive) return
     pointerActive = false
     course.classList.remove("is-dragging")
@@ -2533,11 +2568,11 @@ function bindKnowledgeHomeStone() {
     stone.style.removeProperty("top")
     suppressClick = true
     setStage(nearestStage, nearestStage < currentStage ? "fall" : "push")
-  }
+    }
 
-  stone.addEventListener("pointerup", finishStoneDrag)
-  stone.addEventListener("pointercancel", finishStoneDrag)
-  stone.addEventListener("click", (event) => {
+    stone.addEventListener("pointerup", finishStoneDrag)
+    stone.addEventListener("pointercancel", finishStoneDrag)
+    stone.addEventListener("click", (event) => {
     if (suppressClick) {
       event.preventDefault()
       suppressClick = false
@@ -2545,14 +2580,199 @@ function bindKnowledgeHomeStone() {
     }
     const atSummit = currentStage === positions.length - 1
     setStage(atSummit ? 0 : currentStage + 1, atSummit ? "fall" : "push")
-  })
-  stone.addEventListener("keydown", (event) => {
+    })
+    stone.addEventListener("keydown", (event) => {
     if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return
     event.preventDefault()
     const direction = event.key === "ArrowRight" ? 1 : -1
     const nextStage = Math.max(0, Math.min(positions.length - 1, currentStage + direction))
     setStage(nextStage, direction < 0 ? "fall" : "push")
+    })
+  }
+}
+
+function bindKnowledgeHomeTransitions() {
+  const tracks = Array.from(document.querySelectorAll("[data-transition-track]"))
+  for (const track of tracks) {
+    if (track.dataset.bound === "true") continue
+    track.dataset.bound = "true"
+    let dragging = false
+
+    const setProgress = (value) => {
+      const progress = Math.max(0, Math.min(100, value))
+      track.classList.add("is-controlled")
+      track.style.setProperty("--route-progress", progress + "%")
+      track.setAttribute("aria-valuenow", String(Math.round(progress)))
+    }
+
+    const setFromPointer = (event) => {
+      const rect = track.getBoundingClientRect()
+      setProgress(((event.clientX - rect.left) / rect.width) * 100)
+    }
+
+    track.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "mouse" && event.button !== 0) return
+      dragging = true
+      track.classList.add("is-dragging")
+      track.setPointerCapture?.(event.pointerId)
+      setFromPointer(event)
+    })
+    track.addEventListener("pointermove", (event) => {
+      if (!dragging) return
+      event.preventDefault()
+      setFromPointer(event)
+    })
+    const finish = (event) => {
+      dragging = false
+      track.classList.remove("is-dragging")
+      if (track.hasPointerCapture?.(event.pointerId)) track.releasePointerCapture(event.pointerId)
+    }
+    track.addEventListener("pointerup", finish)
+    track.addEventListener("pointercancel", finish)
+    track.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return
+      event.preventDefault()
+      const current = Number(track.getAttribute("aria-valuenow") || 58)
+      setProgress(current + (event.key === "ArrowRight" ? 5 : -5))
+    })
+  }
+}
+
+function bindKnowledgeHomeHumanHill() {
+  const hill = document.querySelector("[data-human-hill]")
+  const boulder = hill?.querySelector("[data-human-boulder]")
+  const status = hill?.querySelector("[data-human-hill-status]")
+  if (!hill || !boulder || !status || hill.dataset.bound === "true") return
+  hill.dataset.bound = "true"
+
+  const points = [
+    { progress: 0, x: 10, y: 78 },
+    { progress: 34, x: 36, y: 67 },
+    { progress: 67, x: 62, y: 42 },
+    { progress: 100, x: 88, y: 21 },
+  ]
+  const messages = [
+    "山脚 · 一个问题刚刚出现。",
+    "半坡 · 开始搬运证据。",
+    "再往上 · 让证据承担解释。",
+    "山顶 · 暂时拼成一份成稿。",
+  ]
+  let progress = Number(hill.dataset.progress || 0)
+  let dragging = false
+  let moved = false
+  let rollFrame
+  let rollTimer
+  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+
+  const setProgress = (nextProgress, animate = true) => {
+    progress = Math.max(0, Math.min(100, nextProgress))
+    let start = points[0]
+    let end = points[1]
+    for (let index = 1; index < points.length; index += 1) {
+      if (progress <= points[index].progress) {
+        start = points[index - 1]
+        end = points[index]
+        break
+      }
+    }
+    const ratio = (progress - start.progress) / (end.progress - start.progress || 1)
+    const x = start.x + (end.x - start.x) * ratio
+    const y = start.y + (end.y - start.y) * ratio
+    hill.dataset.progress = String(Math.round(progress))
+    hill.style.setProperty("--hill-x", x + "%")
+    hill.style.setProperty("--hill-y", y + "%")
+    hill.classList.toggle("is-summit", progress >= 99)
+    hill.classList.toggle("is-free", !animate)
+    const messageIndex = progress >= 99 ? 3 : progress >= 66 ? 2 : progress >= 33 ? 1 : 0
+    status.textContent = hill.classList.contains("is-rolling")
+      ? progress <= 1
+        ? "山脚 · 石头回来了，文献还在。"
+        : "松手 · 它正在滚回山脚。"
+      : messages[messageIndex]
+    boulder.setAttribute("aria-label", messages[messageIndex])
+  }
+
+  const stopRolling = () => {
+    window.clearTimeout(rollTimer)
+    window.cancelAnimationFrame(rollFrame)
+    hill.classList.remove("is-rolling")
+  }
+
+  const startRolling = (delay = 220) => {
+    stopRolling()
+    hill.classList.add("is-rolling")
+    status.textContent = progress >= 99 ? "山顶 · 停一会儿，它还是会滚下来。" : "松手 · 重力已经接手。"
+    rollTimer = window.setTimeout(() => {
+      if (reduceMotion) {
+        setProgress(0, false)
+        stopRolling()
+        hill.classList.remove("is-free")
+        status.textContent = "山脚 · 石头回来了，文献还在。"
+        return
+      }
+      let velocity = 0.12
+      let lastTime = performance.now()
+      const roll = (time) => {
+        const frame = Math.min(32, time - lastTime)
+        lastTime = time
+        velocity += frame * 0.0018
+        setProgress(progress - velocity * (frame / 16.67), false)
+        hill.style.setProperty("--boulder-turn", progress * 7.2 + "deg")
+        if (progress > 0) {
+          rollFrame = window.requestAnimationFrame(roll)
+        } else {
+          stopRolling()
+          hill.classList.remove("is-free")
+          status.textContent = "山脚 · 石头回来了，文献还在。"
+        }
+      }
+      rollFrame = window.requestAnimationFrame(roll)
+    }, delay)
+  }
+
+  boulder.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return
+    stopRolling()
+    dragging = true
+    moved = false
+    hill.classList.add("is-dragging")
+    boulder.setPointerCapture?.(event.pointerId)
   })
+  boulder.addEventListener("pointermove", (event) => {
+    if (!dragging) return
+    const rect = hill.getBoundingClientRect()
+    const next = ((event.clientX - rect.left) / rect.width) * 118 - 9
+    if (Math.abs(next - progress) > 1.5) moved = true
+    if (!moved) return
+    event.preventDefault()
+    setProgress(next, false)
+  })
+  const finish = (event) => {
+    dragging = false
+    hill.classList.remove("is-dragging", "is-free")
+    if (boulder.hasPointerCapture?.(event.pointerId)) boulder.releasePointerCapture(event.pointerId)
+    if (moved) startRolling(progress >= 99 ? 760 : 180)
+  }
+  boulder.addEventListener("pointerup", finish)
+  boulder.addEventListener("pointercancel", finish)
+  boulder.addEventListener("click", () => {
+    if (moved) {
+      moved = false
+      return
+    }
+    stopRolling()
+    setProgress(Math.min(100, progress + 32))
+    startRolling(progress >= 99 ? 760 : 420)
+  })
+  boulder.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return
+    event.preventDefault()
+    stopRolling()
+    setProgress(progress + (event.key === "ArrowRight" ? 10 : -10))
+    startRolling(progress >= 99 ? 760 : 520)
+  })
+
+  setProgress(progress)
 }
 
 function bindKnowledgeHomeTypeMotion() {
@@ -2588,6 +2808,8 @@ function bindKnowledgeHomeTypeMotion() {
 bindKnowledgeHomeDragRails()
 bindKnowledgeHomeStone()
 bindKnowledgeHomeTypeMotion()
+bindKnowledgeHomeTransitions()
+bindKnowledgeHomeHumanHill()
 
 function rotateMethodsRandomCards() {
   const cards = Array.from(document.querySelectorAll("[data-method-random-card]"))
@@ -6431,7 +6653,18 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 }
 
 .knowledge-home-ai-profile-head::after {
-  display: none;
+  bottom: -1.5rem;
+  color: color-mix(in srgb, var(--home-copper) 8%, transparent);
+  content: "伍";
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(8rem, 18vw, 12rem);
+  font-weight: 700;
+  line-height: 0.8;
+  pointer-events: none;
+  position: absolute;
+  right: -0.6rem;
+  z-index: 0;
 }
 
 .knowledge-home-ai-profile-index {
@@ -6466,116 +6699,185 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   padding: 0.2rem 0.35rem;
 }
 
-.knowledge-home-human-orbit {
-  aspect-ratio: 1;
-  margin: 1.15rem auto 1.5rem;
-  max-width: 11rem;
+.knowledge-home-human-hill {
+  --boulder-turn: 0deg;
+  --hill-x: 10%;
+  --hill-y: 78%;
+  background:
+    radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--home-copper) 11%, transparent), transparent 24%),
+    linear-gradient(var(--home-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--home-grid) 1px, transparent 1px),
+    color-mix(in srgb, var(--home-accent) 6%, var(--home-surface));
+  background-size: auto, 18px 18px, 18px 18px, auto;
+  border: 1px solid var(--home-line);
+  border-radius: 0.75rem;
+  height: 12.3rem;
+  margin: 1rem 0 0;
+  max-width: 15rem;
+  overflow: hidden;
   position: relative;
-  width: min(92%, 11rem);
+  touch-action: pan-y;
+  z-index: 1;
 }
 
-.knowledge-home-human-orbit::before,
-.knowledge-home-human-orbit::after {
-  background: linear-gradient(90deg, transparent, var(--home-line), transparent);
-  content: "";
-  left: 5%;
+.knowledge-home-human-hill svg {
+  height: 100%;
+  inset: 0;
+  pointer-events: none;
   position: absolute;
-  right: 5%;
-  top: 50%;
-  height: 1px;
+  width: 100%;
 }
 
-.knowledge-home-human-orbit::after {
-  transform: rotate(90deg);
+.knowledge-home-human-hill svg path {
+  fill: none;
+  stroke: color-mix(in srgb, var(--home-copper) 78%, var(--home-line));
+  stroke-linecap: round;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
 }
 
-.knowledge-home-human-orbit > span {
-  align-items: center;
-  background: color-mix(in srgb, var(--home-copper) 12%, var(--home-surface));
-  border: 1px solid color-mix(in srgb, var(--home-copper) 48%, var(--home-line));
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 0.55rem color-mix(in srgb, var(--home-copper) 6%, transparent),
-    0 0.55rem 1.4rem color-mix(in srgb, var(--home-copper) 13%, transparent);
-  color: var(--home-copper);
-  display: flex;
-  font-family: var(--font-serif);
-  font-size: 1.45rem;
-  height: 3.1rem;
-  justify-content: center;
-  left: 50%;
+.knowledge-home-human-hill svg .knowledge-home-human-hill-shadow {
+  opacity: 0.18;
+  stroke-dasharray: 2 5;
+}
+
+.knowledge-home-human-hill-fragments span {
+  background: color-mix(in srgb, var(--home-surface) 82%, transparent);
+  border: 1px solid var(--home-line);
+  color: var(--home-muted);
+  font-family: var(--font-mono);
+  font-size: 0.38rem;
+  padding: 0.12rem 0.2rem;
   position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 3.1rem;
+  transform: rotate(-7deg);
+}
+
+.knowledge-home-human-hill-fragments span:first-child {
+  left: 30%;
+  top: 63%;
+}
+
+.knowledge-home-human-hill-fragments span:nth-child(2) {
+  left: 54%;
+  top: 38%;
+  transform: rotate(6deg);
+}
+
+.knowledge-home-human-hill-fragments span:nth-child(3) {
+  left: 77%;
+  top: 18%;
+  transform: rotate(-12deg);
+}
+
+.knowledge-home-human-boulder {
+  background:
+    radial-gradient(circle at 32% 29%, rgba(255, 255, 255, 0.42) 0 8%, transparent 9%),
+    radial-gradient(circle at 66% 65%, rgba(42, 33, 28, 0.22) 0 12%, transparent 13%),
+    linear-gradient(145deg, #c69668, #86563f 64%, #5f3b30);
+  border: 1px solid color-mix(in srgb, var(--home-copper) 70%, var(--home-line));
+  border-radius: 47% 53% 44% 56%;
+  box-shadow: 0 0.36rem 0.8rem rgba(42, 33, 28, 0.3);
+  cursor: grab;
+  height: 2.2rem;
+  left: var(--hill-x);
+  padding: 0;
+  position: absolute;
+  top: var(--hill-y);
+  touch-action: none;
+  transform: translate(-50%, -55%) rotate(var(--boulder-turn));
+  transition:
+    left 460ms cubic-bezier(0.2, 0.78, 0.25, 1),
+    top 460ms cubic-bezier(0.2, 0.78, 0.25, 1),
+    transform 160ms linear;
+  width: 2.2rem;
+  z-index: 4;
+}
+
+.knowledge-home-human-boulder:focus-visible {
+  outline: 2px solid var(--home-accent);
+  outline-offset: 3px;
+}
+
+.knowledge-home-human-hill.is-free .knowledge-home-human-boulder,
+.knowledge-home-human-hill.is-free .knowledge-home-human-pusher {
+  transition: none;
+}
+
+.knowledge-home-human-hill.is-dragging .knowledge-home-human-boulder {
+  cursor: grabbing;
+  filter: brightness(1.08);
+}
+
+.knowledge-home-human-pusher {
+  height: 1.7rem;
+  left: calc(var(--hill-x) - 7%);
+  opacity: 0.72;
+  pointer-events: none;
+  position: absolute;
+  top: calc(var(--hill-y) - 0.2rem);
+  transform: translate(-50%, -50%) rotate(-13deg);
+  transition: left 460ms ease, opacity 220ms ease, top 460ms ease;
+  width: 1.05rem;
   z-index: 3;
 }
 
-.knowledge-home-human-orbit > i {
-  --orbit-direction: normal;
-  --orbit-duration: 13s;
-  animation: knowledge-home-human-spin var(--orbit-duration) linear infinite;
-  animation-direction: var(--orbit-direction);
-  border: 1px solid color-mix(in srgb, var(--home-accent) 24%, var(--home-line));
+.knowledge-home-human-pusher::before {
+  background: var(--home-accent);
   border-radius: 50%;
-  inset: 5%;
+  content: "";
+  height: 0.36rem;
+  left: 0.25rem;
   position: absolute;
+  top: 0;
+  width: 0.36rem;
 }
 
-.knowledge-home-human-orbit > i.orbit-two {
-  --orbit-direction: reverse;
-  --orbit-duration: 9s;
-  inset: 19%;
-}
-
-.knowledge-home-human-orbit > i.orbit-three {
-  --orbit-duration: 6.5s;
-  border-style: dashed;
-  inset: 32%;
-}
-
-.knowledge-home-human-orbit > i > b {
-  animation: knowledge-home-human-counter-spin var(--orbit-duration) linear infinite;
-  animation-direction: var(--orbit-direction);
-  background: var(--home-surface);
-  border: 1px solid color-mix(in srgb, var(--home-accent) 32%, var(--home-line));
-  border-radius: 999px;
-  color: var(--home-accent);
-  font-family: var(--font-serif);
-  font-size: 0.48rem;
-  font-style: normal;
-  font-weight: 700;
-  left: 50%;
-  padding: 0.13rem 0.28rem;
+.knowledge-home-human-pusher > i,
+.knowledge-home-human-pusher > i::before,
+.knowledge-home-human-pusher > i::after {
+  background: var(--home-accent);
+  content: "";
+  height: 1px;
+  left: 0.43rem;
   position: absolute;
-  top: -0.46rem;
-  transform: translateX(-50%);
-  white-space: nowrap;
+  top: 0.42rem;
+  transform: rotate(80deg);
+  transform-origin: left;
+  width: 0.75rem;
 }
 
-.knowledge-home-human-orbit > small {
-  bottom: -1.15rem;
+.knowledge-home-human-pusher > i::before {
+  transform: rotate(-46deg);
+  width: 0.68rem;
+}
+
+.knowledge-home-human-pusher > i::after {
+  transform: rotate(40deg);
+  width: 0.62rem;
+}
+
+.knowledge-home-human-hill.is-rolling .knowledge-home-human-pusher {
+  opacity: 0.18;
+}
+
+.knowledge-home-human-hill > p {
+  bottom: 0.38rem;
   color: var(--home-muted);
+  font-family: var(--font-serif);
+  font-size: 0.5rem;
+  left: 0.55rem;
+  margin: 0;
+  position: absolute;
+}
+
+.knowledge-home-human-hill > small {
+  color: var(--home-copper);
   font-family: var(--font-mono);
-  font-size: 0.42rem;
-  left: 50%;
+  font-size: 0.39rem;
   letter-spacing: 0.08em;
   position: absolute;
-  transform: translateX(-50%);
-  white-space: nowrap;
-}
-
-.knowledge-home-human-orbit:hover > i,
-.knowledge-home-human-orbit:hover > i > b {
-  animation-play-state: paused;
-}
-
-@keyframes knowledge-home-human-spin {
-  to { transform: rotate(360deg); }
-}
-
-@keyframes knowledge-home-human-counter-spin {
-  to { transform: translateX(-50%) rotate(-360deg); }
+  right: 0.5rem;
+  top: 0.42rem;
 }
 
 .knowledge-home-ai-essay-head > span,
@@ -6925,14 +7227,41 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   color: var(--home-muted);
 }
 
-.knowledge-home-transition > i {
-  background: var(--home-line);
-  height: 1px;
+.knowledge-home-transition-track {
+  --route-progress: 58%;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  cursor: ew-resize;
+  height: 1.25rem;
   overflow: visible;
+  padding: 0;
   position: relative;
+  touch-action: none;
+  width: 100%;
 }
 
-.knowledge-home-transition > i::before {
+.knowledge-home-transition-track::after {
+  background: var(--home-line);
+  content: "";
+  height: 1px;
+  inset: 50% 0 auto;
+  position: absolute;
+}
+
+.knowledge-home-transition-track > i {
+  background: linear-gradient(90deg, var(--home-copper), color-mix(in srgb, var(--home-copper) 18%, var(--home-line)));
+  height: 1px;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  transition: opacity 180ms ease, width 180ms ease;
+  width: var(--route-progress);
+  z-index: 1;
+}
+
+.knowledge-home-transition-track::before {
   animation: knowledge-home-route-travel 5.2s ease-in-out infinite;
   background: var(--home-copper);
   border: 2px solid var(--home-paper);
@@ -6945,6 +7274,31 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   top: 50%;
   transform: translate(-50%, -50%);
   width: 0.35rem;
+  z-index: 2;
+}
+
+.knowledge-home-transition-track:hover::before,
+.knowledge-home-transition-track:focus-visible::before,
+.knowledge-home-transition-track.is-dragging::before {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--home-copper) 55%, var(--home-line)),
+    0 0 0 0.35rem color-mix(in srgb, var(--home-copper) 13%, transparent);
+  height: 0.48rem;
+  width: 0.48rem;
+}
+
+.knowledge-home-transition-track:focus-visible {
+  outline: 1px dashed color-mix(in srgb, var(--home-accent) 60%, transparent);
+  outline-offset: 0.2rem;
+}
+
+.knowledge-home-transition-track.is-controlled::before {
+  animation: none;
+  left: var(--route-progress);
+}
+
+.knowledge-home-transition-track.is-controlled > i {
+  opacity: 1;
 }
 
 .knowledge-home-transition + .knowledge-home-topics,
@@ -7667,13 +8021,11 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 @media (prefers-reduced-motion: reduce) {
   .knowledge-home-recent li,
   .knowledge-home-recent li:first-child::before,
-  .knowledge-home-transition > i::before,
+  .knowledge-home-transition-track::before,
   .knowledge-home-stone-course.is-pushing .knowledge-home-stone,
   .knowledge-home-stone-course.is-falling .knowledge-home-stone,
   .knowledge-home-hero-orbit::before,
   .knowledge-home-hero-orbit > i,
-  .knowledge-home-human-orbit > i,
-  .knowledge-home-human-orbit > i > b,
   .knowledge-home-type-motion {
     animation: none;
   }
