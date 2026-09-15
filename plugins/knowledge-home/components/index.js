@@ -1921,6 +1921,14 @@ function KnowledgeHome(userOpts = {}) {
         action: "开始生成",
         tone: "generator",
       },
+      {
+        eyebrow: "CiteCraft 引用工具",
+        title: "参考文献格式生成器",
+        body: "填写或识别书目信息，即时生成 GB/T 7714—2015 与 APA 7 引用。",
+        href: "/static/tools/citecraft-v8.1-manual-first-ui.html",
+        action: "开始编辑",
+        tone: "citation",
+      },
     ]
 
     if (currentRouteKey) {
@@ -2210,7 +2218,7 @@ function KnowledgeHome(userOpts = {}) {
             h("span", null, "RESEARCH UTILITIES"),
             h("h2", { id: "knowledge-home-tools-title" }, "实用工具"),
           ),
-          h("p", null, "从找问题到写出第一版提示词。"),
+          h("p", null, "从找问题、写提示词到整理参考文献。"),
         ),
         h(
           "div",
@@ -8520,7 +8528,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-home-tool-grid {
   display: grid;
   gap: 0.65rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .knowledge-home-tool {
@@ -8581,6 +8589,14 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 
 .knowledge-home-tool.generator::after {
   animation-direction: reverse;
+}
+
+.knowledge-home-tool.citation {
+  --tool-tone: color-mix(in srgb, var(--home-accent) 55%, #9183d8);
+}
+
+.knowledge-home-tool.citation::after {
+  animation-duration: 18s;
 }
 
 .knowledge-home-tool:hover {
@@ -9249,6 +9265,10 @@ body[data-slug="index"] .center > article.popover-hint + hr {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
+  .knowledge-home-tool-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .knowledge-home-stars,
   .knowledge-home-recent {
     grid-auto-rows: 7rem;
@@ -9272,9 +9292,12 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   }
 
   .knowledge-home-topic-grid,
-  .knowledge-home-tool-grid,
   .knowledge-home-type-nav {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .knowledge-home-tool-grid {
+    grid-template-columns: 1fr;
   }
 
   .knowledge-home-type:nth-child(n) {
