@@ -1993,6 +1993,13 @@ function KnowledgeHome(userOpts = {}) {
         ),
       ),
       h(
+        "div",
+        { class: "knowledge-home-transition", "aria-hidden": "true" },
+        h("span", null, "01"),
+        h("i", null),
+        h("em", null, "SIGNAL → QUESTIONS"),
+      ),
+      h(
         "section",
         { class: "knowledge-home-topics", "aria-labelledby": "knowledge-home-topics-title" },
         h(
@@ -2024,6 +2031,13 @@ function KnowledgeHome(userOpts = {}) {
             ),
           ),
         ),
+      ),
+      h(
+        "div",
+        { class: "knowledge-home-transition", "aria-hidden": "true" },
+        h("span", null, "02"),
+        h("i", null),
+        h("em", null, "QUESTIONS → TOOLS"),
       ),
       h(
         "section",
@@ -2058,6 +2072,13 @@ function KnowledgeHome(userOpts = {}) {
             ),
           ),
         ),
+      ),
+      h(
+        "div",
+        { class: "knowledge-home-transition", "aria-hidden": "true" },
+        h("span", null, "03"),
+        h("i", null),
+        h("em", null, "TOOLS → INDEX"),
       ),
       h(
         "section",
@@ -2106,6 +2127,13 @@ function KnowledgeHome(userOpts = {}) {
             ),
           ),
         ),
+      ),
+      h(
+        "div",
+        { class: "knowledge-home-transition", "aria-hidden": "true" },
+        h("span", null, "04"),
+        h("i", null),
+        h("em", null, "INDEX → CONNECTIONS"),
       ),
       h(
         "div",
@@ -2163,6 +2191,13 @@ function KnowledgeHome(userOpts = {}) {
         ),
       ),
       h(
+        "div",
+        { class: "knowledge-home-transition", "aria-hidden": "true" },
+        h("span", null, "05"),
+        h("i", null),
+        h("em", null, "CONNECTIONS → FIELD NOTE"),
+      ),
+      h(
         "section",
         { class: "knowledge-home-ai-essay", "aria-labelledby": "knowledge-home-ai-essay-title" },
         h(
@@ -2185,26 +2220,58 @@ function KnowledgeHome(userOpts = {}) {
               ),
               h(
                 "div",
-                { class: "knowledge-home-ai-essay-signals" },
-                h("i", null, h("b", null, "01"), "拆"),
-                h("i", null, h("b", null, "02"), "核"),
-                h("i", null, h("b", null, "03"), "连"),
-              ),
-              h(
-                "button",
                 {
-                  type: "button",
-                  "data-ai-load-toggle": "true",
-                  "aria-expanded": "false",
+                  class: "knowledge-home-stone-course",
+                  "data-stone-course": "true",
+                  "data-stage": "0",
                 },
-                "展开搬运清单 ↗",
-              ),
-              h(
-                "div",
-                { class: "knowledge-home-ai-essay-load", hidden: true },
-                h("p", null, h("strong", null, "拆"), " 概念，确认它究竟在说什么。"),
-                h("p", null, h("strong", null, "核"), " 证据，追问它是否真的支持结论。"),
-                h("p", null, h("strong", null, "连"), " 来源，把页码和出处搬回来。"),
+                h(
+                  "svg",
+                  {
+                    viewBox: "0 0 320 180",
+                    preserveAspectRatio: "none",
+                    "aria-hidden": "true",
+                  },
+                  h("path", { d: "M18 132 H82 V101 H151 V70 H220 V39 H302" }),
+                ),
+                [
+                  ["拆", "拆开概念"],
+                  ["核", "核对证据"],
+                  ["连", "连回来源"],
+                  ["上", "运上山顶"],
+                ].map(([short, label], index) =>
+                  h(
+                    "button",
+                    {
+                      type: "button",
+                      class: "knowledge-home-stone-stage",
+                      "data-stone-stage": String(index),
+                      "aria-label": label,
+                      "aria-pressed": index === 0 ? "true" : "false",
+                    },
+                    h("b", null, String(index + 1).padStart(2, "0")),
+                    h("span", null, short),
+                  ),
+                ),
+                h(
+                  "button",
+                  {
+                    type: "button",
+                    class: "knowledge-home-stone",
+                    "data-stone": "true",
+                    "aria-label": "推动石头：当前在拆开概念",
+                  },
+                  h("span", { "aria-hidden": "true" }),
+                ),
+                h(
+                  "p",
+                  {
+                    class: "knowledge-home-stone-status",
+                    "data-stone-status": "true",
+                    "aria-live": "polite",
+                  },
+                  "山脚 · 先把概念拆开。",
+                ),
               ),
             ),
           ),
@@ -2243,6 +2310,14 @@ function KnowledgeHome(userOpts = {}) {
             { class: "knowledge-home-ai-profile-head" },
             h("span", null, "THE HUMAN BEHIND THE VAULT"),
             h("h3", null, "推石头的人是谁？"),
+            h(
+              "div",
+              { class: "knowledge-home-ai-profile-index", "aria-label": "研究关键词" },
+              h("small", null, "SCNU · EDUCATION · RESEARCH"),
+              h("i", null, "比较教育"),
+              h("i", null, "课堂教学"),
+              h("i", null, "证据与治理"),
+            ),
           ),
           h(
             "div",
@@ -2343,21 +2418,127 @@ function bindKnowledgeHomeDragRails() {
   }
 }
 
-function bindKnowledgeHomeAiLoad() {
-  const button = document.querySelector("[data-ai-load-toggle]")
-  const load = document.querySelector(".knowledge-home-ai-essay-load")
-  if (!button || !load || button.dataset.bound === "true") return
-  button.dataset.bound = "true"
-  button.addEventListener("click", () => {
-    const expanded = button.getAttribute("aria-expanded") === "true"
-    button.setAttribute("aria-expanded", String(!expanded))
-    load.hidden = expanded
-    button.textContent = expanded ? "展开搬运清单 ↗" : "收起搬运清单 ↖"
+function bindKnowledgeHomeStone() {
+  const course = document.querySelector("[data-stone-course]")
+  const stone = course?.querySelector("[data-stone]")
+  const status = course?.querySelector("[data-stone-status]")
+  const stages = Array.from(course?.querySelectorAll("[data-stone-stage]") || [])
+  if (!course || !stone || !status || stages.length === 0 || course.dataset.bound === "true") return
+  course.dataset.bound = "true"
+
+  const positions = [
+    { x: 12, y: 73 },
+    { x: 35, y: 56 },
+    { x: 58, y: 39 },
+    { x: 83, y: 22 },
+  ]
+  const messages = [
+    "山脚 · 先把概念拆开。",
+    "第二格 · 核对证据是否站得住。",
+    "第三格 · 把判断连回页码与来源。",
+    "山顶 · 终于可以拼成一份成稿。",
+  ]
+  const labels = ["拆开概念", "核对证据", "连回来源", "运上山顶"]
+  let currentStage = Number(course.dataset.stage || 0)
+  let pointerActive = false
+  let moved = false
+  let suppressClick = false
+  let animationTimer
+
+  const setStage = (nextStage, motion = "push") => {
+    currentStage = Math.max(0, Math.min(positions.length - 1, nextStage))
+    course.dataset.stage = String(currentStage)
+    status.textContent = messages[currentStage]
+    stone.setAttribute("aria-label", "推动石头：当前在" + labels[currentStage])
+    stages.forEach((stage, index) => {
+      stage.setAttribute("aria-pressed", String(index === currentStage))
+    })
+    course.classList.remove("is-pushing", "is-falling")
+    void course.offsetWidth
+    course.classList.add(motion === "fall" ? "is-falling" : "is-pushing")
+    window.clearTimeout(animationTimer)
+    animationTimer = window.setTimeout(() => {
+      course.classList.remove("is-pushing", "is-falling")
+    }, 680)
+  }
+
+  stages.forEach((stage, index) => {
+    stage.addEventListener("click", () => setStage(index, index < currentStage ? "fall" : "push"))
+  })
+
+  stone.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return
+    pointerActive = true
+    moved = false
+    course.classList.add("is-dragging")
+    stone.setPointerCapture?.(event.pointerId)
+  })
+
+  stone.addEventListener("pointermove", (event) => {
+    if (!pointerActive) return
+    const rect = course.getBoundingClientRect()
+    const x = Math.max(7, Math.min(90, ((event.clientX - rect.left) / rect.width) * 100))
+    const y = Math.max(13, Math.min(80, ((event.clientY - rect.top) / rect.height) * 100))
+    const current = positions[currentStage]
+    if (Math.abs(x - current.x) > 2 || Math.abs(y - current.y) > 2) moved = true
+    if (!moved) return
+    event.preventDefault()
+    stone.style.left = x + "%"
+    stone.style.top = y + "%"
+  })
+
+  const finishStoneDrag = (event) => {
+    if (!pointerActive) return
+    pointerActive = false
+    course.classList.remove("is-dragging")
+    if (stone.hasPointerCapture?.(event.pointerId)) stone.releasePointerCapture(event.pointerId)
+    if (!moved) return
+
+    const rect = course.getBoundingClientRect()
+    if (!Number.isFinite(event.clientX) || !Number.isFinite(event.clientY)) {
+      stone.style.removeProperty("left")
+      stone.style.removeProperty("top")
+      return
+    }
+    const x = ((event.clientX - rect.left) / rect.width) * 100
+    const y = ((event.clientY - rect.top) / rect.height) * 100
+    let nearestStage = 0
+    let nearestDistance = Infinity
+    positions.forEach((position, index) => {
+      const distance = Math.hypot(position.x - x, position.y - y)
+      if (distance < nearestDistance) {
+        nearestDistance = distance
+        nearestStage = index
+      }
+    })
+    stone.style.removeProperty("left")
+    stone.style.removeProperty("top")
+    suppressClick = true
+    setStage(nearestStage, nearestStage < currentStage ? "fall" : "push")
+  }
+
+  stone.addEventListener("pointerup", finishStoneDrag)
+  stone.addEventListener("pointercancel", finishStoneDrag)
+  stone.addEventListener("click", (event) => {
+    if (suppressClick) {
+      event.preventDefault()
+      suppressClick = false
+      return
+    }
+    const atSummit = currentStage === positions.length - 1
+    setStage(atSummit ? 0 : currentStage + 1, atSummit ? "fall" : "push")
+  })
+  stone.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return
+    event.preventDefault()
+    const direction = event.key === "ArrowRight" ? 1 : -1
+    const nextStage = Math.max(0, Math.min(positions.length - 1, currentStage + direction))
+    setStage(nextStage, direction < 0 ? "fall" : "push")
   })
 }
 
 bindKnowledgeHomeDragRails()
-bindKnowledgeHomeAiLoad()
+bindKnowledgeHomeStone()
 
 function rotateMethodsRandomCards() {
   const cards = Array.from(document.querySelectorAll("[data-method-random-card]"))
@@ -6104,26 +6285,11 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 }
 
 .knowledge-home-ai-essay-head::after {
-  border: 1px solid color-mix(in srgb, var(--home-accent) 32%, transparent);
-  border-radius: 50%;
-  box-shadow: 0 0 0 1.1rem color-mix(in srgb, var(--home-accent) 7%, transparent);
-  content: "";
-  height: 4.8rem;
-  margin: 1.5rem 0 0 0.5rem;
-  opacity: 0.75;
-  width: 4.8rem;
+  display: none;
 }
 
 .knowledge-home-ai-essay-head::before {
-  background: var(--home-copper);
-  border-radius: 50%;
-  content: "";
-  height: 0.42rem;
-  left: 2.7rem;
-  opacity: 0.9;
-  position: absolute;
-  top: 13.1rem;
-  width: 0.42rem;
+  display: none;
 }
 
 .knowledge-home-ai-profile-head::after {
@@ -6136,6 +6302,38 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   line-height: 1;
   position: absolute;
   right: 0.1rem;
+}
+
+.knowledge-home-ai-profile-index {
+  align-content: start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.32rem;
+  margin-top: 1rem;
+  max-width: 12rem;
+  position: relative;
+  z-index: 1;
+}
+
+.knowledge-home-ai-profile-index small {
+  border-bottom: 1px solid var(--home-line);
+  color: var(--home-muted);
+  flex-basis: 100%;
+  font-family: var(--font-mono);
+  font-size: 0.43rem;
+  letter-spacing: 0.07em;
+  padding-bottom: 0.35rem;
+}
+
+.knowledge-home-ai-profile-index i {
+  background: color-mix(in srgb, var(--home-accent) 8%, var(--home-surface));
+  border: 1px solid color-mix(in srgb, var(--home-accent) 25%, var(--home-line));
+  border-radius: 999px;
+  color: var(--home-accent);
+  font-family: var(--font-serif);
+  font-size: 0.55rem;
+  font-style: normal;
+  padding: 0.2rem 0.35rem;
 }
 
 .knowledge-home-ai-essay-head > span,
@@ -6201,62 +6399,181 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   letter-spacing: 0.02em;
 }
 
-.knowledge-home-ai-essay-signals {
-  display: flex;
-  gap: 0.35rem;
-  margin: 0.25rem 0 0.35rem;
+.knowledge-home-stone-course {
+  --stone-left: 12%;
+  --stone-top: 73%;
+  background:
+    linear-gradient(var(--home-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--home-grid) 1px, transparent 1px),
+    color-mix(in srgb, var(--home-accent) 5%, var(--home-surface));
+  background-size: 18px 18px;
+  border: 1px solid var(--home-line);
+  border-radius: 0.7rem;
+  height: 11.2rem;
+  margin-top: 0.55rem;
+  overflow: hidden;
+  position: relative;
+  touch-action: pan-y;
 }
 
-.knowledge-home-ai-essay-signals i {
-  align-items: center;
+.knowledge-home-stone-course::after {
   color: var(--home-muted);
-  display: inline-flex;
-  font-family: var(--font-serif);
-  font-size: 0.68rem;
-  font-style: normal;
-  gap: 0.16rem;
-}
-
-.knowledge-home-ai-essay-signals b {
-  color: var(--home-copper);
+  content: "PUSH / DRAG";
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.44rem;
+  letter-spacing: 0.08em;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.4rem;
 }
 
-.knowledge-home-ai-essay-console button {
-  background: transparent;
-  border: 0;
-  color: var(--home-copper);
-  cursor: pointer;
-  font-family: var(--font-serif);
-  font-size: 0.63rem;
-  font-weight: 700;
-  padding: 0;
-  text-align: left;
+.knowledge-home-stone-course[data-stage="1"] {
+  --stone-left: 35%;
+  --stone-top: 56%;
 }
 
-.knowledge-home-ai-essay-console button:hover {
+.knowledge-home-stone-course[data-stage="2"] {
+  --stone-left: 58%;
+  --stone-top: 39%;
+}
+
+.knowledge-home-stone-course[data-stage="3"] {
+  --stone-left: 83%;
+  --stone-top: 22%;
+}
+
+.knowledge-home-stone-course svg {
+  height: 100%;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+}
+
+.knowledge-home-stone-course svg path {
+  fill: none;
+  stroke: color-mix(in srgb, var(--home-copper) 64%, var(--home-line));
+  stroke-dasharray: 3 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+
+.knowledge-home-stone-stage {
+  align-items: center;
+  background: var(--home-surface);
+  border: 1px solid color-mix(in srgb, var(--home-accent) 32%, var(--home-line));
+  border-radius: 0.42rem;
   color: var(--home-ink);
-}
-
-.knowledge-home-ai-essay-load {
-  border-left: 1px solid var(--home-copper);
+  cursor: pointer;
   display: grid;
-  gap: 0.2rem;
-  margin-top: 0.35rem;
-  padding-left: 0.55rem;
+  height: 1.8rem;
+  justify-items: center;
+  padding: 0.12rem;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+  width: 1.8rem;
+  z-index: 2;
 }
 
-.knowledge-home-ai-essay-load p {
+.knowledge-home-stone-stage[data-stone-stage="0"] { left: 12%; top: 73%; }
+.knowledge-home-stone-stage[data-stone-stage="1"] { left: 35%; top: 56%; }
+.knowledge-home-stone-stage[data-stone-stage="2"] { left: 58%; top: 39%; }
+.knowledge-home-stone-stage[data-stone-stage="3"] { left: 83%; top: 22%; }
+
+.knowledge-home-stone-stage b {
   color: var(--home-muted);
-  font-family: var(--font-serif);
-  font-size: 0.62rem;
-  line-height: 1.4;
-  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.38rem;
+  line-height: 1;
 }
 
-.knowledge-home-ai-essay-load p strong {
-  color: var(--home-copper);
+.knowledge-home-stone-stage span {
+  color: var(--home-accent);
+  font-family: var(--font-serif);
+  font-size: 0.61rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.knowledge-home-stone-stage:hover,
+.knowledge-home-stone-stage[aria-pressed="true"] {
+  background: var(--home-accent-soft);
+  border-color: var(--home-accent);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.knowledge-home-stone {
+  background:
+    radial-gradient(circle at 34% 30%, rgba(255, 255, 255, 0.42) 0 8%, transparent 9%),
+    radial-gradient(circle at 67% 64%, rgba(42, 33, 28, 0.2) 0 11%, transparent 12%),
+    linear-gradient(145deg, #c69668, #8d5e43 62%, #644033);
+  border: 1px solid color-mix(in srgb, var(--home-copper) 65%, var(--home-line));
+  border-radius: 47% 53% 46% 54%;
+  box-shadow: 0 0.35rem 0.75rem rgba(42, 33, 28, 0.25);
+  cursor: grab;
+  height: 2rem;
+  left: var(--stone-left);
+  padding: 0;
+  position: absolute;
+  top: var(--stone-top);
+  touch-action: none;
+  transform: translate(-50%, -50%);
+  transition:
+    left 560ms cubic-bezier(0.25, 0.8, 0.25, 1),
+    top 560ms cubic-bezier(0.25, 0.8, 0.25, 1),
+    filter 180ms ease;
+  width: 2rem;
+  z-index: 4;
+}
+
+.knowledge-home-stone:hover {
+  filter: brightness(1.08);
+}
+
+.knowledge-home-stone:focus-visible {
+  outline: 2px solid var(--home-accent);
+  outline-offset: 3px;
+}
+
+.knowledge-home-stone-course.is-dragging .knowledge-home-stone {
+  cursor: grabbing;
+  transition: none;
+}
+
+.knowledge-home-stone-course.is-pushing .knowledge-home-stone {
+  animation: knowledge-home-stone-push 620ms ease-out;
+}
+
+.knowledge-home-stone-course.is-falling .knowledge-home-stone {
+  animation: knowledge-home-stone-fall 620ms ease-in;
+}
+
+.knowledge-home-stone-status {
+  bottom: 0.38rem;
+  color: var(--home-muted);
+  font-family: var(--font-serif) !important;
+  font-size: 0.53rem !important;
+  left: 0.55rem;
+  line-height: 1.25 !important;
+  margin: 0 !important;
+  max-width: calc(100% - 1.1rem) !important;
+  position: absolute;
+}
+
+@keyframes knowledge-home-stone-push {
+  0% { transform: translate(-50%, -50%) rotate(0); }
+  46% { transform: translate(-50%, calc(-50% - 0.5rem)) rotate(130deg); }
+  100% { transform: translate(-50%, -50%) rotate(250deg); }
+}
+
+@keyframes knowledge-home-stone-fall {
+  0% { transform: translate(-50%, -50%) rotate(0); }
+  42% { transform: translate(-50%, calc(-50% - 0.7rem)) rotate(-150deg); }
+  100% { transform: translate(-50%, -50%) rotate(-330deg); }
 }
 
 .knowledge-home-ai-essay-copy,
@@ -6338,6 +6655,71 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   display: block;
   font-style: normal;
   margin-top: 0.2rem;
+}
+
+.knowledge-home-transition {
+  align-items: center;
+  color: var(--home-muted);
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: auto minmax(2rem, 1fr) auto;
+  margin: 1.65rem 0.15rem 0.85rem;
+}
+
+.knowledge-home-transition > span,
+.knowledge-home-transition > em {
+  font-family: var(--font-mono);
+  font-size: 0.49rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+}
+
+.knowledge-home-transition > span {
+  color: var(--home-copper);
+}
+
+.knowledge-home-transition > em {
+  color: var(--home-muted);
+}
+
+.knowledge-home-transition > i {
+  background: var(--home-line);
+  height: 1px;
+  overflow: visible;
+  position: relative;
+}
+
+.knowledge-home-transition > i::before {
+  animation: knowledge-home-route-travel 5.2s ease-in-out infinite;
+  background: var(--home-copper);
+  border: 2px solid var(--home-paper);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--home-copper) 42%, var(--home-line));
+  content: "";
+  height: 0.35rem;
+  left: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 0.35rem;
+}
+
+.knowledge-home-transition + .knowledge-home-topics,
+.knowledge-home-transition + .knowledge-home-tools,
+.knowledge-home-transition + .knowledge-home-catalogue,
+.knowledge-home-transition + .knowledge-home-grid,
+.knowledge-home-transition + .knowledge-home-ai-essay {
+  margin-top: 0;
+}
+
+@keyframes knowledge-home-route-travel {
+  0%,
+  8% { left: 0; }
+  48%,
+  58% { left: 58%; }
+  92%,
+  100% { left: 100%; }
 }
 
 .knowledge-home-topics {
@@ -6952,7 +7334,10 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 
 @media (prefers-reduced-motion: reduce) {
   .knowledge-home-recent li,
-  .knowledge-home-recent li:first-child::before {
+  .knowledge-home-recent li:first-child::before,
+  .knowledge-home-transition > i::before,
+  .knowledge-home-stone-course.is-pushing .knowledge-home-stone,
+  .knowledge-home-stone-course.is-falling .knowledge-home-stone {
     animation: none;
   }
 
@@ -7026,10 +7411,6 @@ body[data-slug="index"] .center > article.popover-hint + hr {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
-  .knowledge-home-ai-essay-head::before {
-    top: 12.7rem;
-  }
-
   .knowledge-home-stars,
   .knowledge-home-recent {
     grid-auto-rows: 7rem;
@@ -7092,13 +7473,16 @@ body[data-slug="index"] .center > article.popover-hint + hr {
     margin-top: 0.7rem;
   }
 
-  .knowledge-home-ai-essay-head::after {
-    margin-top: 1rem;
+  .knowledge-home-transition {
+    grid-template-columns: auto minmax(2rem, 1fr);
   }
 
-  .knowledge-home-ai-essay-head::before {
-    left: 2.65rem;
-    top: 11.8rem;
+  .knowledge-home-transition > em {
+    display: none;
+  }
+
+  .knowledge-home-stone-course {
+    height: 10.5rem;
   }
 
   .knowledge-home-section-head,
