@@ -80,8 +80,13 @@ function getVisibleProperties(data, opts) {`,
     file: ".quartz/plugins/bases-page/src/components/views/cards.tsx",
     find: `                <span class="bases-card-title">{entry.title}</span>`,
     replace: `                <a href={href} class="internal internal-link bases-card-title">
-                  {entry.title}
+                  {String(resolveEntryPropertyValue("argument_display_title", entry) || entry.title)}
                 </a>`,
+  },
+  {
+    file: ".quartz/plugins/bases-page/src/components/views/cards.tsx",
+    find: `                      <div class="bases-card-row">`,
+    replace: `                      <div class="bases-card-row" data-column={column}>`,
   },
   {
     file: ".quartz/plugins/bases-page/src/components/views/cards.tsx",
@@ -98,7 +103,12 @@ function getVisibleProperties(data, opts) {`,
   {
     file: ".quartz/plugins/bases-page/dist/chunk-4HXXKSJ4.js",
     find: `          /* @__PURE__ */ u("span", { class: "bases-card-title", children: entry.title }),`,
-    replace: `          /* @__PURE__ */ u("a", { href, class: "internal internal-link bases-card-title", children: entry.title }),`,
+    replace: `          /* @__PURE__ */ u("a", { href, class: "internal internal-link bases-card-title", children: String(resolveEntryPropertyValue("argument_display_title", entry) || entry.title) }),`,
+  },
+  {
+    file: ".quartz/plugins/bases-page/dist/chunk-4HXXKSJ4.js",
+    find: `            return /* @__PURE__ */ u("div", { class: "bases-card-row", children: [`,
+    replace: `            return /* @__PURE__ */ u("div", { class: "bases-card-row", "data-column": column, children: [`,
   },
   {
     file: ".quartz/plugins/darkmode/src/components/scripts/darkmode.inline.ts",
