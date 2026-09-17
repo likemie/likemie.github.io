@@ -79,6 +79,11 @@ function getVisibleProperties(data, opts) {`,
   {
     file: ".quartz/plugins/bases-page/src/components/views/cards.tsx",
     find: `                <span class="bases-card-title">{entry.title}</span>`,
+    alsoFind: [
+      `                <a href={href} class="internal internal-link bases-card-title">
+                  {entry.title}
+                </a>`,
+    ],
     replace: `                <a href={href} class="internal internal-link bases-card-title">
                   {String(resolveEntryPropertyValue("argument_display_title", entry) || entry.title)}
                 </a>`,
@@ -103,6 +108,9 @@ function getVisibleProperties(data, opts) {`,
   {
     file: ".quartz/plugins/bases-page/dist/chunk-4HXXKSJ4.js",
     find: `          /* @__PURE__ */ u("span", { class: "bases-card-title", children: entry.title }),`,
+    alsoFind: [
+      `          /* @__PURE__ */ u("a", { href, class: "internal internal-link bases-card-title", children: entry.title }),`,
+    ],
     replace: `          /* @__PURE__ */ u("a", { href, class: "internal internal-link bases-card-title", children: String(resolveEntryPropertyValue("argument_display_title", entry) || entry.title) }),`,
   },
   {
@@ -190,7 +198,9 @@ function resolvePatchFile(patch) {
     .map((candidate) => path.join(directory, candidate))
     .filter((candidate) => {
       const contents = fs.readFileSync(candidate, "utf8")
-      return contents.includes(patch.find) || (patch.replace && contents.includes(patch.replace))
+      return [patch.find, ...(patch.alsoFind ?? []), patch.replace].some(
+        (anchor) => anchor && contents.includes(anchor),
+      )
     })
 
   if (candidates.length !== 1) return patch.file
@@ -205,12 +215,15 @@ for (const patch of patches) {
 
   const original = fs.readFileSync(patchFile, "utf8")
   if (patch.replace && original.includes(patch.replace)) continue
-  if (!original.includes(patch.find)) {
+  const anchor = [patch.find, ...(patch.alsoFind ?? [])].find((candidate) =>
+    original.includes(candidate),
+  )
+  if (!anchor) {
     if (patch.replace === "") continue
     throw new Error(`Patch anchor not found in ${patchFile}`)
   }
 
-  fs.writeFileSync(patchFile, original.replace(patch.find, patch.replace))
+  fs.writeFileSync(patchFile, original.replace(anchor, patch.replace))
 }
 
 console.log("Patched Quartz plugins.")
