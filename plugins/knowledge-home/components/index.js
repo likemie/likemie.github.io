@@ -2494,13 +2494,15 @@ function bindKnowledgeHomeDragRails() {
       startY = event.clientY
       startScrollTop = rail.scrollTop
       rail.classList.add("is-dragging")
-      rail.setPointerCapture?.(event.pointerId)
     })
 
     rail.addEventListener("pointermove", (event) => {
       if (!active) return
       const distance = event.clientY - startY
-      if (Math.abs(distance) > 5) moved = true
+      if (Math.abs(distance) > 5 && !moved) {
+        moved = true
+        rail.setPointerCapture?.(event.pointerId)
+      }
       if (!moved) return
       event.preventDefault()
       rail.scrollTop = startScrollTop - distance
@@ -2511,7 +2513,7 @@ function bindKnowledgeHomeDragRails() {
       active = false
       suppressClick = moved
       rail.classList.remove("is-dragging")
-      rail.releasePointerCapture?.(event.pointerId)
+      if (rail.hasPointerCapture?.(event.pointerId)) rail.releasePointerCapture(event.pointerId)
     }
 
     rail.addEventListener("pointerup", finishDrag)
