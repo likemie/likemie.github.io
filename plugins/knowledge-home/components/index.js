@@ -1924,10 +1924,18 @@ function KnowledgeHome(userOpts = {}) {
       {
         eyebrow: "CiteCraft 引用工具",
         title: "参考文献格式生成器",
-        body: "填写或识别书目信息，即时生成 GB/T 7714—2015 与 APA 7 引用。",
-        href: "/static/tools/citecraft-v8.1-manual-first-ui.html",
+        body: "填写、识别或导入书目信息，核对后生成 GB/T 7714—2015 与 APA 7 引用。",
+        href: "/static/tools/citecraft-v9_5_0-editor.html",
         action: "开始编辑",
         tone: "citation",
+      },
+      {
+        eyebrow: "文献综述",
+        title: "文献综述 Prompt 生成器",
+        body: "从综述逻辑诊断、单篇筛选到多篇整合与写作，分阶段生成可直接使用的提示词。",
+        href: "/static/tools/literature_review_prompt_v6_9_ref_style.html",
+        action: "开始综述",
+        tone: "review",
       },
     ]
 
@@ -2218,7 +2226,7 @@ function KnowledgeHome(userOpts = {}) {
             h("span", null, "RESEARCH UTILITIES"),
             h("h2", { id: "knowledge-home-tools-title" }, "实用工具"),
           ),
-          h("p", null, "从找问题、写提示词到整理参考文献。"),
+          h("p", null, "从确定选题、组织综述到整理参考文献。"),
         ),
         h(
           "div",
@@ -2236,7 +2244,7 @@ function KnowledgeHome(userOpts = {}) {
               h("span", null, tool.eyebrow),
               h("strong", null, tool.title),
               h("p", null, tool.body),
-              h("em", null, `${tool.action} ↗`),
+              h("em", null, tool.action),
             ),
           ),
         ),
@@ -8530,7 +8538,7 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-home-tool-grid {
   display: grid;
   gap: 0.65rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .knowledge-home-tool {
@@ -8599,6 +8607,15 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 
 .knowledge-home-tool.citation::after {
   animation-duration: 18s;
+}
+
+.knowledge-home-tool.review {
+  --tool-tone: color-mix(in srgb, var(--home-copper) 42%, #6aa5c7);
+}
+
+.knowledge-home-tool.review::after {
+  animation-direction: reverse;
+  animation-duration: 16s;
 }
 
 .knowledge-home-tool:hover {

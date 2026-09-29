@@ -1,0 +1,1428 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>参考文献编辑器 · CiteCraft v9.5.0</title>
+<style>
+:root{
+ --navy:#1D2533;--navy2:#26364A;--page:#F9F5F2;--card:#FFFFFF;--line:#E8DDD6;
+ --ink:#1E232C;--ink2:#48505C;--muted:#6E7680;
+ --red:#B8282E;--red2:#D23A33;--red-soft:#FBE3DD;
+ --tan:#C98A4B;--tan-line:#D9A56E;--cream:#FDF5EC;--cream2:#FCEBDB;--peach:#F7D7B0;
+ --sans:"PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Source Han Sans SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif;
+ --serif:"Noto Serif CJK SC","Source Han Serif SC","Songti SC","STSong","SimSun",Georgia,"Times New Roman",serif;
+ --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:15px/1.6 var(--sans)}
+button{font:inherit}
+.hidden{display:none!important}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;border-top:5px solid var(--peach);text-align:center;color:#fff;padding:0 20px 48px;
+ background:repeating-linear-gradient(135deg,rgba(255,255,255,.028) 0 2px,transparent 2px 22px),linear-gradient(120deg,#171D29 0%,var(--navy) 35%,var(--navy2) 100%)}
+.badge{display:inline-block;background:var(--red);color:#fff;font-weight:600;font-size:15px;letter-spacing:.02em;
+ padding:7px 26px 8px;border-radius:0 0 22px 22px;box-shadow:0 6px 16px -8px rgba(0,0,0,.5)}
+.hero h1{margin:30px 0 14px;font:900 clamp(30px,4.6vw,46px)/1.15 var(--serif);letter-spacing:.14em;text-indent:.14em}
+.hero p{margin:0 auto;max-width:720px;color:#B7BFCB;font-size:16px}
+.hero-actions{display:flex;justify-content:center;gap:10px;margin-top:26px;flex-wrap:wrap}
+.hero .btn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.28);color:#fff}
+.hero .btn:hover{background:rgba(255,255,255,.12);border-color:#fff;color:#fff}
+.hero .btn[aria-expanded="true"]{background:var(--red);border-color:var(--red)}
+
+/* ---------- buttons ---------- */
+.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 16px;border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--red);color:var(--red)}
+.btn.primary{background:linear-gradient(135deg,var(--red),var(--red2));border-color:var(--red);color:#fff}
+.btn.primary:hover{filter:brightness(1.06);color:#fff}
+.btn.sm{padding:5px 12px;font-size:13px}
+.btn:disabled{opacity:.6;cursor:progress}
+.link{border:0;background:none;color:var(--muted);font-size:13px;cursor:pointer;padding:4px 0;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line)}
+.link:hover{color:var(--red);text-decoration-color:currentColor}
+
+/* ---------- page ---------- */
+.shell{max-width:1240px;margin:0 auto;padding:40px 28px 80px}
+.lead{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--red);border-radius:12px;padding:24px 30px;margin-bottom:28px}
+.lead .lab{display:block;font-size:15px;color:var(--ink);font-weight:500;margin-bottom:10px}
+.lead .lab strong{color:var(--red)}
+.actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.error{background:var(--red-soft);color:var(--red);border-radius:8px;padding:10px 14px;font-size:14px;margin:-12px 0 24px}
+.error:empty{display:none}
+
+textarea,input,select{width:100%;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:9px 12px;font:inherit;font-size:15px;outline:none}
+textarea{resize:vertical;line-height:1.7;min-height:100px}
+input:focus,select:focus,textarea:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(184,40,46,.12)}
+input::placeholder,textarea::placeholder{color:#A6ADB5}
+
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) 460px;gap:36px;align-items:start}
+
+/* numbered step heading */
+.step{display:flex;gap:18px;align-items:flex-start;margin-bottom:22px}
+.step-no{flex:0 0 auto;width:52px;height:52px;border-radius:12px;display:grid;place-items:center;
+ background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;font:700 22px var(--serif);box-shadow:0 8px 18px -10px rgba(184,40,46,.8)}
+.step h2{margin:2px 0 4px;font:700 22px/1.3 var(--serif);color:var(--ink)}
+.step p{margin:0;color:var(--muted);font-size:14px}
+
+/* formula-style box for types */
+.formula{background:linear-gradient(120deg,var(--cream),var(--cream2));border:1.5px solid var(--tan-line);border-radius:12px;padding:18px 22px 20px;margin-bottom:22px}
+.formula-t{font-weight:700;color:var(--tan);letter-spacing:.12em;font-size:15px;margin-bottom:12px}
+.type-row{display:flex;flex-wrap:wrap;gap:8px}
+.type-pill{border:1px solid transparent;background:rgba(255,255,255,.7);color:var(--ink2);border-radius:6px;padding:5px 12px;cursor:pointer;font:600 15px var(--serif)}
+.type-pill .code{font-size:12px;color:var(--muted);margin-left:5px;font-family:var(--serif)}
+.type-pill:hover{border-color:var(--tan-line);color:var(--ink)}
+.type-pill[aria-pressed="true"]{background:var(--red-soft);color:var(--red);border-color:#F0C2B8}
+.type-pill[aria-pressed="true"] .code{color:var(--red)}
+
+/* tabbed white card */
+.tcard{position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.tcard-hd{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-right:16px}
+.tab{background:var(--navy);color:#fff;font-weight:700;font-size:15px;letter-spacing:.04em;padding:9px 22px;border-bottom-right-radius:2px}
+.tcard-meta{font-size:13px;color:var(--muted);text-align:right;display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:flex-end;padding:8px 0}
+.tcard-body{padding:22px 24px 26px}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.wide{grid-column:1/-1}
+.lab{font-size:13.5px;font-weight:600;color:var(--ink2)}
+
+/* people */
+.author-editor{grid-column:1/-1;padding-bottom:4px}
+.author-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px}
+.author-list{display:flex;flex-direction:column;gap:6px}
+.author-row{display:grid;grid-template-columns:22px minmax(0,1fr) minmax(0,.8fr) auto 34px;gap:6px;align-items:center}
+.author-row.cn{grid-template-columns:22px minmax(0,1fr) auto 34px}
+.author-no{font:600 14px var(--serif);color:var(--red);text-align:right;padding-right:2px}
+.author-type{border:1px solid transparent;background:none;color:var(--muted);font-size:12px;padding:6px;border-radius:6px;cursor:pointer;white-space:nowrap}
+.author-type:hover{border-color:var(--line);color:var(--ink)}
+.author-remove{height:36px;border:1px solid transparent;background:none;color:var(--muted);border-radius:8px;font-size:18px;line-height:1;cursor:pointer}
+.author-remove:hover{border-color:var(--line);color:var(--red);background:var(--page)}
+.author-add{border:0;background:none;color:var(--red);font-weight:600;font-size:13px;cursor:pointer;padding:2px 0}
+.author-add:hover{text-decoration:underline;text-underline-offset:3px}
+.author-hint{font-size:12.5px;color:var(--muted);margin-top:6px;padding-left:28px}
+.author-empty{font-size:13px;color:var(--muted);padding:8px 0 2px 28px}
+
+.date-input-wrap{display:flex;gap:6px;align-items:center}.date-input-wrap input{min-width:0}
+.date-today{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;padding:9px 12px;font-weight:600;cursor:pointer}
+.date-today:hover{border-color:var(--red);color:var(--red)}
+
+/* preview */
+.preview{position:sticky;top:20px}
+.preview .tcard{margin-bottom:16px}
+.cite{font:16.5px/1.95 var(--serif);word-break:break-word;min-height:3.9em;color:var(--ink)}
+.cite-empty{color:var(--muted);font-family:var(--sans);font-size:14px}
+.gap{font:inherit;font-weight:600;line-height:1.3;background:var(--red-soft);color:var(--red);border:0;border-radius:4px;padding:1px 7px;margin:0 1px;cursor:pointer}
+.gap:hover{background:#F6CFC6}
+.gap-note{margin:14px 0 0;padding-top:12px;border-top:1px dashed var(--line);font-size:13.5px;color:var(--ink2)}
+.gap-note::before{content:"→ ";color:var(--red);font-weight:700}
+.gap-note.ok{color:var(--ink2)}
+.gap-note.ok::before{content:"✓ ";color:#3C7A55}
+.gap-note:empty{display:none}
+
+.enw-box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0 20px}
+.enw-box summary{cursor:pointer;padding:14px 0;font-weight:700;color:var(--ink2)}
+.enw-box .actions{margin-top:0}
+.enw{font:12.5px/1.6 var(--mono);white-space:pre-wrap;word-break:break-all;background:var(--page);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:12px 0 18px;max-height:260px;overflow:auto}
+
+.site-foot{text-align:center;color:var(--muted);font-size:12.5px;margin-top:40px}
+
+/* dev test suite (?test=1) */
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-top:24px}.card .hd{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}.card .body{padding:6px 18px 14px}.muted{color:var(--muted);font-size:13px}
+
+@media(max-width:1020px){.workspace{grid-template-columns:1fr}.preview{position:static}}
+@media(max-width:620px){
+ .shell{padding:28px 14px 60px}.hero{padding-bottom:36px}.badge{font-size:13px;padding:6px 18px 7px}
+ .grid{grid-template-columns:1fr}.wide{grid-column:auto}
+ .step-no{width:44px;height:44px;font-size:19px}.step h2{font-size:19px}
+ .tcard-body{padding:18px 16px 20px}.lead{padding:18px 18px}
+ .author-row{grid-template-columns:22px minmax(0,1fr) minmax(0,1fr) 34px;row-gap:0}
+ .author-row.cn{grid-template-columns:22px minmax(0,1fr) 34px}
+ .author-row .author-remove{grid-row:1;grid-column:-2}
+ .author-row .author-type{grid-row:2;grid-column:2/-2;justify-self:start;padding:2px 4px}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="hero">
+ <div class="badge">Reference Editor · GB/T 7714—2015 与 APA 7</div>
+ <h1>参考文献编辑器</h1>
+ <p>填写书目信息，即时排出规范引用 · 支持粘贴识别、豆瓣图书网址与 EndNote 导入</p>
+ <div class="hero-actions">
+  <button class="btn" id="importToggle" aria-expanded="true" aria-controls="importPanel">收起粘贴框</button>
+  <button class="btn" id="importEnwBtn">导入 .enw</button>
+  <input id="enwFileInput" type="file" accept=".enw,text/plain" class="hidden">
+ </div>
+</header>
+
+<main class="shell">
+<section class="lead" id="importPanel">
+ <label class="lab" for="raw">粘贴<strong>参考文献、豆瓣图书网址或豆瓣页面上的图书信息</strong>，识别结果会填入下方字段，请逐项核对。</label>
+ <textarea id="raw" spellcheck="false" placeholder="例：https://book.douban.com/subject/38370177/&#10;或：KANAMORI H. Shaking without quaking[J]. Science, 1998, 279(5359): 2063."></textarea>
+ <div class="actions"><button class="btn primary" id="parseBtn">识别并填入</button><button class="btn" id="clearBtn">清空文本</button></div>
+</section>
+<div id="err" class="error" role="alert"></div>
+
+<div class="workspace">
+ <section id="editor" aria-labelledby="step1">
+  <div class="step"><div class="step-no">1</div><div><h2 id="step1">填写书目信息</h2><p>先选文献类型，再填写你知道的信息，格式细节交给引擎处理</p></div></div>
+  <div class="formula">
+   <div class="formula-t">文献类型</div>
+   <div class="type-row" id="typePills" role="group" aria-label="文献类型">
+    <button class="type-pill" data-kind="book">图书<span class="code">M</span></button>
+    <button class="type-pill" data-kind="journal">期刊<span class="code">J</span></button>
+    <button class="type-pill" data-kind="thesis">学位论文<span class="code">D</span></button>
+    <button class="type-pill" data-kind="report">报告<span class="code">R</span></button>
+    <button class="type-pill" data-kind="newspaper">报纸<span class="code">N</span></button>
+    <button class="type-pill" data-kind="proceedings">会议录<span class="code">C</span></button>
+    <button class="type-pill" data-kind="bookChapter">专著析出<span class="code">M//</span></button>
+    <button class="type-pill" data-kind="conferencePaper">会议析出<span class="code">C//</span></button>
+    <button class="type-pill" data-kind="electronic">网页<span class="code">EB/OL</span></button>
+    <button class="type-pill" data-kind="patent">专利<span class="code">P</span></button>
+    <button class="type-pill" data-kind="standard">标准<span class="code">S</span></button>
+   </div>
+  </div>
+  <div class="tcard">
+   <div class="tcard-hd"><div class="tab">书目信息</div><div class="tcard-meta"><span id="parserTag">手动录入</span><button class="link" id="resetBtn" type="button">清空全部字段</button></div></div>
+   <div class="tcard-body"><div id="fields" class="grid"></div></div>
+  </div>
+ </section>
+
+ <aside class="preview" id="outputs" aria-labelledby="step2">
+  <div class="step"><div class="step-no">2</div><div><h2 id="step2">核对并复制</h2><p>红色标记是待补的著录项，点击即可跳到对应字段</p></div></div>
+  <article class="tcard">
+   <div class="tcard-hd"><div class="tab">GB/T 7714—2015</div><button class="btn sm" data-copy="gb">复制</button></div>
+   <div class="tcard-body"><div id="gb" class="cite"></div><p id="gapNote" class="gap-note" aria-live="polite"></p></div>
+  </article>
+  <article class="tcard">
+   <div class="tcard-hd"><div class="tab">APA 7</div><button class="btn sm" data-copy="apa">复制</button></div>
+   <div class="tcard-body"><div id="apa" class="cite"></div></div>
+  </article>
+  <details class="enw-box">
+   <summary>EndNote 标记格式（.enw）</summary>
+   <div class="actions"><button class="btn sm" data-copy="enw">复制</button><button class="btn sm primary" id="exportEnwBtn">导出 .enw 文件</button></div>
+   <pre id="enw" class="enw"></pre>
+  </details>
+ </aside>
+</div>
+<p class="site-foot">CiteCraft v9.5.0</p>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let state={};
+const schemas={
+book:[['authors','作者',1],['title','题名',1],['translator','译者',1],['edition','版本'],['place','出版地'],['publisher','出版者',1],['year','年份'],['pages','页码'],['isbn','ISBN']],
+journal:[['authors','作者',1],['title','题名',1],['journal','期刊名',1],['year','年份'],['volume','卷'],['issue','期'],['pages','页码'],['doi','DOI',1],['issn','ISSN'],['publisher','出版者']],
+thesis:[['authors','作者',1],['title','题名',1],['place','城市'],['institution','学位授予单位',1],['year','年份'],['pages','页码'],['doi','DOI']],
+report:[['authors','责任者',1],['title','题名',1],['place','出版地'],['publisher','机构/出版者',1],['year','年份'],['pages','页码'],['reportNo','报告编号'],['doi','DOI']],
+newspaper:[['authors','作者',1],['title','题名',1],['newspaper','报纸名',1],['date','日期',0,'date'],['edition','版次']],
+proceedings:[['authors','责任者',1],['title','题名',1],['place','出版地'],['publisher','出版者',1],['year','年份'],['pages','页码'],['isbn','ISBN']],
+electronic:[['authors','责任者',1],['title','题名',1],['siteName','网站/来源名称'],['updateDate','更新日期',0,'date'],['accessDate','引用日期',0,'dateNow'],['url','URL',1]],
+patent:[['authors','专利申请者/所有者',1],['title','专利题名',1],['patentNo','专利号',1],['date','公告/公开日期',0,'date']],
+standard:[['authors','责任者',1],['standardNo','标准号'],['title','标准名称',1],['place','出版地'],['publisher','出版者',1],['year','年份']],
+conferencePaper:[['authors','析出文献作者',1],['title','析出文献题名',1],['hostTitle','会议/论文集题名',1],['editors','会议录编者'],['place','出版地'],['publisher','出版者'],['year','年份'],['pages','页码'],['doi','DOI']],
+bookChapter:[['authors','析出文献作者',1],['title','析出文献题名',1],['hostTitle','专著/论文集题名',1],['editors','专著/论文集编者'],['edition','版本'],['place','出版地'],['publisher','出版者'],['year','年份'],['pages','页码'],['isbn','ISBN'],['doi','DOI']]
+};
+function localToday(){let d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function normalizeDateInput(x){x=clean(x).replace(/[./]/g,'-');let m=x.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);return m?`${m[1]}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`:x}
+function clean(x){return String(x||'').replace(/\u00a0/g,' ').replace(/[ \t]+/g,' ').trim()}
+function parseClean(x){
+ return clean(x)
+  .replace(/［/g,'[').replace(/］/g,']')
+  .replace(/（/g,'(').replace(/）/g,')')
+  .replace(/．/g,'.').replace(/，/g,',').replace(/：/g,':')
+  .replace(/；/g,';')
+  // 只把“数字范围”里的连接号统一为 -（如页码 29—36）；标准号 GB/T 7714—2015 除外
+  .replace(/(?<!\b(?:GB|GB\/T|GB\/Z|JY\/T|ISO|IEC)\s*\d+(?:\.\d+)*)(\d)\s*[–—]+\s*(?=\d)/g,'$1-')
+  // 西文里的 en dash 统一为 -；中文破折号“——”和英文 em dash 保留
+  .replace(/–/g,'-');
+}
+function marker(raw){raw=parseClean(raw);let m=raw.match(/\[\s*([A-Za-z]+(?:\s*\/\s*[A-Za-z]+)?)\s*\]/);return m?m[1].replace(/\s/g,'').toUpperCase():''}
+function splitHead(raw){
+ raw=parseClean(raw);
+ let m=raw.match(/\[\s*[A-Za-z]+(?:\s*\/\s*[A-Za-z]+)?\s*\]/);if(!m)return null;
+ let before=clean(raw.slice(0,m.index)),tail=clean(raw.slice(m.index+m[0].length)).replace(/^\.\s*/,'');
+ if(/^[\u3400-\u9fff]/.test(before)){
+   let cm=before.match(/^(.+?)\.\s*(.+)$/);if(cm)return {authors:clean(cm[1]),title:clean(cm[2]),tail};
+   let comma=before.match(/^([^,]{2,50}),\s*(.+)$/);if(comma)return {authors:clean(comma[1]),title:clean(comma[2]),tail};
+ }
+ // Surname followed by initials. The final initial period is part of the author, not the first title delimiter.
+ let single=before.match(/^([A-Za-zÀ-ÖØ-öø-ÿ'’\-]+\s+(?:(?:[A-Z]\.?)(?:\s+|$)){1,4})\s*(.+)$/);
+ if(single&&single[2]){let au=clean(single[1]);if((au.match(/\./g)||[]).length<=1)au=au.replace(/\.$/,'');return {authors:au,title:clean(single[2]),tail};}
+ let multi=before.match(/^(.+?(?:\b(?:and|&)\s+[A-Z]\.?(?:\s*[A-Z][A-Za-z'’\-]+)|[A-Z][A-Za-z'’\-]+,\s*[A-Z]\.))\s*,\s*(.+)$/i);
+ if(multi)return {authors:clean(multi[1]),title:clean(multi[2]),tail};
+ let dot=before.match(/^(.+?)\.\s+([A-Z\u3400-\u9fff].+)$/);
+ if(dot)return {authors:clean(dot[1]),title:clean(dot[2]),tail};
+ return {authors:'',title:before,tail};
+}
+// ===== v8 Evidence-weighted bibliographic parser =====
+const PUB_LEXICON=[
+ {canonical:"民主与建设出版社",aliases:["民主与建设出版社"],city:"北京"},
+ {canonical:"北京联合出版公司",aliases:["北京联合出版公司","北京联合出版有限责任公司"],city:"北京"},
+ {canonical:"中信出版社",aliases:["中信出版社", "中信出版集团", "中信出版集团股份有限公司"],city:"北京"},
+ {canonical:"商务印书馆",aliases:["商务印书馆"],city:"北京"},
+ {canonical:"中华书局",aliases:["中华书局"],city:"北京"},
+ {canonical:"人民出版社",aliases:["人民出版社"],city:"北京"},
+ {canonical:"人民文学出版社",aliases:["人民文学出版社"],city:"北京"},
+ {canonical:"人民教育出版社",aliases:["人民教育出版社", "人教社"],city:"北京"},
+ {canonical:"高等教育出版社",aliases:["高等教育出版社", "高教出版社"],city:"北京"},
+ {canonical:"教育科学出版社",aliases:["教育科学出版社","教育科学出版社有限公司","教科社"],city:"北京"},
+ {canonical:"科学出版社",aliases:["科学出版社"],city:"北京"},
+ {canonical:"中国人民大学出版社",aliases:["中国人民大学出版社", "人大出版社"],city:"北京"},
+ {canonical:"北京大学出版社",aliases:["北京大学出版社", "北大出版社"],city:"北京"},
+ {canonical:"清华大学出版社",aliases:["清华大学出版社"],city:"北京"},
+ {canonical:"北京师范大学出版社",aliases:["北京师范大学出版社", "北师大出版社"],city:"北京"},
+ {canonical:"中国政法大学出版社",aliases:["中国政法大学出版社"],city:"北京"},
+ {canonical:"社会科学文献出版社",aliases:["社会科学文献出版社"],city:"北京"},
+ {canonical:"中国社会科学出版社",aliases:["中国社会科学出版社"],city:"北京"},
+ {canonical:"中央编译出版社",aliases:["中央编译出版社"],city:"北京"},
+ {canonical:"生活·读书·新知三联书店",aliases:["生活·读书·新知三联书店", "生活·读书·新知三联书店有限公司", "三联书店"],city:"北京"},
+ {canonical:"外语教学与研究出版社",aliases:["外语教学与研究出版社", "外研社"],city:"北京"},
+ {canonical:"机械工业出版社",aliases:["机械工业出版社"],city:"北京"},
+ {canonical:"电子工业出版社",aliases:["电子工业出版社"],city:"北京"},
+ {canonical:"人民邮电出版社",aliases:["人民邮电出版社"],city:"北京"},
+ {canonical:"化学工业出版社",aliases:["化学工业出版社"],city:"北京"},
+ {canonical:"法律出版社",aliases:["法律出版社"],city:"北京"},
+ {canonical:"经济科学出版社",aliases:["经济科学出版社"],city:"北京"},
+ {canonical:"中国财政经济出版社",aliases:["中国财政经济出版社"],city:"北京"},
+ {canonical:"中国青年出版社",aliases:["中国青年出版社"],city:"北京"},
+ {canonical:"作家出版社",aliases:["作家出版社"],city:"北京"},
+ {canonical:"新星出版社",aliases:["新星出版社"],city:"北京"},
+ {canonical:"华夏出版社",aliases:["华夏出版社"],city:"北京"},
+ {canonical:"东方出版社",aliases:["东方出版社"],city:"北京"},
+ {canonical:"中国标准出版社",aliases:["中国标准出版社"],city:"北京"},
+ {canonical:"上海人民出版社",aliases:["上海人民出版社"],city:"上海"},
+ {canonical:"上海教育出版社",aliases:["上海教育出版社"],city:"上海"},
+ {canonical:"上海译文出版社",aliases:["上海译文出版社"],city:"上海"},
+ {canonical:"上海文艺出版社",aliases:["上海文艺出版社"],city:"上海"},
+ {canonical:"上海古籍出版社",aliases:["上海古籍出版社"],city:"上海"},
+ {canonical:"上海三联书店",aliases:["上海三联书店"],city:"上海"},
+ {canonical:"格致出版社",aliases:["格致出版社"],city:"上海"},
+ {canonical:"复旦大学出版社",aliases:["复旦大学出版社"],city:"上海"},
+ {canonical:"华东师范大学出版社",aliases:["华东师范大学出版社"],city:"上海"},
+ {canonical:"上海交通大学出版社",aliases:["上海交通大学出版社"],city:"上海"},
+ {canonical:"同济大学出版社",aliases:["同济大学出版社"],city:"上海"},
+ {canonical:"上海财经大学出版社",aliases:["上海财经大学出版社"],city:"上海"},
+ {canonical:"译林出版社",aliases:["译林出版社"],city:"南京"},
+ {canonical:"江苏人民出版社",aliases:["江苏人民出版社"],city:"南京"},
+ {canonical:"江苏凤凰文艺出版社",aliases:["江苏凤凰文艺出版社", "江苏文艺出版社"],city:"南京"},
+ {canonical:"江苏凤凰教育出版社",aliases:["江苏凤凰教育出版社", "江苏教育出版社"],city:"南京"},
+ {canonical:"南京大学出版社",aliases:["南京大学出版社"],city:"南京"},
+ {canonical:"南京师范大学出版社",aliases:["南京师范大学出版社"],city:"南京"},
+ {canonical:"浙江人民出版社",aliases:["浙江人民出版社"],city:"杭州"},
+ {canonical:"浙江教育出版社",aliases:["浙江教育出版社"],city:"杭州"},
+ {canonical:"浙江文艺出版社",aliases:["浙江文艺出版社"],city:"杭州"},
+ {canonical:"浙江大学出版社",aliases:["浙江大学出版社"],city:"杭州"},
+ {canonical:"广东人民出版社",aliases:["广东人民出版社"],city:"广州"},
+ {canonical:"广东教育出版社",aliases:["广东教育出版社"],city:"广州"},
+ {canonical:"广东高等教育出版社",aliases:["广东高等教育出版社"],city:"广州"},
+ {canonical:"中山大学出版社",aliases:["中山大学出版社"],city:"广州"},
+ {canonical:"华南理工大学出版社",aliases:["华南理工大学出版社"],city:"广州"},
+ {canonical:"暨南大学出版社",aliases:["暨南大学出版社"],city:"广州"},
+ {canonical:"湖北人民出版社",aliases:["湖北人民出版社"],city:"武汉"},
+ {canonical:"武汉大学出版社",aliases:["武汉大学出版社"],city:"武汉"},
+ {canonical:"华中科技大学出版社",aliases:["华中科技大学出版社"],city:"武汉"},
+ {canonical:"华中师范大学出版社",aliases:["华中师范大学出版社"],city:"武汉"},
+ {canonical:"湖南人民出版社",aliases:["湖南人民出版社"],city:"长沙"},
+ {canonical:"湖南教育出版社",aliases:["湖南教育出版社"],city:"长沙"},
+ {canonical:"湖南文艺出版社",aliases:["湖南文艺出版社"],city:"长沙"},
+ {canonical:"岳麓书社",aliases:["岳麓书社"],city:"长沙"},
+ {canonical:"四川人民出版社",aliases:["四川人民出版社"],city:"成都"},
+ {canonical:"四川大学出版社",aliases:["四川大学出版社"],city:"成都"},
+ {canonical:"四川文艺出版社",aliases:["四川文艺出版社"],city:"成都"},
+ {canonical:"巴蜀书社",aliases:["巴蜀书社"],city:"成都"},
+ {canonical:"重庆出版社",aliases:["重庆出版社"],city:"重庆"},
+ {canonical:"重庆大学出版社",aliases:["重庆大学出版社"],city:"重庆"},
+ {canonical:"西南大学出版社",aliases:["西南大学出版社", "西南师范大学出版社"],city:"重庆"},
+ {canonical:"广西师范大学出版社",aliases:["广西师范大学出版社"],city:"桂林"},
+ {canonical:"广西人民出版社",aliases:["广西人民出版社"],city:"南宁"},
+ {canonical:"天津人民出版社",aliases:["天津人民出版社"],city:"天津"},
+ {canonical:"南开大学出版社",aliases:["南开大学出版社"],city:"天津"},
+ {canonical:"天津大学出版社",aliases:["天津大学出版社"],city:"天津"},
+ {canonical:"山东人民出版社",aliases:["山东人民出版社"],city:"济南"},
+ {canonical:"山东教育出版社",aliases:["山东教育出版社"],city:"济南"},
+ {canonical:"山东大学出版社",aliases:["山东大学出版社"],city:"济南"},
+ {canonical:"福建人民出版社",aliases:["福建人民出版社"],city:"福州"},
+ {canonical:"福建教育出版社",aliases:["福建教育出版社"],city:"福州"},
+ {canonical:"厦门大学出版社",aliases:["厦门大学出版社"],city:"厦门"},
+ {canonical:"河南人民出版社",aliases:["河南人民出版社"],city:"郑州"},
+ {canonical:"河南大学出版社",aliases:["河南大学出版社"],city:"开封"},
+ {canonical:"大象出版社",aliases:["大象出版社"],city:"郑州"},
+ {canonical:"陕西人民出版社",aliases:["陕西人民出版社"],city:"西安"},
+ {canonical:"陕西师范大学出版社",aliases:["陕西师范大学出版社"],city:"西安"},
+ {canonical:"西安交通大学出版社",aliases:["西安交通大学出版社"],city:"西安"},
+ {canonical:"辽宁人民出版社",aliases:["辽宁人民出版社"],city:"沈阳"},
+ {canonical:"吉林人民出版社",aliases:["吉林人民出版社"],city:"长春"},
+ {canonical:"吉林大学出版社",aliases:["吉林大学出版社"],city:"长春"},
+ {canonical:"东北师范大学出版社",aliases:["东北师范大学出版社"],city:"长春"},
+ {canonical:"哈尔滨工业大学出版社",aliases:["哈尔滨工业大学出版社"],city:"哈尔滨"},
+ {canonical:"Oxford University Press",aliases:["Oxford University Press", "OUP"],city:"Oxford"},
+ {canonical:"Cambridge University Press",aliases:["Cambridge University Press", "CUP"],city:"Cambridge"},
+ {canonical:"Harvard University Press",aliases:["Harvard University Press"],city:"Cambridge"},
+ {canonical:"MIT Press",aliases:["MIT Press", "The MIT Press"],city:"Cambridge"},
+ {canonical:"Princeton University Press",aliases:["Princeton University Press"],city:"Princeton"},
+ {canonical:"Yale University Press",aliases:["Yale University Press"],city:"New Haven"},
+ {canonical:"University of Chicago Press",aliases:["University of Chicago Press"],city:"Chicago"},
+ {canonical:"University of California Press",aliases:["University of California Press"],city:"Berkeley"},
+ {canonical:"Stanford University Press",aliases:["Stanford University Press"],city:"Stanford"},
+ {canonical:"Routledge",aliases:["Routledge", "RoutledgeFalmer"],city:"London"},
+ {canonical:"SAGE Publications",aliases:["SAGE", "Sage", "SAGE Publications", "Sage Publications"],city:"Thousand Oaks"},
+ {canonical:"Palgrave Macmillan",aliases:["Palgrave Macmillan"],city:"London"},
+ {canonical:"Springer",aliases:["Springer", "Springer-Verlag"],city:"Berlin"},
+ {canonical:"Wiley",aliases:["Wiley", "John Wiley & Sons", "John Wiley and Sons"],city:"Hoboken"},
+ {canonical:"Jossey-Bass Publishers",aliases:["Jossey-Bass Publishers", "Jossey Bass Publishers", "Jossey-Bass", "Jossey Bass"],city:"San Francisco"},
+ {canonical:"Holt, Rinehart and Winston",aliases:["Holt, Rinehart and Winston","Holt, Rinehart & Winston","Holt Rinehart and Winston","Holt Rinehart & Winston","Holt, Rinehart, and Winston","Holt, Rinehart, Winston"],city:"New York"},
+ {canonical:"Free Press",aliases:["Free Press","The Free Press"],city:"New York"},
+ {canonical:"Abbey Press",aliases:["Abbey Press","The Abbey Press"],city:"Abingdon"},
+ {canonical:"Teachers College Press",aliases:["Teachers College Press"],city:"New York"},
+ {canonical:"Guilford Press",aliases:["Guilford Press", "The Guilford Press"],city:"New York"},
+ {canonical:"ASME",aliases:["ASME"],city:"New York"},
+ {canonical:"Corwin Press",aliases:["Corwin Press","Corwin Press, Inc.","Corwin","Corwin, A SAGE Company","Corwin, a SAGE company"],city:"Thousand Oaks"},
+ {canonical:"Solution Tree Press",aliases:["Solution Tree Press","Solution Tree","Solution Tree, Inc."],city:"Bloomington"},
+ {canonical:"ASCD",aliases:["ASCD","Association for Supervision and Curriculum Development"],city:"Alexandria"}
+];
+const CITY_LEXICON=["上海", "北京", "南京", "南宁", "厦门", "哈尔滨", "天津", "广州", "开封", "成都", "杭州", "桂林", "武汉", "沈阳", "济南", "福州", "西安", "郑州", "重庆", "长春", "长沙", "香港", "Berkeley", "Berlin", "Boston", "Cambridge", "Chicago", "Geneva", "Hoboken", "London", "New Haven", "New York", "Oxford", "Princeton", "San Francisco", "Stanford", "Thousand Oaks"];
+
+/* ===== 常见高校 → 所在城市（学位授予单位、大学出版社通用）===== */
+const UNIVERSITY_CITY={"北京大学":"北京","清华大学":"北京","中国人民大学":"北京","北京师范大学":"北京","北京航空航天大学":"北京","北京理工大学":"北京","中国农业大学":"北京","中央民族大学":"北京","北京交通大学":"北京","北京工业大学":"北京","北京科技大学":"北京","北京化工大学":"北京","北京邮电大学":"北京","北京林业大学":"北京","北京中医药大学":"北京","北京外国语大学":"北京","北京语言大学":"北京","北京体育大学":"北京","中国传媒大学":"北京","中央财经大学":"北京","对外经济贸易大学":"北京","中国政法大学":"北京","华北电力大学":"北京","首都师范大学":"北京","首都经济贸易大学":"北京","中国社会科学院大学":"北京","中国科学院大学":"北京","中国石油大学（北京）":"北京","中国地质大学（北京）":"北京","中国矿业大学（北京）":"北京","中央美术学院":"北京","中央音乐学院":"北京","复旦大学":"上海","上海交通大学":"上海","同济大学":"上海","华东师范大学":"上海","华东理工大学":"上海","东华大学":"上海","上海财经大学":"上海","上海外国语大学":"上海","上海大学":"上海","上海师范大学":"上海","华东政法大学":"上海","上海体育大学":"上海","上海体育学院":"上海","南开大学":"天津","天津大学":"天津","天津师范大学":"天津","天津医科大学":"天津","河北工业大学":"天津","重庆大学":"重庆","西南大学":"重庆","西南师范大学":"重庆","西南政法大学":"重庆","重庆师范大学":"重庆","河北师范大学":"石家庄","河北大学":"保定","燕山大学":"秦皇岛","山西大学":"太原","太原理工大学":"太原","内蒙古大学":"呼和浩特","内蒙古师范大学":"呼和浩特","东北大学":"沈阳","辽宁大学":"沈阳","沈阳师范大学":"沈阳","大连理工大学":"大连","辽宁师范大学":"大连","大连海事大学":"大连","吉林大学":"长春","东北师范大学":"长春","延边大学":"延吉","哈尔滨工业大学":"哈尔滨","哈尔滨工程大学":"哈尔滨","东北林业大学":"哈尔滨","东北农业大学":"哈尔滨","哈尔滨师范大学":"哈尔滨","黑龙江大学":"哈尔滨","哈尔滨工业大学（威海）":"威海","山东大学（威海）":"威海","哈尔滨工业大学（深圳）":"深圳","深圳大学":"深圳","南方科技大学":"深圳","南京大学":"南京","东南大学":"南京","南京师范大学":"南京","南京航空航天大学":"南京","南京理工大学":"南京","河海大学":"南京","南京农业大学":"南京","中国药科大学":"南京","南京信息工程大学":"南京","苏州大学":"苏州","江南大学":"无锡","扬州大学":"扬州","中国矿业大学":"徐州","江苏师范大学":"徐州","浙江大学":"杭州","浙江工业大学":"杭州","杭州师范大学":"杭州","浙江师范大学":"金华","宁波大学":"宁波","温州大学":"温州","中国科学技术大学":"合肥","合肥工业大学":"合肥","安徽大学":"合肥","安徽师范大学":"芜湖","厦门大学":"厦门","福州大学":"福州","福建师范大学":"福州","南昌大学":"南昌","江西师范大学":"南昌","山东大学":"济南","山东师范大学":"济南","中国海洋大学":"青岛","中国石油大学（华东）":"青岛","青岛大学":"青岛","曲阜师范大学":"曲阜","郑州大学":"郑州","河南大学":"开封","河南师范大学":"新乡","武汉大学":"武汉","华中科技大学":"武汉","华中师范大学":"武汉","武汉理工大学":"武汉","中南财经政法大学":"武汉","华中农业大学":"武汉","中国地质大学（武汉）":"武汉","湖北大学":"武汉","湖南大学":"长沙","中南大学":"长沙","湖南师范大学":"长沙","湘潭大学":"湘潭","中山大学":"广州","华南理工大学":"广州","华南师范大学":"广州","暨南大学":"广州","广州大学":"广州","广东外语外贸大学":"广州","华南农业大学":"广州","广西大学":"南宁","广西师范大学":"桂林","海南大学":"海口","海南师范大学":"海口","四川大学":"成都","电子科技大学":"成都","西南交通大学":"成都","西南财经大学":"成都","四川师范大学":"成都","贵州大学":"贵阳","贵州师范大学":"贵阳","云南大学":"昆明","云南师范大学":"昆明","西藏大学":"拉萨","西安交通大学":"西安","西北工业大学":"西安","西安电子科技大学":"西安","陕西师范大学":"西安","西北大学":"西安","西北政法大学":"西安","长安大学":"西安","西北农林科技大学":"杨凌","兰州大学":"兰州","西北师范大学":"兰州","青海大学":"西宁","宁夏大学":"银川","新疆大学":"乌鲁木齐","新疆师范大学":"乌鲁木齐","石河子大学":"石河子","香港大学":"香港","香港中文大学":"香港","香港科技大学":"香港","香港教育大学":"香港","澳门大学":"澳门","台湾大学":"台北","台湾师范大学":"台北","政治大学":"台北"};
+const UNI_KEYS=Object.keys(UNIVERSITY_CITY).sort((a,b)=>b.length-a.length);
+function normUni(x){return clean(x).replace(/\(/g,'（').replace(/\)/g,'）').replace(/\s+/g,'')}
+function universityCity(name){let x=normUni(name);for(const k of UNI_KEYS)if(x.includes(k))return UNIVERSITY_CITY[k];return ''}
+const PUBLISHER_CITY_RULES=[
+ // 高校（学位授予单位）常见城市；更具体的规则放在前面
+ [/华东师范|复旦|同济|上海交通|上海财经|华东政法|上海外国语/,'上海'],
+ [/清华|中国人民大学|人民大学|中国政法|中央民族|首都师范|中国传媒|北京外国语/,'北京'],
+ [/南开/,'天津'],[/华南师范|华南农业/,'广州'],[/西南政法|西南大学/,'重庆'],[/西南财经|西南交通|电子科技大学/,'成都'],
+ [/西北师范/,'兰州'],[/西北政法|西北大学|西安交通/,'西安'],[/中南财经政法|华中科技/,'武汉'],[/中南大学/,'长沙'],
+ [/曲阜师范/,'曲阜'],[/中国海洋|青岛/,'青岛'],[/苏州/,'苏州'],[/扬州/,'扬州'],[/宁波/,'宁波'],[/温州/,'温州'],[/大连/,'大连'],
+ [/北京/,'北京'],[/上海/,'上海'],[/天津/,'天津'],[/重庆/,'重庆'],
+ [/南京/,'南京'],[/浙江|杭州/,'杭州'],[/武汉|华中/,'武汉'],
+ [/广东|广州|中山大学|暨南大学|华南理工/,'广州'],[/四川|成都/,'成都'],
+ [/湖南|长沙/,'长沙'],[/山东|济南/,'济南'],[/福建|福州/,'福州'],[/厦门/,'厦门'],
+ [/陕西|西安/,'西安'],[/吉林|长春|东北师范/,'长春'],[/辽宁|沈阳/,'沈阳'],
+ [/哈尔滨/,'哈尔滨'],[/广西师范/,'桂林'],[/广西/,'南宁'],[/云南|昆明/,'昆明'],
+ [/江西|南昌/,'南昌'],[/安徽|合肥/,'合肥'],[/河南大学/,'开封'],[/河南|郑州/,'郑州'],
+ [/兰州|甘肃/,'兰州']
+];
+function inferPublisherCity(name){
+ let x=clean(name);
+ let u=universityCity(x);if(u)return u;
+ for(const [rx,city] of PUBLISHER_CITY_RULES)if(rx.test(x))return city;
+ return '';
+}
+function normKey(x){return clean(x).toLowerCase().replace(/[.，,:：;；]/g,'').replace(/[–—-]/g,' ').replace(/\s+/g,' ').trim()}
+function findPublisher(text){
+ let k=normKey(text),best=null;
+ for(const e of PUB_LEXICON)for(const a of e.aliases){let ak=normKey(a);if(k.includes(ak)&&(!best||ak.length>best.aliasLen))best={...e,alias:a,aliasLen:ak.length}}
+ return best;
+}
+function findCity(text){let k=normKey(text);return CITY_LEXICON.find(c=>k.includes(normKey(c)))||''}
+function yearAnchors(text){return [...String(text).matchAll(/(?<!\d)(18\d{2}|19\d{2}|20\d{2}|21\d{2})(?!\d)/g)].map(m=>({year:m[1],index:m.index}))}
+function pageCandidate(x){x=clean(x).replace(/[.。]$/,'');return /^(?:[A-Za-z]?\d+)(?:\s*[-–—]\s*[A-Za-z]?\d+)?$/.test(x)?x.replace(/\s*[-–—]\s*/g,'-'):''}
+function evidencePublication(tail,kind){
+ let text=clean(tail).replace(/[.。]\s*$/,'');let score=0,source={};
+ let ys=yearAnchors(text);let y=ys.length?ys[ys.length-1]:null;
+ let pub=findPublisher(text),city=findCity(text);
+ let out={};
+ if(y){out.year=y.year;score+=35;source.year='year-anchor'}
+ if(pub){
+   // Lexicon identifies the entity, but does not overwrite an explicit publisher spelling later.
+   out.publisher=pub.canonical;score+=30;source.publisher='publisher-lexicon';
+   if(!city&&pub.city){city=pub.city;source.place='publisher-lexicon-inference';score+=8}
+ }
+ if(city){out.place=city;score+=18;if(!source.place)source.place='city-lexicon'}
+ if(y){let after=text.slice(y.index+4).replace(/^\s*[,，:]\s*/,'');let pg=pageCandidate(after);if(pg){out.pages=pg;score+=20;source.pages='post-year-schema'}}
+
+ // If there is no explicit place, recognize "publisher, year" and infer city conservatively.
+ let pubYear=text.match(/^(.+?)\s*[,，]\s*(18\d{2}|19\d{2}|20\d{2}|21\d{2})(?:\s*[,，:：]\s*([^,，]+))?\s*$/);
+ if(pubYear && !/[:：]/.test(pubYear[1])){
+   let rawPub=clean(pubYear[1]), matched=findPublisher(rawPub);
+   if(matched){
+     out.publisher=rawPub; out.year=pubYear[2];
+     let inferred=matched.city||inferPublisherCity(rawPub);
+     if(!out.place&&inferred){out.place=inferred;source.place='publisher-lexicon-inference'}
+     let pg=pageCandidate(pubYear[3]||'');if(pg)out.pages=pg;
+     source.publisher='explicit-publisher';source.year='explicit-structure';score+=32;
+   }else if((kind==='thesis'||kind==='report')&&/^[^\d.:：]{2,40}$/.test(rawPub)){
+     // 学位论文/报告：年份前就是学位授予单位或机构，即使不在出版社词库中
+     out.publisher=rawPub;out.year=pubYear[2];
+     let inferred=inferPublisherCity(rawPub);
+     if(inferred){out.place=inferred;source.place='institution-city-inference'}
+     let pg=pageCandidate(pubYear[3]||'');if(pg)out.pages=pg;
+     source.publisher=kind==='thesis'?'thesis-position':'report-position';source.year='explicit-structure';score+=30;
+   }
+ }
+ // Prefer explicit punctuation-derived publisher/place over inferred values.
+ let explicit=text.match(/^(.+?)\s*[:：]\s*(.+?)\s*[,，]\s*(18\d{2}|19\d{2}|20\d{2}|21\d{2})(?:\s*[,，]\s*([^,，]+))?\s*$/);
+ if(explicit){out.place=clean(explicit[1]);out.publisher=clean(explicit[2]);out.year=explicit[3];let pg=pageCandidate(explicit[4]||'');if(pg)out.pages=pg;score+=45;source.place=source.publisher=source.year='explicit-structure';if(pg)source.pages='explicit-structure'}
+ // No place but publisher/institution, year, pages (common reports).
+ if(kind==='report'&&!out.publisher&&y){let before=text.slice(0,y.index).replace(/[,，\s]+$/,'');if(before){out.publisher=before;score+=15;source.publisher='report-position'}}
+ return {...out,_score:Math.min(score,100),_source:source};
+}
+function parsePublication(tail){
+ tail=clean(tail).replace(/[\.。]\s*$/,'');
+ let m=tail.match(/^(.+?)\s*[:：]\s*(.+?)\s*[,，]\s*(\d{4})(?:\s*[,，]\s*([^,，]+))?\s*$/);
+ if(!m)return {unparsed:tail};
+ return {place:clean(m[1]),publisher:clean(m[2]),year:m[3],extra:m[4]?clean(m[4]):''};
+}
+
+// ===== v8.6 APA-aware parser =====
+function normalizeDOI(x){
+ return clean(x).replace(/^https?:\/\/(?:dx\.)?doi\.org\//i,'').replace(/^doi\s*[:：]\s*/i,'').replace(/[.。]+$/,'');
+}
+function splitAPAAuthors(x){
+ // Keep the APA author block intact. The renderers parse it structurally.
+ return clean(x);
+}
+function splitLegacyApaPublisher(raw){
+ raw=clean(raw).replace(/[.。]+$/,'');
+ // Old APA: City, ST: Publisher. For GB/T we keep the city only, not the US state code.
+ let m=raw.match(/^(.+?),\s*([A-Z]{2})\s*:\s*(.+)$/);
+ if(m)return {place:clean(m[1]),publisher:clean(m[3]),state:clean(m[2]),legacy:true};
+ // Other old styles may simply use City: Publisher.
+ let m2=raw.match(/^([^:：]{2,80})\s*[:：]\s*(.+)$/);
+ if(m2)return {place:clean(m2[1]),publisher:clean(m2[2]),state:'',legacy:true};
+ return {place:'',publisher:raw,state:'',legacy:false};
+}
+function parseAPA(raw){
+ let text=clean(raw);
+ // Parenthesized year is the strong author-year anchor. Accept both APA's
+ // "(2025)." and institutional styles such as OECD's "(2026),".
+ let ym=text.match(/^(.*?)\s*\(((?:18|19|20|21)\d{2}[a-z]?|n\.d\.)\)\s*[.,，。]?\s*(.+)$/i);
+ if(!ym)return null;
+ let authors=clean(ym[1]).replace(/[.。,，]\s*$/,'');
+ let year=ym[2], rest=clean(ym[3]);
+ let doi='';
+ let dm=rest.match(/(https?:\/\/(?:dx\.)?doi\.org\/10\.\d{4,9}\/\S+|doi\s*[:：]\s*10\.\d{4,9}\/\S+)\s*$/i);
+ if(dm){doi=normalizeDOI(dm[1]);rest=clean(rest.slice(0,dm.index)).replace(/[.,;，；。\s]+$/,'');}
+
+ // Book chapter / book section:
+ // Author. (Year). Chapter title. In P. F. Brandwein (Ed.), Book title (pp. 1–103). Publisher.
+ let cm=rest.match(/^(.+?[.!?])\s+In\s+(.+?)\s+\((Ed\.|Eds\.)\),\s+(.+?)\s+\(pp?\.\s*([A-Za-z]?\d+(?:\s*[–—-]\s*[A-Za-z]?\d+)?)\)\.\s+(.+?)\.?$/i);
+ if(cm){
+   let chapterTitle=clean(cm[1]).replace(/[.。]+$/,'');
+   let editorBlock=clean(cm[2]), hostTitle=clean(cm[4]), pages=clean(cm[5]).replace(/\s*[–—-]\s*/g,'-');
+   let publisher=clean(cm[6]).replace(/[.。]+$/,'');
+   // APA editors are normally "P. F. Brandwein"; convert to our "Brandwein, P. F." editor model.
+   let editorParts=editorBlock.split(/\s*,\s*&\s*|\s*,\s*(?=[A-Z][^.]*\s)|\s+&\s+/).map(clean).filter(Boolean);
+   let editorList=editorParts.map(v=>{
+     let z=v.match(/^((?:[A-ZÀ-ÖØ-Þ]\.\s*)+)\s*(.+)$/);
+     if(z)return {type:'person',family:clean(z[2]),given:clean(z[1])};
+     let z2=v.match(/^(.+?),\s*((?:[A-ZÀ-ÖØ-Þ]\.?\s*)+)$/);
+     if(z2)return {type:'person',family:clean(z2[1]),given:clean(z2[2])};
+     return {type:'literal',name:v};
+   });
+   let editors=editorList.map(a=>a.type==='person'?clean(`${a.family}, ${a.given}`):a.name).join('; ');
+   let hit=findPublisher(publisher);
+   return {
+     kind:'bookChapter',inputFormat:'author-year-chapter',authors:splitAPAAuthors(authors),
+     title:chapterTitle,year,hostTitle,editors,editorList,pages,publisher,
+     place:hit?hit.city:'',doi,_confidence:98,
+     _provenance:{format:'apa-book-chapter',authors:'author-block',year:'parenthesized-year-anchor',
+       title:'chapter-title',editors:'in-editor-anchor',hostTitle:'book-title-position',
+       pages:'pp-anchor',publisher:'publisher-position',...(hit?{place:'publisher-lexicon-inference'}:{}),...(doi?{doi:'doi-url-anchor'}:{})}
+   };
+ }
+
+ // Journal article: Title. Journal, volume(issue), pages
+ let jm=rest.match(/^(.+)[.!?。！？]\s+(.+?),\s*(\d+)\s*(?:\(\s*([^)]+)\s*\))?\s*,\s*([A-Za-z]?\d+(?:\s*[–—-]\s*[A-Za-z]?\d+)?)\s*\.?$/);
+ if(jm){
+   return {
+     kind:'journal',inputFormat:'author-year',authors:splitAPAAuthors(authors),
+     title:clean(jm[1]) + ((rest.match(/^(.+?)([!?！？])\s+.+?,\s*\d+/)||[])[2]||''),journal:clean(jm[2]),year,
+     volume:clean(jm[3]||''),issue:clean(jm[4]||''),
+     pages:clean(jm[5]||'').replace(/\s*[–—-]\s*/g,'-'),doi,
+     _confidence:96,
+     _provenance:{format:'parenthesized-year-anchor',authors:'author-block',year:'parenthesized-year-anchor',
+       journal:'journal-schema',volume:'journal-schema',issue:'journal-schema',pages:'journal-schema',...(doi?{doi:'doi-url-anchor'}:{})}
+   };
+ }
+
+ // OECD / institutional report style:
+ // OECD (2026), Title, Series, OECD Publishing, Paris, DOI
+ // The final two comma fields are publisher + place; the optional field
+ // before them is retained as series metadata rather than mistaken for publisher.
+ let parts=rest.split(/\s*,\s*/).map(clean).filter(Boolean);
+ if(parts.length>=3){
+   let place=parts[parts.length-1], publisher=parts[parts.length-2];
+   // Common institutional locations may be absent from the general city lexicon.
+   const INSTITUTIONAL_PLACES=['Paris','Washington','Washington DC','Geneva','New York','Brussels','Rome'];
+   let pubHit=findPublisher(publisher);
+   let placeKnown=findCity(place) || CITY_LEXICON.some(c=>normKey(c)===normKey(place)) || INSTITUTIONAL_PLACES.some(c=>normKey(c)===normKey(place));
+   let institutional=/\b(?:OECD|UNESCO|WHO|World Bank|UNICEF|European Commission)\b/i.test(authors);
+   let publisherLike=!!pubHit || /\b(?:Publishing|Press|Publisher|Publishers|Publications?)\b|出版社|出版集团|书店/i.test(publisher);
+   if((institutional || publisherLike) && placeKnown){
+     let title=parts[0], series=parts.length>3?parts.slice(1,-2).join(', '):'';
+     return {
+       kind:'report',inputFormat:'author-year-institutional',authors:splitAPAAuthors(authors),
+       title,year,publisher,place,series,doi,_confidence:94,
+       _provenance:{format:'parenthesized-year-anchor',authors:'author-block',year:'parenthesized-year-anchor',
+         title:'institutional-report-position',publisher:'institutional-report-position',place:'institutional-report-position',
+         ...(series?{series:'institutional-report-position'}:{}),...(doi?{doi:'doi-url-anchor'}:{})}
+     };
+   }
+ }
+
+ // APA-like book fallback: Author. (Year). Title. Publisher.
+ let bookRest=clean(rest).replace(/[.。]\s*$/,'');
+ let cut=Math.max(bookRest.lastIndexOf('. '),bookRest.lastIndexOf('。 '));
+ if(cut>0){
+   let title=clean(bookRest.slice(0,cut));
+   let pub=clean(bookRest.slice(cut+2));
+   if(title && pub){
+     let legacy=splitLegacyApaPublisher(pub);
+     let publisher=legacy.publisher;
+     let hit=findPublisher(publisher);
+     let place=legacy.place||(hit?hit.city:'');
+     return {
+       kind:'book',inputFormat:'author-year',authors:splitAPAAuthors(authors),
+       title,year,publisher,place,doi,_confidence:legacy.legacy?94:90,
+       _provenance:{format:'parenthesized-year-anchor',authors:'author-block',year:'parenthesized-year-anchor',
+         title:'book-position',publisher:legacy.legacy?'legacy-apa-publisher-position':'book-position',
+         ...(legacy.legacy?{place:'legacy-apa-place-cleaned'}:(hit?{place:'publisher-lexicon-inference'}:{})),
+         ...(doi?{doi:'doi-url-anchor'}:{})}
+     };
+   }
+ }
+ return null;
+}
+/* 去掉参考文献表的序号：[1] ［1］ 【1】 (1) （1） 1. 1、 */
+function stripRefIndex(x){
+ return String(x||'').replace(/^\s*(?:\[\s*\d{1,4}\s*\]|［\s*\d{1,4}\s*］|【\s*\d{1,4}\s*】|\(\s*\d{1,4}\s*\)|（\s*\d{1,4}\s*）|\d{1,4}\s*[.．、]\s*(?=[^\d\s]))\s*/,'');
+}
+function parse(raw){
+ raw=parseClean(stripRefIndex(raw)).replace(/(\[\d{4}-\d{2})\.(\d{2}\])/g,'$1-$2');
+ // GB/T marker remains strongest. If absent, try APA-like syntax instead.
+ let code=marker(raw);
+ if(!code){
+   let apa=parseAPA(raw);
+   if(apa)return apa;
+   throw Error('未识别到 GB/T 文献类型标识，也未检测到可解析的 APA 格式。');
+ }
+ let h=splitHead(raw);if(!h)throw Error('无法拆分参考文献主体。');
+ let isExtract=/\]\s*\/\//.test(raw);
+ let kind=code==='M'?(isExtract?'bookChapter':'book'):code==='J'?'journal':code==='D'?'thesis':code==='R'?'report':code==='N'?'newspaper':code==='P'?'patent':code==='S'?'standard':code==='C'?(isExtract?'conferencePaper':'proceedings'):code.includes('OL')?'electronic':'unknown';
+ let o={kind,authors:h.authors,title:h.title};
+ if(kind==='book'||kind==='report'||kind==='thesis'||kind==='proceedings'||kind==='standard'){
+   let tail=h.tail.replace(/[\.。]\s*$/,'');
+   // CNKI 等导出常在末尾附 DOI：先作为独立锚点取出，再解析出版项
+   let dm=tail.match(/(?:^|[.。;；,，\s])DOI\s*[:：]?\s*(10\.\d{4,9}\/[-._;()/:A-Z0-9]+?)\s*[.。]?\s*$/i);
+   if(dm){o.doi=clean(dm[1]);tail=clean(tail.slice(0,dm.index)).replace(/[.。;；,，\s]+$/,'')}
+   if(kind==='book'){
+     let tr=tail.match(/^(.+?)\s*[,，]\s*(译|译者|trans\.?|translator)\s*[\.。]\s*(.+)$/i);
+     if(tr){o.translator=clean(tr[1]);tail=clean(tr[3])}
+   }
+   let ev=evidencePublication(tail,kind);
+   if(ev.place)o.place=ev.place;if(ev.publisher)o.publisher=ev.publisher;if(ev.year)o.year=ev.year;if(ev.pages)o.pages=ev.pages;
+   if(kind==='thesis'&&o.publisher){o.institution=o.publisher;delete o.publisher}
+   let unit=o.institution||o.publisher;
+   if(!o.place&&unit){let hit=findPublisher(unit);let c=(hit&&hit.city)||inferPublisherCity(unit);if(c){o.place=c;o._provenance=Object.assign(o._provenance||{},{place:'institution-city-inference'})}}
+   o._confidence=ev._score;o._provenance=ev._source;
+   if(kind==='standard'){
+     let sm=o.title.match(/^([^\s]+\s*\d+(?:[—-]\d+)?)\s+(.+)$/);if(sm){o.standardNo=sm[1];o.title=sm[2]}
+   }
+ }
+ if(kind==='journal'){
+   let tail=parseClean(h.tail).replace(/\.$/,'');
+   // DOI is an independent trailing anchor. Remove it before parsing
+   // journal/year/volume/issue/pages, otherwise a perfectly regular
+   // journal citation with DOI will fail the whole tail match.
+   let doiMatch=tail.match(/(?:^|[.。;；\s])DOI\s*[:：]?\s*(10\.\d{4,9}\/[-._;()/:A-Z0-9]+)\s*\.?\s*$/i);
+   if(doiMatch){
+     o.doi=clean(doiMatch[1]).replace(/[.。]+$/,'');
+     tail=clean(tail.slice(0,doiMatch.index)).replace(/[.。;；\s]+$/,'');
+     o._provenance=Object.assign(o._provenance||{},{doi:'doi-anchor'});
+   }
+   // Year is the strong anchor; punctuation is only supporting evidence.
+   let x=tail.match(/^(.*?)\s*[,;]?\s*((?:18|19|20|21)\d{2})\s*[,;]?\s*(?:(\d+)\s*)?(?:\(\s*([^()]+)\s*\))?\s*[:,;,]?\s*([A-Za-z]?\d+(?:\s*-\s*[A-Za-z]?\d+)?)\s*$/);
+   if(x){
+     Object.assign(o,{journal:clean(x[1]).replace(/[,;:]\s*$/,''),year:x[2],volume:clean(x[3]||''),issue:clean(x[4]||''),pages:clean(x[5]).replace(/\s*-\s*/g,'-')});
+     o._confidence=Math.max(o._confidence||0,94);
+     o._provenance=Object.assign(o._provenance||{},{year:'year-anchor',volume:'journal-schema',issue:'journal-schema',pages:'journal-schema'});
+   }else{
+     let ym=tail.match(/(?:^|[,;\s])((?:18|19|20|21)\d{2})(?=$|[,;\s])/);
+     if(ym){o.year=ym[1];o._provenance=Object.assign(o._provenance||{},{year:'year-anchor-fallback'});}
+   }
+ }
+ if(kind==='newspaper'){
+   let x=h.tail.replace(/[\.。]\s*$/,'').match(/^(.*?)\s*[,，]\s*([\d-]+)(?:\(([^)]+)\))?$/);
+   if(x)Object.assign(o,{newspaper:clean(x[1]),date:x[2],edition:x[3]||''});
+ }
+ if(kind==='electronic'){
+   let x=h.tail.match(/\(([^)]+)\)\s*\[([^\]]+)\]\.?\s*(https?:\/\/\S+)/);
+   if(x)Object.assign(o,{updateDate:x[1],accessDate:x[2],url:x[3].replace(/[\.。]$/,'')});
+ }
+ if(kind==='patent'){
+   let pm=o.title.match(/^(.*?)[：:]\s*([A-Za-z0-9.\-]+)$/);if(pm){o.title=clean(pm[1]);o.patentNo=pm[2]}
+   let dm=h.tail.replace(/[\.。]\s*$/,'').match(/(\d{4}-\d{2}-\d{2})/);if(dm)o.date=dm[1];
+ }
+ if(kind==='conferencePaper'||kind==='bookChapter'){
+   let tail=h.tail.replace(/^\/\/\s*/,'').replace(/[\.。]\s*$/,'');
+   let pages='';let pg=tail.match(/\s*[:：]\s*([A-Za-z]?\d+(?:\s*[-–—]\s*[A-Za-z]?\d+)?)\s*$/);
+   if(pg){pages=clean(pg[1]).replace(/\s*[-–—]\s*/g,'-');tail=clean(tail.slice(0,pg.index))}
+   // Work backwards from the publication year. This tolerates periods inside host titles/editors.
+   let ys=yearAnchors(tail), y=ys.length?ys[ys.length-1]:null, pubPart='', hostPart=tail;
+   if(y){
+     let before=clean(tail.slice(0,y.index)).replace(/[,，\s]+$/,'');
+     let explicit=before.match(/^(.*?)[.。]\s*([^.:：。]+)\s*[:：]\s*([^,，]+)\s*$/);
+     if(explicit){
+       hostPart=clean(explicit[1]);o.place=clean(explicit[2]);o.publisher=clean(explicit[3]);o.year=y.year;
+     }else{
+       let hit=findPublisher(before);
+       if(hit){
+         let idx=normKey(before).lastIndexOf(normKey(hit.alias));
+         // Keep source publisher spelling where possible.
+         let rawPub=before.slice(Math.max(0,before.toLowerCase().lastIndexOf(hit.alias.toLowerCase()))).replace(/^[.。,\s]+/,'');
+         o.publisher=clean(rawPub)||hit.canonical;o.year=y.year;
+         let inferred=hit.city||inferPublisherCity(o.publisher);if(inferred)o.place=inferred;
+         hostPart=clean(before.slice(0,Math.max(0,before.toLowerCase().lastIndexOf(hit.alias.toLowerCase())))).replace(/[.。,，\s]+$/,'');
+       }else{o.year=y.year;hostPart=before.replace(/[.。,，\s]+$/,'')}
+     }
+   }
+   // Optional responsible person(s) before host title: "EDITOR X. Book title"
+   let hs=hostPart.match(/^(.{2,120}?)\.\s+(.+)$/);
+   if(hs && /(?:,\s*[A-Z]\.?|编|主编|ed\.?|eds\.?)/i.test(hs[1])){o.editors=clean(hs[1]).replace(/,\s*(?:ed\.?|eds\.?)$/i,'');o.hostTitle=clean(hs[2])}
+   else o.hostTitle=clean(hostPart);
+   if(pages)o.pages=pages;
+ }
+
+
+ if(kind==='electronic'){
+   let pre=parseClean(raw).split(/\[\s*EB\s*\/\s*OL\s*\]/i)[0];
+   // APA-like mixed author list: Roth, A., H. Kim and E. Care, Title
+   let wm=pre.match(/^([A-Za-z'’\-]+,\s*[A-Z]\.,\s*[A-Z]\.?\s*[A-Za-z'’\-]+\s+and\s+[A-Z]\.?\s*[A-Za-z'’\-]+),\s*(.+)$/i);
+   if(wm){o.authors=clean(wm[1]);o.title=clean(wm[2])}
+ }
+ if(kind==='report' && (!o.authors || !o.title || o.title.length<4)){
+   let mm=parseClean(raw).match(/^(.+?)[,，]\s*(.+?)\[R\]/i);
+   if(mm){o.authors=clean(mm[1]);o.title=clean(mm[2])}
+ }
+ return o;
+}
+function gbAuthor(a){return clean(a)}
+function apaAuthor(a){return clean(a).split(/\s*,\s*/).map(n=>{let m=n.match(/^([A-Za-zÀ-ÖØ-öø-ÿ'’\-]+)\s+(.+)$/);if(!m)return n;let ins=(m[2].match(/[A-Za-z]/g)||[]).map(x=>x.toUpperCase()+'.').join(' ');return m[1][0].toUpperCase()+m[1].slice(1).toLowerCase()+', '+ins}).join(', ')}
+function normTitle(t){return clean(t).replace(/\s+([:;,])/g,'$1')}
+
+function normalizeInitials(raw){
+ return (String(raw||'').match(/[A-Za-z]/g)||[]).map(x=>x.toUpperCase()).join(' ')
+}
+function parseWesternAuthors(raw){
+ raw=clean(raw);
+ // Canonical GB/T western names: SURNAME A D C (surname uppercase, 1+ initials).
+ // This is deliberately stricter than ordinary name parsing to avoid swallowing initials into the surname.
+ // Canonical GB/T western author block:
+ // PETERSON A D C  /  BERGERON L, ROGERS L  /  SMITH J, JONES A B, BROWN C.
+ // A comma is an author separator here only when every resulting group has the strict
+ // "UPPERCASE-SURNAME + 1–5 initials" shape. APA "Surname, A. B." therefore does not enter this branch.
+ let canonicalChunks=raw.split(/\s*(?:,|;|；|，|\band\b|&)\s*/i).map(clean).filter(Boolean);
+ const gbtPerson=/^[A-ZÀ-ÖØ-Þ][A-ZÀ-ÖØ-Þ'’\-]*(?:\s+[A-Z]){1,5}$/;
+ if(canonicalChunks.length && canonicalChunks.every(v=>gbtPerson.test(v))){
+   return canonicalChunks.map(v=>{let p=v.split(/\s+/);return {surname:p.shift(),initials:p};});
+ }
+ if(!raw)return [];
+
+ // Name-aware tokenizer. In the author zone, apostrophes/hyphens/spaces
+ // inside a surname are preserved: O’Leary, D'Angelo, Smith-Jones,
+ // van der Meer, de Vries, García-Peñalvo.
+ const LETTER="A-Za-zÀ-ÖØ-öø-ÿĀ-ž";
+ const surnamePattern=`[${LETTER}]+(?:['’\\-][${LETTER}]+)*(?:\\s+(?:(?:van|von|de|del|della|di|da|dos|das|der|den|la|le)\\s+)*[${LETTER}]+(?:['’\\-][${LETTER}]+)*)*`;
+ const personRx=new RegExp(`(${surnamePattern}),\\s*((?:[A-ZÀ-ÖØ-Þ]\\.?(?:\\s+|(?=,|&|$))){1,6})`,'gi');
+
+ let out=[],m;
+ while((m=personRx.exec(raw))!==null){
+   let initials=(m[2].match(/[A-ZÀ-ÖØ-Þ](?=\.?)/gi)||[]).map(x=>x.toUpperCase());
+   out.push({surname:clean(m[1]),initials});
+ }
+ if(out.length)return out;
+
+ // GB/T-like fallback without comma: "Merriam S. B.; Smith-Jones A."
+ let chunks=raw.replace(/\s*,?\s*&\s*/g,' | ').replace(/\s+and\s+/gi,' | ')
+   .split(/\s*\|\s*|\s*;\s*/).map(clean).filter(Boolean);
+ const fallbackRx=new RegExp(`^(${surnamePattern})\\s+((?:[A-ZÀ-ÖØ-Þ]\\.?(?:\\s*|$)){1,6})$`,'i');
+ for(const chunk of chunks){
+   let z=chunk.match(fallbackRx);
+   if(z)out.push({surname:clean(z[1]),initials:(z[2].match(/[A-ZÀ-ÖØ-Þ]/gi)||[]).map(x=>x.toUpperCase())});
+ }
+ return out;
+}
+function normalizeGBAuthor(raw){
+ raw=clean(raw);
+ if(/[\u3400-\u9fff]/.test(raw))return raw;
+ let people=parseWesternAuthors(raw);
+ if(!people.length)return raw.toUpperCase();
+ return people.map(p=>p.surname.toUpperCase()+' '+p.initials.join(' ')).join(', ');
+}
+function apaFullDate(raw){
+ raw=normalizeDateInput(raw);let m=raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+ if(!m)return raw||'n.d.';
+ const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+ return `${m[1]}, ${months[Number(m[2])-1]} ${Number(m[3])}`;
+}
+function sentenceCaseWebTitle(raw){
+ let original=normTitle(raw),lowered=sentenceCaseTitle(original);
+ let src=original.split(/\s+/),dst=lowered.split(/\s+/);
+ return dst.map((w,i)=>{let token=src[i]||'',core=token.replace(/^[("'“‘]+|[.,;:!?。！？)"'”’]+$/g,'');
+   return (/[A-Z].*[A-Z]/.test(core)||/[a-z][A-Z]/.test(core)||/^[A-Z0-9]{2,}$/.test(core))?token:w;
+ }).join(' ');
+}
+function sentenceCaseTitle(raw){
+ let t=normTitle(raw);
+ if(!t)return t;
+ let words=t.split(/(\s+)/), first=true;
+ return words.map(w=>{
+   if(/^\s+$/.test(w))return w;
+   if(/^[A-Z0-9]{2,}$/.test(w))return w;
+   if(first){first=false;return w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()}
+   return w.toLowerCase()
+ }).join('').replace(/([:?!]\s+)([a-z])/g,(m,a,b)=>a+b.toUpperCase())
+}
+function normalizePublisher(raw){return clean(raw).replace(/\s*[-–—]\s*/g,'-')}
+function normalizeGBTTitle(raw){
+ return clean(raw)
+   .replace(/\s+([:;,])/g,'$1')
+   .replace(/([:;,])(?=\S)/g,'$1 ');
+}
+function normalizeAPAAuthor(raw){
+ raw=clean(raw);
+ if(!raw)return '';
+ if(/[\u3400-\u9fff]/.test(raw))return raw;
+ let people=parseWesternAuthors(raw);
+ if(!people.length)return raw;
+ let names=people.map(p=>{
+   let surname=p.surname.charAt(0).toUpperCase()+p.surname.slice(1);
+   return surname+', '+p.initials.map(x=>x.toUpperCase()+'.').join(' ');
+ });
+ if(names.length===1)return names[0];
+ return names.slice(0,-1).join(', ')+', & '+names[names.length-1];
+}
+function titleWithTerminalPunctuation(t){
+ t=clean(t);
+ return /[.!?。！？]$/.test(t)?t:t+'.';
+}
+
+
+// ===== v8.7 structured multi-author model =====
+function authorObjectsFromRaw(raw){
+ raw=clean(raw);
+ if(!raw)return [];
+ if(/[\u3400-\u9fff]/.test(raw)){
+   return raw.split(/\s*(?:,|，|;|；|、|\band\b|&)\s*/).map(clean).filter(Boolean)
+     .map(name=>({type:'literal',name}));
+ }
+ // In the author zone, an apostrophe between Latin letters is part of the name,
+ // never an author separator.
+ raw=raw.replace(/([A-Za-zÀ-ÖØ-öø-ÿ])['’]([A-Za-zÀ-ÖØ-öø-ÿ])/g,(m,a,b)=>a+(m.includes('’')?'’':"'")+b);
+ let western=parseWesternAuthors(raw);
+ if(western.length)return western.map(p=>({type:'person',family:p.surname,given:p.initials.join(' ')}));
+ return [{type:'literal',name:raw}];
+}
+function ensureAuthorObjects(){
+ if(!Array.isArray(state.authorList)||!state.authorList.length){
+   state.authorList=authorObjectsFromRaw(state.authors||'');
+ }
+ return state.authorList;
+}
+function syncAuthorsLegacy(){
+ let list=ensureAuthorObjects();
+ state.authors=list.map(a=>a.type==='person'
+   ? clean(`${a.family||''}${a.given?' '+a.given:''}`)
+   : clean(a.name||'')).filter(Boolean).join(', ');
+}
+function givenInitials(given){
+ given=clean(given);
+ if(!given)return [];
+ // Full given names from EndNote (Andy / David / John Paul) -> A / D / J P.
+ // Existing initials (J. P. / J P / JP) remain J P rather than becoming every letter of a name.
+ let parts=given.replace(/\./g,' ').split(/[\s-]+/).filter(Boolean);
+ if(parts.length>1)return parts.map(p=>(p.match(/[A-Za-zÀ-ÖØ-öø-ÿ]/)||[''])[0].toUpperCase()).filter(Boolean);
+ let one=parts[0]||'';
+ if(/^[A-Za-z]{1,4}$/.test(one)&&one===one.toUpperCase())return one.split('').map(x=>x.toUpperCase());
+ let first=(one.match(/[A-Za-zÀ-ÖØ-öø-ÿ]/)||[''])[0];
+ return first?[first.toUpperCase()]:[];
+}
+function gbtAuthors(list){
+ list=(list||[]).filter(Boolean);
+ let shown=list.length>3?list.slice(0,3):list;
+ let rendered=shown.map(a=>{
+   if(a.type==='person'){
+     let fam=clean(a.family).toUpperCase();
+     let ini=givenInitials(a.given).join(' ');
+     return clean(fam+' '+ini);
+   }
+   return clean(a.name);
+ });
+ if(list.length>3){
+   let hasChinese=rendered.some(x=>/[\u3400-\u9fff]/.test(x));
+   rendered.push(hasChinese?'等':'et al');
+ }
+ return rendered.join(', ');
+}
+function apaAuthors(list){
+ list=(list||[]).filter(Boolean);
+ let names=list.map(a=>{
+   if(a.type==='person'){
+     let fam=clean(a.family);
+     let given=givenInitials(a.given).map(x=>x+'.').join(' ');
+     return clean(fam+', '+given);
+   }
+   return clean(a.name);
+ });
+ if(names.length<=20){
+   if(names.length<=1)return names[0]||'';
+   return names.slice(0,-1).join(', ')+', & '+names[names.length-1];
+ }
+ // APA 7: 21+ authors -> first 19, ellipsis, final author.
+ return names.slice(0,19).join(', ')+', … '+names[names.length-1];
+}
+function renderPeopleRows(list,p,noun){
+ return list.map((a,i)=>a.type==='person'
+  ?`<div class="author-row" data-${p}-index="${i}"><span class="author-no">${i+1}</span>
+     <input data-${p}-field="family" placeholder="姓 Family name" aria-label="第${i+1}位${noun}的姓" value="${escAttr(a.family||'')}">
+     <input data-${p}-field="given" placeholder="名或缩写 Given" aria-label="第${i+1}位${noun}的名" value="${escAttr(a.given||'')}">
+     <button type="button" class="author-type" data-${p}-type="${i}" title="改为单栏填写（中文姓名、机构）">单栏</button>
+     <button type="button" class="author-remove" data-${p}-remove="${i}" aria-label="删除第${i+1}位${noun}">×</button></div>`
+  :`<div class="author-row cn" data-${p}-index="${i}"><span class="author-no">${i+1}</span>
+     <input data-${p}-field="name" placeholder="${noun}姓名或机构" aria-label="第${i+1}位${noun}" value="${escAttr(a.name||'')}">
+     <button type="button" class="author-type" data-${p}-type="${i}" title="拆分为姓、名两栏（西文姓名）">分姓名</button>
+     <button type="button" class="author-remove" data-${p}-remove="${i}" aria-label="删除第${i+1}位${noun}">×</button></div>`).join('');
+}
+function renderAuthorEditor(){
+ let list=ensureAuthorObjects(),n=list.filter(a=>clean(a.name||a.family||'')).length;
+ return `<div class="author-editor">
+   <div class="author-head"><span class="lab">作者</span><button type="button" class="author-add" data-author-add="1">＋ 添加作者</button></div>
+   <div class="author-list">${renderPeopleRows(list,'author','作者')}</div>
+   <div class="author-hint">${n>3?`共 ${n} 位。GB/T 只列前 3 位并加“等”；APA 20 位以内全部列出。`:'西文姓名可整段粘贴，如 John Hattie 或 Hattie, J.；多位作者用分号或 and 隔开，会自动拆成姓、名两栏。'}</div>
+ </div>`;
+}
+function ensureEditorObjects(){
+ if(!Array.isArray(state.editorList))state.editorList=editorObjectsFromRaw(state.editors||'');
+ return state.editorList;
+}
+function syncEditorsLegacy(){
+ state.editors=ensureEditorObjects().map(a=>a.type==='person'
+  ?clean(`${a.family||''}${a.given?', '+a.given:''}`):clean(a.name||'')).filter(Boolean).join('; ');
+}
+function renderEditorEditor(){
+ let list=ensureEditorObjects();
+ return `<div class="author-editor"><div class="author-head"><span class="lab">编者</span><button type="button" class="author-add" data-editor-add="1">＋ 添加编者</button></div>
+  <div class="author-list">${list.length?renderPeopleRows(list,'editor','编者'):'<div class="author-empty">暂无编者。原书标注了主编或编者时再添加。</div>'}</div></div>`;
+}
+function togglePersonType(a){
+ if(a.type==='person'){let f=clean(a.family),g=clean(a.given);let cjk=/[\u3400-\u9fff]/.test(f+g);return {type:'literal',name:cjk?f+g:clean(f+(g?', '+g:''))}}
+ let n=clean(a.name),sp=/[\u3400-\u9fff]/.test(n)?null:splitWesternName(n);
+ if(sp)return sp;
+ let m=n.match(/^(.+?),\s*(.+)$/);
+ return m?{type:'person',family:clean(m[1]),given:clean(m[2])}:{type:'person',family:n,given:''};
+}
+function escHTML(x){return String(x||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+const GAP_KEYS={'URL':'url','专利号':'patentNo','专著/论文集题名':'hostTitle','会议题名':'hostTitle','出版地':'place','城市':'place','出版者':'publisher','卷':'volume','年份':'year','引用日期':'accessDate','报纸':'newspaper','日期':'date','期刊':'journal','机构':'institution','页码':'pages','Book title':'hostTitle','Proceedings title':'hostTitle','Institution':'institution','Journal':'journal','Newspaper':'newspaper','Publisher':'publisher','Editor(s) to verify':'editors'};
+function gapKey(name){
+ let hit=Object.keys(GAP_KEYS).find(x=>x.toLowerCase()===String(name).toLowerCase());
+ let k=hit?GAP_KEYS[hit]:'',sc=schemas[state.kind]||[];
+ if(k==='institution'&&!sc.some(([x])=>x==='institution'))k='publisher';
+ return k&&(k==='editors'||sc.some(([x])=>x===k))?k:'';
+}
+function markGaps(text){
+ let gaps=[];
+ let html=escHTML(text).replace(/\[((?:[^\[\]]*?待核)|Book title|Proceedings title|Institution|Journal|Newspaper|Publisher|URL|Editor\(s\) to verify)\]/gi,(m,inner)=>{
+   let name=inner.replace(/待核$/,''),k=gapKey(name);gaps.push(name);
+   return `<button type="button" class="gap" data-gap="${k}" title="缺少${escHTML(name)}，点击填写">${escHTML(name)}</button>`;
+ });
+ return {html,gaps};
+}
+function escAttr(x){return String(x||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+function normalizedFor(format){
+ let o={...state};
+ if(format==='gb'){
+   o.title=normalizeGBTTitle(o.title);
+   o.publisher=normalizePublisher(o.publisher);
+ }else{
+   o.title=sentenceCaseTitle(o.title);
+   o.publisher=normalizePublisher(o.publisher);
+ }
+ return o
+}
+function gbtTitleBeforeMarker(t){
+ t=clean(t);
+ // A full stop is structural here and must not become ". [J]" or ".[J]".
+ // Question/exclamation marks belong to the title and are preserved.
+ return t.replace(/[.。．]+$/,'');
+}
+function editorObjectsFromRaw(raw){
+ raw=clean(raw);if(!raw)return [];
+ return raw.split(/\s*;\s*/).map(clean).filter(Boolean).map(v=>{
+   let m=v.match(/^(.+?),\s*(.+)$/);
+   if(m&&!/[\u3400-\u9fff]/.test(v))return {type:'person',family:clean(m[1]),given:clean(m[2])};
+   return {type:'literal',name:v};
+ });
+}
+function apaEditors(raw){
+ let list=editorObjectsFromRaw(raw);
+ if(!list.length)return '';
+ let names=list.map(a=>a.type==='person'
+   ? clean(a.family+', '+givenInitials(a.given).map(x=>x+'.').join(' '))
+   : clean(a.name));
+ let joined=names.length===1?names[0]:names.slice(0,-1).join(', ')+', & '+names[names.length-1];
+ return joined+' ('+(names.length===1?'Ed.':'Eds.')+')';
+}
+function gbtEditors(raw){
+ let list=editorObjectsFromRaw(raw);if(!list.length)return '';
+ return gbtAuthors(list);
+}
+function apaPageRange(raw){
+ raw=clean(raw).replace(/\s*[-–—]\s*/g,'–');
+ return raw?` (pp. ${raw})`:'';
+}
+function renderGB(){
+ let o=normalizedFor('gb'),a=gbtAuthors(ensureAuthorObjects()),t=gbtTitleBeforeMarker(o.title),pub=o.publisher;
+ if(o.kind==='book')return `${a}. ${t}[M]. ${o.translator?o.translator+', 译. ':''}${o.place||'[出版地待核]'}: ${pub||'[出版者待核]'}, ${o.year||'[年份待核]'}${o.pages?', '+o.pages:''}.`;
+ if(o.kind==='journal')return `${a}. ${t}[J]. ${o.journal||'[期刊待核]'}, ${o.year||'[年份待核]'}, ${o.volume||'[卷待核]'}${o.issue?'('+o.issue+')':''}: ${o.pages||'[页码待核]'}.`;
+ if(o.kind==='thesis')return `${a}. ${t}[D]. ${o.place||'[城市待核]'}: ${o.institution||'[机构待核]'}, ${o.year||'[年份待核]'}.`;
+ if(o.kind==='report')return `${a}. ${t}[R]. ${o.place||'[出版地待核]'}: ${pub||'[机构待核]'}, ${o.year||'[年份待核]'}.`;
+ if(o.kind==='newspaper')return `${a}. ${t}[N]. ${o.newspaper||'[报纸待核]'}, ${o.date||'[日期待核]'}${o.edition?'('+o.edition+')':''}.`;
+ if(o.kind==='proceedings')return `${a}. ${t}[C]. ${o.place||'[出版地待核]'}: ${pub||'[出版者待核]'}, ${o.year||'[年份待核]'}.`;
+ if(o.kind==='patent')return `${a}. ${t}: ${o.patentNo||'[专利号待核]'}[P]. ${o.date||'[日期待核]'}.`;
+ if(o.kind==='standard')return `${a}. ${o.standardNo?o.standardNo+' ':''}${t}[S]. ${o.place||'[出版地待核]'}: ${pub||'[出版者待核]'}, ${o.year||'[年份待核]'}.`;
+ if(o.kind==='conferencePaper')return `${a}. ${t}[C]//${o.editors?gbtEditors(o.editors)+'. ':''}${o.hostTitle||'[会议题名待核]'}. ${o.place||'[出版地待核]'}: ${pub||'[出版者待核]'}, ${o.year||'[年份待核]'}${o.pages?': '+o.pages:''}.`;
+ if(o.kind==='bookChapter')return `${a}. ${t}[M]//${o.editors?gbtEditors(o.editors)+'. ':''}${o.hostTitle||'[专著/论文集题名待核]'}. ${o.place||'[出版地待核]'}: ${pub||'[出版者待核]'}, ${o.year||'[年份待核]'}${o.pages?': '+o.pages:''}.`;
+ return `${a}. ${t}[EB/OL]. ${o.updateDate?'('+o.updateDate+')':''}${o.accessDate?'['+o.accessDate+']':'[引用日期待核]'}. ${o.url||'[URL待核]'}`;
+}
+function renderAPA(){
+ let o=normalizedFor('apa'),a=apaAuthors(ensureAuthorObjects()),t=o.title;
+ if(o.kind==='book')return `${a} (${o.year||'n.d.'}). ${t}${o.translator?' ('+o.translator+', Trans.)':''}. ${clean(o.publisher).replace(/\s*[-–—]\s*/g,'-')||'[Publisher]'}.`;
+ if(o.kind==='journal')return `${a} (${o.year||'n.d.'}). ${titleWithTerminalPunctuation(t)} ${o.journal||'[Journal]'}, ${o.volume||''}${o.issue?'('+o.issue+')':''}, ${o.pages||''}.${o.doi?' https://doi.org/'+normalizeDOI(o.doi):''}`;
+ if(o.kind==='thesis')return `${a} (${o.year||'n.d.'}). ${t} [Doctoral dissertation, ${o.institution||'[Institution]'}].`;
+ if(o.kind==='report')return `${a} (${o.year||'n.d.'}). ${t}. ${o.publisher||'[Institution]'}.`;
+ if(o.kind==='newspaper')return `${a} (${o.date||'n.d.'}). ${t}. ${o.newspaper||'[Newspaper]'}.`;
+ if(o.kind==='bookChapter'){
+   let ed=apaEditors(o.editors), host=sentenceCaseTitle(o.hostTitle||'[Book title]');
+   return `${a} (${o.year||'n.d.'}). ${titleWithTerminalPunctuation(t)} In ${ed?ed+', ':'[Editor(s) to verify], '}${host}${apaPageRange(o.pages)}. ${o.publisher||'[Publisher]'}.${o.doi?' https://doi.org/'+normalizeDOI(o.doi):''}`;
+ }
+ if(o.kind==='conferencePaper'){
+   let ed=apaEditors(o.editors), host=sentenceCaseTitle(o.hostTitle||'[Proceedings title]');
+   return `${a} (${o.year||'n.d.'}). ${titleWithTerminalPunctuation(t)} In ${ed?ed+', ':''}${host}${apaPageRange(o.pages)}. ${o.publisher||'[Publisher]'}.${o.doi?' https://doi.org/'+normalizeDOI(o.doi):''}`;
+ }
+ if(o.kind==='proceedings')return `${a} (${o.year||'n.d.'}). ${t}. ${o.publisher||'[Publisher]'}.`;
+ return `${a} (${apaFullDate(o.updateDate)}). ${sentenceCaseWebTitle(state.title)}.${o.siteName?' '+o.siteName+'.':''} ${o.url||'[URL]'}`;
+}
+
+// ===== v9.3 EndNote Tagged (.enw) import =====
+function parseEnwRecords(text){
+ text=String(text||'').replace(/^\uFEFF/,'').replace(/\r\n?/g,'\n');let rs=[],r=null,last='';
+ for(const raw of text.split('\n')){let line=raw.replace(/\s+$/,''),m=line.match(/^%(.)(?:\s+)?(.*)$/);
+  if(m){let t=m[1],v=clean(m[2]);if(t==='0'&&r&&Object.keys(r).length){rs.push(r);r={}}if(!r)r={};(r[t]||(r[t]=[])).push(v);last=t}
+  else if(r&&last&&clean(line)){let a=r[last];a[a.length-1]=clean(a[a.length-1]+' '+line)}
+  else if(r&&Object.keys(r).length&&!clean(line)){rs.push(r);r=null;last=''} }
+ if(r&&Object.keys(r).length)rs.push(r);return rs;
+}
+function enwFirst(r,t){return clean((r[t]||[])[0]||'')}
+function enwTypeToKind(x){let t=clean(x).toLowerCase();if(t.includes('journal')||t==='electronic article')return'journal';if(t==='book'||t==='edited book')return'book';if(t.includes('book section'))return'bookChapter';if(t.includes('thesis')||t.includes('dissertation'))return'thesis';if(t.includes('report')||t.includes('government document'))return'report';if(t.includes('newspaper'))return'newspaper';if(t.includes('conference paper'))return'conferencePaper';if(t.includes('conference proceeding'))return'proceedings';if(t.includes('web')||t.includes('online')||t.includes('electronic'))return'electronic';if(t.includes('standard'))return'standard';if(t.includes('patent'))return'patent';return'book'}
+function stateFromEnw(r){let k=enwTypeToKind(enwFirst(r,'0')),o=emptyState(k),avs=r['A']||[];o.authorList=avs.map(v=>{v=clean(v);let m=v.match(/^(.+?),\s*(.+)$/);return m&&!/[\u3400-\u9fff]/.test(v)?{type:'person',family:clean(m[1]),given:clean(m[2]).replace(/\./g,'')}:{type:'literal',name:v}});o.authors=o.authorList.map(a=>a.type==='person'?clean(a.family+' '+a.given):a.name).join(', ');o.title=enwFirst(r,'T');o.year=enwFirst(r,'D');o.pages=enwFirst(r,'P');o.publisher=enwFirst(r,'I');o.place=enwFirst(r,'C');o.edition=enwFirst(r,'7');o.doi=normalizeDOI(enwFirst(r,'R'));o.url=enwFirst(r,'U');let serial=enwFirst(r,'@');if(k==='journal'){o.journal=enwFirst(r,'J')||enwFirst(r,'B');o.volume=enwFirst(r,'V');o.issue=enwFirst(r,'N');o.issn=serial}else{o.isbn=serial}if(k==='bookChapter'||k==='conferencePaper'){
+ o.hostTitle=enwFirst(r,'B');o.editors=(r['E']||[]).join('; ');
+ o.editorList=(r['E']||[]).map(v=>{v=clean(v);let m=v.match(/^(.+?),\s*(.+)$/);return m&&!/[\u3400-\u9fff]/.test(v)?{type:'person',family:clean(m[1]),given:clean(m[2])}:{type:'literal',name:v}});
+ if(!o.place&&o.publisher){let ph=findPublisher(o.publisher);if(ph&&ph.city){o.place=ph.city;o._provenance=Object.assign(o._provenance||{},{place:'publisher-lexicon-inference'})}}
+}if(k==='thesis')o.institution=enwFirst(r,'I');if(k==='report')o.reportNo=enwFirst(r,'N');if(k==='newspaper'){o.newspaper=enwFirst(r,'J')||enwFirst(r,'B');o.date=enwFirst(r,'8')||o.year;o.edition=enwFirst(r,'N')}if(k==='electronic'){o.updateDate=enwFirst(r,'8')||o.year;o.accessDate=enwFirst(r,'[')}if(k==='patent'){o.patentNo=enwFirst(r,'N');o.date=enwFirst(r,'8')||o.year}o._confidence=100;return o}
+function loadEnwRecord(r){state=stateFromEnw(r);$('err').textContent='';openEditor('auto');$('parserTag').textContent='从 EndNote 导入，请核对各字段'}
+function chooseEnwRecords(rs){if(rs.length===1){loadEnwRecord(rs[0]);return}let labels=rs.map((r,i)=>`${i+1}. ${enwFirst(r,'T')||'(无题名)'} [${enwFirst(r,'0')||'Reference'}]`).join('\n');let n=Number(prompt(`检测到 ${rs.length} 条记录，请输入序号：\n${labels}`));if(n>=1&&n<=rs.length)loadEnwRecord(rs[n-1])}
+
+// ===== v9.2 EndNote Tagged (.enw) export =====
+function enwLine(tag,value){
+ value=clean(value);
+ return value?`%${tag} ${value}`:'';
+}
+function enwAuthors(list,tag='A'){
+ return (list||[]).filter(Boolean).map(a=>{
+   if(a.type==='person'){
+     let fam=clean(a.family), given=clean(a.given);
+     // Preserve the structured name. Initial-only data remain initials; never invent full given names.
+     return enwLine(tag, clean(fam+(given?', '+given:'')));
+   }
+   return enwLine(tag, clean(a.name));
+ }).filter(Boolean);
+}
+function renderEndNote(){
+ let o={...state}, list=ensureAuthorObjects(), lines=[];
+ const add=(tag,val)=>{let x=enwLine(tag,val);if(x)lines.push(x)};
+ const addAuthors=(tag='A')=>lines.push(...enwAuthors(list,tag));
+ const doi=o.doi?normalizeDOI(o.doi):'';
+
+ if(o.kind==='journal'){
+   add('0','Journal Article'); addAuthors(); add('T',o.title); add('J',o.journal);
+   add('V',o.volume); add('N',o.issue); add('P',o.pages); add('D',o.year);
+   add('I',o.publisher); add('@',o.issn); add('R',doi);
+ }else if(o.kind==='book'){
+   add('0','Book'); addAuthors(); add('T',o.title); add('7',o.edition);
+   add('C',o.place); add('I',o.publisher); add('D',o.year); add('P',o.pages); add('@',o.isbn);
+   if(o.translator)add('Y',o.translator);
+ }else if(o.kind==='bookChapter'){
+   add('0','Book Section'); addAuthors(); add('T',o.title); add('B',o.hostTitle);
+   lines.push(...enwAuthors(ensureEditorObjects(),'E')); add('7',o.edition); add('C',o.place); add('I',o.publisher);
+   add('D',o.year); add('P',o.pages); add('@',o.isbn); add('R',doi);
+ }else if(o.kind==='report'){
+   add('0','Report'); addAuthors(); add('T',o.title); add('C',o.place);
+   add('I',o.publisher); add('D',o.year); add('P',o.pages); add('N',o.reportNo); add('R',doi);
+ }else if(o.kind==='thesis'){
+   add('0','Thesis'); addAuthors(); add('T',o.title); add('C',o.place);
+   add('I',o.institution); add('D',o.year); add('P',o.pages);
+ }else if(o.kind==='newspaper'){
+   add('0','Newspaper Article'); addAuthors(); add('T',o.title); add('J',o.newspaper);
+   add('8',o.date); add('P',o.edition);
+ }else if(o.kind==='proceedings'){
+   add('0','Conference Proceedings'); addAuthors(); add('T',o.title); add('C',o.place);
+   add('I',o.publisher); add('D',o.year); add('P',o.pages); add('@',o.isbn);
+ }else if(o.kind==='conferencePaper'){
+   add('0','Conference Paper'); addAuthors(); add('T',o.title); add('B',o.hostTitle);
+   lines.push(...enwAuthors(ensureEditorObjects(),'E')); add('C',o.place); add('I',o.publisher); add('D',o.year);
+   add('P',o.pages); add('R',doi);
+ }else if(o.kind==='electronic'){
+   add('0','Web Page'); addAuthors(); add('T',o.title); add('B',o.siteName); add('D',o.updateDate);
+   add('[',o.accessDate); add('U',o.url);
+ }else if(o.kind==='standard'){
+   add('0','Standard'); addAuthors(); add('T',clean((o.standardNo?o.standardNo+' ':'')+(o.title||'')));
+   add('C',o.place); add('I',o.publisher); add('D',o.year);
+ }else if(o.kind==='patent'){
+   add('0','Patent'); addAuthors(); add('T',o.title); add('N',o.patentNo); add('8',o.date);
+ }else{
+   add('0','Generic'); addAuthors(); add('T',o.title); add('D',o.year);
+ }
+ return lines.join('\n');
+}
+function exportEndNote(){
+ let text=renderEndNote();
+ if(!text.trim())return;
+ // UTF-8 with BOM improves compatibility with non-Latin metadata in desktop reference managers.
+ let blob=new Blob(['\uFEFF'+text+'\r\n'],{type:'text/plain;charset=utf-8'});
+ let url=URL.createObjectURL(blob),a=document.createElement('a');
+ let base=clean(state.title||'citecraft-reference')
+   .replace(/[\\/:*?"<>|]+/g,' ').replace(/\s+/g,' ').trim().slice(0,80)||'citecraft-reference';
+ a.href=url;a.download=base+'.enw';document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+function draw(){
+ let sc=schemas[state.kind]||schemas.book;
+ document.querySelectorAll('.type-pill').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.kind===state.kind)));
+ let authorField=sc.some(([k])=>k==='authors')?renderAuthorEditor():'';
+ let editorField=sc.some(([k])=>k==='editors')?renderEditorEditor():'';
+ let normal=sc.filter(([k])=>k!=='authors'&&k!=='editors').map(([k,l,w,mode])=>{
+  if(mode==='date'||mode==='dateNow'){
+    let today=mode==='dateNow'?`<button type="button" class="date-today" data-date-today="${k}">今天</button>`:'';
+    return `<label class="field ${w?'wide':''}"><span class="lab">${l}</span><div class="date-input-wrap"><input type="date" data-key="${k}" value="${escAttr(normalizeDateInput(state[k]||''))}">${today}</div></label>`;
+  }
+  return `<label class="field ${w?'wide':''}"><span class="lab">${l}</span><input data-key="${k}" value="${escAttr(state[k]||'')}"></label>`;
+ }).join('');
+ $('fields').innerHTML=authorField+editorField+normal;
+ update();
+}
+function isBlankRecord(){
+ return !clean(state.title)&&!ensureAuthorObjects().some(a=>clean(a.name||a.family||a.given||''));
+}
+function update(){
+ $('enw').textContent=renderEndNote();
+ if(isBlankRecord()){
+   let tip='<span class="cite-empty">填写作者或题名后，这里显示排好的引用。</span>';
+   $('gb').innerHTML=tip;$('apa').innerHTML=tip;$('gapNote').textContent='';return;
+ }
+ let gb=markGaps(renderGB()),apa=markGaps(renderAPA());
+ $('gb').innerHTML=gb.html;$('apa').innerHTML=apa.html;
+ let note=$('gapNote');
+ note.classList.toggle('ok',!gb.gaps.length);
+ note.textContent=gb.gaps.length?`还缺 ${gb.gaps.length} 项：${[...new Set(gb.gaps)].join('、')}。点击红色标记可直接填写。`:'著录项目已齐全。';
+}
+function emptyState(kind='book'){
+ return {kind,authors:'',authorList:[],title:'',translator:'',edition:'',place:'',publisher:'',year:'',pages:'',
+ journal:'',volume:'',issue:'',doi:'',institution:'',newspaper:'',date:'',updateDate:'',accessDate:'',url:'',
+ isbn:'',issn:'',reportNo:'',editors:'',editorList:[],siteName:''};
+}
+function openEditor(mode){
+ if(!Array.isArray(state.authorList)||!state.authorList.length)state.authorList=authorObjectsFromRaw(state.authors||'');
+ if(!state.authorList.length)state.authorList.push({type:'literal',name:''});
+ $('parserTag').textContent=mode==='manual'?'手动录入':mode==='douban'?(state._sourceNote||'来自豆瓣，请核对各字段'):('自动识别'+(state._confidence!=null?`，置信度 ${state._confidence}%`:'')+(/inference/.test(state._provenance?.place||'')&&state.place?`，${state.kind==='thesis'?'城市':'出版地'}「${state.place}」为推断`:'')+'，请核对各字段');
+ draw();
+}
+$('resetBtn').onclick=()=>{$('err').textContent='';state=emptyState(state.kind||'book');openEditor('manual')};
+/* ===== v9.5 豆瓣读书 ===== */
+const DOUBAN_KEYS=['书名','副标题','原作名','作者','译者','出版社','出版年','页数','ISBN','出品方','丛书','装帧','定价'];
+function doubanSubjectURL(x){
+ let m=clean(x).match(/^(?:https?:\/\/)?(?:book\.douban\.com\/subject|m\.douban\.com\/book\/subject)\/(\d+)/i);
+ return m?`https://book.douban.com/subject/${m[1]}/`:'';
+}
+function looksLikeDoubanInfo(x){
+ let n=0;for(const k of ['作者','出版社','出版年','ISBN','页数','书名'])if(new RegExp(`(^|\\n)\\s*${k}\\s*[:：]`).test(x))n++;
+ return n>=2;
+}
+function splitDoubanNames(v){
+ return clean(v).split(/\s*(?:\/|;|；|、)\s*|\s*,\s*(?=[【〖\[［(（])/).map(clean).filter(Boolean);
+}
+function parseDoubanText(text){
+ let lines=String(text||'').replace(/\r/g,'').split('\n').map(clean),o={authors:[],translators:[]},first=-1;
+ const key=new RegExp(`^(${DOUBAN_KEYS.join('|')})\\s*[:：]\\s*(.*)$`,'i');
+ lines.forEach((l,i)=>{
+   let m=l.match(key);if(!m)return;if(first<0)first=i;
+   let k=m[1].toUpperCase()==='ISBN'?'ISBN':m[1],v=m[2]||'';
+   if(!v){for(let j=i+1;j<lines.length&&!v;j++){if(key.test(lines[j]))break;v=lines[j]}}
+   if(k==='书名')o.title=v;else if(k==='副标题')o.subtitle=v;else if(k==='作者')o.authors=splitDoubanNames(v);
+   else if(k==='译者')o.translators=splitDoubanNames(v);else if(k==='出版社')o.publisher=v;else if(k==='出版年')o.year=v;
+   else if(k==='页数')o.pages=v;else if(k==='ISBN')o.isbn=v;
+ });
+ if(!o.title&&first>0){
+   for(let j=first-1;j>=0;j--){let l=lines[j].replace(/\s*\(豆瓣\)\s*$/,'');if(l&&!/^(豆瓣|搜索|登录|下载)/.test(l)){o.title=l;break}}
+ }
+ return o;
+}
+function doubanName(x){
+ x=clean(x)
+  .replace(/^(?:【[^】]*】|〖[^〗]*〗|\[[^\]]*\]|［[^］]*］|\([^)]{1,6}\)|（[^）]{1,6}）)\s*/,'')
+  .replace(/\s*(?:编著|等著|著)$/,'')
+  .replace(/([\u3400-\u9fff])[.．•・]([\u3400-\u9fff])/g,'$1·$2');
+ if(/[\u3400-\u9fff]/.test(x))x=x.replace(/\s*[(（][A-Za-z][^)）]*[)）]\s*$/,'');
+ return clean(x);
+}
+function doubanPerson(raw){
+ let x=doubanName(raw);if(!x)return null;
+ if(/[\u3400-\u9fff]/.test(x))return {type:'literal',name:x};
+ return splitWesternName(x)||{type:'literal',name:x};
+}
+function stateFromDouban(d){
+ if(!d||!(clean(d.title)||(d.authors||[]).length))throw Error('没有读到图书信息。请确认网址是豆瓣图书条目页，或粘贴从书名到 ISBN 的那一段信息。');
+ let st=emptyState('book');
+ st.title=clean(d.title)+(clean(d.subtitle)?': '+clean(d.subtitle):'');
+ st.authorList=(d.authors||[]).map(doubanPerson).filter(Boolean);
+ st.translator=(d.translators||[]).map(doubanName).filter(Boolean).join(', ');
+ st.publisher=clean(d.publisher);
+ st.year=(clean(d.year).match(/(?:1[5-9]|20|21)\d{2}/)||[''])[0];
+ st.isbn=clean(d.isbn);
+ let hit=st.publisher?findPublisher(st.publisher):null;
+ st.place=(hit&&hit.city)||inferPublisherCity(st.publisher)||'';
+ let note=['来自豆瓣'];
+ if(st.place)note.push('出版地按出版社推断');
+ let pg=clean(d.pages).match(/\d+/);if(pg)note.push(`全书 ${pg[0]} 页，引用页码需自行填写`);
+ st._sourceNote=note.join('，')+'。请核对各字段';
+ return st;
+}
+function loadDouban(d){
+ state=stateFromDouban(d);
+ syncAuthorsLegacy();
+ openEditor('douban');
+}
+const NO_BRIDGE='浏览器不允许网页直接读取豆瓣。可以安装 CiteCraft 豆瓣助手脚本后再粘贴网址；也可以打开这本书的豆瓣页面，复制从书名到 ISBN 的那一段粘贴到这里。';
+function fetchDoubanViaBridge(url){
+ return new Promise((resolve,reject)=>{
+   if(document.documentElement.dataset.citecraftDouban!=='ready')return reject(Error(NO_BRIDGE));
+   let id='dd'+Date.now()+Math.random().toString(36).slice(2);
+   let t=setTimeout(()=>{window.removeEventListener('message',h);reject(Error('豆瓣 20 秒内没有响应。先在浏览器中打开这个网址确认能正常访问，再重试。'))},20000);
+   function h(e){let m=e.data;if(!m||m.type!=='citecraft:douban-result'||m.id!==id)return;
+     clearTimeout(t);window.removeEventListener('message',h);m.error?reject(Error(m.error)):resolve(m.data)}
+   window.addEventListener('message',h);
+   window.postMessage({type:'citecraft:douban-request',id,url},'*');
+ });
+}
+$('parseBtn').onclick=async()=>{
+ let raw=$('raw').value,btn=$('parseBtn');$('err').textContent='';
+ try{
+   let url=doubanSubjectURL(raw);
+   if(url){
+     btn.disabled=true;btn.textContent='正在读取豆瓣…';
+     try{loadDouban(await fetchDoubanViaBridge(url))}finally{btn.disabled=false;btn.textContent='识别并填入'}
+     return;
+   }
+   if(looksLikeDoubanInfo(raw)){loadDouban(parseDoubanText(raw));return}
+   state=parse(raw);openEditor('auto');
+ }catch(e){$('err').textContent=e.message||String(e)}
+};
+$('importEnwBtn').onclick=()=>$('enwFileInput').click();
+$('enwFileInput').onchange=async e=>{try{let f=e.target.files&&e.target.files[0];if(!f)return;let rs=parseEnwRecords(await f.text());if(!rs.length)throw Error('未检测到有效的 EndNote Tagged（.enw）记录。');chooseEnwRecords(rs)}catch(x){$('err').textContent=x.message||String(x)}finally{e.target.value=''}};
+$('clearBtn').onclick=()=>{$('raw').value='';$('err').textContent='';$('raw').focus()};
+
+/* ===== v9.5 西文姓名自动拆分 ===== */
+const NAME_PARTICLES=/^(van|von|der|den|de|del|della|des|di|da|dos|das|du|la|le|ter|ten|bin|al|st\.?)$/i;
+const NAME_SUFFIX=/^(jr\.?|sr\.?|ii|iii|iv)$/i;
+const ORG_HINT=/\b(of|for|the)\b|organi[sz]ation|association|council|institute|universit|ministry|department|committee|society|\bcent(er|re)\b|foundation|bureau|agency|commission|\boffice\b|\bgroup\b|\bpress\b|\bboard\b|network|company|\binc\b|\bltd\b|\bteam\b|project|consortium|\bschool\b|college|academy|national|international/i;
+function isInitial(t){return /^[A-Z]\.?$/.test(t)||/^(?:[A-Z]\.){2,}$/.test(t)||/^[A-Z]\.?-[A-Z]\.?$/.test(t)}
+function looksLikePersonName(x){
+ x=clean(x);
+ if(!x||/[\u3400-\u9fff]/.test(x)||!/[A-Za-zÀ-ÿ]/.test(x)||/\d/.test(x))return false;
+ if(ORG_HINT.test(x))return false;
+ return x.split(/[\s,]+/).filter(Boolean).length<=5;
+}
+function splitWesternName(x){
+ x=clean(x).replace(/[,，]\s*$/,'');
+ if(!looksLikePersonName(x))return null;
+ let m=x.match(/^([^,]+),\s*(.+)$/);
+ if(m)return {type:'person',family:clean(m[1]),given:clean(m[2])};
+ let t=x.split(/\s+/);
+ if(t.length<2)return null;
+ // 姓在前、名为缩写：Hattie J / HATTIE J A C / Merriam S. B.
+ if(t.slice(1).every(isInitial)&&!isInitial(t[0]))return {type:'person',family:t[0],given:t.slice(1).join(' ')};
+ // 名在前、姓在后：John Hattie / John A. C. Hattie / Ludwig van Beethoven
+ let end=t.length-1,suffix='';
+ if(NAME_SUFFIX.test(t[end])&&end>1){suffix=' '+t[end];end--}
+ let start=end;
+ while(start>1&&NAME_PARTICLES.test(t[start-1]))start--;
+ return {type:'person',family:t.slice(start,end+1).join(' ')+suffix,given:t.slice(0,start).join(' ')};
+}
+function splitNameList(x){
+ let out=[];
+ for(let chunk of clean(x).split(/\s*(?:;|；|、|&|\band\b)\s*/i).map(clean).filter(Boolean)){
+   chunk=chunk.replace(/[,，]\s*$/,'');
+   let parts=chunk.split(/\s*,\s*/).filter(Boolean);
+   if(parts.length>1&&parts.every(p=>p.split(/\s+/).length>=2&&!p.split(/\s+/).slice(1).every(isInitial)))out.push(...parts);
+   else if(parts.length>2){let e=authorObjectsFromRaw(chunk);if(e.length>1&&e.every(a=>a.type==='person')){out.push(...e.map(a=>a.family+', '+a.given))}else out.push(chunk)}
+   else out.push(chunk);
+ }
+ return out;
+}
+/* 返回拆分后的姓名对象数组；无需拆分时返回 null */
+function autoSplitPeople(value){
+ let v=clean(value);
+ if(!v||/[\u3400-\u9fff]/.test(v))return null;
+ let names=splitNameList(v),objs=names.map(splitWesternName);
+ if(objs.some(o=>!o))return null;
+ return objs;
+}
+function focusSignature(el){
+ if(!el||!el.dataset)return null;
+ if(el.dataset.key)return `[data-key="${el.dataset.key}"]`;
+ for(const p of ['author','editor']){
+   if(el.dataset[p+'Field']!=null){let r=el.closest(`[data-${p}-index]`);if(r)return `[data-${p}-index="${r.dataset[p+'Index']}"] [data-${p}-field="${el.dataset[p+'Field']}"]`}
+ }
+ return el.id?'#'+el.id:null;
+}
+function applyAutoSplit(input,{afterPaste=false}={}){
+ let p=input.dataset.authorField!=null?'author':input.dataset.editorField!=null?'editor':null;if(!p)return;
+ let field=input.dataset[p+'Field'],row=input.closest(`[data-${p}-index]`);if(!row)return;
+ let i=Number(row.dataset[p+'Index']),list=p==='author'?ensureAuthorObjects():ensureEditorObjects(),cur=list[i];if(!cur)return;
+ if(field==='given')return;
+ if(field==='family'&&clean(cur.given))return;          // 已分好两栏就不动
+ let objs=autoSplitPeople(input.value);if(!objs)return;
+ if(field==='family'&&objs.length===1&&!clean(objs[0].given))return;
+ list.splice(i,1,...objs);p==='author'?syncAuthorsLegacy():syncEditorsLegacy();
+ let run=()=>{
+   let sig=afterPaste?null:focusSignature(document.activeElement);
+   draw();
+   let target=afterPaste?document.querySelector(`[data-${p}-index="${i+objs.length-1}"] [data-${p}-field="given"]`):(sig&&document.querySelector(sig));
+   if(target){target.focus();if(afterPaste&&target.setSelectionRange)target.setSelectionRange(target.value.length,target.value.length)}
+ };
+ afterPaste?run():setTimeout(run,0);
+}
+$('fields').addEventListener('paste',e=>{
+ let t=e.target;if(t.dataset.authorField==null&&t.dataset.editorField==null)return;
+ setTimeout(()=>{t.dispatchEvent(new Event('input',{bubbles:true}));applyAutoSplit(t,{afterPaste:true})},0);
+});
+$('fields').addEventListener('change',e=>{
+ let k=e.target.dataset.key;
+ if((k==='institution'||k==='publisher')&&!clean(state.place)&&(schemas[state.kind]||[]).some(([x])=>x==='place')){
+   let v=clean(e.target.value),hit=v?findPublisher(v):null,c=(hit&&hit.city)||inferPublisherCity(v);
+   let pl=document.querySelector('[data-key="place"]');
+   if(c&&pl){state.place=c;pl.value=c;update();$('parserTag').textContent=`${state.kind==='thesis'?'城市':'出版地'}「${c}」按${k==='institution'?'学位授予单位':'出版者'}推断，请核对`}
+   return;
+ }
+ applyAutoSplit(e.target);
+});
+$('fields').addEventListener('input',e=>{
+ if(e.target.dataset.key){state[e.target.dataset.key]=e.target.value;update();return}
+ if(e.target.dataset.authorField){
+   let row=e.target.closest('[data-author-index]'),i=Number(row.dataset.authorIndex),list=ensureAuthorObjects();
+   if(list[i]){list[i][e.target.dataset.authorField]=e.target.value;syncAuthorsLegacy();update()}
+   return;
+ }
+ if(e.target.dataset.editorField){
+   let row=e.target.closest('[data-editor-index]'),i=Number(row.dataset.editorIndex),list=ensureEditorObjects();
+   if(list[i]){list[i][e.target.dataset.editorField]=e.target.value;syncEditorsLegacy();update()}
+ }
+});
+$('fields').addEventListener('click',e=>{
+ let tb=e.target.closest('[data-author-type],[data-editor-type]');
+ if(tb){
+   let isA=tb.dataset.authorType!=null,i=Number(isA?tb.dataset.authorType:tb.dataset.editorType),list=isA?ensureAuthorObjects():ensureEditorObjects();
+   list[i]=togglePersonType(list[i]);isA?syncAuthorsLegacy():syncEditorsLegacy();draw();
+   let row=document.querySelector(`[data-${isA?'author':'editor'}-index="${i}"] input`);if(row)row.focus();return;
+ }
+ if(e.target.dataset.authorAdd){
+   let list=ensureAuthorObjects();let western=list.some(a=>a.type==='person');
+   list.push(western?{type:'person',family:'',given:''}:{type:'literal',name:''});syncAuthorsLegacy();draw();
+   let rows=document.querySelectorAll('[data-author-index]');rows[rows.length-1]?.querySelector('input')?.focus();return;
+ }
+ if(e.target.dataset.authorRemove!=null){
+   let i=Number(e.target.dataset.authorRemove),list=ensureAuthorObjects();list.splice(i,1);
+   if(!list.length)list.push({type:'literal',name:''});syncAuthorsLegacy();draw();return;
+ }
+ if(e.target.dataset.editorAdd){
+   let el=ensureEditorObjects();el.push(el.some(a=>a.type==='literal')?{type:'literal',name:''}:{type:'person',family:'',given:''});syncEditorsLegacy();draw();
+   let rows=document.querySelectorAll('[data-editor-index]');rows[rows.length-1]?.querySelector('input')?.focus();return;
+ }
+ if(e.target.dataset.editorRemove!=null){
+   let i=Number(e.target.dataset.editorRemove),list=ensureEditorObjects();list.splice(i,1);syncEditorsLegacy();draw();
+ }
+});
+document.addEventListener('click',e=>{let key=e.target.dataset.dateToday;if(!key)return;state[key]=localToday();let input=document.querySelector(`[data-key="${key}"]`);if(input)input.value=state[key];update()});
+document.addEventListener('click',async e=>{let k=e.target.dataset.copy;if(!k)return;let txt=k==='gb'?renderGB():k==='apa'?renderAPA():renderEndNote();try{await navigator.clipboard.writeText(txt);let old=e.target.textContent;e.target.textContent='已复制';setTimeout(()=>e.target.textContent=old,900)}catch{prompt('复制：',txt)}});
+$('exportEnwBtn').onclick=exportEndNote;
+
+/* ===== Independent regression suite (hidden in normal UI) ===== */
+const GOLDEN_DATASET = {"meta":{"name":"CiteCraft GB/T 7714—2015 Golden Dataset","version":"1.0","purpose":"Parser / field model / renderer regression tests","notes":["Standard-derived examples are kept separate from synthetic dirty-input regression cases.","Do not fabricate missing bibliographic metadata in tests.","ASCII [] are valid half-width brackets and must not be flagged as full-width punctuation."]},"standard_examples":[{"id":"A1-book-en","kind":"book","input":"MERRIAM S B. Case Study Research in Education[M]. San Francisco: Jossey-Bass, 1988.","expect":{"authors":"MERRIAM S B","title":"Case Study Research in Education","place":"San Francisco","publisher":"Jossey-Bass","year":"1988"}},{"id":"A2-proceedings-zh","kind":"proceedings","input":"中国力学学会. 第3届全国实验流体力学学术会议论文集[C]. 天津: 出版者不详, 1990.","expect":{"authors":"中国力学学会","year":"1990"}},{"id":"A3-report-en","kind":"report","input":"World Health Organization. Factors regulating the immune response[R]. Geneva: WHO, 1970.","expect":{"year":"1970","place":"Geneva","publisher":"WHO"}},{"id":"A4-thesis-en","kind":"thesis","input":"CALMS R B. Infrared spectroscopic studies on solid oxygen[D]. Berkeley: Univ. of California, 1965.","expect":{"authors":"CALMS R B","place":"Berkeley","year":"1965"}},{"id":"A5-patent-zh","kind":"patent","input":"张凯军. 轨道火车及高速轨道火车紧急安全制动辅助装置: 201220158825.2[P]. 2012-04-05.","expect":{"authors":"张凯军","patentNo":"201220158825.2","date":"2012-04-05"}},{"id":"A6-standard-zh","kind":"standard","input":"全国信息与文献标准化技术委员会. GB/T 7714—2015 信息与文献 参考文献著录规则[S]. 北京: 中国标准出版社, 2015.","expect":{"year":"2015","place":"北京"}},{"id":"A7-conference-paper-en","kind":"conferencePaper","input":"FOURNEY M E. Advances in holographic photoelasticity[C]//Symposium on Applications of Holography in Mechanics. New York: ASME, 1971: 17-38.","expect":{"authors":"FOURNEY M E","title":"Advances in holographic photoelasticity","pages":"17-38"}},{"id":"A8-journal-en","kind":"journal","input":"KANAMORI H. Shaking without quaking[J]. Science, 1998, 279(5359): 2063.","expect":{"authors":"KANAMORI H","journal":"Science","year":"1998","volume":"279","issue":"5359","pages":"2063"}},{"id":"A9-newspaper-zh","kind":"newspaper","input":"丁文祥. 数字革命与竞争国际化[N]. 中国青年报, 2000-11-20(15).","expect":{"authors":"丁文祥","newspaper":"中国青年报","date":"2000-11-20","edition":"15"}},{"id":"A10-electronic-zh","kind":"electronic","input":"萧钰. 出版业信息化迈入快车道[EB/OL]. (2001-12-19)[2002-04-15]. http://example.org","expect":{"updateDate":"2001-12-19","accessDate":"2002-04-15","url":"http://example.org"}}],"regressions":[{"id":"R12-fullwidth-translated-book","kind":"book","input":"威廉·劳伦斯·纽曼．社会研究方法［M］．郝大海，译．北京：中国人民大学出版社，2007, 3","expect":{"authors":"威廉·劳伦斯·纽曼","title":"社会研究方法","translator":"郝大海","place":"北京","publisher":"中国人民大学出版社","year":"2007","pages":"3"}},{"id":"R13-fullwidth-merriam-book","kind":"book","input":"Merriam S. B. Case Study Research in Education : A qualitative Approach［M］. San Francisco: Jossey - Bass Publishers, 1988, 4","expect":{"authors":"Merriam S. B.","place":"San Francisco","year":"1988","pages":"4"}},{"id":"R14-cn-journal","kind":"journal","input":"杨惠雯,朱洪洋,项贤明.问题解决学习是什么样的学习——基于三种理论来源的分析[J].课程.教材.教法,2023,43(12):29-36.","expect":{"year":"2023","volume":"43","issue":"12","pages":"29-36"}},{"id":"R22-apa-journal","kind":"journal","input":"Ginsberg, Y. C., Hollands, F. M., Holmes, V. R., Shand, R., Evans, P., Blodgett, R., Wang, Y., & Head, L. (2024). Does ESSA assure the use of evidence-based educational practices? Educational Policy, 38(1), 161–185. https://doi.org/10.1177/08959048221127989","expect":{"year":"2024","title":"Does ESSA assure the use of evidence-based educational practices?","journal":"Educational Policy","volume":"38","issue":"1","pages":"161-185","doi":"10.1177/08959048221127989"}},{"id":"R21-cn-journal-with-doi","kind":"journal","input":"张学军,李莉,岳彦龙.项目式学习何以培养高中生的数据素养——基于数据生命周期的信息技术课程实证研究[J].电化教育研究,2026,47(8):106-113.DOI:10.13811/j.cnki.eer.2026.08.013.","expect":{"authors":"张学军,李莉,岳彦龙","title":"项目式学习何以培养高中生的数据素养——基于数据生命周期的信息技术课程实证研究","journal":"电化教育研究","year":"2026","volume":"47","issue":"8","pages":"106-113","doi":"10.13811/j.cnki.eer.2026.08.013"}},{"id":"R20-cn-journal-no-volume","kind":"journal","input":"赵剑峰,邓通.以“朱元璋到底长啥样”为例谈高中历史项目式学习的设计与核心素养的培育[J].历史教学(上半月刊),2026,(7):30-51.","expect":{"authors":"赵剑峰,邓通","title":"以“朱元璋到底长啥样”为例谈高中历史项目式学习的设计与核心素养的培育","journal":"历史教学(上半月刊)","year":"2026","issue":"7","pages":"30-51"}},{"id":"R15-en-journal-dirty-punct","kind":"journal","input":"Siggelkow N. Persuasion with case studies ［J］. Academy of Management Journal, 2007, 50 (1), 20-24.","expect":{"authors":"Siggelkow N","journal":"Academy of Management Journal","year":"2007","volume":"50","issue":"1","pages":"20-24"}},{"id":"R16-cn-thesis","kind":"thesis","input":"霍昭琪. 基于学科核心素养的项目式学习在高中思政课的应用研究[D].上海：华东师范大学,2023, 5","expect":{"authors":"霍昭琪","place":"上海","institution":"华东师范大学","year":"2023","pages":"5"}},{"id":"R17-hk-report-dirty","kind":"report","input":"课程发展议会与香港考试及评核局, 通识教育科 课程及评估指引(中四至中六)[R]. 香港教育局, 2007, 8","expect":{"authors":"课程发展议会与香港考试及评核局","title":"通识教育科 课程及评估指引(中四至中六)","publisher":"香港教育局","year":"2007","pages":"8"}},{"id":"R18-cn-newspaper","kind":"newspaper","input":"李大伦.经济全球化的重要性[N]. 光明日报，1998-12-27(3).","expect":{"authors":"李大伦","newspaper":"光明日报","date":"1998-12-27","edition":"3"}},{"id":"R19-en-web-multiauthor","kind":"electronic","input":"Roth, A., H. Kim and E. Care, New data on the breadth of skills movement: Over 150 countries included, Skills for a Changing World project[EB/OL]. (2017-08-31) [2023-11.20]. https://www.brookings.edu/blog/education-plus-development/2017/08/31/new-data-on-the-breadth-ofskills-movement-over-150-countries-included/.","expect":{"authors":"Roth, A., H. Kim and E. Care","title":"New data on the breadth of skills movement: Over 150 countries included, Skills for a Changing World project","updateDate":"2017-08-31","accessDate":"2023-11-20"}},{"id":"R11-chinese-translated-book","kind":"book","input":"威廉·劳伦斯·纽曼. 社会研究方法 [M]. 郝大海, 译. 北京：中国人民大学出版社, 2007, 3","expect":{"authors":"威廉·劳伦斯·纽曼","title":"社会研究方法","translator":"郝大海","place":"北京","publisher":"中国人民大学出版社","year":"2007","pages":"3"},"render_contains":["威廉·劳伦斯·纽曼. 社会研究方法[M]. 郝大海, 译. 北京: 中国人民大学出版社, 2007, 3."]},{"id":"R01-merriam-dirty","kind":"book","input":"Merriam S. B. Case Study Research in Education : A qualitative Approach [M] . San Francisco: Jossey - Bass Publishers, 1988, 4.","expect":{"authors":"Merriam S. B.","place":"San Francisco","publisher":"Jossey - Bass Publishers","year":"1988","pages":"4"},"render_contains":["MERRIAM S B.","Case Study Research in Education: A qualitative Approach[M].","Jossey-Bass Publishers, 1988, 4."]},{"id":"R02-ascii-brackets","kind":"book","input":"MERRIAM S B. Test title[M]. London: Test Press, 2020.","expect":{"kind":"book"},"invariant":"ASCII [] must not be treated as full-width punctuation"},{"id":"R03-journal-volume-issue","kind":"journal","input":"KANAMORI H. Shaking without quaking[J]. Science, 1998, 279(5359): 2063.","expect":{"volume":"279","issue":"5359","pages":"2063"}},{"id":"R04-newspaper-edition","kind":"newspaper","input":"丁文祥. 数字革命与竞争国际化[N]. 中国青年报, 2000-11-20(15).","expect":{"edition":"15"}},{"id":"R05-hyphen-normalization","kind":"book","input":"MERRIAM S B. Test[M]. San Francisco: Jossey - Bass, 1988.","expect":{"publisher":"Jossey - Bass"},"render_contains":["Jossey-Bass"]},{"id":"R06-title-colon-space","kind":"book","input":"MERRIAM S B. Education : A Study[M]. Boston: Press, 2000.","expect":{"title":"Education : A Study"},"render_contains":["Education: A Study"]},{"id":"R07-book-single-page","kind":"book","input":"MERRIAM S B. Test[M]. Boston: Press, 2000, 4.","expect":{"pages":"4"},"render_contains":[", 2000, 4."]},{"id":"R08-author-canonical","kind":"book","input":"Merriam S. B. Test[M]. Boston: Press, 2000.","expect":{"authors":"Merriam S. B."},"render_contains":["MERRIAM S B."]},{"id":"R09-electronic-dates","kind":"electronic","input":"萧钰. 测试[EB/OL]. (2001-12-19)[2002-04-15]. http://example.org","expect":{"updateDate":"2001-12-19","accessDate":"2002-04-15"}},{"id":"R20-book-missing-punctuation","kind":"book","input":"MERRIAM S B. Test title[M]. San Francisco Jossey-Bass Publishers 1988 4","expect":{"place":"San Francisco","publisher":"Jossey-Bass Publishers","year":"1988","pages":"4"}},
+{"id":"R21-cn-book-missing-punctuation","kind":"book","input":"张三. 教育研究方法[M]. 北京 中国人民大学出版社 2020 12","expect":{"place":"北京","publisher":"中国人民大学出版社","year":"2020","pages":"12"}},
+{"id":"R22-year-anchor","kind":"book","input":"SMITH J. Research Methods[M]. London Routledge 2019 25-31","expect":{"place":"London","publisher":"Routledge","year":"2019","pages":"25-31"}},
+{"id":"R23-publisher-city-inference","kind":"book","input":"SMITH J. Research Methods[M]. Routledge, 2019, 25","expect":{"place":"London","publisher":"Routledge","year":"2019","pages":"25"}},
+{"id":"R24-cn-publisher-city-inference","kind":"book","input":"张三. 教育研究方法[M]. 高等教育出版社, 2021, 8","expect":{"place":"北京","publisher":"高等教育出版社","year":"2021","pages":"8"}},{"id":"R25-cnki-thesis-doi","kind":"thesis","input":"范钰琪.生成式人工智能创作物的版权问题研究[D].山东政法学院,2026.DOI:10.27874/d.cnki.gsdzf.2026.000115.","expect":{"authors":"范钰琪","title":"生成式人工智能创作物的版权问题研究","place":"济南","institution":"山东政法学院","year":"2026","doi":"10.27874/d.cnki.gsdzf.2026.000115"},"render_contains":["范钰琪. 生成式人工智能创作物的版权问题研究[D]. 济南: 山东政法学院, 2026."]},
+{"id":"R26-thesis-uni-no-city-in-name","kind":"thesis","input":"赵六.某研究[D].河北工业大学,2023.","expect":{"place":"天津","institution":"河北工业大学"}},
+{"id":"R27-thesis-branch-campus","kind":"thesis","input":"钱七.某研究[D].哈尔滨工业大学(深圳),2024.","expect":{"place":"深圳","institution":"哈尔滨工业大学(深圳)"}},
+{"id":"R28-thesis-longest-match","kind":"thesis","input":"孙八.某研究[D].东北师范大学,2022.","expect":{"place":"长春","institution":"东北师范大学"}},
+{"id":"R29-cnki-index-prefix","kind":"thesis","input":"[1]孙晓彤.生成式人工智能应用中的个人信息保护[D].山东财经大学,2026.DOI:10.27274/d.cnki.gsdjc.2026.000605.","expect":{"authors":"孙晓彤","title":"生成式人工智能应用中的个人信息保护","place":"济南","institution":"山东财经大学","year":"2026","doi":"10.27274/d.cnki.gsdjc.2026.000605"},"render_contains":["孙晓彤. 生成式人工智能应用中的个人信息保护[D]. 济南: 山东财经大学, 2026."]},
+{"id":"R30-standard-no-keeps-dash","kind":"standard","input":"全国信息与文献标准化技术委员会. GB/T 7714—2015 信息与文献 参考文献著录规则[S]. 北京: 中国标准出版社, 2015.","expect":{"standardNo":"GB/T 7714—2015"},"render_contains":["GB/T 7714—2015 信息与文献"]},
+{"id":"R31-emdash-page-range","kind":"journal","input":"张三.某研究[J].某刊,2020,3(2):29—36.","expect":{"pages":"29-36"}},
+{"id":"R10-no-marker","kind":"unknown","input":"MERRIAM S B. Test title. Boston: Press, 2000.","expect_error":true}]};
+
+function deepChecks(o, expected){
+ let failures=[];
+ Object.entries(expected||{}).forEach(([k,v])=>{if(String(o[k]??'')!==String(v))failures.push(`${k}: expected "${v}", got "${o[k]??''}"`)});
+ return failures;
+}
+function runGoldenSuite(){
+ let cases=[...GOLDEN_DATASET.standard_examples,...GOLDEN_DATASET.regressions], rows=[];
+ for(let tc of cases){
+   let fail=[],o=null,gb='';
+   try{
+     o=parse(tc.input);
+     if(tc.expect_error){fail.push('expected parser error, but parsing succeeded')}
+     fail.push(...deepChecks(o,tc.expect));
+     try{gb=renderGBFor(o)}catch(e){fail.push('renderer: '+e.message)}
+     (tc.render_contains||[]).forEach(x=>{if(!gb.includes(x))fail.push(`GB/T output missing "${x}"`)});
+     (tc.render_excludes||[]).forEach(x=>{if(gb.includes(x))fail.push(`GB/T output should exclude "${x}"`)});
+   }catch(e){if(!tc.expect_error)fail.push('parser: '+e.message)}
+   rows.push({id:tc.id,pass:fail.length===0,fail});
+ }
+ return rows;
+}
+function renderGBFor(o){let prev=state;state={...o};let x=renderGB();state=prev;return x}
+function showTestSuite(){
+ let rows=runGoldenSuite(),ok=rows.filter(x=>x.pass).length;
+ let box=document.createElement('section');box.className='card';box.id='devTests';
+ box.innerHTML=`<div class="hd"><b>Developer Test Suite</b><span class="muted">${ok}/${rows.length} passed</span></div>
+ <div class="body">${rows.map(r=>`<div style="padding:9px 0;border-bottom:1px solid var(--line)"><b>${r.pass?'✓':'✕'} ${r.id}</b>${r.fail.length?`<div class="error">${r.fail.join('<br>')}</div>`:''}</div>`).join('')}</div>`;
+ document.querySelector('.shell').appendChild(box);
+}
+if(new URLSearchParams(location.search).get('test')==='1')showTestSuite();
+
+
+// v9.5 workspace UI
+$('importToggle').onclick=()=>{
+ let open=$('importPanel').classList.toggle('hidden')===false;
+ $('importToggle').setAttribute('aria-expanded',String(open));
+ $('importToggle').textContent=open?'收起粘贴框':'粘贴识别';
+ if(open)$('raw').focus();
+};
+document.querySelectorAll('.type-pill').forEach(btn=>btn.onclick=()=>{
+ if(state.kind===btn.dataset.kind)return;
+ state.kind=btn.dataset.kind;draw();   // keep shared fields when switching type
+});
+$('outputs').addEventListener('click',e=>{
+ let g=e.target.closest('.gap');if(!g)return;
+ let k=g.dataset.gap,el=null;
+ if(k==='editors'){el=document.querySelector('[data-editor-field]');if(!el){document.querySelector('[data-editor-add]')?.click();el=document.querySelector('[data-editor-field]')}}
+ else if(k)el=document.querySelector(`[data-key="${k}"]`);
+ if(el){el.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});el.focus({preventScroll:true})}
+});
+state=emptyState('book');openEditor('manual');
+$('raw').focus({preventScroll:true});
+</script></body></html>
