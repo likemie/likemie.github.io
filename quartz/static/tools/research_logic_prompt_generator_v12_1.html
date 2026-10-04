@@ -1,0 +1,1194 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>研究问题与假设 Prompt 生成器 v12.1</title>
+<style>
+:root{
+ --board:#1d3a32;--board-line:#33574b;--chalk:#f3f1e6;--chalk-dim:#a9bfb5;
+ --green:#2c6e58;--green-d:#215645;--green-soft:#e5efea;--green-line:#bcd4c9;
+ --yellow:#f0bf4c;--yellow-soft:#fcf5dc;--yellow-line:#e8d48a;
+ --ink:#1b2823;--muted:#61706a;--line:#d7dfda;--bg:#f1f4f1;--red:#b3463a;--red-soft:#fbefed;
+ --serif:"Songti SC","Noto Serif CJK SC","Source Han Serif SC","STZhongsong","SimSun",serif;
+ --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+ --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"PingFang SC","Microsoft YaHei",monospace
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 var(--sans)}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
+.hidden{display:none!important}
+
+header{background:var(--board);color:var(--chalk)}
+.hero{max-width:1120px;margin:auto;padding:30px 24px 28px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
+.hero h1{margin:0 0 8px;font:700 30px/1.25 var(--serif);letter-spacing:.02em}
+.hero p{margin:0;color:var(--chalk-dim);font-size:14px}
+.restart{flex:none;border:1px solid var(--board-line);background:transparent;color:var(--chalk);border-radius:8px;padding:8px 13px;font-size:12px;font-weight:600;cursor:pointer}
+.restart:hover{border-color:var(--chalk-dim)}
+
+.shell{max-width:1120px;margin:22px auto 64px;padding:0 24px;display:grid;grid-template-columns:188px minmax(0,1fr);gap:22px;align-items:start}
+.rail{position:sticky;top:16px;display:flex;flex-direction:column;gap:2px;padding:10px;background:#fff;border:1px solid var(--line);border-radius:14px}
+.step{display:flex;align-items:center;gap:10px;padding:8px 10px;border:0;border-radius:9px;background:none;color:#9aa7a1;font-size:13px;font-weight:600;text-align:left;cursor:default;white-space:nowrap}
+.step .num{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;border:1.5px solid currentColor;font-size:12px;font-weight:700}
+.step.reach{color:var(--green);cursor:pointer}.step.reach:hover{background:var(--green-soft)}
+.step.active{background:var(--green);color:#fff}.step.active .num{background:var(--yellow);border-color:var(--yellow);color:var(--board)}
+.rail-div{height:1px;background:var(--line);margin:6px 4px}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px 30px 26px}
+h2{margin:0 0 6px;font:700 22px/1.35 var(--serif)}
+.sub{margin:0 0 4px;color:var(--muted);font-size:13px;line-height:1.7}
+.zone{margin:24px 0 8px;font-size:12px;font-weight:700;color:var(--muted)}
+.field{margin:16px 0}.field>label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
+
+.inp{width:100%;border:1px solid #cdd7d2;border-radius:8px;padding:9px 12px;background:#fff;color:inherit;font:inherit;font-size:13px;outline:none}
+textarea.inp{min-height:84px;resize:vertical;line-height:1.6}
+.inp:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(44,110,88,.14)}
+.inwrap{position:relative;min-width:0}.inwrap .inp{padding-right:66px}
+.cc{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:11px;color:#9aa7a1;pointer-events:none}
+.inwrap.over .inp{border-color:var(--red);background:var(--red-soft)}
+.inwrap.over .inp:focus{box-shadow:0 0 0 3px rgba(179,70,58,.14)}
+.inwrap.over .cc{color:var(--red);font-weight:700}
+
+.prompt{background:var(--board);border-radius:12px;padding:12px 18px 16px;color:var(--chalk)}
+.phead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid var(--board-line);font-size:12px;font-weight:700;color:var(--chalk-dim)}
+.copy{border:0;background:var(--yellow);color:var(--board);border-radius:7px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer}
+.copy:hover{background:#f5cc6a}
+.prompt pre{margin:0;max-height:380px;overflow:auto;white-space:pre-wrap;word-break:break-word;font:13px/1.75 var(--mono);scrollbar-color:#4d7164 transparent}
+
+.paste{border:1px dashed var(--green-line);background:#f7faf8;border-radius:11px;padding:12px}
+.paste textarea.inp{min-height:62px}
+.pmsg{font-size:12px;color:var(--muted)}
+
+.btns{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:18px}.paste .btns{margin-top:8px}
+.btn{border:1px solid #c5d0ca;background:#fff;color:var(--ink);border-radius:8px;padding:9px 15px;font-size:13px;font-weight:700;cursor:pointer}
+.btn:hover{border-color:var(--green)}
+.btn.primary{background:var(--green);border-color:var(--green);color:#fff}.btn.primary:hover{background:var(--green-d);border-color:var(--green-d)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.spacer{margin-left:auto}
+
+.typecards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.typecard{border:1px solid var(--line);border-radius:11px;padding:13px 14px;cursor:pointer;background:#fff}
+.typecard:hover{border-color:var(--green-line)}
+.typecard input{margin:0 7px 0 0;accent-color:var(--green)}
+.typecard:has(input:checked){border-color:var(--green);background:var(--green-soft)}
+.typecard b{font-size:14px}.typecard p{margin:6px 0 0;font-size:12px;color:var(--muted);line-height:1.6}
+.kept{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:10px;padding:9px 9px 9px 13px;font-size:13px;font-weight:700}
+
+.group{border:1px solid var(--line);border-radius:11px;padding:13px;margin:0 0 10px}
+.grouphead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}
+.grouphead b{font-size:13px}.count{font-size:11px;color:var(--muted);white-space:nowrap}
+.atomic-list{display:flex;flex-direction:column;gap:8px}
+.atomic-row{display:grid;grid-template-columns:64px minmax(0,1fr) 32px;gap:8px;align-items:center}
+.atomic-row.hrow{grid-template-columns:64px 88px minmax(0,1fr) 32px}
+.atomic-row.mrow{grid-template-columns:64px 220px minmax(0,1fr) 32px}
+.tag{background:var(--green-soft);color:var(--green-d);border-radius:6px;padding:9px 6px;font-size:12px;font-weight:700;text-align:center}
+.remove{border:0;background:#edf1ee;border-radius:6px;width:32px;height:32px;font-size:17px;line-height:1;cursor:pointer;color:#7b8a84}
+.remove:hover{background:var(--red-soft);color:var(--red)}
+.add{margin-top:10px;border:1px solid #c5d0ca;background:#fff;color:var(--green-d);border-radius:7px;padding:6px 11px;font-size:12px;font-weight:700;cursor:pointer}
+.add:hover{border-color:var(--green)}.add:disabled{opacity:.4;cursor:not-allowed}
+
+.cands{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px;padding:9px 10px 10px;background:#f7faf8;border:1px dashed var(--green-line);border-radius:9px}
+.cands.col{flex-direction:column}
+.cap{flex-basis:100%;font-size:11px;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:7px;border:1px solid #c5d0ca;background:#fff;color:var(--ink);border-radius:999px;padding:5px 7px 5px 12px;font-size:12px;font-weight:600;line-height:1.45;text-align:left;cursor:pointer}
+.chip:hover,.opt:hover{border-color:var(--green)}
+.chip.on{background:var(--green);border-color:var(--green);color:#fff}
+.opt{display:flex;align-items:flex-start;gap:9px;width:100%;border:1px solid #c5d0ca;background:#fff;color:var(--ink);border-radius:9px;padding:8px 10px;font-size:13px;line-height:1.55;text-align:left;cursor:pointer}
+.opt .tx{flex:1;min-width:0}
+.opt .ty{flex:none;margin-top:1px;background:var(--green-soft);color:var(--green-d);border-radius:5px;padding:1px 7px;font-size:11px;font-weight:700}
+.opt.on{border-color:var(--green);background:var(--green-soft);box-shadow:inset 3px 0 0 var(--green)}
+.opt.on .ty{background:#fff}
+.rt{flex:none;font-style:normal;font-size:11px;font-weight:700;border-radius:999px;padding:1px 8px}
+.rt-h{background:var(--green-soft);color:var(--green-d)}.rt-m{background:var(--yellow-soft);color:#7a611a}.rt-l{background:#eceeed;color:#6d7a74}
+.opt.on .rt-h{background:#fff}
+.sup{font-style:normal;font-size:10px;font-weight:700;border-radius:4px;padding:0 5px;background:var(--yellow-soft);color:#7a611a}
+.note{background:var(--yellow-soft);border:1px solid var(--yellow-line);border-radius:9px;padding:9px 12px;font-size:12px;color:#6a561c;margin-top:10px}
+.qblock{border:1px solid var(--line);border-radius:10px;padding:10px}
+.kids{margin:8px 0 0 30px;padding-left:12px;border-left:2px solid var(--green-line);display:flex;flex-direction:column;gap:8px}
+.kids .add{margin-top:0;align-self:flex-start}.kids .cands{margin:0}
+.hnode{border:1px solid var(--line);border-radius:10px;padding:10px}
+.hnode.kid{margin-left:30px;border-left:2px solid var(--green-line)}
+.hnode .cands{margin:8px 0;border:0;padding:0;background:none}
+.capline{font-size:11px;color:var(--muted);margin-bottom:8px}
+.subc{display:flex;flex-direction:column;gap:6px;margin-left:26px;padding-left:10px;border-left:2px solid var(--green-line)}
+.opt.sm{font-size:12px;padding:6px 9px}
+.qline{font-size:13px;line-height:1.6}.qline b{margin-right:8px;color:var(--green-d)}.qline .dim{font-size:12px;color:var(--muted)}
+.pl{display:flex;flex-direction:column;gap:2px}.pl>.prow{margin-top:6px}.pl>.prow:first-child{margin-top:0}
+.prow{display:flex;align-items:flex-start;border-radius:9px}
+.prow.on{background:var(--green-soft)}
+.rowbtn{flex:1;min-width:0;display:flex;align-items:flex-start;gap:10px;border:0;border-radius:9px;background:none;padding:8px 10px;font:inherit;font-size:13px;line-height:1.6;color:var(--ink);text-align:left;cursor:pointer}
+.prow:not(.on) .rowbtn:hover{background:#f0f4f1}
+.mark{flex:none;min-width:22px;height:22px;margin-top:1px;padding:0 6px;border:1.5px solid #b7c5be;border-radius:11px;display:grid;place-items:center;font-size:11px;font-weight:700;line-height:1;color:transparent;white-space:nowrap}
+.prow.on .mark{background:var(--green);border-color:var(--green);color:#fff}
+.rowbtn .tx{flex:1;min-width:0}
+.meta{flex:none;margin-top:2px;font-size:11px;color:var(--muted);white-space:nowrap}
+.rk{font-weight:700}.rk-h{color:var(--green)}.rk-m{color:#a67c12}.rk-l{color:#8a968f}
+.chg{font-style:normal;font-size:11px;color:var(--muted);margin-left:8px}
+.ebtn{flex:none;border:0;background:none;border-radius:7px;padding:9px 9px;font-size:12px;color:var(--muted);cursor:pointer}
+.ebtn:hover{color:var(--green-d);background:#fff}
+.erow{flex:1;display:flex;align-items:center;gap:8px;padding:6px 8px}.erow .inp{flex:1}
+.btn.sm{padding:6px 12px;font-size:12px}
+.kidlist{margin:0 0 4px 20px;padding-left:10px;border-left:2px solid var(--green-line);display:flex;flex-direction:column;gap:2px}
+.tog{align-self:flex-start;border:0;background:none;border-radius:7px;padding:5px 10px;font:inherit;font-size:12px;color:var(--muted);cursor:pointer}
+.tog:hover{color:var(--green-d);background:#f0f4f1}
+.acc{border:1px solid var(--line);border-radius:11px;background:#fff}.acc+.acc{margin-top:8px}
+.acc.open{border-color:var(--green-line)}
+.acch{display:flex;align-items:center;gap:10px;width:100%;border:0;border-radius:11px;background:none;padding:10px 12px;font:inherit;text-align:left;color:var(--ink);cursor:pointer}
+.acch .tag{flex:none;padding:5px 9px}
+.acch .ttl{flex:1;min-width:0;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.acch .ttl.dim{color:var(--muted)}
+.acch .st{flex:none;font-size:12px;color:var(--muted)}.acch .st.ok{color:var(--green-d);font-weight:700}
+.acch .chev{flex:none;color:var(--muted);font-size:12px}
+.accb{padding:2px 12px 12px;border-top:1px solid var(--line)}
+.qref{margin:10px 0 0;padding:8px 10px;border-radius:8px;background:#f5f8f6;font-size:12px;line-height:1.6;color:var(--muted)}
+.slot{margin-top:12px}.slot.kid{margin-left:20px;padding-left:10px;border-left:2px solid var(--green-line)}
+.slh{margin:0 0 3px 10px;font-size:12px;line-height:1.6;color:var(--muted)}.slh b{margin-right:8px;color:var(--green-d)}
+.accb .btns{margin-top:12px}
+.group.info{background:#f7faf8;border-style:dashed}.group.info .grouphead{margin-bottom:6px}
+.infop{margin:0;font-size:12px;line-height:1.7;color:var(--muted)}
+.adv{border:1px dashed var(--green-line);border-radius:11px;padding:11px 13px}
+.adv>button{border:0;background:none;padding:0;color:var(--green-d);font-size:13px;font-weight:700;cursor:pointer}
+.adv-note{font-size:12px;color:var(--muted);margin-top:3px}
+.adv-panel{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.adv-choice{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:10px}
+.adv-choice label{font-size:13px;font-weight:600}.adv-choice input{accent-color:var(--green);margin-right:5px}
+
+.warn{background:var(--yellow-soft);border:1px solid var(--yellow-line);border-radius:9px;padding:10px 13px;font-size:13px;color:#6a561c;margin-top:16px}
+
+.sum{margin-top:18px}
+.sum .meta{font-size:13px;line-height:2}
+.sum h3{margin:22px 0 8px;font:700 15px/1.4 var(--serif)}
+.tw{overflow-x:auto}
+.sum table{width:100%;border-collapse:collapse;font-size:13px}
+.sum th,.sum td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top;line-height:1.65}
+.sum th{background:var(--green-soft);color:var(--green-d);font-weight:700;white-space:nowrap}
+.footer{grid-column:2;color:#93a09a;font-size:12px;margin-top:-6px}
+
+@media(max-width:880px){
+ .hero{flex-direction:column;align-items:flex-start;padding:22px 18px}.hero h1{font-size:23px}h2{font-size:19px}
+ .shell{grid-template-columns:minmax(0,1fr);padding:0 14px;gap:14px}
+ .rail{position:static;flex-direction:row;overflow-x:auto}.rail-div{flex:none;width:1px;height:auto;margin:4px 6px}
+ .footer{grid-column:1}
+ .card{padding:20px 16px}.kids{margin-left:8px}.kidlist,.slot.kid{margin-left:8px}.acch{flex-wrap:wrap}.acch .ttl{flex-basis:60%}.rowbtn{flex-wrap:wrap;row-gap:2px}.rowbtn .tx{flex:1 1 calc(100% - 40px)}.meta{margin:0 0 0 32px}
+ .typecards{grid-template-columns:1fr}
+ .atomic-row{grid-template-columns:50px minmax(0,1fr) 30px}
+ .atomic-row.hrow{grid-template-columns:40px 72px minmax(0,1fr) 30px}
+ .atomic-row.mrow{grid-template-columns:50px minmax(0,1fr) 30px}.mrow .rsn{grid-column:2;grid-row:2}
+}
+</style>
+</head>
+<body>
+<header><div class="hero">
+ <div><h1>研究问题与假设 Prompt 生成器</h1><p>AI 给出候选、推荐程度和解释，你来判断和选定，页面整理成汇总表。</p></div>
+ <button class="restart" onclick="reset(this)">重新开始</button>
+</div></header>
+
+<div class="shell">
+<nav class="rail" aria-label="步骤">
+ <button class="step" id="s1" onclick="jump(1)"><span class="num">1</span>题目诊断</button>
+ <button class="step" id="s2" onclick="jump(2)"><span class="num">2</span>核心要素</button>
+ <button class="step" id="s3" onclick="jump(3)"><span class="num">3</span>操作化</button>
+ <button class="step" id="s4" onclick="jump(4)"><span class="num">4</span>研究问题</button>
+ <button class="step" id="s5" onclick="jump(5)"><span class="num">5</span>假设 / 结构</button>
+ <button class="step" id="s6" onclick="jump(6)"><span class="num">6</span>汇总表</button>
+ <span class="rail-div"></span>
+ <button class="step" id="s7" onclick="jump(7)"><span class="num">7</span>研究方法</button>
+ <button class="step" id="s8" onclick="jump(8)"><span class="num">8</span>测量工具</button>
+</nav>
+
+<main>
+<section id="p1"><div class="card">
+ <h2>第一步：诊断题目并确定研究类型</h2>
+ <p class="sub">填写题目后生成 Prompt，再根据 AI 的结果确认研究类型；现状 / 探索类还要确认子类。</p>
+ <div class="field"><label for="topic">研究题目</label><input class="inp" id="topic" placeholder="请输入完整研究题目" oninput="onTopic()"></div>
+ <div class="field"><label for="lit">文献综述核心结论（可选）</label><textarea class="inp" id="lit" placeholder="已完成文献综述的，粘贴最重要的结论，后面每一步都会带上；没有可留空，AI 会联网检索依据。" oninput="onLit()"></textarea></div>
+ <div class="btns"><button class="btn primary" id="g1" onclick="showP1()" disabled>生成 Prompt</button></div>
+ <div id="o1" class="hidden">
+  <div class="zone">发给 AI 的 Prompt</div>
+  <div class="prompt"><div class="phead"><span>题目诊断</span><button class="copy" onclick="cp(this)">复制</button></div><pre id="q1"></pre></div>
+  <div class="zone">根据 AI 的结果，确认研究类型</div>
+  <div class="typecards">
+   <label class="typecard"><input type="radio" name="rtype" value="intervention" onchange="onType(this)"><b>干预类</b><p>实施教学、课程、技术或行动，与常规教学比较结果的变化。</p></label>
+   <label class="typecard"><input type="radio" name="rtype" value="correlation" onchange="onType(this)"><b>相关类</b><p>题目已明确变量，考察变量之间的关系、预测或差异。</p></label>
+   <label class="typecard"><input type="radio" name="rtype" value="explore" onchange="onType(this)"><b>现状 / 探索类</b><p>调查现象的现状、问题、原因和改进；“现状及影响因素”“现状、问题与改进”题目选这里。</p></label>
+  </div>
+  <div id="subWrap" class="hidden">
+   <div class="zone">现状 / 探索类再确认子类</div>
+   <div class="typecards">
+    <label class="typecard"><input type="radio" name="sub" value="exp" onchange="onSub(this)"><b>体验类</b><p>研究对象怎么看、怎么感受、有什么需求。如“研学中高中生的地理学习体验”。</p></label>
+    <label class="typecard"><input type="radio" name="sub" value="pra" onchange="onSub(this)"><b>实践类</b><p>研究对象做了什么、怎么做、遇到什么问题。如“初中地理大单元教学的实施现状”。</p></label>
+    <label class="typecard"><input type="radio" name="sub" value="pol" onchange="onSub(this)"><b>政策类</b><p>一项政策或改革要求了什么、落实得怎样、有什么困境。如“优质职教资源下沉县域的现实困境”。</p></label>
+   </div>
+  </div>
+  <div class="zone">最终采用的题目</div>
+  <div id="titleKeep" class="kept"><span id="keptTitle"></span><button type="button" class="btn" onclick="editTitle()">修改题目</button></div>
+  <div id="titleEdit" class="hidden">
+   <input class="inp" id="finalTopic" placeholder="修改后的最终题目" oninput="S.finalTopic=this.value;save()">
+   <div class="btns" style="margin-top:8px"><button type="button" class="btn" onclick="cancelTitleEdit()">取消修改</button></div>
+  </div>
+  <div class="btns"><button id="to2" class="btn primary" onclick="go(2)" disabled>下一步：核心要素</button></div>
+ </div>
+ <div class="warn hidden" id="w1"></div>
+</div></section>
+
+<section id="p2" class="hidden"></section>
+<section id="p3" class="hidden"></section>
+<section id="p4" class="hidden"></section>
+<section id="p5" class="hidden"></section>
+
+<section id="p6" class="hidden"><div class="card">
+ <h2>研究设计汇总表</h2>
+ <p class="sub">由各步确认的内容自动生成。第七、八步选定后，研究方法、测量工具和补充资料会并入这张表。</p>
+ <div id="sumBox" class="sum"></div>
+ <div class="btns"><button class="btn" onclick="go(5)">上一步</button><button class="btn" onclick="cpTable(this)">复制表格（可粘贴到 Word）</button><button class="btn" onclick="cpMd(this)">复制 Markdown</button><button class="btn primary spacer" onclick="go(7)">下一步：研究方法</button></div>
+</div></section>
+
+<section id="p7" class="hidden"></section>
+<section id="p8" class="hidden"></section>
+</main>
+<div class="footer">v12.1</div>
+</div>
+
+<script>
+const KEY='rlpg_v11_5',LAST=8,ABC='abcdefgh';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const TNAME={intervention:'干预类',correlation:'相关类',explore:'现状/探索类'};
+const LIM={x:[1,4],y:[1,4],d:[2,4],f:[2,4],mt:[1,3],sup:[1,2]};
+const blank=k=>k==='f'||k==='sup'?'':k==='rq'?{t:'',h:'',subs:[]}:k==='mt'?{n:'',r:''}:{n:'',d:[''],ms:'',dc:[],tc:[]};
+const fresh=()=>({step:1,max:1,topic:'',lit:'',shown1:false,rtype:'',sub:'',finalTopic:'',editing:false,
+ x:[blank('x')],y:[blank('y')],advOpen:false,m:blank('x'),w:blank('x'),
+ p:'',d:[blank('d'),blank('d')],f:['',''],fms:'',rq:[blank('rq')],mt:[blank('mt')],
+ c2:{X:[],Y:[],M:[],W:[],P:[],D:[]},fc:[],ftc:[],c4:[],c5:[],c5sig:'',c7:[],sup:[''],supc:[]});
+let S=fresh();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function load(){try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(fresh(),JSON.parse(r))}catch(e){S=fresh()}}
+
+const isExp=()=>S.rtype==='explore', isInt=()=>S.rtype==='intervention';
+/* 现状/探索类的三个子类：研究什么、层次怎么分、问题怎么问、用什么方法和工具 */
+const EX={
+ exp:{name:'体验类',what:'研究对象的看法、感受和需求',
+  p:'核心现象P是研究对象对某件事的体验，写成“……的体验”“……的看法”“……的需求”这类名词短语',
+  d:'体验类的层次常按体验的构成来分，如怎么理解、感受如何、怎么参与、希望怎样',
+  dim:'维度是能通过访谈或问卷问出来的具体体验内容',src:'问卷、访谈或观察',
+  now:'现状“……对……有怎样的体验（或看法）？”',prob:'问题“……在哪些方面体验不佳，或需求没有得到满足？”',
+  mt:'候选优先从访谈和问卷调查中提出：访谈了解体验的细节和原因，问卷了解整体情况。',eg:'半结构化访谈',
+  tools:'访谈、问卷、观察',note:'访谈写明对象和提纲要点；观察写明观察点和记录方式。'},
+ pra:{name:'实践类',what:'研究对象的做法、行为和实施情况',
+  p:'核心现象P是研究对象实际在做的事，写成“……的实施”“……的应用”“……行为”这类名词短语',
+  d:'实践类的层次常按“做了什么、怎么做、效果如何、遇到什么困难”来分',
+  dim:'维度是能被观察、记录或问出来的具体做法，如内容、频率、方式、环节',src:'问卷、访谈或观察',
+  now:'现状“……做了什么、是怎么做的？”',prob:'问题“……存在哪些问题或困难？”',
+  mt:'候选优先从问卷调查、观察、访谈和案例研究中提出：问卷了解整体情况，观察和案例了解具体做法，访谈了解原因。',eg:'课堂观察',
+  tools:'观察、问卷、访谈、量规',note:'观察写明观察点和记录方式；访谈写明对象和提纲要点；量规用于评价教案、作业等实物，写明评价指标和等级。'},
+ pol:{name:'政策类',what:'一项政策或改革的要求及其落实情况',
+  p:'核心现象P是一项政策或改革在某个范围内的落实，写成“……政策的落实”“……改革的实施”这类名词短语，并写明区域或学校范围',
+  d:'政策类的层次常按“政策要求了什么、实际怎么落实、落实中的困境”来分',
+  dim:'维度是能从政策文本里读出来、或能向落实者问出来的具体方面，如目标、措施、保障条件',src:'政策文本、访谈或问卷',
+  now:'现状“政策对……提出了哪些要求？”“……实际是怎样落实的？”',prob:'问题“落实过程中面临哪些困境？”',
+  mt:'候选优先从政策文本分析、访谈和案例研究中提出：文本分析说明政策要求，访谈和案例说明落实情况和困境。',eg:'政策文本分析',
+  tools:'文本分析框架、访谈、问卷',note:'文本分析框架写明分析哪些政策文本、分析类目和编码规则；访谈写明对象（政策的落实者）和提纲要点。'}
+};
+const ex=()=>EX[S.sub]||EX.pra;
+const tn=()=>isExp()?`现状/探索类中的${ex().name}`:TNAME[S.rtype];
+const exLead=()=>`以下研究属于${tn()}，研究的是${ex().what}。`;
+const topic=()=>(S.editing&&S.finalTopic.trim())||S.topic.trim();
+const filled=a=>a.map(s=>s.trim()).filter(Boolean);
+const xName=()=>isInt()?'干预变量':'自变量';
+const hasM=()=>!!S.m.n.trim(), hasW=()=>!!S.w.n.trim();
+const varTotal=()=>S.x.filter(o=>o.n.trim()).length+S.y.filter(o=>o.n.trim()).length+hasM()+hasW();
+const rqMin=()=>isExp()?2:1;
+
+function vars(){
+ if(isExp())return S.d.map((o,i)=>({tag:'D'+(i+1),role:'关键层次',o,path:'d.'+i})).filter(v=>v.o.n.trim());
+ const a=S.x.map((o,i)=>({tag:'X'+(i+1),role:xName(),o,path:'x.'+i,isX:true})).concat(S.y.map((o,i)=>({tag:'Y'+(i+1),role:'因变量',o,path:'y.'+i})));
+ a.push({tag:'M',role:'中介变量',o:S.m,path:'m'},{tag:'W',role:'调节变量',o:S.w,path:'w'});
+ return a.filter(v=>v.o.n.trim());
+}
+const measured=()=>vars().filter(v=>!(isInt()&&v.isX));
+const dimWord=v=>isInt()&&v.isX?'实施要素':'维度';
+const dimTag=v=>isInt()&&v.isX?'要素':'维度';
+
+/* ---------- Prompt 文本 ---------- */
+const ROLE='你是一位教育学实证研究方法教师。';
+const num=a=>a.filter(Boolean).map((s,i)=>`${i+1}. ${s}`).join('\n');
+const lines=a=>a.filter(Boolean).join('\n');
+const litBlock=()=>S.lit.trim()?`\n文献综述核心结论：\n${S.lit.trim()}`:'';
+const evid=()=>`依据来源：${S.lit.trim()?'优先使用上面的文献综述结论，不足处':''}联网检索，给出真实可查的来源（作者，年份）；查不到的标注“待查证”，不编造文献。`;
+const ctrl=()=>isInt()?'对照条件为常规教学。':'';
+const out=(intro,item,p2)=>`输出分两部分，不输出其他内容。
+
+第一部分【候选与解释】
+写给第一次做研究的本科生，用通俗的话，少用术语。${intro}每个候选按下面的格式写，每条不超过40字：
+${item}
+最后写【怎么选】：2—3条判断提示，说明在什么情况下选哪个，不直接给出最终方案。
+
+第二部分【回填清单】
+放在代码块中，列出第一部分的全部候选，每行一个，只用下面的格式：
+${p2}`;
+
+function coreBlock(){
+ const a=[];if(isExp())a.push('核心现象P：'+S.p.trim());
+ vars().forEach(v=>a.push(`${v.role}${v.tag}：${v.o.n.trim()}`));return a.join('\n')
+}
+function fullBlock(){
+ const a=[];if(isExp())a.push('核心现象P：'+S.p.trim());
+ vars().forEach(v=>a.push(`${v.role}${v.tag}：${v.o.n.trim()}（${dimWord(v)}：${filled(v.o.d).join('、')||'总体'}）`));
+ if(isExp())a.push('预设影响因素F：'+filled(S.f).join('、'));
+ return a.join('\n')
+}
+const rqs=()=>S.rq.filter(q=>q.t.trim()), subsOf=q=>q.subs.filter(s=>s.t.trim());
+const subsAll=q=>[...subsOf(q),...q.subs.filter(s=>!s.t.trim()&&(s.h||'').trim()).sort((a,b)=>(a.hk||'~').localeCompare(b.hk||'~'))];
+const rqBlock=()=>rqs().map((q,i)=>[`RQ${i+1}：${q.t.trim()}`,...subsOf(q).map((s,j)=>`RQ${i+1}${ABC[j]}：${s.t.trim()}`)].join('\n')).join('\n');
+function hList(){
+ const a=[];
+ rqs().forEach((q,i)=>{if((q.h||'').trim())a.push({id:`H${i+1}`,t:q.h.trim()});subsAll(q).forEach((s,j)=>{if((s.h||'').trim())a.push({id:`H${i+1}${ABC[j]}`,t:s.h.trim()})})});
+ return a
+}
+const mtList=()=>S.mt.filter(m=>m.n.trim());
+
+function gen1(){
+ $('q1').textContent=`${ROLE}请诊断下面的研究题目并判断研究类型。
+
+研究题目：${S.topic.trim()}${litBlock()}
+
+一、题目诊断，检查四项：
+1. 研究对象和核心研究内容是否清楚；
+2. 核心概念是否过宽、含混或难以研究；
+3. “影响、效果、机制”等表述是否超出题目能支持的证据强度；
+4. 是否同时承担过多研究任务。
+
+二、研究类型，三选一：
+A. 干预类：实施一种教学、课程、技术或行动，考察结果的变化。
+B. 相关类：题目已明确变量，考察变量之间的关系、预测或差异。
+C. 现状/探索类：调查某种现象的现状、问题、原因和改进；“现状及影响因素”“现状、问题与改进”“困境与对策”类题目归入此类。
+
+三、研究类型为C时，再判断子类，三选一：
+C1. 体验类：研究对象怎么看、怎么感受、有什么需求。
+C2. 实践类：研究对象做了什么、怎么做、遇到什么问题。
+C3. 政策类：一项政策或改革要求了什么、落实得怎样、有什么困境。
+题目跨两类时，按题目最终要回答的问题选一个主类。
+
+请严格按以下格式输出，不输出其他内容：
+【题目诊断】可直接使用 / 建议优化
+【主要问题】最多3条，每条一句；没有则写“无”
+【建议题目】需要优化时给1个；否则写“沿用原题”
+【研究类型】干预类 / 相关类 / 现状探索类
+【探索子类】体验类 / 实践类 / 政策类；研究类型不是现状探索类时写“无”
+【判断依据】1—2句`
+}
+
+const ITEM2=`候选名称（推荐程度：高/中/低）
+- 概念界定：指……
+- 选它的理由：……
+- 要注意：局限或容易出错的地方`;
+const VD=['变量是一个独立的概念，有自己的定义，能单独得出一个总分，能与其他变量谈关系；维度是同一个概念的组成部分。',
+ '判别：能说“A是B的一个方面”，A是B的维度；能说“A与B有关系”或“A影响B”，A和B是两个变量。',
+ '几个候选合起来正好等于一个更大的概念时，它们是维度，那个更大的概念才是变量。',
+ '例：学习投入是变量，行为投入、认知投入、情感投入是它的维度；学习投入与学业自我效能感是两个变量。'];
+function gen2(){
+ let p;
+ if(isExp()){
+  p=`${ROLE}${exLead()}请提取并界定核心现象和关键层次，不使用自变量、因变量框架。
+
+研究题目：${topic()}${litBlock()}
+
+界定标准：
+${num([`${ex().p}，范围与题目一致，不扩大也不缩小。`,
+ '关键层次D是从不同侧面描述P的几个方面，处于同一概括水平，互不重叠；影响P的因素、改进对策都不算层次。',
+ `${ex().d}；题目有更合适的分法时按题目来。`,
+ '名称不超过15个汉字。'])}
+
+任务：
+${num(['P列出2—3个候选表述，学生最终选1个。','D列出4—6个候选，学生最终选2—4个。'])}
+
+${out('按P、D分组。',ITEM2,'P｜候选名称｜推荐程度\nD｜候选名称｜推荐程度')}`
+ }else{
+  p=`${ROLE}以下研究属于${TNAME[S.rtype]}，请提取并界定题目里的变量，并提出补充变量候选。
+
+研究题目：${topic()}${litBlock()}
+
+变量与维度的区分：
+${num([...VD,'本步只列变量，不把维度列为变量。'])}
+
+界定标准：
+${num(['变量是在不同对象或条件下取值会变化的属性；研究对象、研究情境、教学内容不是变量。',
+ '一个变量只含一个概念，用中性名词短语命名，不带“提高、有效”等方向或评价词，不超过15个汉字。',
+ '优先采用文献中已有明确定义的成熟概念。',
+ isInt()?'干预变量X是一种可以实施、与常规教学有明确区别的教学做法；因变量Y是学生身上可观察或可测量、干预能直接作用到的结果。'
+  :'自变量X和因变量Y都是可测量的属性，Y是研究最终要解释的结果。',
+ '中介变量M是随X变化、再作用于Y的过程性变量，如认知、情感或行为过程。',
+ '调节变量W是改变X与Y关系强弱或方向的条件，通常是较稳定的个体或情境特征，本身不受X影响；控制变量不算。'])}
+
+变量数量：
+${num(['学生最终选定3—4个变量（X、Y、M、W合计），X和Y各至少1个，M和W各最多1个。',
+ `题目里的变量不足3个时需要补充。补充变量的角色可以是第二个因变量、第二个自变量、中介变量或调节变量；${isInt()?'干预类优先补充第二个因变量':'相关类优先补充第二个自变量或中介变量'}。`,
+ '补充变量要有文献或理论依据，并且能与题目里的变量形成层层递进的假设。'])}
+
+任务：
+${num(['题目里的X、Y各列出2—3个候选（界定范围或命名不同）；只是同一概念的不同说法时，在“要注意”里写明只能选其一。',
+ '另列出3—5个补充变量候选，覆盖至少两种角色。',evid()])}
+
+${out('先写题目里的变量，再写补充变量。',`候选名称（角色：X/Y/M/W；来自题目或补充；推荐程度：高/中/低）
+- 概念界定：指……
+- 可能的维度：1—2个
+- 选它的理由：……
+- 要注意：局限和测量代价；补充变量写明是否需要改题目，需要时给出改后的题目`,'X｜候选名称｜题目或补充｜推荐程度\nY｜候选名称｜题目或补充｜推荐程度\nM｜候选名称｜补充｜推荐程度\nW｜候选名称｜补充｜推荐程度')}`
+ }
+ $('q2').textContent=p
+}
+
+const ITEM3=`候选名称（推荐程度：高/中/低）
+- 是什么：……
+- 来源：理论、量表或文献（作者，年份）
+- 选它的理由：……
+- 要注意：局限或容易出错的地方`;
+function gen3(){
+ const vs=vars(),el=v=>isInt()&&v.isX,keys=vs.map(v=>el(v)?`${v.tag}｜要素名称｜与常规教学的不同（不超过30字）｜推荐程度`:`${v.tag}｜维度名称｜推荐程度`).join('\n');let p;
+ if(isExp()){
+  p=`${ROLE}${exLead()}请把关键层次具体化为可调查的维度，并提出预设影响因素，不使用自变量、因变量框架。
+
+研究题目：${topic()}
+${coreBlock()}${litBlock()}
+
+划分标准：
+${num([`${ex().dim}；同一层次的维度处于同一概括水平，互不重叠。`,
+ `每个维度都能从${ex().src}中得到资料；层次本身已经足够具体的，只列“总体”一个候选。`,
+ '预设影响因素是可能造成核心现象出现差异或问题的个体、学校或环境条件，用来回答“原因”类问题，不与任何维度重复。',
+ '名称不超过15个汉字。'])}
+
+任务：
+${num(['每个关键层次列出4—6个候选维度，学生最终各选1—4个。','另列出4—6个候选影响因素，学生最终选2—4个。',evid()])}
+
+${out('按关键层次分组，影响因素单独一组。',ITEM3,keys+'\nF｜因素名称｜推荐程度')}`
+ }else{
+  p=`${ROLE}以下研究属于${TNAME[S.rtype]}，请对已确认的变量做操作化并划分维度。${ctrl()}
+
+研究题目：${topic()}
+${coreBlock()}${litBlock()}
+
+划分标准：
+${num(['维度是概念的组成部分，来自概念的定义、理论结构或成熟量表；影响它的因素、它带来的结果、测量工具和题项都不是维度。',
+ '判别：能说“A是这个变量的一个方面”，A才是维度；只能说“A与这个变量有关系”或“A影响这个变量”的，A是另一个变量，不列为维度。',
+ '已确认的其他变量，以及有自己的定义和量表、能独立成为研究变量的概念，不列为维度。例：学习投入的维度是行为投入、认知投入、情感投入，学业自我效能感不是它的维度。',
+ '同一变量的维度处于同一概括水平，互不重叠，合起来等于这个变量，各维度得分能加总为变量总分。',
+ '每个维度都能被观察或测量；概念本身是单维的，只列“总体”一个候选。',
+ isInt()&&'实施要素是干预变量区别于常规教学的关键做法或环节，按实施顺序排列，每项都能在课堂上检查是否做到。',
+ isInt()&&'每个实施要素写清教师和学生各做什么，并指出它在教学目标、内容组织、活动方式、师生角色、技术与资源、评价方式中的哪一方面与常规教学不同、常规教学通常怎么做；与常规教学没有区别的做法不算实施要素。',
+ !isInt()&&'优先选择本科生能够获得数据的维度。',
+ '名称不超过15个汉字；不新增变量。'])}
+
+任务：
+${num([isInt()?'每个变量先写一句操作性定义：干预变量写怎样实施、与常规教学的总体区别，其余变量写用什么可观察的表现或得分来代表。':'每个变量先写一句操作性定义，写明用什么可观察的表现或得分来代表。',
+ isInt()&&'每个干预变量列出4—6个候选实施要素，学生最终选2—4个。',
+ `${isInt()?'其余每个':'每个'}变量列出4—6个候选维度，学生最终各选1—4个。`,
+ '同一变量有不同的划分方式时都列出来，并在“要注意”里写明哪些候选不能同时选。',evid()])}
+
+${out('按变量分组，每组开头写操作性定义。',isInt()?`干预变量的实施要素按这个格式：
+要素名称（推荐程度：高/中/低）
+- 具体做法：教师和学生各做什么
+- 与常规教学的不同：哪一方面不同，常规教学通常怎么做
+- 选它的理由：……
+- 要注意：实施难点
+其余变量的维度按这个格式：
+${ITEM3}`:ITEM3,keys)}`
+ }
+ $('q3').textContent=p
+}
+
+function gen4(){
+ let p;
+ if(isExp()){
+  p=`${ROLE}${exLead()}请依据已确认的核心现象、层次、维度和预设影响因素提出候选研究问题，不使用自变量、因变量框架。
+
+研究题目：${topic()}
+${fullBlock()}${litBlock()}
+
+研究问题写法：
+${num(['写成以问号结尾的疑问句，写明研究对象，名称与上面完全一致；一个问题只问一件事，并且能用收集到的资料回答。',
+ '问题按“现状—问题—原因—改进”的顺序层层递进，后一个问题建立在前一个问题的发现之上；问题之间不重复。',
+ `句式：${ex().now}；${ex().prob}；原因“哪些因素影响……？”；差异“不同……的研究对象在……上有什么差异？”。`,
+ '至少1个现状问题直接考察核心现象在各层次上的表现。',
+ '题目包含改进、优化、对策、应对等内容时，最后提1个改进问题，句式“基于以上发现，……可以从哪些方面改进？”；改进问题依据前面问题的发现和研究对象提出的需求来回答，不凭空提对策。题目没有这类内容则不提。',
+ '只使用上面列出的内容，不新增。'])}
+
+任务：
+${num(['按递进顺序提出5—6个候选研究问题，学生最终选2—4个，选出的问题合起来要覆盖题目。'])}
+
+${out('',`研究问题（类型：现状/差异/问题/原因/改进；推荐程度：高/中/低）
+- 它在问什么：……
+- 与上一个问题的关系：第一个问题写“起点”
+- 选它的理由：……
+- 要注意：与哪个候选重复，或回答它需要什么资料`,'RQ｜研究问题｜类型｜推荐程度')}`
+ }else{
+  const mw=hasM()||hasW(),tail=mw?`，最后问${[hasM()&&'中介',hasW()&&'调节'].filter(Boolean).join('和')}`:'';
+  const types=(isInt()?'直接效果':'直接关系/共同预测')+(hasM()?'/中介':'')+(hasW()?'/调节':'');
+  p=`${ROLE}以下研究属于${TNAME[S.rtype]}，请依据已确认的变量和维度提出候选研究问题，分为主问题和子问题。${ctrl()}
+
+研究题目：${topic()}
+${fullBlock()}${litBlock()}
+
+研究问题写法：
+${num(['写成以问号结尾的疑问句，写明研究对象，变量名与上面完全一致；不预设答案，不写“如何提高、应该怎样”这类对策性问题。',
+ `主问题只在变量层面提出，一个主问题只问两个变量之间的一种关系${mw?'，或一个中介、调节关系':''}。`,
+ `主问题里只能出现这些变量名：${vars().map(v=>v.o.n.trim()).join('、')}；不用维度名代替变量，不出现这份名单以外的变量。维度名只出现在子问题里。`,
+ isInt()?`主问题按递进顺序编号：先问干预对主要结果变量的效果，再问对其他结果变量的效果${tail}。`
+  :`主问题按递进顺序编号：先问各自变量与因变量的直接关系，有多个自变量时再问共同预测或相对强弱${tail}。`,
+ '子问题是所属主问题按维度的拆分，只能挂在主问题之下；维度不单独成为主问题，维度为“总体”的变量不拆子问题。',
+ isInt()&&'干预变量的实施要素不进入研究问题，也不拆成子问题。',
+ isInt()?'句式：“与常规教学相比，X能否提高（或是否影响）研究对象的Y？”'
+  :'句式按关系选用：相关“X与Y是否相关？”；预测“X能否预测Y？”；差异“不同……的研究对象在Y上是否存在差异？”。不使用“导致、造成”等因果措辞。',
+ hasM()&&'中介问题句式：“M是否在X与Y之间起中介作用？”',
+ hasW()&&'调节问题句式：“W是否调节X与Y的关系？”',
+ '只使用上面列出的变量和维度，不新增。'])}
+
+任务：
+${num(['按递进顺序列出候选主问题，覆盖上面所有变量之间值得检验的关系，不超过5个；学生最终选1—4个。',
+ '每个主问题下列出0—4个候选子问题，学生自行决定是否选用。'])}
+
+${out('',`RQ1 主问题（类型：${types}；推荐程度：高/中/低）
+- 它在问什么：……
+- 与上一个主问题的关系：第一个主问题写“起点”
+- 选它的理由：……
+- 要注意：回答它需要什么条件
+RQ1a 子问题（推荐程度：高/中/低）：一句理由`,'RQ1｜主问题｜类型｜推荐程度\nRQ1a｜子问题｜推荐程度\nRQ2｜主问题｜类型｜推荐程度')}`
+ }
+ $('q4').textContent=p
+}
+
+function gen5(){
+ let p;
+ if(isExp()){
+  p=`${ROLE}${exLead()}请把研究问题整理成便于设计研究工具的结构表，不提出统计假设，不使用自变量、因变量框架。
+
+研究题目：${topic()}
+${fullBlock()}
+研究问题：
+${rqBlock()}
+
+请严格按以下格式输出，不输出其他内容：
+【研究问题结构表】
+研究问题｜问题类型｜涉及层次｜具体维度｜预设影响因素｜建议证据来源`
+ }else{
+  p=`${ROLE}以下研究属于${TNAME[S.rtype]}，请为下列研究问题提出候选研究假设，分为主假设和子假设。${ctrl()}
+
+研究题目：${topic()}
+${fullBlock()}
+研究问题：
+${rqBlock()}${litBlock()}
+
+研究假设写法：
+${num(['写成陈述句，是对应研究问题的预期答案，能被数据支持或推翻；一条假设只陈述一种关系，变量名与上面完全一致，不新增变量或维度。',
+ '编号与研究问题一一对应：RQ1对应主假设H1，RQ1a对应子假设H1a。',
+ '主假设之间层层递进：后一条以前一条为前提，或在前一条的基础上延伸。',
+ '子假设是所属主假设在某个维度上的具体化，方向与主假设一致，不引入主假设没有的变量。',
+ '有子问题的，子假设与子问题一一对应；主问题没有子问题、但因变量有维度时，可以按维度补充子假设，编号接着往下排（H1a、H1b……）。干预变量的实施要素不写子假设。',
+ isInt()?'方向性句式：“接受X的研究对象，其Y显著高于接受常规教学的研究对象。”非方向性句式：“接受X与接受常规教学的研究对象在Y上存在显著差异。”'
+  :'方向性句式：相关“X与Y呈显著正（负）相关。”；预测“X显著正（负）向预测Y。”；差异“……组的Y显著高于……组。”非方向性句式只写“存在显著相关（差异）”，不写正负高低。',
+ hasM()&&'中介假设句式：“M在X与Y之间起中介作用。”',
+ hasW()&&'调节假设句式：“W调节X与Y的关系：W越高，X与Y的关系越强（弱）。”',
+ `不用“证明、一定、有一定影响”等词${isInt()?'':'，不用“导致、造成”等因果措辞'}。`])}
+
+任务：
+${num(['每条主假设和子假设都给出方向性、非方向性两个版本，学生每条选1个版本，子假设可以不选。',
+ '依据充分时方向性版本的推荐程度更高，否则非方向性版本更高。',
+ '无法检验的研究问题不设假设，在第一部分末尾说明原因。',
+ '回填清单里的“涉及变量”写这条假设用到的变量编号，用顿号分隔，如 X1、Y1；调节假设如 X1、W、Y1。',evid()])}
+
+${out('按研究问题的编号顺序写。',`H1 假设内容（方向性或非方向性；推荐程度：高/中/低）
+- 依据：理论或文献（作者，年份）
+- 与上一条的关系：主假设写与上一条主假设的递进关系，子假设写与所属主假设的关系
+- 要注意：依据是否充分，数据不支持时意味着什么`,'H1｜方向性｜假设内容｜涉及变量｜推荐程度\nH1｜非方向性｜假设内容｜涉及变量｜推荐程度\nH1a｜方向性｜假设内容｜涉及变量｜推荐程度\nH1a｜非方向性｜假设内容｜涉及变量｜推荐程度')}`
+ }
+ $('q5').textContent=p
+}
+
+function gen7(){
+ const hs=hList();
+ $('q7').textContent=`${ROLE}以下研究属于${tn()}，请提出候选研究方法并说明理由。${ctrl()}
+
+研究题目：${topic()}
+${fullBlock()}
+研究问题：
+${rqBlock()}${!isExp()&&hs.length?'\n研究假设：\n'+hs.map(h=>`${h.id}：${h.t}`).join('\n'):''}
+
+选择标准：
+${num(['方法与研究类型和研究问题匹配，每个研究问题至少有一种方法能够回答。',
+ isExp()?ex().mt
+  :isInt()?'候选优先从准实验、实验和行动研究中提出；了解实施过程和学生感受可辅以访谈或课堂观察。'
+  :'候选优先考虑问卷调查；确需解释原因时辅以访谈。',
+ `方法名称写到具体设计，如“${isExp()?ex().eg:isInt()?'准实验（不等组前后测）':'问卷调查（横断面）'}”，不超过15个汉字。`,
+ '本科生能够完成：一学期内可以实施，样本和工具能够获得。'])}
+
+任务：
+${num(['列出4—6种候选方法，学生最终选1—3种，选出的方法各自承担不同任务。'])}
+
+${out('',`方法名称（推荐程度：高/中/低）
+- 怎么做：对象、大致样本量和流程
+- 能回答哪些研究问题：……
+- 选它的理由：……
+- 要注意：难点或局限`,'方法｜方法名称｜不超过40字的理由｜推荐程度')}`
+}
+
+function gen8(){
+ const exp=isExp(),unit=exp?'关键层次':'变量',vs=measured();
+ $('q8').textContent=`${ROLE}以下研究属于${tn()}，请为每个${isInt()?'需要测量的变量':unit}提出候选测量工具。${ctrl()}
+
+研究题目：${topic()}
+${fullBlock()}
+研究方法：${mtList().map(m=>m.n.trim()).join('、')}${litBlock()}
+
+工具标准：
+${num([isInt()&&'干预变量是被操纵的变量，由分组（实验班接受干预，对照班接受常规教学）和实施要素界定，不测量，不为它列工具。',
+ exp?`工具类型从这几类中选：${ex().tools}。`:'工具类型从五类中选：观察、问卷、访谈、量规、测验。',
+ '问卷按维度拆分题项，形成量表；优先改编公开发表、报告过信效度的成熟量表，写明编制者与年份；没有合适量表时自编，写明每个维度大致几题、几点计分。',
+ exp?ex().note:'测验用于知识和能力类结果，写明题型和计分；量规用于评价作品、表现或任务完成质量，写明评价指标和等级；观察写明观察点和记录方式；访谈写明对象和提纲要点。',
+ `工具与已选研究方法一致，覆盖该${unit}的全部维度。`,
+ isInt()&&'补充资料不对应任何变量，不进入假设检验，分两类：实施记录（说明干预按方案实施，如教案、课堂观察记录）和过程资料（了解学生的看法和体验，如访谈、开放题）。',
+ !exp&&!isInt()&&'已选研究方法里有访谈、观察等辅助方法时，把对应的工具列为补充资料；补充资料不对应任何变量，不进入假设检验。没有辅助方法则不列。',
+ '本科生能够获得并使用。'])}
+
+任务：
+${num([`${isInt()?'除干预变量外，':''}每个${unit}列出3—4种候选工具，覆盖至少两种工具类型，学生最终各选1种。`,
+ exp&&'预设影响因素另列2—3种候选收集工具。',
+ isInt()&&'另列出3—4种候选补充资料，两类都要有；学生可以不选，最多选2种。',
+ !exp&&!isInt()&&'有辅助方法时另列出2—3种候选补充资料，学生可以不选。',evid()])}
+
+${out(`按${unit}分组${exp?'':'，补充资料单独一组'}。`,`工具类型：具体工具（推荐程度：高/中/低）
+- 怎么用：测什么，怎么计分或记录
+- 来源：成熟工具写编制者与年份，自编写按哪些维度编制
+- 选它的理由：……
+- 要注意：难点或局限`,vs.map(v=>`${v.tag}｜工具类型｜具体工具｜推荐程度`).join('\n')+(exp?'\nF｜工具类型｜具体工具｜推荐程度':'\n补充｜资料类型｜具体工具｜推荐程度'))}`
+}
+
+/* ---------- 表单 ---------- */
+function getAt(path){return path.split('.').reduce((o,k)=>o[k],S)}
+function setAt(path,v){const ks=path.split('.'),last=ks.pop();ks.reduce((o,k)=>o[k],S)[last]=v}
+const ccText=(len,lim)=>len>lim?`超出${len-lim}字`:`${len}/${lim}`;
+function hideWarn(n){const w=$('w'+n);if(w)w.classList.add('hidden')}
+function showWarn(n,t){const w=$('w'+n);w.textContent=t;w.classList.remove('hidden')}
+function onIn(el){
+ setAt(el.dataset.path,el.dataset.num?+el.value:el.value);
+ const lim=+el.dataset.lim;
+ if(lim){el.nextElementSibling.textContent=ccText(el.value.length,lim);el.parentElement.classList.toggle('over',el.value.length>lim)}
+ const g=el.closest('.group,.subg');
+ if(g){const vs=new Set([...g.querySelectorAll('input.inp')].map(x=>x.value.trim()));g.querySelectorAll('[data-t]').forEach(b=>{const on=vs.has(b.dataset.t);b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)})}
+ if(S.step===2)note2();
+ hideWarn(S.step);save()
+}
+function note2(){
+ const n=$('n2');if(!n)return;
+ const t=varTotal(),show=!isExp()&&t<3&&S.x.some(o=>o.n.trim())&&S.y.some(o=>o.n.trim());
+ n.textContent=`目前选了 ${t} 个变量。建议 3—4 个，主假设才能层层递进；确认只用 ${t} 个也可以继续。`;
+ n.classList.toggle('hidden',!show)
+}
+function limIn(path,val,lim,ph){
+ return `<div class="inwrap${val.length>lim?' over':''}"><input class="inp" data-path="${path}" data-lim="${lim}" value="${esc(val)}" oninput="onIn(this)" placeholder="${ph}"><span class="cc">${ccText(val.length,lim)}</span></div>`
+}
+const rmBtn=call=>call?`<button class="remove" onclick="${call}" title="删除" aria-label="删除">×</button>`:'<span></span>';
+const nameRow=(tag,path,val,rm)=>`<div class="atomic-row"><span class="tag">${tag}</span>${limIn(path,val,15,'不超过15个汉字')}${rmBtn(rm)}</div>`;
+const addBtn=(label,call,dis)=>`<button class="add" onclick="${call}"${dis?' disabled':''}>＋ ${label}</button>`;
+const group=(title,count,cands,rows,add='')=>`<div class="group"><div class="grouphead"><b>${title}</b><span class="count">${count}</span></div>${cands}${cands?'<div class="capline">已选定（可直接改写）</div>':''}<div class="atomic-list">${rows}</div>${add}</div>`;
+
+/* 候选：短名称用 chips，长句用 opts */
+const RK={高:'h',中:'m',低:'l'};
+const badge=r=>r?`<i class="rt rt-${RK[r]}">${r}</i>`:'';
+const CAP='<span class="cap">候选：点击选用，再点一次取消</span>';
+function chips(list,sel,call){
+ if(!list||!list.length)return '';
+ return `<div class="cands">${CAP}${list.map((c,i)=>`<button type="button" class="chip${sel(c)?' on':''}" aria-pressed="${!!sel(c)}" data-t="${esc(c.t)}" onclick="${call(i)}">${c.src?`<i class="sup">${c.src}</i>`:''}${esc(c.t)}${badge(c.r)}</button>`).join('')}</div>`
+}
+/* o: {pre(c) 前缀标签, dt 是否按文本联动, keep(c,i) 过滤, cap 是否显示说明} */
+function opts(list,sel,call,o={}){
+ const rows=(list||[]).map((c,i)=>(!o.keep||o.keep(c,i))?`<button type="button" class="opt${sel(c,i)?' on':''}" aria-pressed="${!!sel(c,i)}"${o.dt?` data-t="${esc(c.t)}"`:''} onclick="${call(i)}">${o.pre&&o.pre(c)?`<span class="ty">${esc(o.pre(c))}</span>`:''}<span class="tx">${esc(c.t)}</span>${badge(c.r)}</button>`:'').join('');
+ return rows?`<div class="cands col">${o.cap===false?'':CAP}${rows}</div>`:''
+}
+function toggleStr(a,t,min,max){
+ const at=a.findIndex(s=>s.trim()===t);
+ if(at>=0){if(a.length>min)a.splice(at,1);else a[at]='';return true}
+ const e=a.findIndex(s=>!s.trim());if(e>=0){a[e]=t;return true}
+ if(a.length<max){a.push(t);return true}
+ return false
+}
+const fullMsg=max=>`这一组最多选 ${max} 个，先取消一个再选。`;
+const CAPMSG='X、Y、M、W 合计最多 4 个，先取消一个再选。';
+function pickVar(k,i){
+ const c=S.c2[k.toUpperCase()][i],a=S[k],at=a.findIndex(o=>o.n.trim()===c.t),mk=()=>Object.assign(blank(k),{n:c.t});
+ if(at>=0){if(a.length>LIM[k][0])a.splice(at,1);else a[at]=blank(k)}
+ else{
+  const e=a.findIndex(o=>!o.n.trim());
+  if(k==='d'?(e<0&&a.length>=4):varTotal()>=4){showWarn(2,k==='d'?fullMsg(4):CAPMSG);return}
+  if(e>=0)a[e]=mk();else a.push(mk())
+ }
+ hideWarn(2);save();render2()
+}
+function pickOne(k,i){
+ const c=S.c2[k][i];
+ if(k==='P')S.p=S.p.trim()===c.t?'':c.t;
+ else{
+  const key=k.toLowerCase(),cur=S[key].n.trim();
+  if(cur===c.t)S[key]=blank('x');
+  else{if(!cur&&varTotal()>=4){showWarn(2,CAPMSG);return}S[key]=Object.assign(blank('x'),{n:c.t})}
+ }
+ hideWarn(2);save();render2()
+}
+function ddFit(o){o.dd=o.dd||[];while(o.dd.length<o.d.length)o.dd.push('');o.dd.length=o.d.length}
+function pickDim(path,i){
+ const o=getAt(path),c=o.dc[i];ddFit(o);
+ const at=o.d.findIndex(t=>t.trim()===c.t);
+ if(at>=0){if(o.d.length>1){o.d.splice(at,1);o.dd.splice(at,1)}else{o.d[0]='';o.dd[0]=''}}
+ else{
+  const e=o.d.findIndex(t=>!t.trim());
+  if(e>=0){o.d[e]=c.t;o.dd[e]=c.note||''}else if(o.d.length<4){o.d.push(c.t);o.dd.push(c.note||'')}else{showWarn(3,fullMsg(4));return}
+  const ord=t=>{const k=o.dc.findIndex(x=>x.t===t.trim());return k<0?99:k};
+  const p=o.d.map((t,k)=>({t,n:o.dd[k],k})).sort((a,b)=>ord(a.t)-ord(b.t)||a.k-b.k);o.d=p.map(x=>x.t);o.dd=p.map(x=>x.n)
+ }
+ hideWarn(3);save();render3()
+}
+function pickF(i){if(!toggleStr(S.f,S.fc[i].t,2,4)){showWarn(3,fullMsg(4));return}hideWarn(3);save();render3()}
+const UI={edit:'',open4:{},open5:-1};
+const rk=r=>r?`<span class="rk rk-${RK[r]}">${r}</span>`:'';
+const metaOf=(ty,r)=>ty||r?`<span class="meta">${ty?esc(ty):''}${ty&&r?' · ':''}${rk(r)}</span>`:'';
+/* 一行候选：点整行选用或取消；选中后可“改写”。o:{on,mark,text,changed,meta,call,edit,rm,ph} */
+function prow(o){
+ if(o.edit&&UI.edit===o.edit)return `<div class="prow on"><div class="erow"><span class="mark">${o.mark||''}</span><input class="inp" id="ed" data-path="${o.edit}" value="${esc(o.text)}" oninput="onIn(this)" onkeydown="if(event.key==='Enter')doneEdit()" placeholder="${o.ph||''}"><button type="button" class="btn sm" onclick="doneEdit()">完成</button></div></div>`;
+ return `<div class="prow${o.on?' on':''}"><button type="button" class="rowbtn" aria-pressed="${!!o.on}" onclick="${o.call}"><span class="mark">${o.on?(o.mark||'✓'):''}</span><span class="tx">${esc(o.text)}${o.changed?'<i class="chg">已改写</i>':''}</span>${o.meta||''}</button>${o.on&&o.edit?`<button type="button" class="ebtn" onclick="startEdit('${o.edit}')">改写</button>`:''}${o.rm?`<button type="button" class="ebtn" onclick="${o.rm}">删除</button>`:''}</div>`
+}
+function startEdit(p){UI.edit=p;renderStep(S.step);const e=$('ed');if(e){e.focus();e.setSelectionRange(e.value.length,e.value.length)}}
+function doneEdit(){UI.edit='';save();renderStep(S.step)}
+
+function selectMain(i){
+ const v=Object.assign(blank('rq'),{t:S.c4[i].t,cid:i}),e=S.rq.findIndex(q=>!q.t.trim());
+ if(e>=0)S.rq[e]=v;else if(S.rq.length<4)S.rq.push(v);else{showWarn(4,'主问题最多选 4 个，先取消一个再选。');return false}
+ S.rq=S.rq.map((q,k)=>({q,k})).sort((a,b)=>(a.q.cid??99+a.k)-(b.q.cid??99+b.k)).map(o=>o.q);
+ return true
+}
+function pickRQ(i){
+ UI.edit='';
+ const at=S.rq.findIndex(q=>q.cid===i);
+ if(at>=0){if(S.rq.length>rqMin())S.rq.splice(at,1);else S.rq[at]=blank('rq')}
+ else if(!selectMain(i))return;
+ hideWarn(4);save();render4()
+}
+function pickSub(i,j){
+ UI.edit='';
+ if(!S.rq.some(q=>q.cid===i)&&!selectMain(i))return;
+ const q=S.rq.find(q=>q.cid===i),at=q.subs.findIndex(s=>s.sc===j);
+ if(at>=0)q.subs.splice(at,1);
+ else{
+  if(subsAll(q).length>=4){showWarn(4,'每个主问题最多 4 个子问题，先取消一个再选。');return}
+  q.subs.push({t:S.c4[i].subs[j].t,h:'',sc:j});
+  q.subs=q.subs.map((s,k)=>({s,k})).sort((a,b)=>(a.s.sc??99)-(b.s.sc??99)||a.k-b.k).map(o=>o.s)
+ }
+ hideWarn(4);save();render4()
+}
+function relink4(){
+ S.rq.forEach(q=>{const c=S.c4[q.cid];q.subs.forEach(s=>{
+  if(!c){delete s.sc;return}
+  if(s.sc===undefined||!c.subs[s.sc]){const k=c.subs.findIndex(o=>o.t===s.t.trim());if(k>=0)s.sc=k;else delete s.sc}})})
+}
+function tog4(key,v){UI.open4[key]=v;render4()}
+function addRQ(){
+ let k=S.rq.findIndex(q=>q.cid===undefined&&!q.t.trim());
+ if(k<0){if(S.rq.length>=4){showWarn(4,'主问题最多 4 个，先取消一个再加。');return}S.rq.push(blank('rq'));k=S.rq.length-1}
+ save();if(S.c4.length)startEdit(`rq.${k}.t`);else render4()
+}
+function rmRQ(i){UI.edit='';if(S.rq.length>rqMin())S.rq.splice(i,1);else S.rq[i]=blank('rq');save();render4()}
+function addSub(i){
+ const q=S.rq[i];if(subsAll(q).length>=4){showWarn(4,'每个主问题最多 4 个子问题。');return}
+ q.subs.push({t:'',h:''});save();if(S.c4.length)startEdit(`rq.${i}.subs.${q.subs.length-1}.t`);else render4()
+}
+function rmSub(i,j){UI.edit='';S.rq[i].subs.splice(j,1);save();render4()}
+function pickH(path,i){UI.edit='';const c=S.c5[i],o=getAt(path.slice(0,-2)),on=(o.h||'').trim()===c.t;o.h=on?'':c.t;if(on)delete o.hv;else o.hv=c.vars||[];hideWarn(5);tidySubs();save();render5()}
+function pickOrphan(i,key,idx){
+ UI.edit='';const q=S.rq[i];
+ if(subsAll(q).length>=4){showWarn(5,'每条主假设最多 4 条子假设，先取消一条再选。');return}
+ q.subs.push({t:'',h:S.c5[idx].t,hk:key,hv:S.c5[idx].vars||[]});hideWarn(5);tidySubs();save();render5()
+}
+function tog5(i,scroll){UI.edit='';UI.open5=UI.open5===i?-2:i;render5();if(scroll){const e=$('acc'+i);if(e)e.scrollIntoView({block:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}}
+function relink(){S.rq.forEach(q=>q.subs.forEach(s=>{const c=!s.t.trim()&&S.c5.find(o=>o.t===(s.h||'').trim());if(c)s.hk=c.key;else delete s.hk}))}
+function tidySubs(){S.rq.forEach(q=>q.subs=[...subsOf(q),...q.subs.filter(s=>!s.t.trim()&&(s.h||'').trim()).sort((a,b)=>(a.hk||'~').localeCompare(b.hk||'~'))])}
+function pickMt(i){
+ const c=S.c7[i],at=S.mt.findIndex(m=>m.n.trim()===c.t);
+ if(at>=0){if(S.mt.length>1)S.mt.splice(at,1);else S.mt[0]=blank('mt')}
+ else{
+  const e=S.mt.findIndex(m=>!m.n.trim()),v={n:c.t,r:c.why};
+  if(e>=0)S.mt[e]=v;else if(S.mt.length<3)S.mt.push(v);else{showWarn(7,fullMsg(3));return}
+ }
+ hideWarn(7);save();render7()
+}
+function pickSup(i){if(!toggleStr(S.sup,S.supc[i].t,1,2)){showWarn(8,fullMsg(2));return}hideWarn(8);save();render8()}
+function pickTool(path,i){const o=getAt(path),t=o.tc[i].t;o.ms=(o.ms||'').trim()===t?'':t;save();render8()}
+function pickFTool(i){const t=S.ftc[i].t;S.fms=(S.fms||'').trim()===t?'':t;save();render8()}
+
+function addItem(k){
+ if(S[k].length>=LIM[k][1])return;
+ if((k==='x'||k==='y')&&S.x.length+S.y.length+hasM()+hasW()>=4)return;
+ S[k].push(blank(k));save();renderStep(S.step)
+}
+function rmItem(k,i){
+ if(S[k].length<=LIM[k][0])return;
+ S[k].splice(i,1);save();renderStep(S.step)
+}
+function addDim(path){const o=getAt(path.slice(0,-2));ddFit(o);if(o.d.length>=4)return;o.d.push('');o.dd.push('');save();render3()}
+function rmDim(path,i){const o=getAt(path.slice(0,-2));ddFit(o);if(o.d.length<=1)return;o.d.splice(i,1);o.dd.splice(i,1);save();render3()}
+
+function fill1(){$('topic').value=S.topic;$('lit').value=S.lit;$('finalTopic').value=S.finalTopic;document.querySelectorAll('input[name=rtype]').forEach(r=>r.checked=r.value===S.rtype);document.querySelectorAll('input[name=sub]').forEach(r=>r.checked=r.value===S.sub)}
+function sync1(){
+ const has=!!S.topic.trim();
+ $('g1').disabled=!has;
+ if(!has)S.shown1=false;
+ $('o1').classList.toggle('hidden',!S.shown1);
+ if(S.shown1)gen1();
+ $('titleKeep').classList.toggle('hidden',S.editing);$('titleEdit').classList.toggle('hidden',!S.editing);
+ $('keptTitle').textContent=S.topic.trim();
+ $('subWrap').classList.toggle('hidden',!isExp());
+ $('to2').disabled=!S.rtype||(isExp()&&!EX[S.sub])
+}
+function onTopic(){S.topic=$('topic').value;sync1();save()}
+function onLit(){S.lit=$('lit').value;if(S.shown1)gen1();save()}
+function showP1(){if(!S.topic.trim())return;S.shown1=true;sync1();save()}
+function onType(r){S.rtype=r.value;S.max=1;sync1();paint();save()}
+function onSub(r){S.sub=r.value;S.max=1;sync1();paint();save()}
+function editTitle(){S.editing=true;if(!S.finalTopic.trim()){S.finalTopic=S.topic.trim();$('finalTopic').value=S.finalTopic}sync1();save();$('finalTopic').focus()}
+function cancelTitleEdit(){S.editing=false;S.finalTopic='';$('finalTopic').value='';sync1();save()}
+
+function render2(){
+ gen2();let h;const C=S.c2;
+ if(isExp()){
+  $('sub2').textContent='先读 AI 对每个候选的解释，再选定 1 个核心现象和 2—4 个关键层次。';
+  h=group('核心现象','选1个',chips(C.P,c=>S.p.trim()===c.t,i=>`pickOne('P',${i})`),nameRow('P','p',S.p,''))
+   +group('关键层次','选2—4个',chips(C.D,c=>S.d.some(o=>o.n.trim()===c.t),i=>`pickVar('d',${i})`),S.d.map((o,i)=>nameRow('D'+(i+1),`d.${i}.n`,o.n,S.d.length>2?`rmItem('d',${i})`:'')).join(''),addBtn('增加层次',"addItem('d')",S.d.length>=4))
+ }else{
+  $('sub2').textContent='先读 AI 对每个候选的解释，再选定变量：X、Y、M、W 合计 3—4 个，X 和 Y 各至少 1 个。同一概念的不同说法只选一个；补充变量后需要改题目的，回第一步修改。';
+  const full=S.x.length+S.y.length+hasM()+hasW()>=4,open=S.advOpen||hasM()||hasW()||C.M.length||C.W.length;
+  h=group(xName(),'至少1个',chips(C.X,c=>S.x.some(o=>o.n.trim()===c.t),i=>`pickVar('x',${i})`),S.x.map((o,i)=>nameRow('X'+(i+1),`x.${i}.n`,o.n,S.x.length>1?`rmItem('x',${i})`:'')).join(''),addBtn('增加变量',"addItem('x')",full))
+   +group('因变量','至少1个',chips(C.Y,c=>S.y.some(o=>o.n.trim()===c.t),i=>`pickVar('y',${i})`),S.y.map((o,i)=>nameRow('Y'+(i+1),`y.${i}.n`,o.n,S.y.length>1?`rmItem('y',${i})`:'')).join(''),addBtn('增加变量',"addItem('y')",full))
+   +`<div class="adv"><button type="button" onclick="S.advOpen=!S.advOpen;save();render2()">✦ 高阶玩法：中介与调节（可选）</button>
+   <div class="adv-note">各最多 1 个，分析难度较大，有文献或理论依据时再选。</div>
+   <div class="adv-panel${open?'':' hidden'}">
+    <div class="subg">${chips(C.M,c=>S.m.n.trim()===c.t,i=>`pickOne('M',${i})`)}<div class="atomic-list">${nameRow('M','m.n',S.m.n,'')}</div></div>
+    <div class="subg" style="margin-top:10px">${chips(C.W,c=>S.w.n.trim()===c.t,i=>`pickOne('W',${i})`)}<div class="atomic-list">${nameRow('W','w.n',S.w.n,'')}</div></div>
+   </div></div><div class="note hidden" id="n2"></div>`
+ }
+ $('f2').innerHTML=h;note2()
+}
+function render3(){
+ gen3();
+ $('sub3').textContent=isExp()?'这一步选择空间较大：先读 AI 的解释，每个层次选 1—4 个维度，另选 2—4 个预设影响因素。不选按“总体”处理。'
+  :isInt()?'这一步选择空间较大：先读 AI 的解释，干预变量选实施要素，每个要素写明它与常规教学的不同；其余变量选维度，不选按“总体”处理。'
+  :'这一步选择空间较大：先读 AI 的解释，每个变量选 1—4 个维度；不选按“总体”处理。';
+ let h=vars().map(v=>{ddFit(v.o);const a=v.o.d,w=dimWord(v),t=dimTag(v);
+  return group(`${v.role}${v.tag}：${esc(v.o.n.trim())}`,`选1—4个${w}`,
+   chips(v.o.dc,c=>filled(a).includes(c.t),i=>`pickDim('${v.path}',${i})`),
+   a.map((s,i)=>isInt()&&v.isX
+     ?`<div class="atomic-row mrow"><span class="tag">${t+(i+1)}</span>${limIn(`${v.path}.d.${i}`,s,15,'要素名称')}<div class="rsn">${limIn(`${v.path}.dd.${i}`,v.o.dd[i]||'',40,'与常规教学的不同，不超过40字')}</div>${rmBtn(a.length>1?`rmDim('${v.path}.d',${i})`:'')}</div>`
+     :nameRow(t+(i+1),`${v.path}.d.${i}`,s,a.length>1?`rmDim('${v.path}.d',${i})`:'')).join(''),
+   addBtn('增加'+w,`addDim('${v.path}.d')`,a.length>=4))}).join('');
+ if(isExp())h+=group('预设影响因素','选2—4个',chips(S.fc,c=>filled(S.f).includes(c.t),i=>`pickF(${i})`),S.f.map((s,i)=>nameRow('F'+(i+1),'f.'+i,s,S.f.length>2?`rmItem('f',${i})`:'')).join(''),addBtn('增加影响因素',"addItem('f')",S.f.length>=4));
+ $('f3').innerHTML=h
+}
+function kids4(c,i,q,k,n){
+ const list=c?c.subs:[];
+ if(!list.length&&!q)return '';
+ const key=c?'c'+i:'m'+k,sel=q?subsOf(q).length:0,bare=!list.length&&!q.subs.some(s=>s.t.trim()||UI.edit===`rq.${k}.subs.${q.subs.indexOf(s)}.t`),open=bare||(UI.open4[key]??!!q);
+ let h=`<div class="kidlist">${bare?'':`<button type="button" class="tog" aria-expanded="${open}" onclick="tog4('${key}',${!open})">${open?'▾':'▸'} 子问题${list.length?`候选 ${list.length} 个`:''}${sel?`${list.length?'，':' '}已选 ${sel} 个`:''}</button>`}`;
+ if(open){
+  const mk=s=>{const x=subsOf(q).indexOf(s);return `RQ${n}${x>=0?ABC[x]:''}`};
+  list.forEach((sc,j)=>{const s=q&&q.subs.find(s=>s.sc===j);
+   h+=prow({on:!!s,mark:s?mk(s):'',text:s?s.t:sc.t,changed:s&&s.t.trim()!==sc.t,meta:metaOf('',sc.r),call:`pickSub(${i},${j})`,edit:s?`rq.${k}.subs.${q.subs.indexOf(s)}.t`:'',ph:'子问题'})});
+  if(q){
+   q.subs.forEach((s,j)=>{
+    const p=`rq.${k}.subs.${j}.t`;
+    if((s.sc!==undefined&&list[s.sc])||(!s.t.trim()&&UI.edit!==p))return;
+    h+=prow({on:true,mark:mk(s),text:s.t,meta:metaOf('自己写的',''),call:`startEdit('${p}')`,edit:p,rm:`rmSub(${k},${j})`,ph:'子问题：按维度拆分'})});
+   h+=`<button type="button" class="tog" onclick="addSub(${k})">＋ 自己写一个子问题</button>`
+  }
+ }
+ return h+'</div>'
+}
+function render4(){
+ gen4();
+ while(S.rq.length<rqMin())S.rq.push(blank('rq'));
+ const exp=isExp(),has=S.c4.length>0,order=S.rq.filter(q=>q.t.trim()),n=q=>order.indexOf(q)+1;
+ $('sub4').textContent=exp?'先读 AI 的解释，再按递进顺序选定 2—4 个研究问题，选出的问题合起来要覆盖题目。'
+  :'主问题在变量层面、按递进顺序排列，选 1—4 个；子问题是主问题按维度的拆分，可选可不选。';
+ let rows;
+ if(!has){
+  rows=S.rq.map((q,i)=>{
+   const row=`<div class="atomic-row"><span class="tag">RQ${i+1}</span><input class="inp" data-path="rq.${i}.t" value="${esc(q.t)}" oninput="onIn(this)" placeholder="${exp?'一个框只填一个研究问题':'主问题：变量层面的一种关系'}">${rmBtn(S.rq.length>rqMin()?`rmRQ(${i})`:'')}</div>`;
+   if(exp)return row;
+   return `<div class="qblock">${row}<div class="kids">${q.subs.map((s,j)=>!s.t.trim()&&(s.h||'').trim()?'':`<div class="atomic-row"><span class="tag">RQ${i+1}${ABC[j]}</span><input class="inp" data-path="rq.${i}.subs.${j}.t" value="${esc(s.t)}" oninput="onIn(this)" placeholder="子问题：按维度拆分">${rmBtn(`rmSub(${i},${j})`)}</div>`).join('')}${addBtn('增加子问题',`addSub(${i})`,q.subs.length>=4)}</div></div>`}).join('')
+   +addBtn(exp?'增加研究问题':'增加主问题','addRQ()',S.rq.length>=4);
+  rows=`<div class="atomic-list">${rows}</div>`
+ }else{
+  rows=S.c4.map((c,i)=>{
+   const k=S.rq.findIndex(q=>q.cid===i),q=S.rq[k];
+   return prow({on:!!q,mark:q?`RQ${n(q)}`:'',text:q?q.t:c.t,changed:q&&q.t.trim()!==c.t,meta:metaOf(c.type,c.r),call:`pickRQ(${i})`,edit:q?`rq.${k}.t`:'',ph:exp?'研究问题':'主问题'})
+    +(exp?'':kids4(c,i,q,k,q?n(q):0))}).join('');
+  S.rq.forEach((q,k)=>{
+   const p=`rq.${k}.t`;
+   if((q.cid!==undefined&&S.c4[q.cid])||(!q.t.trim()&&UI.edit!==p))return;
+   rows+=prow({on:true,mark:q.t.trim()?`RQ${n(q)}`:'',text:q.t,meta:metaOf('自己写的',''),call:`startEdit('${p}')`,edit:p,rm:`rmRQ(${k})`,ph:exp?'研究问题':'主问题：变量层面的一种关系'})
+    +(exp||!q.t.trim()?'':kids4(null,-1,q,k,n(q)))});
+  rows=`<div class="pl">${rows}<button type="button" class="tog" onclick="addRQ()">＋ 自己写一个${exp?'研究问题':'主问题'}</button></div>`
+ }
+ const subN=S.rq.reduce((a,q)=>a+subsOf(q).length,0);
+ $('f4').innerHTML=`<div class="group"><div class="grouphead"><b>${exp?'研究问题':'主问题与子问题'}</b><span class="count">${has?`已选 ${exp?'':'主问题 '}${order.length} 个${exp?'':` · 子问题 ${subN} 个`}`:exp?'2—4个':'主问题1—4个，子问题可选'}</span></div>${has?'<div class="capline">点一行选用，再点一次取消；选中后可以改写文字。</div>':''}${rows}</div>`
+}
+function render5(){
+ gen5();
+ $('bf5').classList.toggle('hidden',isExp());
+ if(isExp()){
+  $('t5').textContent='第五步：研究问题结构';
+  $('sub5').textContent='现状/探索类不设统计假设。结构表供后续设计问卷、访谈或观察工具使用，无需回填。';
+  return
+ }
+ $('t5').textContent='第五步：提出研究假设';
+ $('sub5').textContent='一次只展开一条主假设：先选主假设，再看它下面的子假设（可以不选），然后进入下一条。主假设之间要层层递进，子假设的方向与所属主假设一致。';
+ if(S.c5.length&&S.c5sig!==rqBlock()){S.c5=[];S.c5sig='';relink()}
+ const has=S.c5.length>0;
+ const slots=(q,i)=>{
+  const a=[{key:`${i+1}`,label:`H${i+1}`,path:`rq.${i}.h`,val:q.h}],used=new Set(),done=new Set();
+  const sub=(j,key)=>({key,label:`H${i+1}${ABC[j]}`,q:q.subs[j].t.trim()?`RQ${i+1}${ABC[j]}：${q.subs[j].t}`:'',path:`rq.${i}.subs.${j}.h`,val:q.subs[j].h,kid:true});
+  q.subs.forEach((t,j)=>{if(t.t.trim()){const key=`${i+1}${ABC[j]}`;used.add(key);a.push(sub(j,key))}});
+  [...new Set(S.c5.map(c=>c.key))].filter(k=>new RegExp(`^${i+1}[a-h]$`).test(k)&&!used.has(k)).sort().forEach(k=>{
+   const j=q.subs.findIndex(t=>!t.t.trim()&&t.hk===k);
+   if(j>=0){done.add(j);a.push(sub(j,k))}else a.push({key:k,label:'',path:'',val:'',kid:true,orphan:k})});
+  q.subs.forEach((t,j)=>{if(!t.t.trim()&&(t.h||'').trim()&&!done.has(j))a.push(sub(j,t.hk||''))});
+  return a
+ };
+ const slot=(i,sl)=>{
+  const cs=S.c5.map((c,x)=>({c,x})).filter(o=>o.c.key===sl.key),val=(sl.val||'').trim(),custom=val&&!cs.some(o=>o.c.t===val);
+  let h=`<div class="slot${sl.kid?' kid':''}"><div class="slh"><b>${sl.kid?'子假设':'主假设'}${sl.label?' '+sl.label:''}</b>${sl.kid?(sl.q?esc(sl.q):'按维度补充，没有对应的子问题'):''}</div>`;
+  if(!cs.length&&sl.path&&!custom)h+=`<input class="inp" data-path="${sl.path}" value="${esc(sl.val||'')}" oninput="onIn(this)" placeholder="${sl.kid?'子假设':'主假设'}；不设假设可留空">`;
+  else{
+   if(UI.edit&&UI.edit===sl.path)h+=prow({on:true,mark:'✓',text:sl.val||'',edit:sl.path,ph:'假设内容'});
+   else{
+    cs.forEach(o=>{const on=val===o.c.t;h+=prow({on,text:o.c.t,meta:metaOf(o.c.ver,o.c.r),call:sl.path?`pickH('${sl.path}',${o.x})`:`pickOrphan(${i},'${sl.orphan}',${o.x})`,edit:on?sl.path:''})});
+    if(custom)h+=prow({on:true,text:val,meta:metaOf('自己写的',''),call:`startEdit('${sl.path}')`,edit:sl.path})
+   }
+  }
+  return h+'</div>'
+ };
+ if(UI.open5===-1){const k=S.rq.findIndex(q=>!(q.h||'').trim());UI.open5=k<0?0:k}
+ let mainN=0,subN=0;
+ const html=S.rq.map((q,i)=>{
+  const ss=slots(q,i),ok=!!(q.h||'').trim(),kt=ss.filter(x=>x.kid).length,ks=ss.filter(x=>x.kid&&(x.val||'').trim()).length,open=UI.open5===i;
+  mainN+=ok;subN+=ks;
+  return `<div class="acc${open?' open':''}" id="acc${i}"><button type="button" class="acch" aria-expanded="${open}" onclick="tog5(${i})"><span class="tag">H${i+1}</span><span class="ttl${ok?'':' dim'}">${esc(ok?q.h:q.t)}</span><span class="st${ok?' ok':''}">${ok?'已选':'未选'}${kt?` · 子假设 ${ks}/${kt}`:''}</span><span class="chev">${open?'▾':'▸'}</span></button>${open?`<div class="accb"><div class="qref">RQ${i+1}：${esc(q.t)}</div>${ss.map(x=>slot(i,x)).join('')}${i<S.rq.length-1?`<div class="btns"><button type="button" class="btn sm" onclick="tog5(${i+1},true)">下一条：H${i+2}</button></div>`:''}</div>`:''}</div>`}).join('');
+ $('f5').innerHTML=`<div class="group"><div class="grouphead"><b>主假设与子假设</b><span class="count">已选 主假设 ${mainN}/${S.rq.length} · 子假设 ${subN} 条</span></div>${has?'<div class="capline">点一行选用，再点一次取消；选中后可以改写文字。</div>':''}${html}</div>`
+}
+function render7(){
+ gen7();
+ $('sub7').textContent='这一步选择空间较大：先读 AI 对每种方法“怎么做、要注意什么”的解释，结合自己能接触到的对象和时间，选定 1—3 种。';
+ $('f7').innerHTML=group('最终选定的研究方法','选1—3种',
+  opts(S.c7,c=>S.mt.some(m=>m.n.trim()===c.t),i=>`pickMt(${i})`),
+  S.mt.map((m,i)=>`<div class="atomic-row mrow"><span class="tag">方法${i+1}</span>${limIn(`mt.${i}.n`,m.n,15,'方法名称')}<div class="rsn">${limIn(`mt.${i}.r`,m.r,40,'选用理由，不超过40字')}</div>${rmBtn(S.mt.length>1?`rmItem('mt',${i})`:'')}</div>`).join(''),
+  addBtn('增加方法',"addItem('mt')",S.mt.length>=3))
+}
+function render8(){
+ gen8();
+ $('sub8').textContent=`这一步选择空间较大：工具有${isExp()?ex().tools+'几类':'观察、问卷、访谈、量规、测验五类'}。先读 AI 的解释，`+(isExp()?'每个关键层次选 1 种，预设影响因素另选 1 种。':isInt()?'因变量等需要测量的变量各选 1 种。干预变量不测量；实施记录、学生访谈属于补充资料，可选。':'每个变量选 1 种；访谈等辅助方法的工具放在补充资料里，可选。');
+ const row=(path,val)=>`<div class="atomic-row"><span class="tag">工具</span>${limIn(path,val||'',40,'工具类型：具体工具，不超过40字')}<span></span></div>`;
+ let h=(isInt()?vars().filter(v=>v.isX):[]).map(v=>`<div class="group info"><div class="grouphead"><b>${v.role}${v.tag}：${esc(v.o.n.trim())}</b><span class="count">不测量</span></div><p class="infop">干预变量是被操纵的变量，由分组和实施要素界定：实验班接受干预，对照班接受常规教学。数据里只记分组，不需要测量工具。</p></div>`).join('');
+ h+=measured().map(v=>group(`${v.role}${v.tag}：${esc(v.o.n.trim())}`,'选1种',
+  chips(v.o.tc,c=>(v.o.ms||'').trim()===c.t,i=>`pickTool('${v.path}',${i})`),row(`${v.path}.ms`,v.o.ms))).join('');
+ if(isExp())h+=group('预设影响因素','选1种',chips(S.ftc,c=>(S.fms||'').trim()===c.t,i=>`pickFTool(${i})`),row('fms',S.fms));
+ else h+=group('补充资料（可选）','最多2种，不进入假设检验',chips(S.supc,c=>filled(S.sup).includes(c.t),i=>`pickSup(${i})`),
+  S.sup.map((t,i)=>`<div class="atomic-row"><span class="tag">补充${i+1}</span>${limIn('sup.'+i,t,40,isInt()?'如 实施记录：教案与课堂观察记录':'如 访谈：学生半结构化访谈提纲')}${rmBtn(S.sup.length>1?`rmItem('sup',${i})`:'')}</div>`).join(''),
+  addBtn('增加补充资料',"addItem('sup')",S.sup.length>=2));
+ $('f8').innerHTML=h
+}
+
+/* ---------- 汇总表 ---------- */
+/* 每条假设涉及哪些变量：优先用 AI 标注的，其次按假设文字里出现的变量名、维度名推断 */
+function hvMap(){
+ const vs=vars(),tags=vs.map(v=>v.tag),one=k=>{const a=vs.filter(v=>v.tag[0]===k);return a.length===1?[a[0].tag]:[]};
+ const norm=a=>(a||[]).map(t=>/^[XY]$/.test(t)?t+'1':t).filter(t=>tags.includes(t));
+ const infer=(text,base)=>{
+  const r=vs.filter(v=>text.includes(v.o.n.trim())||(!(isInt()&&v.isX)&&filled(v.o.d).some(d=>d!=='总体'&&text.includes(d)))).map(v=>v.tag);
+  ['X','Y'].forEach(k=>{if(!r.some(t=>t[0]===k))r.push(...(base?base.filter(t=>t[0]===k):one(k)))});
+  return r};
+ const out=[];
+ rqs().forEach((q,i)=>{
+  const a=norm(q.hv),mv=a.length?a:infer((q.h||'')+q.t,null);
+  if((q.h||'').trim())out.push({id:`H${i+1}`,vars:mv});
+  subsAll(q).forEach((t,j)=>{if((t.h||'').trim()){const b=norm(t.hv);out.push({id:`H${i+1}${ABC[j]}`,vars:b.length?b:infer(t.h+t.t,mv)})}})
+ });
+ return out
+}
+function sumModel(){
+ const vs=vars(),mts=mtList(),noM=v=>isInt()&&v.isX,hasMs=vs.some(v=>!noM(v)&&(v.o.ms||'').trim()),sup=isExp()?[]:filled(S.sup);
+ const meta=[['研究题目',topic()],['研究类型',isExp()?`${TNAME.explore}（${ex().name}）`:TNAME[S.rtype]]],tables=[],ms=v=>noM(v)?'不测量，按实验班 / 对照班分组':(v.o.ms||'').trim()||'—';
+ if(isExp()){
+  meta.push(['核心现象',S.p.trim()],['预设影响因素',filled(S.f).join('、')+((S.fms||'').trim()?`（${S.fms.trim()}）`:'')]);
+  tables.push({title:'分析框架',head:['关键层次','维度',...(hasMs?['测量工具']:[])],rows:vs.map(v=>[`${v.tag} ${v.o.n.trim()}`,filled(v.o.d).join('、')||'总体',...(hasMs?[ms(v)]:[])])});
+  tables.push({title:'研究问题',head:['编号','研究问题'],rows:rqs().map((q,i)=>['RQ'+(i+1),q.t.trim()])})
+ }else{
+  if(isInt())meta.push(['对照条件','常规教学']);
+  const dims=v=>filled(v.o.d).join('、')||'总体';
+  const detail=v=>{const p=v.o.d.map((t,i)=>[t.trim(),((v.o.dd||[])[i]||'').trim()]).filter(x=>x[0]);return noM(v)&&p.length?p.map(x=>x[1]?`${x[0]}：${x[1]}`:x[0]).join('\n'):dims(v)};
+  tables.push({title:'变量与操作化',head:['角色','变量',isInt()?'实施要素（与常规教学的不同）/ 维度':'维度'],rows:vs.map(v=>[`${v.role} ${v.tag}`,v.o.n.trim(),detail(v)])});
+  const rows=[],hy=(k,h)=>(h||'').trim()?`H${k}：${h.trim()}`:'不设假设';
+  rqs().forEach((q,i)=>{rows.push([`RQ${i+1}`,q.t.trim(),hy(i+1,q.h)]);subsAll(q).forEach((s,j)=>{const k=`${i+1}${ABC[j]}`;rows.push(s.t.trim()?[`└ RQ${k}`,s.t.trim(),hy(k,s.h)]:['└','—',hy(k,s.h)])})});
+  tables.push({title:'研究问题与假设',head:['编号','研究问题','研究假设'],rows});
+  const hv=hvMap(),row=v=>[hv.filter(h=>h.vars.includes(v.tag)).map(h=>h.id).join('、')||'—',v.o.n.trim()+(v.tag==='M'?'（中介变量）':v.tag==='W'?'（调节变量）':''),(noM(v)?'实施要素：':'')+dims(v),ms(v)];
+  tables.push({title:'假设、变量与测量工具',head:['假设','自变量','包含的维度','测量工具'],
+   rows:[...vs.filter(v=>v.tag[0]!=='Y').map(row),{h:['假设','因变量','包含的维度','测量工具']},...vs.filter(v=>v.tag[0]==='Y').map(row)]})
+ }
+ if(mts.length)tables.push({title:'研究方法',head:['方法','理由'],rows:mts.map(m=>[m.n.trim(),m.r.trim()||'—'])});
+ if(sup.length)tables.push({title:'补充资料（不进入假设检验）',head:['类型','工具'],rows:sup.map(t=>{const k=t.search(/[：:]/);return k>0?[t.slice(0,k),t.slice(k+1)]:['—',t]})});
+ return {meta,tables}
+}
+function render6(){
+ const m=sumModel(),cell=s=>esc(s).replace(/\n/g,'<br>');
+ $('sumBox').innerHTML=`<div class="meta">${m.meta.map(x=>`<b>${x[0]}：</b>${esc(x[1])}`).join('<br>')}</div>`
+  +m.tables.map(t=>`<h3>${t.title}</h3><div class="tw"><table border="1" cellspacing="0" cellpadding="6"><thead><tr>${t.head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${t.rows.map(r=>r.h?`<tr>${r.h.map(c=>`<th>${c}</th>`).join('')}</tr>`:`<tr>${r.map(c=>`<td>${cell(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`).join('')
+}
+function sumMd(){
+ const m=sumModel(),cell=s=>String(s).replace(/\|/g,'\\|').replace(/\n/g,'<br>');
+ const tb=(head,rows)=>`| ${head.join(' | ')} |\n|${head.map(()=>' --- ').join('|')}|\n${rows.map(r=>`| ${r.map(cell).join(' | ')} |`).join('\n')}`;
+ return m.meta.map(x=>`**${x[0]}：**${x[1]}`).join('  \n')+'\n\n'
+  +m.tables.map(t=>{const parts=[];let head=t.head,cur=[];t.rows.forEach(r=>{if(r.h){parts.push(tb(head,cur));head=r.h;cur=[]}else cur.push(r)});parts.push(tb(head,cur));return `### ${t.title}\n\n${parts.join('\n\n')}`}).join('\n\n')+'\n'
+}
+
+/* ---------- 读取候选 ---------- */
+function parseCands(raw){
+ let t=raw.replace(/\r/g,'');const i=t.lastIndexOf('回填清单');if(i>=0)t=t.slice(i+4);
+ const out=[];
+ t.split('\n').forEach(line=>{
+  const s=line.replace(/[*`]/g,'').replace(/^[\s#>\-•·└]+/,'').trim();
+  if(!/[｜|]/.test(s))return;
+  const f=s.split(/[｜|]/).map(z=>z.trim());
+  while(f.length&&!f[0])f.shift();while(f.length&&!f[f.length-1])f.pop();
+  if(f.length<2||f.includes('推荐程度'))return;
+  const m=f[0].match(/^(RQ|H|X|Y|D|F|M|W|P|方法|补充)\s*(\d*)\s*([a-h]?)$/i);if(!m)return;
+  let r='';const rm=f[f.length-1].match(/^(高|中|低)(?:[（(].*)?$/);if(rm){r=rm[1];f.pop()}
+  if(f.length<2)return;
+  out.push({k:m[1].toUpperCase(),i:m[2]?+m[2]:0,s:m[3].toLowerCase(),f:f.slice(1),r})
+ });
+ return out
+}
+function autofill(n){
+ const items=parseCands($('pa'+n).value),by=k=>items.filter(x=>x.k===k);
+ const uniq=a=>a.filter((c,i)=>c.t&&a.findIndex(o=>o.t===c.t)===i),nm=z=>z.replace(/[。；;，,\s]+$/,'');
+ const names=a=>uniq(a.map(x=>({t:nm(x.f[0]),r:x.r,src:/补充/.test(x.f[1]||'')?'补充':''})));
+ const tools=a=>uniq(a.map(x=>({t:nm(x.f.length>1?`${x.f[0]}：${x.f.slice(1).join('，')}`:x.f[0]),r:x.r})));
+ const tagOf=x=>x.k+(x.i||'');
+ let c=0,subN=0;
+ if(n===2){
+  (isExp()?['P','D']:['X','Y','M','W']).forEach(k=>{const a=names(by(k));if(a.length){S.c2[k]=a;c+=a.length}})
+ }else if(n===3){
+  vars().forEach(v=>{const a=uniq(items.filter(x=>tagOf(x)===v.tag).map(x=>({t:nm(x.f[0]),r:x.r,note:isInt()&&v.isX&&x.f.length>1?nm(x.f.slice(1).join('，')):''})));if(a.length){v.o.dc=a;c+=a.length}});
+  if(isExp()){const a=names(by('F'));if(a.length){S.fc=a;c+=a.length}}
+ }else if(n===4){
+  const R=by('RQ'),mk=x=>({id:x.i,t:x.f[0],type:x.f[1]||'',r:x.r,subs:[]});
+  const a=uniq(R.filter(x=>isExp()||!x.s).map(mk));
+  if(!isExp())R.filter(x=>x.s).forEach(x=>{const p=a.find(o=>o.id===x.i);if(p&&!p.subs.some(o=>o.t===x.f[0])){p.subs.push({t:x.f[0],r:x.r});subN++}});
+  if(a.length){S.c4=a;c=a.length;S.rq.forEach(q=>{const k=a.findIndex(o=>o.t===q.t.trim());if(k>=0)q.cid=k;else delete q.cid;q.subs.forEach(s=>delete s.sc)});relink4();UI.open4={}}
+ }else if(n===5){
+  const a=uniq(by('H').filter(x=>x.i).map(x=>{
+   const f=[...x.f];let vs=[];
+   if(f.length>1&&/^[XYMW]\d?(?:[\s,，、→>\-—和与]+[XYMW]\d?)*$/i.test(f[f.length-1]))vs=f.pop().toUpperCase().match(/[XYMW]\d?/g);
+   return {key:x.i+x.s,ver:f.length>1?f[0]:'',t:f[f.length>1?1:0],r:x.r,vars:vs}}));
+  if(a.length){S.c5=a;S.c5sig=rqBlock();relink();c=a.length;subN=a.filter(o=>parseInt(o.key)>rqs().length).length}
+ }else if(n===7){
+  const a=uniq(by('方法').map(x=>({t:nm(x.f[0]),why:nm(x.f.slice(1).join('，')),r:x.r})));if(a.length){S.c7=a;c=a.length}
+ }else if(n===8){
+  measured().forEach(v=>{const a=tools(items.filter(x=>tagOf(x)===v.tag));if(a.length){v.o.tc=a;c+=a.length}});
+  const a=tools(by(isExp()?'F':'补充'));if(a.length){if(isExp())S.ftc=a;else S.supc=a;c+=a.length}
+ }
+ if(n===5)UI.open5=-1;
+ save();renderStep(n);hideWarn(n);
+ $('pm'+n).textContent=c?`已读取 ${n===4&&!isExp()?`${c} 个主问题、${subN} 个子问题候选`:`${c} 个候选`}。${n===5&&subN?`其中 ${subN} 个对不上已选的主问题，没有显示。`:''}读取后不会自动填入：先看 AI 的解释，再在下面点击选用；${n===4||n===5?'选中后可以改写文字':'也可以在输入框里改写'}。`:'没有读到【回填清单】，请确认粘贴的是 AI 的完整回复。'
+}
+
+/* ---------- 导航 ---------- */
+function validate(k){
+ if(k===1)return !S.topic.trim()?'请先填写研究题目。':!S.rtype?'请先确认研究类型。':isExp()&&!EX[S.sub]?'请先确认现状 / 探索类的子类。':'';
+ if(k===2){
+  if(isExp())return S.p.trim()&&S.d.filter(o=>o.n.trim()).length>=2?'':'请选定核心现象，并至少选定 2 个关键层次。';
+  if(!S.x.some(o=>o.n.trim())||!S.y.some(o=>o.n.trim()))return `请至少选定 1 个${xName()}和 1 个因变量。`;
+  return varTotal()>4?CAPMSG:''
+ }
+ if(k===3)return isExp()&&filled(S.f).length<2?'请至少选定 2 个预设影响因素。':'';
+ if(k===4)return rqs().length<rqMin()?(isExp()?'请至少选定 2 个研究问题。':'请至少选定 1 个主问题。'):'';
+ if(k===5)return !isExp()&&!hList().length?'请至少选定 1 条研究假设。':'';
+ if(k===7)return mtList().length?'':'请至少选定 1 种研究方法。';
+ return ''
+}
+function compact(){
+ const objs=(a,min)=>{const b=a.filter(o=>o.n.trim());while(b.length<min)b.push(blank('x'));return b};
+ const strs=(a,min)=>{const b=filled(a);while(b.length<min)b.push('');return b};
+ S.x=objs(S.x,1);S.y=objs(S.y,1);S.d=objs(S.d,2);
+ [...S.x,...S.y,...S.d,S.m,S.w].forEach(o=>{const p=o.d.map((t,i)=>[t,(o.dd||[])[i]||'']).filter(x=>x[0].trim());if(!p.length)p.push(['','']);o.d=p.map(x=>x[0]);o.dd=p.map(x=>x[1])});
+ S.f=strs(S.f,2);S.sup=strs(S.sup,1);
+ S.rq=rqs();tidySubs();while(S.rq.length<rqMin())S.rq.push(blank('rq'));
+ S.mt=mtList();if(!S.mt.length)S.mt=[blank('mt')]
+}
+function paint(){for(let i=1;i<=LAST;i++){$('p'+i).classList.toggle('hidden',i!==S.step);const s=$('s'+i);s.classList.toggle('active',i===S.step);s.classList.toggle('reach',i<=S.max&&i!==S.step);if(i===S.step)s.setAttribute('aria-current','step');else s.removeAttribute('aria-current')}}
+const RENDER={1:sync1,2:render2,3:render3,4:render4,5:render5,6:render6,7:render7,8:render8};
+function renderStep(n){RENDER[n]()}
+function show(n){
+ S.step=n;if(n>S.max)S.max=n;UI.edit='';UI.open5=-1;
+ for(let i=1;i<=LAST;i++)hideWarn(i);
+ paint();renderStep(n);save();
+ window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})
+}
+function go(n){
+ for(let k=1;k<n;k++){const e=validate(k);if(e){if(k!==S.step)show(k);showWarn(k,e);return}}
+ compact();show(n)
+}
+function jump(n){if(n<=S.max&&n!==S.step)go(n)}
+
+/* ---------- 复制与重置 ---------- */
+function flash(btn,txt){const x=btn.dataset.t||(btn.dataset.t=btn.textContent);btn.textContent=txt;setTimeout(()=>btn.textContent=x,1200)}
+function copyText(text,btn){
+ const fb=()=>{const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}ta.remove();flash(btn,ok?'已复制':'复制失败，请手动选中')};
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text).then(()=>flash(btn,'已复制'),fb);else fb()
+}
+function cp(btn){copyText(btn.closest('.prompt').querySelector('pre').textContent,btn)}
+function cpMd(btn){copyText(sumMd(),btn)}
+function cpTable(btn){
+ const r=document.createRange();r.selectNodeContents($('sumBox'));const s=getSelection();s.removeAllRanges();s.addRange(r);
+ let ok=false;try{ok=document.execCommand('copy')}catch(e){}
+ s.removeAllRanges();flash(btn,ok?'已复制':'复制失败，请手动选中')
+}
+let armed=0;
+function reset(btn){
+ if(!armed){armed=1;btn.textContent='再点一次，清空全部内容';setTimeout(()=>{armed=0;btn.textContent='重新开始'},3000);return}
+ armed=0;btn.textContent='重新开始';S=fresh();
+ try{localStorage.removeItem(KEY)}catch(e){}
+ Object.keys(SEC).forEach(i=>{$('pa'+i).value='';$('pm'+i).textContent=''});
+ fill1();show(1)
+}
+
+/* ---------- 页面骨架 ---------- */
+const SEC={
+ 2:{t:'第二步：确认核心研究要素',name:'核心要素',prev:[1,'上一步'],next:[3,'下一步：操作化']},
+ 3:{t:'第三步：操作化与维度',name:'操作化',prev:[2,'上一步'],next:[4,'下一步：研究问题']},
+ 4:{t:'第四步：提出研究问题',name:'研究问题',prev:[3,'上一步'],next:[5,'下一步：假设 / 结构']},
+ 5:{t:'',name:'假设 / 结构',prev:[4,'上一步'],next:[6,'生成汇总表']},
+ 7:{t:'第七步：选择研究方法',name:'研究方法',prev:[6,'回到汇总表'],next:[8,'下一步：测量工具']},
+ 8:{t:'第八步：选择测量工具',name:'测量工具',prev:[7,'上一步'],next:[6,'更新汇总表']}
+};
+Object.entries(SEC).forEach(([n,c])=>{
+ $('p'+n).innerHTML=`<div class="card">
+ <h2 id="t${n}">${c.t}</h2><p class="sub" id="sub${n}"></p>
+ <div class="zone">发给 AI 的 Prompt</div>
+ <div class="prompt"><div class="phead"><span>${c.name}</span><button class="copy" onclick="cp(this)">复制</button></div><pre id="q${n}"></pre></div>
+ <div id="bf${n}">
+  <div class="zone">粘贴 AI 回复</div>
+  <div class="paste"><textarea class="inp" id="pa${n}" aria-label="粘贴 AI 回复" placeholder="粘贴完整回复即可，页面只读取第二部分【回填清单】里的候选"></textarea><div class="btns"><button class="btn" onclick="autofill(${n})">读取候选</button><span class="pmsg" id="pm${n}"></span></div></div>
+  <div class="zone">从候选中选定</div>
+  <div id="f${n}"></div>
+ </div>
+ <div class="warn hidden" id="w${n}"></div>
+ <div class="btns"><button class="btn" onclick="go(${c.prev[0]})">${c.prev[1]}</button><button class="btn primary" onclick="go(${c.next[0]})">${c.next[1]}</button></div>
+</div>`});
+
+load();relink4();fill1();show(Math.min(S.step,S.max));
+</script>
+</body>
+</html>

@@ -1937,6 +1937,14 @@ function KnowledgeHome(userOpts = {}) {
         action: "开始综述",
         tone: "review",
       },
+      {
+        eyebrow: "研究设计",
+        title: "研究问题与假设 Prompt 生成器",
+        body: "从题目诊断、核心要素和操作化出发，逐步形成研究问题、假设、方法与测量工具。",
+        href: "/static/tools/research_logic_prompt_generator_v12_1.html",
+        action: "开始设计",
+        tone: "logic",
+      },
     ]
 
     if (currentRouteKey) {
@@ -2226,7 +2234,7 @@ function KnowledgeHome(userOpts = {}) {
             h("span", null, "RESEARCH UTILITIES"),
             h("h2", { id: "knowledge-home-tools-title" }, "实用工具"),
           ),
-          h("p", null, "从确定选题、组织综述到整理参考文献。"),
+          h("p", null, "从确定选题、设计研究到组织综述与整理参考文献。"),
         ),
         h(
           "div",
@@ -8618,6 +8626,18 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   animation-duration: 16s;
 }
 
+.knowledge-home-tool.logic {
+  --tool-tone: color-mix(in srgb, var(--home-accent) 72%, #d5b44c);
+}
+
+.knowledge-home-tool.logic::after {
+  animation-duration: 20s;
+}
+
+.knowledge-home-tool:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
 .knowledge-home-tool:hover {
   border-color: var(--tool-tone);
   text-decoration: none;
@@ -9317,6 +9337,10 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 
   .knowledge-home-tool-grid {
     grid-template-columns: 1fr;
+  }
+
+  .knowledge-home-tool:last-child:nth-child(odd) {
+    grid-column: auto;
   }
 
   .knowledge-home-type:nth-child(n) {

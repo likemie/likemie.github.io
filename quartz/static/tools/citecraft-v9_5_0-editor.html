@@ -100,6 +100,7 @@ input::placeholder,textarea::placeholder{color:#A6ADB5}
 .author-add{border:0;background:none;color:var(--red);font-weight:600;font-size:13px;cursor:pointer;padding:2px 0}
 .author-add:hover{text-decoration:underline;text-underline-offset:3px}
 .author-hint{font-size:12.5px;color:var(--muted);margin-top:6px;padding-left:28px}
+.etal{display:flex;gap:6px;align-items:center;font-size:13px;color:var(--ink2);margin:8px 0 0 28px;cursor:pointer;width:max-content;max-width:100%}.etal input{width:auto;margin:0;accent-color:var(--red)}
 .author-empty{font-size:13px;color:var(--muted);padding:8px 0 2px 28px}
 
 .date-input-wrap{display:flex;gap:6px;align-items:center}.date-input-wrap input{min-width:0}
@@ -125,6 +126,27 @@ input::placeholder,textarea::placeholder{color:#A6ADB5}
 .enw{font:12.5px/1.6 var(--mono);white-space:pre-wrap;word-break:break-all;background:var(--page);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:12px 0 18px;max-height:260px;overflow:auto}
 
 .site-foot{text-align:center;color:var(--muted);font-size:12.5px;margin-top:40px}
+
+
+/* ---------- 填写检查 ---------- */
+.checks{margin:16px 0 0;padding-top:14px;border-top:1px dashed var(--line)}
+.checks:empty{display:none}
+.checks-hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;font-size:13.5px;font-weight:700;color:var(--ink)}
+.checks-hd span{font-weight:500;color:var(--muted);font-size:12.5px}
+.checks ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.chk{display:flex;gap:8px;align-items:baseline;width:100%;text-align:left;border:0;background:none;padding:5px 6px;border-radius:6px;font-size:13.5px;line-height:1.5;color:var(--ink2);cursor:pointer}
+.chk:hover{background:var(--page)}
+.chk b{flex:0 0 auto;font-size:11.5px;font-weight:700;padding:1px 6px;border-radius:4px;letter-spacing:.04em}
+.chk-req b{background:var(--red-soft);color:var(--red)}
+.chk-warn b{background:#FCEBD4;color:#9A5B17}
+.chk-sug b{background:#EEF0F2;color:#56606B}
+.checks-ok{font-size:13.5px;color:#3C7A55;font-weight:600}
+.field.is-req input,.author-editor.is-req .author-row input:placeholder-shown{border-color:#E7B2A9;background:#FFFAF9}
+.field.is-warn input{border-color:#E5C08F;background:#FFFCF6}
+.field.is-req .lab::after,.author-editor.is-req .author-head .lab::after{content:"必填";margin-left:6px;font-size:11px;font-weight:700;color:var(--red);background:var(--red-soft);padding:1px 5px;border-radius:3px}
+.field.is-sug .lab::after{content:"建议";margin-left:6px;font-size:11px;font-weight:700;color:#56606B;background:#EEF0F2;padding:1px 5px;border-radius:3px}
+.field.is-warn .lab::after{content:"请核对";margin-left:6px;font-size:11px;font-weight:700;color:#9A5B17;background:#FCEBD4;padding:1px 5px;border-radius:3px}
+.author-row.row-warn input:placeholder-shown{border-color:#E5C08F;background:#FFFCF6}
 
 /* dev test suite (?test=1) */
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-top:24px}.card .hd{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}.card .body{padding:6px 18px 14px}.muted{color:var(--muted);font-size:13px}
@@ -189,10 +211,10 @@ input::placeholder,textarea::placeholder{color:#A6ADB5}
  </section>
 
  <aside class="preview" id="outputs" aria-labelledby="step2">
-  <div class="step"><div class="step-no">2</div><div><h2 id="step2">核对并复制</h2><p>红色标记是待补的著录项，点击即可跳到对应字段</p></div></div>
+  <div class="step"><div class="step-no">2</div><div><h2 id="step2">核对并复制</h2><p>下方列出缺漏和可疑之处，点击即可跳到对应字段</p></div></div>
   <article class="tcard">
    <div class="tcard-hd"><div class="tab">GB/T 7714—2015</div><button class="btn sm" data-copy="gb">复制</button></div>
-   <div class="tcard-body"><div id="gb" class="cite"></div><p id="gapNote" class="gap-note" aria-live="polite"></p></div>
+   <div class="tcard-body"><div id="gb" class="cite"></div><div id="checks" class="checks" aria-live="polite"></div></div>
   </article>
   <article class="tcard">
    <div class="tcard-hd"><div class="tab">APA 7</div><button class="btn sm" data-copy="apa">复制</button></div>
@@ -802,7 +824,16 @@ function titleWithTerminalPunctuation(t){
 
 
 // ===== v8.7 structured multi-author model =====
+/* 作者著录中的截断标记：“, et al.” “等” “等人” */
+const ETAL_RX=/(?:\s*[,，;；、]\s*|\s+)(?:et\s*al\.?|等人?)\s*\.?\s*$/i;
+function splitEtAl(raw){let x=clean(raw);if(ETAL_RX.test(x))return {raw:clean(x.replace(ETAL_RX,'')),etAl:true};return {raw:x,etAl:/^(?:et\s*al\.?|等人?)$/i.test(x)?true:false}}
 function authorObjectsFromRaw(raw){
+ let e=splitEtAl(raw);
+ let out=authorObjectsCore(/^(?:et\s*al\.?|等人?)$/i.test(e.raw)?'':e.raw);
+ if(e.etAl)out.etAl=true;
+ return out;
+}
+function authorObjectsCore(raw){
  raw=clean(raw);
  if(!raw)return [];
  if(/[\u3400-\u9fff]/.test(raw)){
@@ -819,6 +850,7 @@ function authorObjectsFromRaw(raw){
 function ensureAuthorObjects(){
  if(!Array.isArray(state.authorList)||!state.authorList.length){
    state.authorList=authorObjectsFromRaw(state.authors||'');
+   if(state.authorList.etAl)state.authorsEtAl=true;
  }
  return state.authorList;
 }
@@ -840,7 +872,7 @@ function givenInitials(given){
  let first=(one.match(/[A-Za-zÀ-ÖØ-öø-ÿ]/)||[''])[0];
  return first?[first.toUpperCase()]:[];
 }
-function gbtAuthors(list){
+function gbtAuthors(list,etAl=false){
  list=(list||[]).filter(Boolean);
  let shown=list.length>3?list.slice(0,3):list;
  let rendered=shown.map(a=>{
@@ -851,22 +883,29 @@ function gbtAuthors(list){
    }
    return clean(a.name);
  });
- if(list.length>3){
+ if(list.length>3||(etAl&&list.length)){
    let hasChinese=rendered.some(x=>/[\u3400-\u9fff]/.test(x));
    rendered.push(hasChinese?'等':'et al');
  }
  return rendered.join(', ');
 }
-function apaAuthors(list){
+/* GB/T 习惯把西文姓全大写；APA 7 用首字母大写：AVILA → Avila，O'NEIL → O'Neil，SMITH-JONES → Smith-Jones */
+function apaSurname(x){
+ x=clean(x);
+ if(!/[A-Z]{2}/.test(x)||/[a-z]/.test(x))return x;
+ return x.toLowerCase().replace(/(^|[\s'’\-])([a-zà-ÿ])/g,(m,a,b)=>a+b.toUpperCase()).replace(/\b(Van|Von|De|Der|Den|Del|Della|Di|Da|Du|La|Le)\s/g,(m,w)=>w.toLowerCase()+' ').replace(/^([a-z])/,c=>c.toUpperCase());
+}
+function apaAuthors(list,etAl=false){
  list=(list||[]).filter(Boolean);
  let names=list.map(a=>{
    if(a.type==='person'){
-     let fam=clean(a.family);
+     let fam=apaSurname(a.family);
      let given=givenInitials(a.given).map(x=>x+'.').join(' ');
      return clean(fam+', '+given);
    }
    return clean(a.name);
  });
+ if(etAl&&names.length&&names.length<20)return names.join(', ')+', [其余作者待核]';
  if(names.length<=20){
    if(names.length<=1)return names[0]||'';
    return names.slice(0,-1).join(', ')+', & '+names[names.length-1];
@@ -891,6 +930,7 @@ function renderAuthorEditor(){
  return `<div class="author-editor">
    <div class="author-head"><span class="lab">作者</span><button type="button" class="author-add" data-author-add="1">＋ 添加作者</button></div>
    <div class="author-list">${renderPeopleRows(list,'author','作者')}</div>
+   <label class="etal"><input type="checkbox" data-etal ${state.authorsEtAl?'checked':''}> 原文献还有更多作者，著录为“等 / et al.”</label>
    <div class="author-hint">${n>3?`共 ${n} 位。GB/T 只列前 3 位并加“等”；APA 20 位以内全部列出。`:'西文姓名可整段粘贴，如 John Hattie 或 Hattie, J.；多位作者用分号或 and 隔开，会自动拆成姓、名两栏。'}</div>
  </div>`;
 }
@@ -915,7 +955,7 @@ function togglePersonType(a){
  return m?{type:'person',family:clean(m[1]),given:clean(m[2])}:{type:'person',family:n,given:''};
 }
 function escHTML(x){return String(x||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-const GAP_KEYS={'URL':'url','专利号':'patentNo','专著/论文集题名':'hostTitle','会议题名':'hostTitle','出版地':'place','城市':'place','出版者':'publisher','卷':'volume','年份':'year','引用日期':'accessDate','报纸':'newspaper','日期':'date','期刊':'journal','机构':'institution','页码':'pages','Book title':'hostTitle','Proceedings title':'hostTitle','Institution':'institution','Journal':'journal','Newspaper':'newspaper','Publisher':'publisher','Editor(s) to verify':'editors'};
+const GAP_KEYS={'其余作者':'authors','URL':'url','专利号':'patentNo','专著/论文集题名':'hostTitle','会议题名':'hostTitle','出版地':'place','城市':'place','出版者':'publisher','卷':'volume','年份':'year','引用日期':'accessDate','报纸':'newspaper','日期':'date','期刊':'journal','机构':'institution','页码':'pages','Book title':'hostTitle','Proceedings title':'hostTitle','Institution':'institution','Journal':'journal','Newspaper':'newspaper','Publisher':'publisher','Editor(s) to verify':'editors'};
 function gapKey(name){
  let hit=Object.keys(GAP_KEYS).find(x=>x.toLowerCase()===String(name).toLowerCase());
  let k=hit?GAP_KEYS[hit]:'',sc=schemas[state.kind]||[];
@@ -974,7 +1014,7 @@ function apaPageRange(raw){
  return raw?` (pp. ${raw})`:'';
 }
 function renderGB(){
- let o=normalizedFor('gb'),a=gbtAuthors(ensureAuthorObjects()),t=gbtTitleBeforeMarker(o.title),pub=o.publisher;
+ let o=normalizedFor('gb'),a=gbtAuthors(ensureAuthorObjects(),!!state.authorsEtAl),t=gbtTitleBeforeMarker(o.title),pub=o.publisher;
  if(o.kind==='book')return `${a}. ${t}[M]. ${o.translator?o.translator+', 译. ':''}${o.place||'[出版地待核]'}: ${pub||'[出版者待核]'}, ${o.year||'[年份待核]'}${o.pages?', '+o.pages:''}.`;
  if(o.kind==='journal')return `${a}. ${t}[J]. ${o.journal||'[期刊待核]'}, ${o.year||'[年份待核]'}, ${o.volume||'[卷待核]'}${o.issue?'('+o.issue+')':''}: ${o.pages||'[页码待核]'}.`;
  if(o.kind==='thesis')return `${a}. ${t}[D]. ${o.place||'[城市待核]'}: ${o.institution||'[机构待核]'}, ${o.year||'[年份待核]'}.`;
@@ -988,7 +1028,7 @@ function renderGB(){
  return `${a}. ${t}[EB/OL]. ${o.updateDate?'('+o.updateDate+')':''}${o.accessDate?'['+o.accessDate+']':'[引用日期待核]'}. ${o.url||'[URL待核]'}`;
 }
 function renderAPA(){
- let o=normalizedFor('apa'),a=apaAuthors(ensureAuthorObjects()),t=o.title;
+ let o=normalizedFor('apa'),a=apaAuthors(ensureAuthorObjects(),!!state.authorsEtAl),t=o.title;
  if(o.kind==='book')return `${a} (${o.year||'n.d.'}). ${t}${o.translator?' ('+o.translator+', Trans.)':''}. ${clean(o.publisher).replace(/\s*[-–—]\s*/g,'-')||'[Publisher]'}.`;
  if(o.kind==='journal')return `${a} (${o.year||'n.d.'}). ${titleWithTerminalPunctuation(t)} ${o.journal||'[Journal]'}, ${o.volume||''}${o.issue?'('+o.issue+')':''}, ${o.pages||''}.${o.doi?' https://doi.org/'+normalizeDOI(o.doi):''}`;
  if(o.kind==='thesis')return `${a} (${o.year||'n.d.'}). ${t} [Doctoral dissertation, ${o.institution||'[Institution]'}].`;
@@ -1045,6 +1085,8 @@ function renderEndNote(){
  const add=(tag,val)=>{let x=enwLine(tag,val);if(x)lines.push(x)};
  const addAuthors=(tag='A')=>lines.push(...enwAuthors(list,tag));
  const doi=o.doi?normalizeDOI(o.doi):'';
+ // EndNote 的 %D 是“年份”字段，只放四位年；完整日期放 %8（Date），访问日期放 %[
+ const yearOf=x=>(clean(x).match(/(?:1[5-9]|20|21)\d{2}/)||[''])[0];
 
  if(o.kind==='journal'){
    add('0','Journal Article'); addAuthors(); add('T',o.title); add('J',o.journal);
@@ -1063,10 +1105,10 @@ function renderEndNote(){
    add('I',o.publisher); add('D',o.year); add('P',o.pages); add('N',o.reportNo); add('R',doi);
  }else if(o.kind==='thesis'){
    add('0','Thesis'); addAuthors(); add('T',o.title); add('C',o.place);
-   add('I',o.institution); add('D',o.year); add('P',o.pages);
+   add('I',o.institution); add('D',o.year); add('P',o.pages); add('R',doi);
  }else if(o.kind==='newspaper'){
    add('0','Newspaper Article'); addAuthors(); add('T',o.title); add('J',o.newspaper);
-   add('8',o.date); add('P',o.edition);
+   add('D',yearOf(o.date)); add('8',o.date); add('P',o.edition);
  }else if(o.kind==='proceedings'){
    add('0','Conference Proceedings'); addAuthors(); add('T',o.title); add('C',o.place);
    add('I',o.publisher); add('D',o.year); add('P',o.pages); add('@',o.isbn);
@@ -1075,13 +1117,14 @@ function renderEndNote(){
    lines.push(...enwAuthors(ensureEditorObjects(),'E')); add('C',o.place); add('I',o.publisher); add('D',o.year);
    add('P',o.pages); add('R',doi);
  }else if(o.kind==='electronic'){
-   add('0','Web Page'); addAuthors(); add('T',o.title); add('B',o.siteName); add('D',o.updateDate);
-   add('[',o.accessDate); add('U',o.url);
+   add('0','Web Page'); addAuthors(); add('T',o.title); add('B',o.siteName); add('D',yearOf(o.updateDate)); add('8',o.updateDate);
+   // 访问日期写两处：%[ 是通用的 Access Date；EndNote 的 Web Page 类型历来把“Access Date”放在 Number 字段（%N）
+   add('[',o.accessDate); add('N',o.accessDate); add('U',o.url);
  }else if(o.kind==='standard'){
    add('0','Standard'); addAuthors(); add('T',clean((o.standardNo?o.standardNo+' ':'')+(o.title||'')));
    add('C',o.place); add('I',o.publisher); add('D',o.year);
  }else if(o.kind==='patent'){
-   add('0','Patent'); addAuthors(); add('T',o.title); add('N',o.patentNo); add('8',o.date);
+   add('0','Patent'); addAuthors(); add('T',o.title); add('N',o.patentNo); add('D',yearOf(o.date)); add('8',o.date);
  }else{
    add('0','Generic'); addAuthors(); add('T',o.title); add('D',o.year);
  }
@@ -1117,17 +1160,150 @@ function draw(){
 function isBlankRecord(){
  return !clean(state.title)&&!ensureAuthorObjects().some(a=>clean(a.name||a.family||a.given||''));
 }
+
+/* ===== v9.5 填写检查：必填缺失 / 格式核对 / 建议补充 ===== */
+const REQUIRED={
+ book:['authors','title','place','publisher','year'],
+ journal:['authors','title','journal','year','pages'],
+ thesis:['authors','title','place','institution','year'],
+ report:['authors','title','place','publisher','year'],
+ newspaper:['authors','title','newspaper','date'],
+ proceedings:['authors','title','place','publisher','year'],
+ bookChapter:['authors','title','hostTitle','place','publisher','year','pages'],
+ conferencePaper:['authors','title','hostTitle','place','publisher','year','pages'],
+ electronic:['title','accessDate','url'],
+ patent:['authors','title','patentNo','date'],
+ standard:['authors','standardNo','title','place','publisher','year']
+};
+const SUGGEST={
+ journal:[['volume','期刊有卷号时须著录'],['issue','期刊有期号时须著录'],['doi','有 DOI 时 APA 7 要求著录']],
+ bookChapter:[['editors','APA 7 需要著录原书编者'],['doi','有 DOI 时建议著录']],
+ conferencePaper:[['editors','APA 7 需要著录会议录编者'],['doi','有 DOI 时建议著录']],
+ electronic:[['authors','有作者或发布机构时应著录'],['updateDate','页面有发布或更新日期时著录'],['siteName','APA 7 需要网站名称']],
+ newspaper:[['edition','报纸文章须著录版次']],
+ book:[['isbn','方便核对版本，非著录必需']]
+};
+const REQ_HINT={
+ authors:'没有个人作者时填写机构名称',title:'',place:'版权页上的出版城市',publisher:'',year:'',
+ journal:'',pages:'',institution:'',hostTitle:'析出文献所在的原书或会议录题名',newspaper:'',
+ date:'',accessDate:'你查阅网页的日期，可点“今天”',url:'',patentNo:'',standardNo:'如 GB/T 7714—2015'
+};
+function fieldLabel(k){
+ if(k==='authors'){let f=(schemas[state.kind]||[]).find(([x])=>x==='authors');return f?f[1]:'作者'}
+ let f=(schemas[state.kind]||[]).find(([x])=>x===k);return f?f[1]:k;
+}
+function hasPeople(list){return (list||[]).some(a=>clean(a.name||a.family||''))}
+function valueOf(k){
+ if(k==='authors')return hasPeople(ensureAuthorObjects());
+ if(k==='editors')return hasPeople(ensureEditorObjects());
+ return clean(state[k]);
+}
+function isbnValid(x){
+ let d=clean(x).replace(/[-\s]/g,'').toUpperCase();
+ if(/^\d{9}[\dX]$/.test(d)){let s=0;for(let i=0;i<10;i++)s+=(d[i]==='X'?10:+d[i])*(10-i);return s%11===0}
+ if(/^\d{13}$/.test(d)){let s=0;for(let i=0;i<13;i++)s+=(+d[i])*(i%2?3:1);return s%10===0}
+ return false;
+}
+function checkRecord(){
+ let out=[],kind=state.kind,sc=(schemas[kind]||[]).map(([k])=>k);
+ let req=(REQUIRED[kind]||[]).filter(k=>sc.includes(k));
+ for(const k of req)if(!valueOf(k)){
+   let pagesHint=k==='pages'?(kind==='journal'?'期刊文章须著录起止页码':'析出文献须著录在原书中的起止页码'):'';
+   let placeHint=k==='place'&&kind==='thesis'?'学位授予单位所在城市':'';
+   out.push({level:'req',key:k,msg:`${fieldLabel(k)}${(pagesHint||placeHint||REQ_HINT[k])?'：'+(pagesHint||placeHint||REQ_HINT[k]):''}`});
+ }
+ // 格式核对
+ const now=new Date().getFullYear();
+ let y=clean(state.year);
+ if(y&&sc.includes('year')){
+   if(!/^\d{4}[a-z]?$/.test(y))out.push({level:'warn',key:'year',msg:'年份：应为四位数字，如 2024'});
+   else if(+y.slice(0,4)>now+1)out.push({level:'warn',key:'year',msg:`年份：${y} 晚于明年，请确认`});
+   else if(+y.slice(0,4)<1500)out.push({level:'warn',key:'year',msg:`年份：${y} 过早，请确认`});
+ }
+ let pg=clean(state.pages);
+ if(pg&&sc.includes('pages')){
+   if(!/^[A-Za-z]?\d+(?:\s*[-–—~～]\s*[A-Za-z]?\d+)?(?:\s*[,，]\s*[A-Za-z]?\d+(?:\s*[-–—~～]\s*[A-Za-z]?\d+)?)*$/.test(pg))
+     out.push({level:'warn',key:'pages',msg:'页码：只写数字，如 29-36 或 5, 12-15'});
+   else{let m=pg.match(/^(\d+)\s*[-–—~～]\s*(\d+)$/);if(m&&+m[2]<+m[1])out.push({level:'warn',key:'pages',msg:`页码：结束页 ${m[2]} 小于起始页 ${m[1]}`})}
+ }
+ if(clean(state.doi)&&sc.includes('doi')&&!/^10\.\d{4,9}\/\S+$/.test(normalizeDOI(state.doi)))
+   out.push({level:'warn',key:'doi',msg:'DOI：应以 10. 开头，如 10.1177/0895904822'});
+ if(clean(state.url)&&sc.includes('url')&&!/^https?:\/\/\S+\.\S+/.test(clean(state.url)))
+   out.push({level:'warn',key:'url',msg:'URL：应以 http:// 或 https:// 开头'});
+ if(clean(state.isbn)&&sc.includes('isbn')&&!isbnValid(state.isbn))
+   out.push({level:'warn',key:'isbn',msg:'ISBN：校验位不对，可能抄错了一位'});
+ if(sc.includes('accessDate')&&clean(state.accessDate)&&clean(state.updateDate)&&normalizeDateInput(state.accessDate)<normalizeDateInput(state.updateDate))
+   out.push({level:'warn',key:'accessDate',msg:'引用日期：早于更新日期，请确认'});
+ if(sc.includes('accessDate')&&clean(state.accessDate)&&normalizeDateInput(state.accessDate)>localToday())
+   out.push({level:'warn',key:'accessDate',msg:'引用日期：晚于今天'});
+ if(sc.includes('volume')&&clean(state.volume)&&!/^\d+[A-Za-z]?$/.test(clean(state.volume)))
+   out.push({level:'warn',key:'volume',msg:'卷：只写数字，不要带“第”“卷”'});
+ if(sc.includes('issue')&&clean(state.issue)&&/[第期]/.test(clean(state.issue)))
+   out.push({level:'warn',key:'issue',msg:'期：只写数字，不要带“第”“期”'});
+ const checkPeople=(list,p,noun)=>(list||[]).forEach((a,i)=>{
+   if(a.type!=='person'){
+     let n=clean(a.name);
+     if(/^[A-Za-zÀ-ÿ'’-]+$/.test(n)&&!/^[A-Z]{2,}$/.test(n))out.push({level:'warn',key:`${p}:${i}:name`,msg:`第 ${i+1} 位${noun}“${n}”只有一个词，是否漏了姓或名？`});
+     return;
+   }
+   let f=clean(a.family),g=clean(a.given);
+   if(f&&!g)out.push({level:'warn',key:`${p}:${i}:given`,msg:`第 ${i+1} 位${noun}（${f}）缺少名或缩写`});
+   if(!f&&g)out.push({level:'warn',key:`${p}:${i}:family`,msg:`第 ${i+1} 位${noun}缺少姓`});
+ });
+ if(sc.includes('authors'))checkPeople(ensureAuthorObjects(),'author','作者');
+ if(sc.includes('editors'))checkPeople(ensureEditorObjects(),'editor','编者');
+ if(state.authorsEtAl&&sc.includes('authors')){
+   let n=ensureAuthorObjects().filter(a=>clean(a.name||a.family||'')).length;
+   if(n<3)out.push({level:'warn',key:'authors',msg:`作者：已著录为“等 / et al.”，GB/T 要求先列出前 3 位（现有 ${n} 位）`});
+   out.push({level:'sug',key:'authors',msg:'作者：原文献只列出了部分作者；APA 7 需列出全部作者（20 位以内），GB/T 不受影响'});
+ }
+ // 建议补充
+ for(const [k,why] of (SUGGEST[kind]||[]))if(sc.includes(k)&&!valueOf(k)&&!out.some(o=>o.key===k))out.push({level:'sug',key:k,msg:`${fieldLabel(k)}：${why}`});
+ return out;
+}
+const CHK_TAG={req:'必填',warn:'核对',sug:'建议'};
+function renderChecks(list){
+ let box=$('checks');
+ if(isBlankRecord()){box.innerHTML='';return}
+ let req=list.filter(x=>x.level==='req').length,warn=list.filter(x=>x.level==='warn').length;
+ if(!list.length){box.innerHTML='<div class="checks-ok">✓ 著录项目齐全，格式未发现问题</div>';return}
+ let sum=[req&&`${req} 项必填`,warn&&`${warn} 处待核对`].filter(Boolean).join('，')||'只剩建议项';
+ let order={req:0,warn:1,sug:2};
+ box.innerHTML=`<div class="checks-hd">填写检查<span>${sum}</span></div><ul>${list.slice().sort((a,b)=>order[a.level]-order[b.level]).map(c=>
+   `<li><button type="button" class="chk chk-${c.level}" data-check="${escHTML(c.key)}"><b>${CHK_TAG[c.level]}</b><span>${escHTML(c.msg)}</span></button></li>`).join('')}</ul>`;
+}
+function markFormFields(list){
+ document.querySelectorAll('#fields .field').forEach(f=>f.classList.remove('is-req','is-warn','is-sug'));
+ document.querySelectorAll('#fields .author-editor').forEach(f=>f.classList.remove('is-req'));
+ document.querySelectorAll('#fields .row-warn').forEach(r=>r.classList.remove('row-warn'));
+ for(const c of list){
+   let m=c.key.match(/^(author|editor):(\d+):/);
+   if(m){document.querySelector(`[data-${m[1]}-index="${m[2]}"]`)?.classList.add('row-warn');continue}
+   if(c.key==='authors'||c.key==='editors'){
+     if(c.level==='req'){let heads=[...document.querySelectorAll('#fields .author-editor')];let h=heads.find(x=>x.querySelector(c.key==='authors'?'[data-author-add]':'[data-editor-add]'));h?.classList.add('is-req')}
+     continue;
+   }
+   let el=document.querySelector(`#fields [data-key="${c.key}"]`)?.closest('.field');
+   if(el&&!el.classList.contains('is-req')&&!el.classList.contains('is-warn'))el.classList.add('is-'+c.level);
+ }
+}
+function focusCheck(key){
+ let el=null,m=key.match(/^(author|editor):(\d+):(\w+)$/);
+ if(m)el=document.querySelector(`[data-${m[1]}-index="${m[2]}"] [data-${m[1]}-field="${m[3]}"]`);
+ else if(key==='authors')el=document.querySelector('[data-author-field]');
+ else if(key==='editors'){el=document.querySelector('[data-editor-field]');if(!el){document.querySelector('[data-editor-add]')?.click();el=document.querySelector('[data-editor-field]')}}
+ else el=document.querySelector(`#fields [data-key="${key}"]`);
+ if(el){el.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});el.focus({preventScroll:true})}
+}
 function update(){
  $('enw').textContent=renderEndNote();
+ let checks=isBlankRecord()?[]:checkRecord();
+ markFormFields(checks);renderChecks(checks);
  if(isBlankRecord()){
    let tip='<span class="cite-empty">填写作者或题名后，这里显示排好的引用。</span>';
-   $('gb').innerHTML=tip;$('apa').innerHTML=tip;$('gapNote').textContent='';return;
+   $('gb').innerHTML=tip;$('apa').innerHTML=tip;return;
  }
- let gb=markGaps(renderGB()),apa=markGaps(renderAPA());
- $('gb').innerHTML=gb.html;$('apa').innerHTML=apa.html;
- let note=$('gapNote');
- note.classList.toggle('ok',!gb.gaps.length);
- note.textContent=gb.gaps.length?`还缺 ${gb.gaps.length} 项：${[...new Set(gb.gaps)].join('、')}。点击红色标记可直接填写。`:'著录项目已齐全。';
+ $('gb').innerHTML=markGaps(renderGB()).html;$('apa').innerHTML=markGaps(renderAPA()).html;
 }
 function emptyState(kind='book'){
  return {kind,authors:'',authorList:[],title:'',translator:'',edition:'',place:'',publisher:'',year:'',pages:'',
@@ -1135,7 +1311,7 @@ function emptyState(kind='book'){
  isbn:'',issn:'',reportNo:'',editors:'',editorList:[],siteName:''};
 }
 function openEditor(mode){
- if(!Array.isArray(state.authorList)||!state.authorList.length)state.authorList=authorObjectsFromRaw(state.authors||'');
+ if(!Array.isArray(state.authorList)||!state.authorList.length){state.authorList=authorObjectsFromRaw(state.authors||'');if(state.authorList.etAl)state.authorsEtAl=true}
  if(!state.authorList.length)state.authorList.push({type:'literal',name:''});
  $('parserTag').textContent=mode==='manual'?'手动录入':mode==='douban'?(state._sourceNote||'来自豆瓣，请核对各字段'):('自动识别'+(state._confidence!=null?`，置信度 ${state._confidence}%`:'')+(/inference/.test(state._provenance?.place||'')&&state.place?`，${state.kind==='thesis'?'城市':'出版地'}「${state.place}」为推断`:'')+'，请核对各字段');
  draw();
@@ -1274,6 +1450,7 @@ function splitNameList(x){
 }
 /* 返回拆分后的姓名对象数组；无需拆分时返回 null */
 function autoSplitPeople(value){
+ let e=splitEtAl(value);if(e.etAl){let r=e.raw?autoSplitPeople(e.raw)||(/[\u3400-\u9fff]/.test(e.raw)?e.raw.split(/\s*[,，、;；]\s*/).filter(Boolean).map(name=>({type:'literal',name})):[{type:'literal',name:e.raw}]):[];r.etAl=true;return r}
  let v=clean(value);
  if(!v||/[\u3400-\u9fff]/.test(v))return null;
  let names=splitNameList(v),objs=names.map(splitWesternName);
@@ -1289,13 +1466,17 @@ function focusSignature(el){
  return el.id?'#'+el.id:null;
 }
 function applyAutoSplit(input,{afterPaste=false}={}){
+ if(!input||input.dataset.splitDone)return;
  let p=input.dataset.authorField!=null?'author':input.dataset.editorField!=null?'editor':null;if(!p)return;
  let field=input.dataset[p+'Field'],row=input.closest(`[data-${p}-index]`);if(!row)return;
  let i=Number(row.dataset[p+'Index']),list=p==='author'?ensureAuthorObjects():ensureEditorObjects(),cur=list[i];if(!cur)return;
  if(field==='given')return;
  if(field==='family'&&clean(cur.given))return;          // 已分好两栏就不动
  let objs=autoSplitPeople(input.value);if(!objs)return;
- if(field==='family'&&objs.length===1&&!clean(objs[0].given))return;
+ if(objs.etAl){if(p==='author')state.authorsEtAl=true}
+ else if(field==='family'&&objs.length===1&&!clean(objs[0].given))return;
+ if(!objs.length&&list.length===1)objs=[{type:'literal',name:''}];
+ input.dataset.splitDone='1';
  list.splice(i,1,...objs);p==='author'?syncAuthorsLegacy():syncEditorsLegacy();
  let run=()=>{
    let sig=afterPaste?null:focusSignature(document.activeElement);
@@ -1310,6 +1491,7 @@ $('fields').addEventListener('paste',e=>{
  setTimeout(()=>{t.dispatchEvent(new Event('input',{bubbles:true}));applyAutoSplit(t,{afterPaste:true})},0);
 });
 $('fields').addEventListener('change',e=>{
+ if(e.target.matches('[data-etal]')){state.authorsEtAl=e.target.checked;update();return}
  let k=e.target.dataset.key;
  if((k==='institution'||k==='publisher')&&!clean(state.place)&&(schemas[state.kind]||[]).some(([x])=>x==='place')){
    let v=clean(e.target.value),hit=v?findPublisher(v):null,c=(hit&&hit.city)||inferPublisherCity(v);
@@ -1356,7 +1538,7 @@ $('fields').addEventListener('click',e=>{
  }
 });
 document.addEventListener('click',e=>{let key=e.target.dataset.dateToday;if(!key)return;state[key]=localToday();let input=document.querySelector(`[data-key="${key}"]`);if(input)input.value=state[key];update()});
-document.addEventListener('click',async e=>{let k=e.target.dataset.copy;if(!k)return;let txt=k==='gb'?renderGB():k==='apa'?renderAPA():renderEndNote();try{await navigator.clipboard.writeText(txt);let old=e.target.textContent;e.target.textContent='已复制';setTimeout(()=>e.target.textContent=old,900)}catch{prompt('复制：',txt)}});
+document.addEventListener('click',async e=>{let k=e.target.dataset.copy;if(!k)return;let txt=k==='gb'?renderGB():k==='apa'?renderAPA():renderEndNote();try{await navigator.clipboard.writeText(txt);let old=e.target.textContent,miss=k!=='enw'&&!isBlankRecord()?checkRecord().filter(x=>x.level==='req').length:0;e.target.textContent=miss?`已复制，缺 ${miss} 项`:'已复制';setTimeout(()=>e.target.textContent=old,miss?1800:900)}catch{prompt('复制：',txt)}});
 $('exportEnwBtn').onclick=exportEndNote;
 
 /* ===== Independent regression suite (hidden in normal UI) ===== */
@@ -1371,6 +1553,8 @@ const GOLDEN_DATASET = {"meta":{"name":"CiteCraft GB/T 7714—2015 Golden Datase
 {"id":"R29-cnki-index-prefix","kind":"thesis","input":"[1]孙晓彤.生成式人工智能应用中的个人信息保护[D].山东财经大学,2026.DOI:10.27274/d.cnki.gsdjc.2026.000605.","expect":{"authors":"孙晓彤","title":"生成式人工智能应用中的个人信息保护","place":"济南","institution":"山东财经大学","year":"2026","doi":"10.27274/d.cnki.gsdjc.2026.000605"},"render_contains":["孙晓彤. 生成式人工智能应用中的个人信息保护[D]. 济南: 山东财经大学, 2026."]},
 {"id":"R30-standard-no-keeps-dash","kind":"standard","input":"全国信息与文献标准化技术委员会. GB/T 7714—2015 信息与文献 参考文献著录规则[S]. 北京: 中国标准出版社, 2015.","expect":{"standardNo":"GB/T 7714—2015"},"render_contains":["GB/T 7714—2015 信息与文献"]},
 {"id":"R31-emdash-page-range","kind":"journal","input":"张三.某研究[J].某刊,2020,3(2):29—36.","expect":{"pages":"29-36"}},
+{"id":"R32-web-etal","kind":"electronic","input":"AVILA A, BHARGAVA M, BIRKAR C, et al. A severe misalignment of AI in mathematics[EB/OL]. (2026-09-11)[2026-10-01]. https://mathandai.org/","expect":{"title":"A severe misalignment of AI in mathematics","updateDate":"2026-09-11","accessDate":"2026-10-01","url":"https://mathandai.org/"},"render_contains":["AVILA A, BHARGAVA M, BIRKAR C, et al. A severe misalignment of AI in mathematics[EB/OL]. (2026-09-11)[2026-10-01]. https://mathandai.org/"]},
+{"id":"R33-cn-journal-deng","kind":"journal","input":"[2]张三, 李四, 王五, 等. 某研究[J]. 教育研究, 2024, 45(3): 10-20.","expect":{"journal":"教育研究","year":"2024","volume":"45","issue":"3","pages":"10-20"},"render_contains":["张三, 李四, 王五, 等. 某研究[J]. 教育研究, 2024, 45(3): 10-20."]},
 {"id":"R10-no-marker","kind":"unknown","input":"MERRIAM S B. Test title. Boston: Press, 2000.","expect_error":true}]};
 
 function deepChecks(o, expected){
@@ -1417,9 +1601,11 @@ document.querySelectorAll('.type-pill').forEach(btn=>btn.onclick=()=>{
  state.kind=btn.dataset.kind;draw();   // keep shared fields when switching type
 });
 $('outputs').addEventListener('click',e=>{
+ let c=e.target.closest('[data-check]');if(c){focusCheck(c.dataset.check);return}
  let g=e.target.closest('.gap');if(!g)return;
  let k=g.dataset.gap,el=null;
- if(k==='editors'){el=document.querySelector('[data-editor-field]');if(!el){document.querySelector('[data-editor-add]')?.click();el=document.querySelector('[data-editor-field]')}}
+ if(k==='authors'){let rows=document.querySelectorAll('[data-author-index]');document.querySelector('[data-author-add]')?.click();rows=document.querySelectorAll('[data-author-index]');el=rows[rows.length-1]?.querySelector('input')}
+ else if(k==='editors'){el=document.querySelector('[data-editor-field]');if(!el){document.querySelector('[data-editor-add]')?.click();el=document.querySelector('[data-editor-field]')}}
  else if(k)el=document.querySelector(`[data-key="${k}"]`);
  if(el){el.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});el.focus({preventScroll:true})}
 });
