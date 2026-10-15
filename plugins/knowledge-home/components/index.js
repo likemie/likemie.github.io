@@ -544,6 +544,7 @@ function methodsTopicData(pages, todayKey) {
       title: "Observation Method",
       description: "在自然或结构化情境中记录行为、互动与过程。",
       variants: [
+        "Classroom Observation",
         "Participant Observation",
         "Non-participant Observation",
         "Structured Observation",
