@@ -1,4 +1,5 @@
 import { h } from "preact"
+import { renderEvidenceTopicPage, evidenceScript, evidenceCss } from "./evidence.js"
 
 const defaultOptions = {
   recentLimit: 12,
@@ -1960,6 +1961,10 @@ function KnowledgeHome(userOpts = {}) {
         return renderComparativeTopicPage({ pages, topicConfig, todayKey, displayClass })
       }
 
+      if (currentRouteKey === "evidence") {
+        return renderEvidenceTopicPage({ pages, displayClass })
+      }
+
       const topic = buildTopicIndex(pages, topicConfig)
 
       return h(
@@ -2483,7 +2488,9 @@ function KnowledgeHome(userOpts = {}) {
     )
   }
 
-  Component.afterDOMLoaded = `
+  Component.afterDOMLoaded =
+    evidenceScript +
+    `
 const knowledgeHomeSlug = document.body.dataset.slug
 if (knowledgeHomeSlug === "explore" || knowledgeHomeSlug === "explore/index") {
   window.location.replace(new URL("/", window.location.origin).toString())
@@ -9415,6 +9422,8 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   }
 }
 `
+
+  Component.css += evidenceCss
 
   return Component
 }
