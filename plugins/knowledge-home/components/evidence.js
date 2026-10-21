@@ -812,11 +812,11 @@ const oecdNodes = [
     key: "impact",
     title: "Strengthening the Impact of Education Research Project",
     label: "强化教育研究影响力",
-    detail: "CERI 研究项目",
+    detail: "CERI 项目 · EEF 案例",
     kind: "project",
     x: 860,
     y: 650,
-    relation: "CERI → 强化教育研究影响力项目 · 考察研究如何进入教育政策与学校实践。",
+    relation: "CERI → 强化教育研究影响力项目 · EEF 是其中讨论的研究使用案例。",
   },
   {
     key: "numbers",
@@ -851,6 +851,42 @@ const oecdEdges = [
   ["oecd", "numbers", "M500 350 C500 620 300 620 300 860", "lens"],
   ["oecd", "brokerage", "M500 350 C500 620 700 620 700 860", "lens"],
 ]
+
+// EEF connects network coordination to an OECD research case, not membership.
+const internationalPositions = {
+  een: [500, 220],
+  eef: [500, 480],
+  nro: [160, 100],
+  summa: [840, 100],
+  e4l: [840, 330],
+  project: [160, 330],
+  bhp: [160, 510],
+  toolkit: [840, 510],
+  impact: [500, 640],
+  ceri: [840, 730],
+  oecd: [500, 850],
+  pisa: [160, 730],
+  talis: [160, 920],
+  ines: [840, 920],
+  piaac: [160, 1110],
+  eag: [840, 1110],
+  numbers: [500, 1130],
+  ahelo: [160, 1300],
+  brokerage: [790, 1300],
+}
+const internationalNodes = [...eenNodes, ...oecdNodes].map((node) => ({
+  ...node,
+  x: internationalPositions[node.key][0],
+  y: internationalPositions[node.key][1],
+}))
+const internationalEdges = [...eenEdges, ...oecdEdges, ["eef", "impact", "", "case"]].map(
+  ([from, to, , kind]) => {
+    const [x1, y1] = internationalPositions[from],
+      [x2, y2] = internationalPositions[to]
+    const middle = (y1 + y2) / 2
+    return [from, to, `M${x1} ${y1} C${x1} ${middle} ${x2} ${middle} ${x2} ${y2}`, kind]
+  },
+)
 
 const conceptContrasts = {
   "Evidence-Based Education": ["Critique of Evidence-Based Education", "循证教育批判"],
@@ -1139,7 +1175,7 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
         ),
     ),
   )
-  const networkGraph = ({ key, nodes, edges, height = 660, legend }) => {
+  const networkGraph = ({ key, nodes, edges, height = 660 }) => {
     const graphNodes = nodes.filter((node) => find(node.title))
     const graphKeys = new Set(graphNodes.map((node) => node.key))
     return h(
@@ -1147,7 +1183,7 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
       { class: `ev-network-figure ev-${key}-network`, "data-evidence-graph": key },
       h(
         "div",
-        { class: "ev-network-canvas" },
+        { class: "ev-network-canvas", "data-graph-height": height },
         h(
           "svg",
           {
@@ -1162,10 +1198,16 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
               h(
                 "g",
                 {
-                  class: `ev-network-edge ${kind === "lens" || (key === "een" && (from === "bhp" || to === "project" || to === "toolkit")) ? "is-context" : ""} ${kind === "lens" ? "is-lens" : ""}`,
+                  class: `ev-network-edge ${kind === "lens" || kind === "case" || from === "bhp" || to === "project" || to === "toolkit" ? "is-context" : ""} ${kind === "lens" ? "is-lens" : ""}`,
                   "data-from": from,
                   "data-to": to,
+                  "data-relation-kind": kind ?? "partner",
                 },
+                h(
+                  "title",
+                  null,
+                  kind === "case" ? "EEF · OECD 研究使用项目中的案例" : `${from} → ${to}`,
+                ),
                 h("path", { d }),
                 h("path", { d, class: "ev-network-stream" }),
               ),
@@ -1180,6 +1222,8 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
               {
                 style: { "--node-x": `${node.x / 10}%`, "--node-y": `${(node.y / height) * 100}%` },
                 class: `ev-graph-position is-${node.kind}`,
+                "data-initial-x": node.x / 10,
+                "data-initial-y": (node.y / height) * 100,
               },
               h(
                 "a",
@@ -1188,23 +1232,25 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
                   href: hrefFor(find(node.title)),
                   "data-graph-node": node.key,
                   "data-relation": node.relation,
+                  title: node.relation,
                 },
                 h("strong", null, node.label),
                 h("span", null, node.detail),
               ),
+              h(
+                "button",
+                {
+                  type: "button",
+                  class: "ev-node-handle",
+                  "data-drag-node": node.key,
+                  "aria-label": `移动 ${node.label} 节点`,
+                  title: "拖动节点；方向键微调位置",
+                },
+                "⠿",
+              ),
             ),
           ),
         ),
-      ),
-      h(
-        "div",
-        { class: "ev-network-legend" },
-        legend.map(([kind, label]) => h("span", { class: `is-${kind}` }, label)),
-      ),
-      h(
-        "p",
-        { class: "ev-network-caption", "data-graph-caption": true, "aria-live": "polite" },
-        "点击节点进入条目；悬停或聚焦查看关系。",
       ),
     )
   }
@@ -1631,67 +1677,30 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
         "国际机构与协作",
         "顺着组织、合作方与具体项目，阅读跨国证据工作。",
       ),
-      find("Evidence for Education Network") &&
+      h(
+        "div",
+        { class: "ev-international-toolbar" },
+        h("p", null, "EEN 的网络协调机构 EEF，也是 OECD 研究使用项目讨论的案例。"),
         h(
-          "article",
-          { class: "ev-een-hub" },
-          h(
-            "header",
-            { class: "ev-een-heading" },
-            h(
-              "div",
-              null,
-              h("h3", null, link("Evidence for Education Network", "教育证据网络")),
-              h("p", { lang: "en" }, "Evidence for Education Network"),
-            ),
-            h("p", null, "围绕 EEN 阅读合作机构、共同工具与项目沿革；资助关系连接到对应项目。"),
-          ),
-          networkGraph({
-            key: "een",
-            nodes: eenNodes,
-            edges: eenEdges,
-            legend: [
-              ["partner", "合作机构"],
-              ["resource", "共同资源"],
-              ["project", "项目与资助"],
-            ],
-          }),
+          "button",
+          { type: "button", class: "ev-shuffle", "data-graph-reset": "international" },
+          "重置布局 ↺",
         ),
-      find("OECD") &&
-        h(
-          "article",
-          { class: "ev-oecd" },
-          h(
-            "header",
-            { class: "ev-oecd-heading" },
-            h(
-              "div",
-              null,
-              h("h3", null, link("OECD", "经济合作与发展组织")),
-              h("p", { lang: "en" }, "OECD"),
-            ),
-            h("p", null, "从学生测评与教育指标进入，再沿研究使用项目与治理概念展开阅读。"),
-          ),
-          networkGraph({
-            key: "oecd",
-            nodes: oecdNodes,
-            edges: oecdEdges,
-            height: 1000,
-            legend: [
-              ["partner", "研究中心"],
-              ["project", "项目与报告"],
-              ["lens", "治理视角 · 虚线"],
-            ],
-          }),
-          h(
-            "nav",
-            { class: "ev-oecd-readings", "aria-label": "OECD 对照与延伸阅读" },
-            link("Critique of PISA", "对照阅读 · PISA 批判", "ev-counter"),
-            link("International Large-Scale Assessments", "国际大规模评估"),
-            link("Governing at a Distance", "远处治理"),
-            link("EU Evidence-Informed Education Policy Initiatives", "欧盟证据知情政策倡议"),
-          ),
-        ),
+      ),
+      networkGraph({
+        key: "international",
+        nodes: internationalNodes,
+        edges: internationalEdges,
+        height: 1420,
+      }),
+      h(
+        "nav",
+        { class: "ev-oecd-readings", "aria-label": "OECD 对照与延伸阅读" },
+        link("Critique of PISA", "对照阅读 · PISA 批判", "ev-counter"),
+        link("International Large-Scale Assessments", "国际大规模评估"),
+        link("Governing at a Distance", "远处治理"),
+        link("EU Evidence-Informed Education Policy Initiatives", "欧盟证据知情政策倡议"),
+      ),
     ),
     // ------------------------------------------------------------- discover
     h(
@@ -1833,8 +1842,6 @@ function bindEvidencePage() {
   root.querySelectorAll('[data-evidence-graph]').forEach((graph) => {
     const nodes = [...graph.querySelectorAll('[data-graph-node]')]
     const edges = [...graph.querySelectorAll('.ev-network-edge')]
-    const caption = graph.querySelector('[data-graph-caption]')
-    const fallback = caption.textContent
     const focus = (key) => {
       const related = new Set(key ? [key] : [])
       edges.forEach((edge) => {
@@ -1844,8 +1851,68 @@ function bindEvidencePage() {
       })
       graph.dataset.active = String(!!key)
       nodes.forEach((node) => node.classList.toggle('is-connected', related.has(node.dataset.graphNode)))
-      caption.textContent = nodes.find((node) => node.dataset.graphNode === key)?.dataset.relation ?? fallback
     }
+    const canvas = graph.querySelector('.ev-network-canvas')
+    const storageKey = 'evidence-layout-v1-' + graph.dataset.evidenceGraph
+    let saved = {}
+    try { saved = JSON.parse(sessionStorage.getItem(storageKey) || '{}') } catch {}
+    const position = (node, x, y) => {
+      const box = node.closest('.ev-graph-position')
+      const bounds = canvas.getBoundingClientRect()
+      const halfX = box.offsetWidth / bounds.width * 50, halfY = box.offsetHeight / bounds.height * 50
+      const next = [Math.max(halfX + 1, Math.min(99 - halfX, x)), Math.max(halfY + 1, Math.min(99 - halfY, y))]
+      box.style.setProperty('--node-x', next[0] + '%'); box.style.setProperty('--node-y', next[1] + '%')
+      return next
+    }
+    const redraw = () => {
+      const bounds = canvas.getBoundingClientRect(), height = Number(canvas.dataset.graphHeight)
+      const centers = new Map(nodes.map(node => {
+        const r = node.getBoundingClientRect()
+        return [node.dataset.graphNode, [(r.left + r.width / 2 - bounds.left) / bounds.width * 1000, (r.top + r.height / 2 - bounds.top) / bounds.height * height]]
+      }))
+      edges.forEach(edge => {
+        const a = centers.get(edge.dataset.from), b = centers.get(edge.dataset.to)
+        if (!a || !b) return
+        const mid = (a[1] + b[1]) / 2
+        edge.querySelectorAll('path').forEach(path => path.setAttribute('d', 'M' + a[0] + ' ' + a[1] + ' C' + a[0] + ' ' + mid + ' ' + b[0] + ' ' + mid + ' ' + b[0] + ' ' + b[1]))
+      })
+    }
+    const persist = () => { try { sessionStorage.setItem(storageKey, JSON.stringify(saved)) } catch {} }
+    nodes.forEach(node => { const xy = saved[node.dataset.graphNode]; if (Array.isArray(xy) && xy.length === 2 && xy.every(Number.isFinite)) position(node, ...xy) })
+    let dragging
+    graph.querySelectorAll('[data-drag-node]').forEach(handle => {
+      const node = nodes.find(node => node.dataset.graphNode === handle.dataset.dragNode)
+      const box = node.closest('.ev-graph-position')
+      handle.addEventListener('pointerdown', event => {
+        if (event.button !== 0) return
+        event.preventDefault(); handle.focus(); handle.setPointerCapture(event.pointerId)
+        const r = box.getBoundingClientRect(), c = canvas.getBoundingClientRect()
+        dragging = { id: event.pointerId, startX: event.clientX, startY: event.clientY, x: (r.left + r.width / 2 - c.left) / c.width * 100, y: (r.top + r.height / 2 - c.top) / c.height * 100 }
+        box.classList.add('is-dragging')
+      })
+      handle.addEventListener('pointermove', event => {
+        if (!dragging || event.pointerId !== dragging.id) return
+        const r = canvas.getBoundingClientRect()
+        saved[node.dataset.graphNode] = position(node, dragging.x + (event.clientX - dragging.startX) / r.width * 100, dragging.y + (event.clientY - dragging.startY) / r.height * 100)
+        redraw()
+      })
+      const stop = () => { dragging = null; box.classList.remove('is-dragging'); persist() }
+      handle.addEventListener('pointerup', stop); handle.addEventListener('pointercancel', stop); handle.addEventListener('lostpointercapture', stop)
+      handle.addEventListener('keydown', event => {
+        const delta = { ArrowLeft: [-1,0], ArrowRight: [1,0], ArrowUp: [0,-1], ArrowDown: [0,1] }[event.key]
+        if (!delta) return
+        event.preventDefault()
+        const r = box.getBoundingClientRect(), c = canvas.getBoundingClientRect(), step = event.shiftKey ? 3 : 1
+        saved[node.dataset.graphNode] = position(node, (r.left + r.width / 2 - c.left) / c.width * 100 + delta[0] * step, (r.top + r.height / 2 - c.top) / c.height * 100 + delta[1] * step)
+        redraw(); persist()
+      })
+    })
+    root.querySelector('[data-graph-reset="' + graph.dataset.evidenceGraph + '"]')?.addEventListener('click', () => {
+      saved = {}; nodes.forEach(node => { const box = node.closest('.ev-graph-position'); position(node, Number(box.dataset.initialX), Number(box.dataset.initialY)) }); persist(); redraw()
+    })
+    const resize = new ResizeObserver(() => { nodes.forEach(node => { const box = node.closest('.ev-graph-position'); position(node, parseFloat(box.style.getPropertyValue('--node-x')), parseFloat(box.style.getPropertyValue('--node-y'))) }); redraw() })
+    resize.observe(canvas); window.addCleanup?.(() => resize.disconnect()); redraw()
+    if (matchMedia('(max-width: 600px)').matches) graph.scrollLeft = (canvas.offsetWidth - graph.clientWidth) / 2
     graph.addEventListener('pointerover', (event) => { const node = event.target.closest('[data-graph-node]'); if (node) focus(node.dataset.graphNode) })
     graph.addEventListener('pointerleave', () => focus(document.activeElement?.closest('[data-graph-node]')?.dataset.graphNode))
     graph.addEventListener('focusin', (event) => focus(event.target.closest('[data-graph-node]')?.dataset.graphNode))
@@ -2074,17 +2141,17 @@ a.ev-counter:hover { transform: translateX(3px); }
 /* discover --------------------------------------------------------------- */
 
 .ev-draws { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1rem; }
-.ev-draw { display: flex; flex-direction: column; min-width: 0; padding: 1.3rem; border: 1px dashed var(--ev-line); border-radius: 0.7rem; background: var(--ev-card); }
+.ev-draw { display: flex; flex-direction: column; min-width: 0; padding: 1rem; border: 1px solid color-mix(in srgb,var(--ev-signal) 18%,var(--ev-line)); border-radius: 0.7rem; background: var(--ev-card); }
 .ev-draw:last-child { grid-column: span 2; }
-.ev-draw h3 { display: flex; justify-content: space-between; gap: 0.6rem; align-items: baseline; margin: 0 0 1.2rem; font-family: var(--bodyFont); font-size: 1.05rem; }
+.ev-draw h3 { display: flex; justify-content: space-between; gap: 0.6rem; align-items: baseline; margin: 0 0 0.8rem; font-family: var(--bodyFont); font-size: 1.05rem; }
 .ev-draw h3 small { white-space: nowrap; font-size: 0.85rem; font-weight: 400; color: var(--ev-signal); }
-.ev-draw-item { display: flex; flex-direction: column; min-width: 0; height: 19rem; gap: 1rem; }
-.ev-draw-item strong { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden; overflow-wrap: anywhere; font-family: var(--headerFont); font-size: 1.08rem; line-height: 1.5; flex-shrink: 0; }
-.ev-draw-summary { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 5; overflow: hidden; margin: 0 !important; font-size: 0.9rem; font-weight: 400; color: var(--ev-ink); line-height: 1.65; }
-.ev-draw-meta { margin-top: auto; padding-top: 1rem; font-size: 0.82rem; color: var(--ev-muted); }
+.ev-draw-item { display: flex; flex-direction: column; min-width: 0; height: 12rem; gap: 0.55rem; }
+.ev-draw-item strong { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; overflow-wrap: anywhere; font-family: var(--headerFont); font-size: 1rem; line-height: 1.5; flex-shrink: 0; }
+.ev-draw-summary { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; margin: 0 !important; font-size: 0.9rem; font-weight: 400; color: var(--ev-ink); line-height: 1.65; flex-shrink: 0; }
+.ev-draw-meta { margin-top: auto; padding-top: 0.25rem; font-size: 0.82rem; color: var(--ev-muted); }
 .ev-draw-item:hover strong { color: var(--ev-signal); }
 @media (max-width: 1000px) { .ev-draws { grid-template-columns: repeat(2,minmax(0,1fr)); } }
-@media (max-width: 600px) { .ev-draws { grid-template-columns: 1fr; } .ev-draw:last-child { grid-column: auto; } .ev-draw-item { height: 18rem; } }
+@media (max-width: 600px) { .ev-draws { grid-template-columns: 1fr; } .ev-draw:last-child { grid-column: auto; } .ev-draw-item { height: 12rem; } }
 
 /* latest ----------------------------------------------------------------- */
 .ev-latest-list { border-top: 1px solid var(--ev-line); }
@@ -2230,12 +2297,6 @@ a.ev-counter:hover { transform: translateX(3px); }
 .ev-network-figure[data-active="true"] .ev-graph-node:not(.is-connected) { opacity: 0.35; }
 .ev-network-figure[data-active="true"] .ev-network-edge:not(.is-connected) path { opacity: 0.08; }
 .ev-network-figure .ev-network-edge.is-connected path { opacity: 0.95; stroke-width: 2.8; }
-.ev-network-legend { display: flex; flex-wrap: wrap; gap: 0.6rem 1.3rem; justify-content: center; }
-.ev-network-legend span { color: var(--ev-muted); font-size: 0.85rem; }
-.ev-network-legend span::before { content: ""; display: inline-block; vertical-align: middle; width: 9px; height: 9px; margin-right: 0.4rem; border-radius: 50%; background: var(--ev-signal); }
-.ev-network-legend .is-resource::before { background: var(--ev-doubt); }
-.ev-network-legend .is-project::before { background: transparent; outline: 1px dashed var(--ev-signal); }
-.ev-network-caption { min-height: 3.5rem; margin-top: 0.9rem !important; font-size: 0.92rem; line-height: 1.65; color: var(--ev-muted) !important; text-align: center; }
 /* OECD projects and analytic concepts ------------------------------------ */
 .ev-oecd { display: grid; gap: 1.4rem; margin-top: 1rem; }
 @media (max-width: 860px) { .ev-een-heading, .ev-oecd-heading { grid-template-columns: 1fr; gap: 0.7rem; } }
@@ -2249,8 +2310,6 @@ a.ev-counter:hover { transform: translateX(3px); }
   .ev-page .ev-graph-node { height: 100%; padding: 0.9rem 0.6rem; }
   .ev-graph-node strong { font-size: 0.95rem; }
   .ev-graph-node.is-hub strong { font-size: 1.6rem; }
-  .ev-network-legend { margin-top: 1.3rem; }
-  .ev-network-caption { min-height: 4.7rem; }
 }
 
 /* Fixed anchors, sampled reading pools and OECD relationship map */
@@ -2264,7 +2323,6 @@ a.ev-counter:hover { transform: translateX(3px); }
 .ev-oecd-network .ev-graph-node.is-project { border-style: solid; }
 .ev-graph-node.is-lens { border-color: var(--ev-doubt); border-style: dashed; }
 .ev-network-edge.is-lens path { stroke: var(--ev-doubt); }
-.ev-network-legend .is-lens::before { background: var(--ev-doubt); }
 .ev-oecd-readings { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; align-items: center; margin-top: 1rem; }
 .ev-oecd-readings > a { font-size: 0.9rem; }
 @media (max-width: 600px) {
@@ -2333,5 +2391,39 @@ a.ev-counter:hover { transform: translateX(3px); }
 @media (prefers-reduced-motion: reduce) {
   .ev-page *, .ev-page *::before, .ev-page *::after { transition: none !important; animation: none !important; }
   .ev-page a:hover, .ev-page button:hover, .ev-case:hover { transform: none !important; }
+}
+
+/* Compact reading cards and a movable international map. */
+.ev-draw { position: relative; overflow: hidden; background-image: radial-gradient(ellipse at 0 0,color-mix(in srgb,var(--ev-signal) 9%,transparent),transparent 75%),repeating-linear-gradient(0deg,transparent,transparent 5px,color-mix(in srgb,var(--ev-ink) 2%,transparent) 6px); transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease; }
+.ev-draw:hover, .ev-draw:focus-within { transform: translateY(-3px); border-color: var(--ev-signal); box-shadow: 0 10px 24px color-mix(in srgb,var(--ev-signal) 10%,transparent); }
+.ev-draw::before { content: ""; position: absolute; width: 45%; height: 100%; inset: 0 auto 0 -60%; pointer-events: none; background: linear-gradient(105deg,transparent,color-mix(in srgb,var(--ev-signal) 8%,transparent),transparent); transform: skewX(-14deg); transition: transform 700ms ease; }
+.ev-draw:hover::before { transform: translateX(420%) skewX(-14deg); }
+.ev-international-toolbar { display: flex; justify-content: space-between; gap: 1rem; align-items: start; }
+.ev-international-toolbar p { font-size: 0.9rem; line-height: 1.65; max-width: 38rem; }
+.ev-international-toolbar button { white-space: nowrap; }
+.ev-international-network { overflow: auto; max-height: 85vh; border-radius: 12px; background: var(--ev-signal-soft); scrollbar-color: var(--ev-signal) transparent; }
+.ev-international-network .ev-network-canvas { aspect-ratio: 1000 / 1420; min-height: 70rem; margin: 0; }
+.ev-international-network .ev-graph-position { width: 24%; }
+.ev-international-network .ev-graph-position.is-hub { width: 28%; }
+.ev-node-handle { position: absolute; top: 3px; right: 4px; width: 30px; height: 28px; padding: 0; border: 0; border-radius: 6px; color: var(--ev-signal); background: transparent; cursor: grab; touch-action: none; font-size: 1.2rem; opacity: 0.6; }
+.ev-node-handle:hover, .ev-node-handle:focus-visible { opacity: 1; background: var(--ev-signal-soft); outline: 2px solid var(--ev-signal); }
+.ev-graph-position.is-dragging { z-index: 5; }
+.ev-graph-position.is-dragging .ev-node-handle { cursor: grabbing; }
+.ev-international-network[data-active="true"] .ev-graph-node:not(.is-connected) { opacity: 0.65; }
+.ev-international-network .ev-graph-node { padding-top: 1.7rem; }
+.ev-international-network .ev-graph-node:hover { transform: none; }
+@media (max-width: 600px) {
+  .ev-international-toolbar { flex-wrap: wrap; }
+  .ev-international-network .ev-network-canvas { min-width: 700px; height: 1240px; min-height: 1240px; aspect-ratio: auto; }
+  .ev-international-network .ev-network-edges { display: block; }
+  .ev-international-network .ev-network-nodes { position: absolute; display: block; }
+  .ev-international-network .ev-graph-position, .ev-international-network .ev-graph-position.is-hub { position: absolute; transform: translate(-50%,-50%); width: 24%; }
+  .ev-international-network .ev-graph-position.is-hub { width: 28%; }
+  .ev-international-network .ev-graph-node { height: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ev-draw, .ev-draw::before { transition: none; }
+  .ev-draw:hover, .ev-draw:focus-within, .ev-draw:hover::before { transform: none; }
+  .ev-draw::before { display: none; }
 }
 `

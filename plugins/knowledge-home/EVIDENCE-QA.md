@@ -135,3 +135,45 @@ Scores: design 6.5 · usability 8.0 · creativity 7.0 · content 8.5 → overall
 Caps: unresolved generic visual gate; these scores do not imply its approval.
 Top three changes checked: remove repeated international block; expand programme
 coverage through Slavin tables; replace sparse rows with equal-height summary cards.
+
+## Compact textured cards and movable connected graph
+
+- Compiled 581 inputs into 2,827 preview files. Ten component tests pass; the
+  interactive script also parses independently.
+- The international map now has 19 native entry links, 19 separate labelled drag
+  handles and 18 edges. EEF's bridge to the OECD research-impact project has a
+  `case` relation type. Bottom legends and instructional captions are removed.
+- Real browser pointer input verified dragging and live edge updates at
+  1440/768/390. Arrow keys move the selected handle; session reload restores its
+  location, and reset returns to the initial arrangement. Dragging does not follow
+  the entry link. A separate mobile touch test verifies dragging and tap navigation.
+- Both themes and all three widths retain 44 project candidates and five equal-height
+  discovery cards. Cards are about 263px on desktop/tablet and 258px on phones,
+  compared with about 390/370px previously. Summaries remain visible and complete
+  titles/summaries remain accessible. All 322 component wiki links resolve.
+- Discovery refresh still changes one selection per category. Reduced-motion
+  settings disable the new hover travel/light sweep. No document overflow.
+- The map has an internal scrolling viewport; on phones it starts horizontally
+  centred on the main node, and the surrounding network can be panned. Node bounds
+  are clamped to the canvas. Graph positions use session storage, not vault content.
+- No vault prose or writing-exception record was edited; no new exceptions approved.
+
+Visual review opened all nine full-page inspector images, plus light/dark discovery
+and graph close-ups at the three widths. The last full-page inspector reports
+13 FAIL / 10 WARN, and source style lint reports 44 FAIL / 12 WARN. Generic visual
+approval remains unmet: existing ledger conventions, requested surface effects,
+and shared Quartz chrome still trigger checks. These results are not suppressed.
+A final text-fit correction reduces internal gaps/footer padding and prevents
+summaries from shrinking into partial lines; targeted longest-title checks and
+screenshots cover that final adjustment.
+
+LATEST REVIEW
+Seen in one second: an evidence guide with compact discovery and a connected map.
+Idea: EEF's coordination and research-case roles connect the two reading routes.
+Live thing: drag handles, live edge routing, keyboard movement, reset and session
+position memory, with native entry links and independent discovery draws.
+Scores: design 6.5 · usability 8.0 · creativity 7.0 · content 8.5 → overall 6.0.
+Caps: unresolved generic visual gate; scores do not imply approval.
+Top three fixes: reduce discovery height; connect the two maps using a supported
+case relation; separate node dragging from link navigation and remove bottom notes.
+No new photographs, clips or raster assets were introduced.

@@ -187,3 +187,14 @@ summary wording is supplied by the vault, not generated from titles. Titles and
 summaries have visual line limits and full text in their title attributes. The
 five categories use three desktop columns, two tablet columns and one phone
 column; the programme card occupies the remaining two columns on wider screens.
+
+## Connecting the EEN and OECD reading maps
+
+Read the EEN definition and partner matrix, the OECD research-impact project body,
+and the supporting Révai (2022) / Hill (2022) Argument passages concerning EEF.
+The resulting bridge is EEN → EEF → Strengthening the Impact of Education Research
+Project → CERI → OECD. The EEF-to-project edge is explicitly a research-case
+connection, supported by the project's actor section and Révai's discussion of EEF
+as an intermediary/toolkit example. It does not assert that OECD belongs to EEN,
+that EEN belongs to OECD, or that they have a direct formal partnership. No original
+PDF was reopened and no vault entry was edited for this navigation relationship.

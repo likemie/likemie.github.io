@@ -74,3 +74,17 @@ titles do not force tall narrow columns. Use three desktop columns, two tablet
 columns and one phone column. The final programme card spans two columns when
 available. This explicit user preference takes precedence over the skill's generic
 ban on repeated cards. Remove the secondary international entry block.
+
+### Compact cards and movable international nodes
+
+Reduce discovery reading areas from 19/18rem to 12rem, shorten visible summaries
+to three lines, and retain full text in native title attributes. The user's request
+for texture and motion adds restrained amber surface grain, a hover light sweep,
+and a short lift; reduced-motion settings remove travel. Existing palette stays.
+
+Combine EEN and OECD in one connected map using the EEF research-case bridge.
+Native links stay on the entry boxes; separate labelled handles accept pointer
+and arrow-key movement. Positions remain in session storage, edges follow node
+centres, and a reset button restores the initial arrangement. On narrow screens
+the map pans inside its own scroll region, keeping the document width fixed.
+Remove the former bottom legend and instructional caption, as requested.

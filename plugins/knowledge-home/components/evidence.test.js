@@ -1,7 +1,7 @@
 import assert from "node:assert/strict"
 import test from "node:test"
 import { render } from "preact-render-to-string"
-import { evidenceTopicData, renderEvidenceTopicPage } from "./evidence.js"
+import { evidenceTopicData, renderEvidenceTopicPage, evidenceScript } from "./evidence.js"
 
 const page = (title, slug, links = []) => ({ frontmatter: { title }, slug, links })
 
@@ -153,14 +153,19 @@ test("international graph distinguishes partners from funding and OECD concepts"
       pages: titles.map((title, i) => page(title, `wiki/organization/${i}`)),
     }),
   )
-  assert.equal((html.match(/data-evidence-graph=/g) ?? []).length, 2)
+  assert.equal((html.match(/data-evidence-graph=/g) ?? []).length, 1)
   assert.equal((html.match(/data-graph-node=/g) ?? []).length, 19)
-  assert.equal((html.match(/data-from=/g) ?? []).length, 17)
+  assert.equal((html.match(/data-from=/g) ?? []).length, 18)
   assert(html.includes('data-from="bhp" data-to="project"'))
   assert(!html.includes('data-from="een" data-to="bhp"'))
   assert(html.includes('data-from="ines" data-to="eag"'))
   assert(html.includes('data-from="ceri" data-to="impact"'))
   assert(html.includes('is-context is-lens" data-from="oecd" data-to="numbers"'))
+  assert(html.includes('data-from="eef" data-to="impact" data-relation-kind="case"'))
+  assert.equal((html.match(/data-drag-node=/g) ?? []).length, 19)
+  assert(html.includes('data-graph-reset="international"'))
+  assert(!html.includes("data-graph-caption"))
+  assert(!html.includes('class="ev-network-legend"'))
   assert(!html.includes('class="ev-oecd-project"'))
   assert(html.includes("数字治理"))
   assert(!html.includes("网络与知识服务"))
@@ -209,4 +214,8 @@ test("discovery includes traced teaching programmes and safe vault summaries", (
   assert(!discovery.includes("[[Tutoring"))
   assert(!discovery.includes("<script>alert(1)</script>"))
   assert(discovery.includes("&lt;script"))
+})
+
+test("interactive evidence script parses independently", () => {
+  assert.doesNotThrow(() => new Function(evidenceScript))
 })
