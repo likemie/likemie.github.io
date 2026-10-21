@@ -280,6 +280,7 @@ plugins:
       includeAll: false
       includedProperties:
         - citation
+        - extracted_to
         - argument_key
         - description
         - authors
