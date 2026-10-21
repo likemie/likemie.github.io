@@ -641,7 +641,7 @@ function methodsTopicData(pages, todayKey) {
   }
 }
 
-function comparativeTopicData(pages, todayKey) {
+export function comparativeTopicData(pages, todayKey) {
   const index = pageIndexFor(pages)
   const find = (title, prefix) => pageByTitle(index, title, prefix)
   const existing = (titles, prefix) => titles.map((title) => find(title, prefix)).filter(Boolean)
@@ -961,7 +961,7 @@ function comparativeTopicData(pages, todayKey) {
     return {
       ...group,
       count: candidates.length,
-      pages: sequentialPicks(candidates, `${todayKey}-comparative-${group.key}`, 8),
+      pages: sequentialPicks(candidates, `${todayKey}-comparative-${group.key}`, candidates.length),
     }
   })
   const latest = scoped
@@ -3084,14 +3084,14 @@ function rotateMethodsRandomCards() {
   }
 }
 
-function rotateComparativeItems(selector, itemSelector) {
+function rotateComparativeItems(selector, itemSelector, avoidRepeat = true) {
   const containers = Array.from(document.querySelectorAll(selector))
   for (const container of containers) {
     const items = Array.from(container.querySelectorAll(itemSelector))
     if (items.length < 2) continue
-    const current = items.findIndex((item) => !item.hidden)
-    let next = Math.floor(Math.random() * items.length)
-    if (next === current) next = (next + 1) % items.length
+    const current = avoidRepeat ? items.findIndex((item) => !item.hidden) : -1
+    const next = current < 0 ? Math.floor(Math.random() * items.length)
+      : (current + 1 + Math.floor(Math.random() * (items.length - 1))) % items.length
     items.forEach((item, index) => { item.hidden = index !== next })
   }
 }
@@ -3121,6 +3121,9 @@ if (window.knowledgeMethodsRandomBound !== true) {
 
 if (window.knowledgeComparativeBound !== true) {
   window.knowledgeComparativeBound = true
+  const drawComparativeDiscovery = () => rotateComparativeItems("[data-comparative-random-card]", "[data-comparative-random-item]", false)
+  document.addEventListener("nav", drawComparativeDiscovery)
+  drawComparativeDiscovery()
   document.addEventListener("click", (event) => {
     const journalButton = event.target.closest("[data-comparative-journal-refresh]")
     if (journalButton) {
