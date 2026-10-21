@@ -68,9 +68,9 @@ const methods = [
     review:
       "系统综述明确检索与筛选过程，元分析合并可比较的研究结果，主题综合整合质性发现。阅读综合结论时，还需要检查研究之间的差异及结论的适用情境。",
     items: [
-      ["Systematic Review", "系统综述"],
       ["Meta-analysis", "元分析", "Critique of Meta-analysis"],
       ["Meta-meta-analysis", "元-元分析", "Critique of Meta-meta-analysis"],
+      ["Systematic Review", "系统综述"],
       ["Research Synthesis", "研究综合"],
       ["Thematic Synthesis", "主题综合"],
       ["PRISMA", "PRISMA 报告规范"],
@@ -152,8 +152,14 @@ const stages = [
 ]
 
 const stageTopics = [
-  [["Research-Practice Partnership", "研究-实践伙伴关系", "研究者与实践者怎样持续协作。"]],
-  [["Evidence Standards", "证据标准", "哪些设计与报告可以进入审查。"]],
+  [
+    ["Research-Practice Partnership", "研究-实践伙伴关系", "研究者与实践者怎样持续协作。"],
+    ["School Enquiry Cycle", "学校探究循环", "结合校内数据与研究证据，界定学校要解决的问题。"],
+  ],
+  [
+    ["Evidence Standards", "证据标准", "哪些设计与报告可以进入审查。"],
+    ["PRISMA", "PRISMA 报告规范", "公开记录检索、筛选与纳入研究的过程。"],
+  ],
   [
     [
       "Study Design and Implementation Assessment Device",
@@ -202,10 +208,7 @@ const mechanisms = [
 
 const useReadings = {
   "Educational Brokerage Agency": [["Knowledge Mobilisation", "知识动员"]],
-  "Research-Practice Partnership": [
-    ["Engagement in and with Research", "教师科研参与"],
-    ["School Enquiry Cycle", "学校探究循环"],
-  ],
+  "Research-Practice Partnership": [["Engagement in and with Research", "教师科研参与"]],
   "Quality Use of Research Evidence Framework": [
     ["Profession-Sensitive Conceptualisations of Research Use", "专业敏感型研究使用"],
   ],
@@ -569,6 +572,38 @@ const international = [
 ]
 
 // The random library also includes the six networks, portals and programmes requested by the user.
+// Existing programmes reached through evidence agencies, intervention entries and their Arguments.
+const evidenceProjects = [
+  ["Success for All", "人人成功", "读写干预"],
+  ["Reading Recovery", "阅读恢复方案", "读写干预"],
+  ["Reading Rescue", "阅读营救", "读写干预"],
+  ["Sound Partners", "声音伙伴", "读写干预"],
+  ["Lightning Squad", "闪电读写小组", "读写干预"],
+  ["Open Court Reading", "开放式阅读", "课程方案"],
+  ["Peer-Assisted Learning Strategies", "同伴辅助学习策略", "同伴辅导"],
+  ["SPARK Literacy", "SPARK 读写项目", "读写干预"],
+  ["QuickReads", "极速阅读", "读写干预"],
+  ["ROOTS", "数学根基方案", "数学干预"],
+  ["Number Rockets", "数字火箭", "数学干预"],
+  ["Fraction Face-Off!", "分数对决", "数学干预"],
+  ["Literacy Octopus", "识字八爪鱼", "证据传播试验"],
+  ["Feedback Action Research Trial", "反馈行动研究试验", "教师研究试验"],
+  ["Incentivised Pay and Coaching Trial", "教师绩效激励与辅导试验", "试验案例 · 已终止"],
+  ["Tennessee STAR Project 1985-1989", "田纳西 STAR 班级规模试验", "历史试验"],
+  ["Investing in Innovation Program", "创新投资项目 i3", "资助计划"],
+  ["Education Innovation and Research", "教育创新与研究计划 EIR", "资助计划"],
+  ["Comprehensive School Reform Program", "全面学校改革计划", "资助计划"],
+  ["Monash Q Project", "莫纳什 Q 项目", "研究使用"],
+  ["Teacher Choices", "教师选择", "评估资助"],
+  ["Researching School Choices", "研究学校选择", "评估资助"],
+  ["Building a Global Evidence Ecosystem for Teaching", "全球教学证据生态项目", "跨国协作"],
+  ["Strengthening the Impact of Education Research Project", "强化教育研究影响力项目", "研究使用"],
+  ["Best Evidence Synthesis", "最佳证据综合项目", "研究综合"],
+]
+const projectMetadata = new Map(
+  evidenceProjects.map(([title, label, kind]) => [title, { label, kind }]),
+)
+
 const institutionPool = [
   ...institutions,
   ...practiceNetworks.map(([title, label, country, note], index) => [
@@ -838,6 +873,7 @@ export function evidenceTopicData(pages) {
   }
   const countFor = (page) => (page ? (inbound.get(page.slug) ?? 0) : 0)
   const curated = new Set([
+    ...evidenceProjects.map(([title]) => title),
     ...concepts.map(([title]) => title),
     ...methods.flatMap((group) => group.items.flatMap(([title, , critique]) => [title, critique])),
     ...stages.map(([, , title]) => title),
@@ -886,6 +922,7 @@ export function evidenceTopicData(pages) {
   // Follow evidence-specific entries to their Arguments, including reverse links.
   // Broad organizations (OECD, World Bank, funders) do not seed unrelated research.
   const seedTitles = new Set([
+    ...evidenceProjects.map(([title]) => title),
     ...concepts.map(([title]) => title),
     ...mechanisms.map(([title]) => title),
     ...institutions.map(([title]) => title),
@@ -941,8 +978,8 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
     candidates.length > 0 &&
     h(
       "article",
-      { class: "ev-draw", "data-evidence-pool": "discover" },
-      h("h3", null, label, h("small", null, `${candidates.length} 条`)),
+      { class: "ev-draw", "data-evidence-pool": "discover", "data-discovery-category": label },
+      h("h3", null, h("span", null, label), h("small", null, `${candidates.length} 条`)),
       candidates.map((page, index) =>
         h(
           "a",
@@ -951,9 +988,17 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
             href: hrefFor(page),
             "data-evidence-item": true,
             hidden: index > 0,
+            title: displayFor(page),
+            "aria-label": `${projectMetadata.get(titleFor(page))?.label ?? displayFor(page)} · ${displayFor(page)}`,
           },
-          h("strong", null, displayFor(page)),
-          h("span", null, page.frontmatter?.year ? `${page.frontmatter.year}` : "打开条目 ↗"),
+          h("strong", null, projectMetadata.get(titleFor(page))?.label ?? displayFor(page)),
+          h(
+            "span",
+            null,
+            projectMetadata.get(titleFor(page))?.kind ??
+              (page.frontmatter?.year ? `${page.frontmatter.year}` : "打开条目"),
+            " ↗",
+          ),
         ),
       ),
     )
@@ -1139,6 +1184,8 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
     h(
       "li",
       props,
+      props["data-fixed-reading"] &&
+        h("h4", { class: "ev-method-label ev-method-fixed-label" }, "固定阅读"),
       h(
         "a",
         { href: hrefFor(find(title)), class: "internal ev-method-main" },
@@ -1312,7 +1359,7 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
                 h("strong", null, group.title),
                 h("span", null, group.note),
               ),
-              h("small", null, "固定 2 + 随机 4"),
+              h("small", null, "固定 2 + 随机 1"),
               h("span", { class: "ev-chapter-toggle", "aria-hidden": "true" }, "+"),
             ),
             h(
@@ -1324,50 +1371,59 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
                 h("h3", null, "怎样读这一环节"),
                 h("p", null, group.review),
               ),
-              h("h4", { class: "ev-method-label" }, "固定阅读"),
-              h(
-                "ol",
-                { class: "ev-method-readings ev-method-fixed", "data-method-fixed": group.key },
-                group.items.slice(0, 2).map((item) => methodEntry(item)),
-              ),
               h(
                 "div",
-                { class: "ev-method-random-heading" },
+                { class: "ev-method-row" },
                 h(
-                  "h4",
-                  { class: "ev-method-label" },
-                  "随机延伸",
+                  "ol",
+                  { class: "ev-method-readings ev-method-fixed", "data-method-fixed": group.key },
+                  group.items
+                    .slice(0, 2)
+                    .map((item) => methodEntry(item, { "data-fixed-reading": true })),
+                ),
+                h(
+                  "div",
+                  { class: "ev-method-draw" },
                   h(
-                    "small",
-                    null,
-                    `从 ${group.items.slice(2).filter(([title]) => find(title)).length} 条中抽取 4 条`,
+                    "div",
+                    { class: "ev-method-random-heading" },
+                    h(
+                      "h4",
+                      { class: "ev-method-label" },
+                      "随机延伸",
+                      h(
+                        "small",
+                        null,
+                        `${group.items.slice(2).filter(([title]) => find(title)).length} 条候选`,
+                      ),
+                    ),
+                    h(
+                      "button",
+                      {
+                        type: "button",
+                        class: "ev-shuffle",
+                        "data-evidence-refresh": `methods-${group.key}`,
+                        "aria-label": `${group.title}：换一条随机延伸`,
+                      },
+                      "换一条 ↻",
+                    ),
+                  ),
+                  h(
+                    "ol",
+                    {
+                      class: "ev-method-readings ev-method-random",
+                      "data-evidence-pool": `methods-${group.key}`,
+                      "aria-live": "polite",
+                      "aria-atomic": "true",
+                    },
+                    group.items
+                      .slice(2)
+                      .filter(([title]) => find(title))
+                      .map((item, index) =>
+                        methodEntry(item, { "data-evidence-item": true, hidden: index > 0 }),
+                      ),
                   ),
                 ),
-                h(
-                  "button",
-                  {
-                    type: "button",
-                    class: "ev-shuffle",
-                    "data-evidence-refresh": `methods-${group.key}`,
-                  },
-                  "换四条 ↻",
-                ),
-              ),
-              h(
-                "ol",
-                {
-                  class: "ev-method-readings ev-method-random",
-                  "data-evidence-pool": `methods-${group.key}`,
-                  "data-evidence-limit": 4,
-                  "aria-live": "polite",
-                  "aria-atomic": "true",
-                },
-                group.items
-                  .slice(2)
-                  .filter(([title]) => find(title))
-                  .map((item, index) =>
-                    methodEntry(item, { "data-evidence-item": true, hidden: index >= 4 }),
-                  ),
               ),
             ),
           ),
@@ -1661,6 +1717,7 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
           "研究文献",
           scope.filter((page) => page.slug.startsWith("wiki/arguments/")),
         ),
+        randomGroup("循证项目", evidenceProjects.map(([title]) => find(title)).filter(Boolean)),
       ),
     ),
     // --------------------------------------------------------------- latest
@@ -2004,13 +2061,15 @@ a.ev-counter:hover { transform: translateX(3px); }
 .ev-case nav a::before { content: "→ "; color: var(--ev-signal); }
 .ev-case nav a:hover { color: var(--ev-ink); }
 /* discover --------------------------------------------------------------- */
-.ev-draws { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.8rem; }
-.ev-draw { display: grid; grid-template-rows: auto 1fr; gap: 0.8rem; padding: 1rem; border-radius: 12px; border: 1px dashed color-mix(in srgb, var(--ev-signal) 45%, var(--lightgray)); background: repeating-linear-gradient(180deg, transparent 0 27px, var(--ev-rule) 27px 28px); min-height: 10rem; }
-.ev-draw h3 { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.8rem; letter-spacing: 0.1em; font-family: var(--bodyFont); font-weight: 800; color: var(--ev-muted); }
-.ev-draw h3 small { font-family: var(--ev-mono); font-weight: 400; letter-spacing: 0; color: var(--ev-signal); }
-.ev-draw-item { display: grid; gap: 0.5rem; align-content: space-between; }
-.ev-draw-item strong { font-family: var(--headerFont); font-size: 1rem; line-height: 1.45; overflow-wrap: anywhere; }
-.ev-draw-item span { color: var(--ev-muted); font-size: 0.78rem; font-family: var(--ev-mono); }
+
+.ev-draws { display: grid; grid-template-columns: 1fr; gap: 0; }
+.ev-draw { display: grid; grid-template-columns: 9rem minmax(0,1fr); gap: 1.5rem; align-items: center; padding: 1rem 0; min-height: 6.5rem; border-top: 1px solid var(--ev-line); }
+.ev-draw h3 { display: grid; gap: 0.3rem; margin: 0; font-family: var(--bodyFont); font-size: 0.95rem; }
+.ev-draw h3 span, .ev-draw h3 small { white-space: nowrap; }
+.ev-draw h3 small { font-size: 0.8rem; font-weight: 400; color: var(--ev-muted); }
+.ev-draw-item { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 1.2rem; align-items: center; min-width: 0; }
+.ev-draw-item strong { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; overflow-wrap: anywhere; font-family: var(--headerFont); font-size: 1rem; line-height: 1.5; }
+.ev-draw-item span { white-space: nowrap; font-size: 0.82rem; color: var(--ev-muted); }
 .ev-draw-item:hover strong { color: var(--ev-signal); }
 
 /* latest ----------------------------------------------------------------- */
@@ -2208,9 +2267,36 @@ a.ev-counter:hover { transform: translateX(3px); }
   .ev-method-random-heading { align-items: start; }
 }
 
+
+/* Three readings on one line; compact discovery records */
+.ev-method-row { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1.1rem; }
+.ev-method-fixed { grid-column: span 2; gap: 1.1rem; margin: 0 !important; }
+.ev-method-fixed > li { padding: 0; border-top: 0; }
+.ev-method-fixed-label { grid-column: 1 / -1; min-height: 3rem; display: flex; align-items: start; padding-top: 0.3rem; }
+.ev-method-fixed .ev-method-main, .ev-method-random .ev-method-main { border-top: 1px solid var(--ev-line); padding-top: 0.9rem; }
+.ev-method-fixed em { padding-top: 0.9rem; border-top: 1px solid var(--ev-line); }
+.ev-method-draw { min-width: 0; }
+.ev-method-random-heading { margin: 0; gap: 0.4rem; align-items: start; min-height: 3.5rem; }
+.ev-method-random-heading .ev-method-label { font-size: 0.85rem; }
+.ev-method-label small { display: block; margin: 0.25rem 0 0; font-size: 0.82rem; }
+.ev-method-random-heading .ev-shuffle { padding: 0.4rem 0.6rem; white-space: nowrap; font-size: 0.82rem; }
+.ev-method-random { grid-template-columns: 1fr; margin: 0 !important; }
+.ev-method-random > li { padding: 0; border-top: 0; }
+.ev-method-random em { padding-top: 0.9rem; border-top: 1px solid var(--ev-line); }
+@media (max-width: 600px) {
+  .ev-method-row { grid-template-columns: 1fr; gap: 1rem; }
+  .ev-method-fixed { grid-column: auto; grid-template-columns: 1fr; }
+  .ev-method-fixed-label { min-height: 1.5rem; }
+  .ev-method-random-heading { min-height: 2.7rem; }
+  .ev-draw { grid-template-columns: 5rem minmax(0,1fr); gap: 0.9rem; min-height: 7rem; }
+  .ev-draw h3 { font-size: 0.85rem; }
+  .ev-draw-item { grid-template-columns: 1fr; gap: 0.5rem; }
+  .ev-draw-item span { font-size: 0.82rem; }
+}
+
 /* responsive ------------------------------------------------------------- */
 @media (max-width: 1100px) {
-  .ev-case-grid, .ev-draws { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ev-case-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 860px) {
   .ev-hero { grid-template-columns: 1fr; }
@@ -2234,7 +2320,7 @@ a.ev-counter:hover { transform: translateX(3px); }
   .ev-flow-steps span { width: 38px; height: 38px; }
   .ev-flow-steps::before, .ev-flow-steps::after { top: 19px; }
   .ev-flow-steps strong { font-size: 0.72rem; }
-  .ev-case-grid, .ev-draws { grid-template-columns: 1fr; }
+  .ev-case-grid { grid-template-columns: 1fr; }
   .ev-latest-list a { grid-template-columns: 1fr; gap: 0.2rem; }
 }
 @media (prefers-reduced-motion: reduce) {

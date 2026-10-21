@@ -139,3 +139,26 @@ The PISA critique and wider assessment/governance concepts remain supporting lin
 ## Concept diagram link targets
 
 Index lookup found Professional Judgment, Local Knowledge in Evidence-Based Policy and Evidence-Informed Decision-Making. Their definition passages were read before assigning the corresponding diagram links. Research Evidence has no standalone entry; its link is explicitly labelled as a route to Research Synthesis. No wiki entries were created for the illustration.
+
+## Project discovery and compact reading revision
+
+The project traversal started with EEF, Evidence for ESSA and Best Evidence
+Encyclopedia, then followed Success for All and Reading Recovery into their
+intervention examples and supporting Arguments. Slavin (2019) supplied additional
+mathematics examples, including ROOTS, Number Rockets and Fraction Face-Off!.
+Twenty-five existing Fact entries are included in a distinct project discovery pool:
+12 intervention or curriculum programmes, four trial cases, six research/cooperation
+projects and three funding programmes. Entry definitions and institutional-context
+passages were read before inclusion. Reading routes include Slavin (2019), Edovald
+and Nevill (2021), Gorard et al. (2020), Wadhwa et al. (2024), and Rickinson et al.
+(2022b). The historical terminated incentive/pay trial is labelled as such. Inclusion
+provides a reading case and makes no claim that every intervention was effective.
+Unrelated semiconductor-fund links were not followed; the absent ABRACADABRA entry
+and the CIRC pedagogical concept were not manufactured as Fact programme pages.
+
+Each methods chapter now displays two fixed entries plus one random candidate.
+The synthesis anchors are Meta-analysis and Meta-meta-analysis; Systematic Review
+moves into the ten-item synthesis pool. School Enquiry Cycle and PRISMA were added
+as the second main entries in problem formation and search/screening respectively.
+Their definition passages and Brown et al. (2017) / the PRISMA entry's cited methods
+context support these reading positions. All six use stages now contain two entries.

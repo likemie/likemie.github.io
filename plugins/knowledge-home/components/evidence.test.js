@@ -112,10 +112,16 @@ test("each research chapter separates two fixed entries from its random pool", (
     )
     assert.equal((readings.match(/<li/g) ?? []).length, 6)
     assert.equal((readings.match(/data-evidence-item=/g) ?? []).length, 4)
-    assert(readings.includes('data-evidence-limit="4"'))
+    assert(!readings.includes('data-evidence-limit="4"'))
     const fixed = readings.slice(0, readings.indexOf("</ol>"))
     assert.equal((fixed.match(/<li/g) ?? []).length, 2)
     assert(!fixed.includes("data-evidence-item"))
+    assert.equal((readings.match(/ hidden/g) ?? []).length, 3)
+    if (chapter.startsWith('"synthesize"')) {
+      assert(fixed.includes('href="/wiki/method/7"'))
+      assert(fixed.includes('href="/wiki/method/8"'))
+      assert(!fixed.includes('href="/wiki/method/6"'))
+    }
   }
 })
 

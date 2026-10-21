@@ -84,3 +84,21 @@ Top three visible issues addressed:
 The four linked regions cover both the diagram symbols and their labels. SVG uses a group role so native links retain their accessible semantics. Research evidence directs to the existing Research Synthesis entry; the other regions direct to Professional Judgment, Local Knowledge in Evidence-Based Policy and Evidence-Informed Decision-Making. Existing source-checked labels and diagram geometry remain unchanged. No writing exceptions were added.
 
 The linked illustration passed desktop (1440px) and phone (390px) pointer hit tests for all four regions, keyboard focus and actual navigation to the decision entry. The final publication preview compiled successfully.
+
+## Compact three-reading revision
+
+- Latest preview compilation: 562 inputs, 2,717 emitted files, success.
+- Eight component tests pass. Synthesis anchors are explicitly checked as
+  Meta-analysis and Meta-meta-analysis.
+- Browser checks passed at 1440, 768 and 390 pixels in both themes: no horizontal
+  overflow; exactly two fixed and one random reading in each chapter; three
+  reading columns share one row on desktop/tablet; refresh changes only the
+  random selection. The previous four-entry random layout is superseded.
+- All six use panels contain two main entries. Project discovery has 25 verified
+  candidates and five discovery categories render. With the longest titles
+  selected, all five discovery rows have matching heights; full titles remain
+  accessible through the link label and native title tooltip.
+- Generic inspector remains at 13 FAIL / 7 WARN for retained ledger conventions,
+  rendered depth and shared Quartz chrome; no generic visual-gate pass is claimed.
+- This revision changes frontend navigation and layout only; no writing exceptions
+  were added and no wiki body content was modified.

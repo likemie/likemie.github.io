@@ -36,7 +36,7 @@ Entries are matched by wiki title; missing entries are skipped. Counts are inbou
 wikilinks across the vault.
 
 1. 重要概念: lead card 循证教育 with a labelled evidence/judgment/context illustration; ledger rows 循证决策, 证据知情实践, 研究利用, 证据标准, 证据生态系统.
-2. 证据的产生与评价: three native disclosure chapters (产生 / 综合 / 评价); each opens downward with a brief review, two fixed anchors and four independently sampled related entries. The respective random pools contain 13, 10 and 12 existing entries. Paired criticism remains beside the relevant method.
+2. 证据的产生与评价: three native disclosure chapters (产生 / 综合 / 评价); each opens downward with a brief review, two fixed anchors and one independently sampled related entry. The respective random pools contain 13, 10 and 12 existing entries. Paired criticism remains beside the relevant method.
 3. 证据的传播与使用: six reading stages (形成问题 / 检索筛选 / 审查综合 / 转译交流 / 实施调适 / 使用反馈). The six use concepts and their readings live inside the appropriate stage; there is no detached use-card grid.
 4. 各国机构与案例: four fixed logo cards (EEF, WWC, Visible Learning, Evidence for ESSA); an independent random draw from 34 institutions, networks, portals and programmes, with country, function and reading link. Historical cases are labelled. The former six-item services list is folded into that draw, with explicit entry types.
 5. 国际机构与协作: a clickable eight-node EEN graph connects EEF, NRO, SUMMA and E4L, a shared toolkit, the earlier cooperation project and its funder. Partner relations are distinct from project funding. An eleven-node OECD graph connects six project entrances (PISA, TALIS, PIAAC, INES, AHELO feasibility study, research-impact project), Education at a Glance/CERI and numerical-governance/policy-brokerage concepts. Its solid project/organization edges are distinct from dashed interpretive links. Campbell and BE2 remain secondary entrances.
@@ -50,7 +50,7 @@ wikilinks across the vault.
 - The compass highlights the current section while scrolling (captured scroll listener, so it works with any scroll container).
 - Native disclosure summaries support Enter and Space; flow steps support arrow keys, Home and End. Opening a chapter closes the previous chapter; reduced-motion skips the slide.
 - `prefers-reduced-motion` disables all transitions and transforms; all functions remain.
-- The concept lens uses layered discs, soft radial light and animated signals. EEN connections animate subtly; hover and keyboard focus highlight connected nodes, and node links open their wiki entries. Both graphs become readable linked grids on phones. Each method refresh changes only its own four random entries, preserving the two fixed anchors and every other pool.
+- The concept lens uses layered discs, soft radial light and animated signals. EEN connections animate subtly; hover and keyboard focus highlight connected nodes, and node links open their wiki entries. Both graphs become readable linked grids on phones. Each method refresh changes only its own random entry, preserving the two fixed anchors and every other pool.
 - Official logos sit unmodified on a white plate in both themes.
 - Checked at 1440px, 768px and 390px in light and dark themes: no horizontal overflow.
 
@@ -63,3 +63,5 @@ also reports existing ledger conventions and shared Quartz chrome as findings;
 its results must not be described as a complete visual-gate pass.
 
 The concept lens has four native SVG links with descriptive labels and hover/focus hit areas: research synthesis, professional judgment, local knowledge and evidence-informed decision-making. Missing targets leave the diagram visible without dead links.
+
+Research readings share one three-column row on desktop and tablet. Synthesis fixes Meta-analysis and Meta-meta-analysis, with Systematic Review in its random pool. Every use stage has two main entries. Discovery uses five compact, consistently sized records, including a dedicated 25-entry project pool. Long titles show at most two visual lines, retain full accessible text and expose the full title on hover.
