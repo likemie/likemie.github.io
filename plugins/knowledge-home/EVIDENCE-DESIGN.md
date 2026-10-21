@@ -65,3 +65,12 @@ its results must not be described as a complete visual-gate pass.
 The concept lens has four native SVG links with descriptive labels and hover/focus hit areas: research synthesis, professional judgment, local knowledge and evidence-informed decision-making. Missing targets leave the diagram visible without dead links.
 
 Research readings share one three-column row on desktop and tablet. Synthesis fixes Meta-analysis and Meta-meta-analysis, with Systematic Review in its random pool. Every use stage has two main entries. Discovery uses five compact, consistently sized records, including a dedicated 25-entry project pool. Long titles show at most two visual lines, retain full accessible text and expose the full title on hover.
+
+### Discovery card revision
+
+Restore the user's card composition and add vault summaries. Keep category counts
+and a bottom metadata/action line; limit title and summary lines so long research
+titles do not force tall narrow columns. Use three desktop columns, two tablet
+columns and one phone column. The final programme card spans two columns when
+available. This explicit user preference takes precedence over the skill's generic
+ban on repeated cards. Remove the secondary international entry block.

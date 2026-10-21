@@ -102,3 +102,36 @@ The linked illustration passed desktop (1440px) and phone (390px) pointer hit te
   rendered depth and shared Quartz chrome; no generic visual-gate pass is claimed.
 - This revision changes frontend navigation and layout only; no writing exceptions
   were added and no wiki body content was modified.
+
+## Slavin programme expansion and restored cards
+
+- Final preview: 581 Markdown inputs, 2,827 emitted files, success. Nine component
+  tests pass, including summary escaping and programme destinations.
+- Browser checks pass at 1440/768/390 in light and dark themes: five discovery
+  categories, 44 programme candidates, visible existing summaries, no horizontal
+  overflow, identical card heights even with the longest available titles selected.
+- Refresh interactions preserve fixed method readings. Chapters still show two
+  fixed entries plus one random entry, synthesis fixes Meta-analysis and
+  Meta-meta-analysis, and every use stage retains two entries. All 322 distinct
+  component wiki links resolve in the preview. All 44 project titles are also
+  present in the remote vault index.
+- Removed “其他国际协作入口” and its unused styles. No vault prose, summary or
+  writing-exception record was edited; no new writing exceptions were approved.
+- Opened all ten final inspector screenshots and discovery close-ups in both
+  themes, including longest-title cases. Final inspector: 14 FAIL / 7 WARN.
+  Source style linter: 41 FAIL / 11 WARN. These generic gates remain unmet:
+  retained ledger styling and rendered depth conflict with generic house rules;
+  the restored cards are explicitly requested by the user. Shared Quartz header,
+  sidebar positioning and small text remain additional findings. None are hidden.
+
+LATEST REVIEW
+Seen in one second: an evidence guide with explorable reading cards.
+Idea: existing vault summaries give each random selection enough context to choose
+whether to open it; intervention labels distinguish teaching, funding and trials.
+Live thing: five independent discovery draws, with a 44-candidate programme pool.
+Layout: three desktop columns, two tablet columns, one phone column; final card
+spans available columns. Full text remains available through entry links/tooltips.
+Scores: design 6.5 · usability 8.0 · creativity 7.0 · content 8.5 → overall 6.0.
+Caps: unresolved generic visual gate; these scores do not imply its approval.
+Top three changes checked: remove repeated international block; expand programme
+coverage through Slavin tables; replace sparse rows with equal-height summary cards.

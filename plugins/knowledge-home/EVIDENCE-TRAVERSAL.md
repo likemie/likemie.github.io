@@ -162,3 +162,28 @@ moves into the ten-item synthesis pool. School Enquiry Cycle and PRISMA were add
 as the second main entries in problem formation and search/screening respectively.
 Their definition passages and Brown et al. (2017) / the PRISMA entry's cited methods
 context support these reading positions. All six use stages now contain two entries.
+
+## Slavin programme tables and discovery cards
+
+Followed the body links in Argument_Slavin_2019_EducPsychol, especially the reading
+and mathematics programme tables attributed to pp. 27–28, into the existing entry
+definitions. Added 19 candidates: ECRI, LiPS, Read, Write, & Type, Butterfly Phonics,
+Early Reading Intervention, Targeted Reading Intervention, Early Steps, Intensive
+Reading Remediation, Reach, Perry Beeches, SMART, FocusMath, Numbers Count, Math
+Recovery, Catch Up Numeracy, Galaxy Math, Pirate Math, TAMPS and CIRC. Perry Beeches
+is included as the coaching programme described by its entry. CIRC keeps its existing
+Concept destination and is labelled as a cooperative reading/writing programme;
+no Fact duplicate is created. The broader Direct Instruction concept is excluded
+from this programme draw because its definition covers both general pedagogy and
+a specific scripted curriculum tradition. The resulting pool has 44 candidates,
+including 31 teaching/intervention programmes and the previous trial, research and
+funding cases. Categories describe the case, not a universal effectiveness rating.
+Verification reached entry definitions and the supporting Argument; original PDFs
+were not reread for this navigation update.
+
+Removed the separate Campbell/BE2 “其他国际协作入口” module. Discovery returns to
+cards with existing frontmatter summaries, rendered as escaped plain text. The
+summary wording is supplied by the vault, not generated from titles. Titles and
+summaries have visual line limits and full text in their title attributes. The
+five categories use three desktop columns, two tablet columns and one phone
+column; the programme card occupies the remaining two columns on wider screens.

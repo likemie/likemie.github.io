@@ -32,7 +32,8 @@ test("removed sections stay removed and random pools are independently addressed
   assert(html.includes('data-evidence-pool="discover"'))
   assert(html.includes('data-evidence-refresh="institutions"'))
   assert(html.includes('data-evidence-refresh="discover"'))
-  for (const removed of ["机构登记表", "争议与反思", "使用的机制"]) assert(!html.includes(removed))
+  for (const removed of ["机构登记表", "争议与反思", "使用的机制", "其他国际协作入口"])
+    assert(!html.includes(removed))
   assert(!html.includes("undefined"))
 })
 
@@ -192,4 +193,20 @@ test("concept illustration exposes four native links and skips absent targets", 
     renderEvidenceTopicPage({ pages: [page("Evidence-Based Education", "wiki/education")] }),
   )
   assert(!empty.includes('ev-lens-link"'))
+})
+
+test("discovery includes traced teaching programmes and safe vault summaries", () => {
+  const project = page("Perry Beeches", "wiki/facts/uk/perry")
+  project.frontmatter.summary = "针对阅读困难学生的[[Tutoring|个别辅导]]。<script>alert(1)</script>"
+  const circ = page("Cooperative Integrated Reading and Composition", "wiki/concepts/circ")
+  const html = render(renderEvidenceTopicPage({ pages: [project, circ] }))
+  const discovery = html.slice(html.indexOf('class="ev-section ev-discover"'))
+  assert(discovery.includes('data-discovery-category="循证项目"'))
+  assert(discovery.includes("佩里比奇斯辅导项目"))
+  assert(discovery.includes("合作整合阅读与写作 CIRC"))
+  assert(discovery.includes('class="ev-draw-summary"'))
+  assert(discovery.includes("针对阅读困难学生的个别辅导。"))
+  assert(!discovery.includes("[[Tutoring"))
+  assert(!discovery.includes("<script>alert(1)</script>"))
+  assert(discovery.includes("&lt;script"))
 })

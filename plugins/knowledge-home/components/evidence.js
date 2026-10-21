@@ -574,6 +574,26 @@ const international = [
 // The random library also includes the six networks, portals and programmes requested by the user.
 // Existing programmes reached through evidence agencies, intervention entries and their Arguments.
 const evidenceProjects = [
+  ["Enhanced Core Reading Instruction", "增强型核心阅读教学", "多层阅读干预"],
+  ["Lindamood Phoneme Sequencing", "林达穆德音素序列项目", "读写干预"],
+  ["Read, Write, & Type", "读写与打字", "技术辅助读写"],
+  ["Butterfly Phonics", "蝴蝶自然拼读", "读写干预"],
+  ["Early Reading Intervention", "早期阅读干预", "读写干预"],
+  ["Targeted Reading Intervention", "目标阅读干预", "读写干预"],
+  ["Early Steps", "早期起步", "读写干预"],
+  ["Intensive Reading Remediation", "密集阅读补救", "读写干预"],
+  ["Reach", "Reach 读写干预", "读写干预"],
+  ["Perry Beeches", "佩里比奇斯辅导项目", "个别辅导"],
+  ["Start Making a Reader Today", "今日起步做读者", "志愿者伴读"],
+  ["FocusMath", "聚焦数学", "数学干预"],
+  ["Numbers Count", "数数算算", "数学干预"],
+  ["Math Recovery", "数学恢复方案", "数学干预"],
+  ["Catch Up Numeracy", "Catch Up 数学辅导", "数学干预"],
+  ["Galaxy Math", "银河数学", "数学干预"],
+  ["Pirate Math", "海盗数学", "数学干预"],
+  ["Tutor-Assisted Math Problem Solving", "助教辅助数学问题解决", "数学干预"],
+  ["Cooperative Integrated Reading and Composition", "合作整合阅读与写作 CIRC", "合作读写方案"],
+
   ["Success for All", "人人成功", "读写干预"],
   ["Reading Recovery", "阅读恢复方案", "读写干预"],
   ["Reading Rescue", "阅读营救", "读写干预"],
@@ -974,6 +994,13 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
       ),
       h("div", { class: "ev-head-side" }, note && h("p", null, note), action),
     )
+  const summaryFor = (page) =>
+    String(page.frontmatter?.summary ?? "")
+      .replace(/\[\[([^\]]+)\]\]/g, (_, target) => target.split("|").at(-1).replace(/\\$/, ""))
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+      .replace(/[*_`]/g, "")
+      .replace(/\s+/g, " ")
+      .trim()
   const randomGroup = (label, candidates) =>
     candidates.length > 0 &&
     h(
@@ -992,9 +1019,11 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
             "aria-label": `${projectMetadata.get(titleFor(page))?.label ?? displayFor(page)} · ${displayFor(page)}`,
           },
           h("strong", null, projectMetadata.get(titleFor(page))?.label ?? displayFor(page)),
+          page.frontmatter?.summary &&
+            h("p", { class: "ev-draw-summary", title: summaryFor(page) }, summaryFor(page)),
           h(
             "span",
-            null,
+            { class: "ev-draw-meta" },
             projectMetadata.get(titleFor(page))?.kind ??
               (page.frontmatter?.year ? `${page.frontmatter.year}` : "打开条目"),
             " ↗",
@@ -1663,24 +1692,6 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
             link("EU Evidence-Informed Education Policy Initiatives", "欧盟证据知情政策倡议"),
           ),
         ),
-      h(
-        "div",
-        { class: "ev-secondary-orgs" },
-        h("h3", null, "其他国际协作入口"),
-        international
-          .filter((group) => group.key === "synthesis" || group.key === "donors")
-          .map(
-            (group) =>
-              find(group.title) &&
-              h(
-                "article",
-                null,
-                h("h4", null, link(group.title, group.label)),
-                h("p", { lang: "en" }, group.title),
-                h("p", null, group.note),
-              ),
-          ),
-      ),
     ),
     // ------------------------------------------------------------- discover
     h(
@@ -2062,15 +2073,18 @@ a.ev-counter:hover { transform: translateX(3px); }
 .ev-case nav a:hover { color: var(--ev-ink); }
 /* discover --------------------------------------------------------------- */
 
-.ev-draws { display: grid; grid-template-columns: 1fr; gap: 0; }
-.ev-draw { display: grid; grid-template-columns: 9rem minmax(0,1fr); gap: 1.5rem; align-items: center; padding: 1rem 0; min-height: 6.5rem; border-top: 1px solid var(--ev-line); }
-.ev-draw h3 { display: grid; gap: 0.3rem; margin: 0; font-family: var(--bodyFont); font-size: 0.95rem; }
-.ev-draw h3 span, .ev-draw h3 small { white-space: nowrap; }
-.ev-draw h3 small { font-size: 0.8rem; font-weight: 400; color: var(--ev-muted); }
-.ev-draw-item { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 1.2rem; align-items: center; min-width: 0; }
-.ev-draw-item strong { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; overflow-wrap: anywhere; font-family: var(--headerFont); font-size: 1rem; line-height: 1.5; }
-.ev-draw-item span { white-space: nowrap; font-size: 0.82rem; color: var(--ev-muted); }
+.ev-draws { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1rem; }
+.ev-draw { display: flex; flex-direction: column; min-width: 0; padding: 1.3rem; border: 1px dashed var(--ev-line); border-radius: 0.7rem; background: var(--ev-card); }
+.ev-draw:last-child { grid-column: span 2; }
+.ev-draw h3 { display: flex; justify-content: space-between; gap: 0.6rem; align-items: baseline; margin: 0 0 1.2rem; font-family: var(--bodyFont); font-size: 1.05rem; }
+.ev-draw h3 small { white-space: nowrap; font-size: 0.85rem; font-weight: 400; color: var(--ev-signal); }
+.ev-draw-item { display: flex; flex-direction: column; min-width: 0; height: 19rem; gap: 1rem; }
+.ev-draw-item strong { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden; overflow-wrap: anywhere; font-family: var(--headerFont); font-size: 1.08rem; line-height: 1.5; flex-shrink: 0; }
+.ev-draw-summary { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 5; overflow: hidden; margin: 0 !important; font-size: 0.9rem; font-weight: 400; color: var(--ev-ink); line-height: 1.65; }
+.ev-draw-meta { margin-top: auto; padding-top: 1rem; font-size: 0.82rem; color: var(--ev-muted); }
 .ev-draw-item:hover strong { color: var(--ev-signal); }
+@media (max-width: 1000px) { .ev-draws { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 600px) { .ev-draws { grid-template-columns: 1fr; } .ev-draw:last-child { grid-column: auto; } .ev-draw-item { height: 18rem; } }
 
 /* latest ----------------------------------------------------------------- */
 .ev-latest-list { border-top: 1px solid var(--ev-line); }
@@ -2224,12 +2238,6 @@ a.ev-counter:hover { transform: translateX(3px); }
 .ev-network-caption { min-height: 3.5rem; margin-top: 0.9rem !important; font-size: 0.92rem; line-height: 1.65; color: var(--ev-muted) !important; text-align: center; }
 /* OECD projects and analytic concepts ------------------------------------ */
 .ev-oecd { display: grid; gap: 1.4rem; margin-top: 1rem; }
-.ev-secondary-orgs { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem 2rem; }
-.ev-secondary-orgs > h3 { grid-column: 1 / -1; font-size: 1.2rem; }
-.ev-secondary-orgs article { padding-top: 1rem; border-top: 1px solid var(--ev-line); }
-.ev-secondary-orgs h4 { font-size: 1.15rem; }
-.ev-secondary-orgs p { font-size: 0.93rem; line-height: 1.7; margin-top: 0.5rem; }
-.ev-secondary-orgs p[lang] { color: var(--ev-muted); font-size: 0.85rem; }
 @media (max-width: 860px) { .ev-een-heading, .ev-oecd-heading { grid-template-columns: 1fr; gap: 0.7rem; } }
 @media (max-width: 600px) {
   .ev-een-hub { padding: 1rem; }
@@ -2243,7 +2251,6 @@ a.ev-counter:hover { transform: translateX(3px); }
   .ev-graph-node.is-hub strong { font-size: 1.6rem; }
   .ev-network-legend { margin-top: 1.3rem; }
   .ev-network-caption { min-height: 4.7rem; }
-  .ev-secondary-orgs { grid-template-columns: 1fr; }
 }
 
 /* Fixed anchors, sampled reading pools and OECD relationship map */
@@ -2268,7 +2275,7 @@ a.ev-counter:hover { transform: translateX(3px); }
 }
 
 
-/* Three readings on one line; compact discovery records */
+/* Three readings on one line */
 .ev-method-row { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1.1rem; }
 .ev-method-fixed { grid-column: span 2; gap: 1.1rem; margin: 0 !important; }
 .ev-method-fixed > li { padding: 0; border-top: 0; }
@@ -2288,9 +2295,9 @@ a.ev-counter:hover { transform: translateX(3px); }
   .ev-method-fixed { grid-column: auto; grid-template-columns: 1fr; }
   .ev-method-fixed-label { min-height: 1.5rem; }
   .ev-method-random-heading { min-height: 2.7rem; }
-  .ev-draw { grid-template-columns: 5rem minmax(0,1fr); gap: 0.9rem; min-height: 7rem; }
+
   .ev-draw h3 { font-size: 0.85rem; }
-  .ev-draw-item { grid-template-columns: 1fr; gap: 0.5rem; }
+
   .ev-draw-item span { font-size: 0.82rem; }
 }
 
