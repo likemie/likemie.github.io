@@ -1,4 +1,5 @@
 import { h } from "preact"
+import { methodsFlowPool } from "./methods-flow-pools.js"
 import { renderEvidenceTopicPage, evidenceScript, evidenceCss } from "./evidence.js"
 
 const defaultOptions = {
@@ -501,28 +502,17 @@ export function methodsTopicData(pages, todayKey) {
     {
       title: "选题与收窄",
       note: "从研究兴趣与实际问题出发，判断研究价值和可行性，明确研究范围。",
-      links: existing(["Research Topic", "Research Scope", "Problem Finding"]),
+      links: existing(["Research Topic", "Research Scope"]),
     },
     {
       title: "综述与研究论证",
       note: "检索、评估并综合已有研究，说明当前研究的问题来源、研究目的与预期贡献。",
-      links: existing([
-        "Literature Search",
-        "Literature Review",
-        "Research Purpose",
-        "Research Proposal",
-      ]),
+      links: existing(["Literature Search", "Literature Review", "Research Purpose"]),
     },
     {
       title: "问题与操作化",
       note: "明确研究问题和关键概念。量化研究按需要提出变量关系与假设，界定测量方式；质性问题可随研究推进修订。",
-      links: existing([
-        "Research Question",
-        "Definition of Terms",
-        "Variable",
-        "Hypothesis",
-        "Operationalization",
-      ]),
+      links: existing(["Research Question", "Variable", "Operationalization"]),
     },
     {
       title: "研究对象与取样",
@@ -530,8 +520,6 @@ export function methodsTopicData(pages, todayKey) {
       links: existing([
         "Study Population and Sample",
         "Unit of Analysis",
-        "Random Sampling",
-        "Purposeful Sampling",
         "Sample Size Determination",
       ]),
     },
@@ -560,12 +548,7 @@ export function methodsTopicData(pages, todayKey) {
       title: "收集数据",
       kind: "collection",
       note: "按问题与设计选择资料和工具，先行试用并记录实施过程。问卷、访谈和观察可服务于不同研究路径。",
-      links: existing([
-        "Questionnaire",
-        "Qualitative Interview",
-        "Observation Method",
-        "Qualitative Documents",
-      ]),
+      links: existing(["Questionnaire", "Qualitative Interview", "Observation Method"]),
     },
     {
       title: "分析与整合",
@@ -594,14 +577,30 @@ export function methodsTopicData(pages, todayKey) {
       title: "质量检查与报告",
       kind: "report",
       note: "检查证据质量与推论边界，解释结果如何回应研究问题，报告方法和局限。质量检查贯穿研究全过程。",
-      links: existing([
-        "Trustworthiness",
-        "Internal Validity",
-        "External Validity",
-        "Research Writing Script",
-      ]),
+      links: existing(["Trustworthiness", "Internal Validity", "Research Writing Script"]),
     },
   ]
+
+  const groupKeys = ["topic", "review", "question", "sampling", null, "collection", null, "quality"]
+  const branchKeys = {
+    4: ["qualitativeDesign", "quantitativeDesign", "mixedDesign"],
+    6: ["qualitativeAnalysis", "quantitativeAnalysis", "mixedAnalysis"],
+  }
+  const decorateReading = (item, key) => {
+    const candidates = methodsFlowPool(pages, key, [...item.links, item.page])
+    item.random = {
+      key,
+      count: candidates.length,
+      pages: sequentialPicks(candidates, todayKey + key, candidates.length),
+    }
+  }
+  stages.forEach((stage, index) => {
+    if (stage.branches)
+      stage.branches.forEach((item, branchIndex) =>
+        decorateReading(item, branchKeys[index][branchIndex]),
+      )
+    else decorateReading(stage, groupKeys[index])
+  })
 
   const methods = [
     {
@@ -699,21 +698,11 @@ export function methodsTopicData(pages, todayKey) {
     .sort(byDateThenLinks)
   const latest = latestPool.slice(0, 6)
 
-  const random = randomPools.map((pool) => {
-    const candidates = pages.filter((page) => (page.slug ?? "").startsWith(pool.prefix))
-    return {
-      ...pool,
-      count: candidates.length,
-      pages: sequentialPicks(candidates, `${todayKey}-${pool.key}`, candidates.length),
-    }
-  })
-
   return {
     fixed,
     stages,
     methods,
     ethics,
-    random,
     latest,
     total: randomPools.reduce(
       (sum, pool) => sum + pages.filter((page) => (page.slug ?? "").startsWith(pool.prefix)).length,
@@ -1064,6 +1053,74 @@ export function comparativeTopicData(pages, todayKey) {
   }
 }
 
+function methodShuffleIcon() {
+  return h(
+    "svg",
+    {
+      viewBox: "0 0 20 20",
+      width: 16,
+      height: 16,
+      fill: "none",
+      stroke: "currentColor",
+      "stroke-width": 1.5,
+      "aria-hidden": "true",
+    },
+    h("path", {
+      d: "M3 5h2c4 0 5 10 9 10h3m-3-3 3 3-3 3M3 15h2c1.4 0 2.5-1.4 3.5-3.2M11.5 8.2C12.3 6.4 13 5 14 5h3m-3-3 3 3-3 3",
+    }),
+  )
+}
+
+function renderMethodStageReading(item, label) {
+  return h(
+    "div",
+    { class: "method-stage-reading", "data-method-flow-pool": item.random.key },
+    h("small", { class: "method-stage-fixed-label" }, "固定阅读"),
+    h(
+      "div",
+      { class: "knowledge-methods-stage-links" },
+      item.links.map((page) => h("a", { href: hrefFor(page), class: "internal" }, titleFor(page))),
+    ),
+    h(
+      "div",
+      { class: "method-stage-draw" },
+      h(
+        "header",
+        null,
+        h("span", null, "随机延伸", h("small", null, `${formatCount(item.random.count)} 条`)),
+        h(
+          "button",
+          {
+            type: "button",
+            class: "method-stage-shuffle",
+            "data-method-flow-refresh": item.random.key,
+            "aria-label": `更换${label}的随机延伸`,
+            disabled: item.random.count < 2,
+          },
+          methodShuffleIcon(),
+          h("span", null, "换一条"),
+        ),
+      ),
+      item.random.pages.length
+        ? item.random.pages.map((page, index) =>
+            h(
+              "a",
+              {
+                class: "method-stage-random-item internal",
+                href: hrefFor(page),
+                "data-method-flow-item": item.random.key,
+                hidden: index > 0 ? true : undefined,
+                title: titleFor(page),
+              },
+              h("strong", null, titleFor(page)),
+              h("p", { title: summaryFor(page) }, summaryFor(page)),
+            ),
+          )
+        : h("p", { class: "method-stage-empty" }, "暂无延伸条目"),
+    ),
+  )
+}
+
 function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) {
   const topic = methodsTopicData(pages, todayKey)
 
@@ -1235,14 +1292,7 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
                 stage.conditional && h("em", null, "条件步骤"),
               ),
               h("p", null, stage.note),
-              stage.links.length > 0 &&
-                h(
-                  "div",
-                  { class: "knowledge-methods-stage-links" },
-                  stage.links.map((page) =>
-                    h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
-                  ),
-                ),
+              !stage.branches && renderMethodStageReading(stage, stage.title),
               stage.branches &&
                 h(
                   "div",
@@ -1266,10 +1316,8 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
                       h("p", null, branch.note),
                       h(
                         "div",
-                        { class: "knowledge-methods-stage-links" },
-                        branch.links.map((page) =>
-                          h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
-                        ),
+                        { class: "method-path-reading" },
+                        renderMethodStageReading(branch, branch.label),
                       ),
                     ),
                   ),
@@ -1347,9 +1395,11 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
                     {
                       type: "button",
                       "data-method-tool-refresh": String(index),
+                      class: "method-stage-shuffle",
                       "aria-label": `更换${method.label}的关联阅读`,
                     },
-                    "换一条 ↻",
+                    methodShuffleIcon(),
+                    h("span", null, "换一条"),
                   ),
               ),
               method.related.length
@@ -1368,55 +1418,6 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
                     ),
                   )
                 : h("p", null, "暂无关联条目"),
-            ),
-          ),
-        ),
-      ),
-    ),
-    h(
-      "section",
-      { class: "knowledge-methods-section knowledge-methods-discovery" },
-      h(
-        "div",
-        { class: "knowledge-methods-section-head" },
-        h("div", null, h("span", null, "Serendipity"), h("h2", null, "随机发现")),
-        h(
-          "button",
-          { type: "button", class: "knowledge-methods-refresh", "data-method-random-refresh": "" },
-          "换一批",
-        ),
-      ),
-      h(
-        "div",
-        { class: "knowledge-methods-random-grid" },
-        topic.random.map((group) =>
-          h(
-            "div",
-            { class: "knowledge-methods-random-card", "data-method-random-card": group.key },
-            h(
-              "header",
-              null,
-              h("span", null, group.label),
-              h("small", null, `${formatCount(group.count)} 个候选`),
-            ),
-            h(
-              "div",
-              { class: "knowledge-methods-random-items" },
-              group.pages.map((page, index) =>
-                h(
-                  "a",
-                  {
-                    href: hrefFor(page),
-                    class: "knowledge-methods-random-item internal",
-                    "data-method-random-item": group.key,
-                    title: titleFor(page),
-                    hidden: index > 0 ? true : undefined,
-                  },
-                  h("strong", null, titleFor(page)),
-                  h("p", { title: summaryFor(page) }, summaryFor(page)),
-                  h("span", null, `${sectionFor(page)} · ${formatCount(linksFor(page))} 个链接`),
-                ),
-              ),
             ),
           ),
         ),
@@ -3247,10 +3248,6 @@ bindKnowledgeHomeHumanDrop()
 bindKnowledgeHomeOrbitStars()
 bindKnowledgeMethodsRoadmap()
 
-function rotateMethodsRandomCards(avoidRepeat = true) {
-  rotateTopicItems("[data-method-random-card]", "[data-method-random-item]", avoidRepeat)
-}
-
 function rotateTopicItems(selector, itemSelector, avoidRepeat = true) {
   const containers = Array.from(document.querySelectorAll(selector))
   for (const container of containers) {
@@ -3279,22 +3276,24 @@ function rotateComparativeCountries() {
 if (window.knowledgeMethodsRandomBound !== true) {
   window.knowledgeMethodsRandomBound = true
   const drawMethodsDiscovery = () => {
-    rotateMethodsRandomCards(false)
+    rotateTopicItems("[data-method-flow-pool]", "[data-method-flow-item]", false)
     rotateTopicItems("[data-method-tool-pool]", "[data-method-tool-item]", false)
   }
   document.addEventListener("nav", drawMethodsDiscovery)
   drawMethodsDiscovery()
   document.addEventListener("click", (event) => {
+    const flowButton = event.target.closest("[data-method-flow-refresh]")
+    if (flowButton) {
+      event.preventDefault()
+      rotateTopicItems('[data-method-flow-pool="' + flowButton.dataset.methodFlowRefresh + '"]', "[data-method-flow-item]")
+      return
+    }
     const toolButton = event.target.closest("[data-method-tool-refresh]")
     if (toolButton) {
       event.preventDefault()
       rotateTopicItems('[data-method-tool-pool="' + toolButton.dataset.methodToolRefresh + '"]', "[data-method-tool-item]")
       return
     }
-    const button = event.target.closest("[data-method-random-refresh]")
-    if (!button) return
-    event.preventDefault()
-    rotateMethodsRandomCards()
   })
 }
 
@@ -9792,6 +9791,60 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 @media (max-width: 700px) {
  .knowledge-methods-page .knowledge-methods-paths { grid-template-columns: 1fr; }
  .knowledge-methods-page .knowledge-methods-path { gap: .5rem; padding: .9rem; }
+}
+
+/* Stage-specific draws sit beside their stable reading anchors. */
+.knowledge-methods-page .method-stage-reading { margin-top: .9rem; min-width: 0; }
+.knowledge-methods-page .method-stage-fixed-label { display: block; color: var(--methods-panel-muted); font-size: .73rem; margin-bottom: .45rem; }
+.knowledge-methods-page .method-stage-reading > .knowledge-methods-stage-links { min-height: 3.4rem; align-content: start; margin-top: 0; }
+.knowledge-methods-page .method-stage-draw { margin-top: .8rem; padding: .8rem; border: 1px solid color-mix(in srgb,var(--methods-signal) 22%,var(--methods-line)); border-radius: .65rem; background: color-mix(in srgb,var(--light) 96%,var(--methods-signal)); }
+.knowledge-methods-page .method-stage-draw > header { display: flex; align-items: center; justify-content: space-between; gap: .4rem; margin-bottom: .55rem; }
+.knowledge-methods-page .method-stage-draw > header > span { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem; font-size: .78rem; color: var(--methods-signal); }
+.knowledge-methods-page .method-stage-draw > header small { font-size: .7rem; color: var(--methods-panel-muted); white-space: nowrap; }
+.knowledge-methods-page .method-stage-shuffle, .knowledge-methods-page .method-tool-reading button.method-stage-shuffle { display: inline-flex; align-items: center; justify-content: center; gap: .3rem; flex-shrink: 0; min-height: 36px; padding: .35rem .55rem; border-radius: 999px; border: 1px solid color-mix(in srgb,var(--methods-signal) 32%,transparent); background: var(--light); color: var(--methods-signal); font: inherit; font-size: .74rem; cursor: pointer; transition: background 160ms ease,transform 160ms ease; }
+.knowledge-methods-page .method-stage-shuffle svg { flex-shrink: 0; transition: transform 220ms ease; }
+.knowledge-methods-page .method-stage-shuffle:hover { background: color-mix(in srgb,var(--light) 88%,var(--methods-signal)); }
+.knowledge-methods-page .method-stage-shuffle:hover svg { transform: rotate(-12deg); }
+.knowledge-methods-page .method-stage-shuffle:active { transform: scale(.96); }
+.knowledge-methods-page .method-stage-shuffle:focus-visible { outline: 2px solid var(--methods-signal); outline-offset: 3px; }
+.knowledge-methods-page .method-stage-shuffle:disabled { cursor: default; opacity: .45; }
+.knowledge-methods-page .method-stage-random-item { display: block; min-height: 5.2rem; color: var(--dark); background: none; padding: 0; }
+.knowledge-methods-page .method-stage-random-item[hidden] { display: none !important; }
+.knowledge-methods-page .method-stage-random-item:not([hidden]) { animation: method-reading-in 240ms ease both; }
+.knowledge-methods-page .method-stage-random-item strong { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-size: .9rem; line-height: 1.5; }
+.knowledge-methods-page .method-stage-random-item p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; margin: .35rem 0 0; font-size: .8rem; line-height: 1.6; font-weight: 400; color: var(--methods-panel-muted); }
+.knowledge-methods-page .method-stage-random-item:hover strong { color: var(--methods-signal); }
+.knowledge-methods-page .method-path-reading { margin-top: auto; min-width: 0; }
+.knowledge-methods-page .method-stage-empty { font-size: .8rem; color: var(--methods-panel-muted); }
+@media (max-width: 900px) { .knowledge-methods-page .method-stage-shuffle { min-height: 44px; } }
+@media (prefers-reduced-motion: reduce) {
+ .knowledge-methods-page .method-stage-random-item { animation: none !important; }
+ .knowledge-methods-page .method-stage-shuffle, .knowledge-methods-page .method-stage-shuffle svg { transition: none; transform: none !important; }
+}
+
+
+.knowledge-methods-page .method-stage-reading > .knowledge-methods-stage-links { min-height: 5rem; }
+.knowledge-methods-page .method-stage-random-item { height: 6rem; min-height: 0; overflow: hidden; }
+.knowledge-methods-page .knowledge-methods-path > p { min-height: 4.5rem; }
+.knowledge-methods-page .knowledge-methods-path .method-stage-draw > header { min-height: 3rem; }
+.knowledge-methods-page .stage-collection .method-stage-reading,
+.knowledge-methods-page .stage-report .method-stage-reading { display: grid; grid-template-columns: minmax(0,.85fr) minmax(0,1.15fr); gap: .45rem 1.2rem; align-items: start; }
+.knowledge-methods-page .stage-collection .method-stage-fixed-label,
+.knowledge-methods-page .stage-report .method-stage-fixed-label { grid-column: 1; grid-row: 1; margin: 0; }
+.knowledge-methods-page .stage-collection .method-stage-reading > .knowledge-methods-stage-links,
+.knowledge-methods-page .stage-report .method-stage-reading > .knowledge-methods-stage-links { grid-column: 1; grid-row: 2; min-height: 0; }
+.knowledge-methods-page .stage-collection .method-stage-draw,
+.knowledge-methods-page .stage-report .method-stage-draw { grid-column: 2; grid-row: 1 / 3; margin-top: 0; }
+@media (max-width: 700px) {
+ .knowledge-methods-page .method-stage-reading > .knowledge-methods-stage-links { min-height: 0; }
+ .knowledge-methods-page .knowledge-methods-path > p { min-height: 0; }
+ .knowledge-methods-page .knowledge-methods-path .method-stage-draw > header { min-height: 0; }
+ .knowledge-methods-page .stage-collection .method-stage-reading,
+ .knowledge-methods-page .stage-report .method-stage-reading { display: block; }
+ .knowledge-methods-page .stage-collection .method-stage-fixed-label,
+ .knowledge-methods-page .stage-report .method-stage-fixed-label { margin-bottom: .45rem; }
+ .knowledge-methods-page .stage-collection .method-stage-draw,
+ .knowledge-methods-page .stage-report .method-stage-draw { margin-top: .8rem; }
 }
 
 `
