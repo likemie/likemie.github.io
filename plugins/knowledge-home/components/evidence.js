@@ -1042,6 +1042,7 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
     h(
       "article",
       { class: "ev-draw", "data-evidence-pool": "discover", "data-discovery-category": label },
+      h("span", { class: "ev-lettermark", "aria-hidden": "true" }, ({ "概念": "IDEAS", "方法与工具": "METHOD", "人物": "PEOPLE", "研究文献": "READ", "循证项目": "PROJECT" })[label]),
       h("h3", null, h("span", null, label), h("small", null, `${candidates.length} 条`)),
       candidates.map((page, index) =>
         h(
@@ -1184,6 +1185,7 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
       h(
         "div",
         { class: "ev-network-canvas", "data-graph-height": height },
+        h("span", { class: "ev-lettermark", "aria-hidden": "true" }, "EVIDENCE\nNETWORK"),
         h(
           "svg",
           {
@@ -1283,6 +1285,7 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
     h(
       "header",
       { class: "ev-hero" },
+      h("span", { class: "ev-lettermark", "aria-hidden": "true" }, "EVIDENCE"),
       h(
         "nav",
         { class: "ev-hero-nav", "aria-label": "专题位置" },
@@ -1619,6 +1622,7 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
       h(
         "div",
         { class: "ev-institution-draw" },
+        h("span", { class: "ev-lettermark", "aria-hidden": "true" }, "INSTITUTIONS"),
         h(
           "div",
           { class: "ev-institution-intro" },
@@ -2427,5 +2431,45 @@ a.ev-counter:hover { transform: translateX(3px); }
  .ev-method-random-heading .ev-shuffle { min-height: 44px; }
 }
 @media print { .ev-chapter-body::before { display: none; } }
+
+/* Oversized type echoes the comparative atlas without adding content labels. */
+.ev-page .ev-lettermark { position: absolute; pointer-events: none; user-select: none; font-family: var(--headerFont); font-weight: 800; line-height: .8; letter-spacing: -.07em; color: color-mix(in srgb,var(--ev-ink) 5%,transparent); z-index: 0; }
+.ev-page .ev-hero > .ev-lettermark { bottom: -.1em; left: .05em; font-size: clamp(5.4rem,14vw,11rem); }
+.ev-institution-draw { position: relative; isolation: isolate; overflow: hidden; gap: 1.25rem; padding: 1.2rem; border: 1px solid var(--ev-line); background: radial-gradient(ellipse at 100% 100%,color-mix(in srgb,var(--ev-signal) 7%,transparent),transparent 65%),linear-gradient(120deg,var(--light),var(--ev-card)); box-shadow: inset 0 1px color-mix(in srgb,var(--ev-ink) 5%,transparent); }
+.ev-institution-draw > .ev-lettermark { bottom: -.06em; left: -.03em; font-size: clamp(3.8rem,9vw,7rem); white-space: nowrap; }
+.ev-institution-intro, .ev-institution-pool { position: relative; z-index: 1; }
+.ev-institution-intro h3 { font-size: 1.1rem; }
+.ev-institution-intro p { font-size: .82rem; line-height: 1.6; }
+.ev-institution-pool { min-height: 11rem; }
+.ev-institution-pool article { gap: .45rem; }
+.ev-institution-pool h3 { font-size: clamp(1.15rem,2vw,1.5rem); }
+.ev-institution-pool p { font-size: .86rem; }
+.ev-international-network { background: linear-gradient(145deg,var(--light),var(--ev-card)); border: 1px solid var(--ev-line); }
+.ev-international-network .ev-network-canvas { isolation: isolate; background-image: linear-gradient(var(--ev-rule) 1px,transparent 1px),linear-gradient(90deg,var(--ev-rule) 1px,transparent 1px); background-size: 64px 64px; }
+.ev-network-canvas > .ev-lettermark { top: 3%; left: 2%; font-size: clamp(4rem,11vw,9rem); line-height: .9; white-space: pre; color: color-mix(in srgb,var(--ev-ink) 3.5%,transparent); }
+.ev-network-edges { z-index: 1; }
+.ev-network-nodes { z-index: 2; }
+.ev-draws { gap: .75rem; }
+.ev-draw { padding: .8rem; isolation: isolate; background: linear-gradient(140deg,color-mix(in srgb,var(--light) 98%,var(--ev-signal)),var(--ev-card)); border-color: var(--ev-line); box-shadow: inset 0 1px color-mix(in srgb,var(--ev-ink) 5%,transparent); }
+.ev-draw::before { display: none; }
+.ev-draw > .ev-lettermark { right: -.05em; bottom: -.08em; font-size: 4.7rem; white-space: nowrap; color: color-mix(in srgb,var(--ev-signal) 7%,transparent); }
+.ev-draw > h3, .ev-draw-item { position: relative; z-index: 1; }
+.ev-draw h3 { font-size: .8rem; margin-bottom: .55rem; }
+.ev-draw h3 small { font-family: var(--ev-mono); font-size: .7rem; }
+.ev-draw-item { height: 7.4rem; gap: .35rem; }
+.ev-draw-item strong { font-size: .88rem; line-height: 1.45; -webkit-line-clamp: 2; }
+.ev-draw-summary { font-size: .79rem; line-height: 1.5; -webkit-line-clamp: 2; color: var(--ev-muted); }
+.ev-draw-meta { font-size: .72rem; padding-top: .1rem; }
+.ev-draw:hover, .ev-draw:focus-within { transform: translateY(-2px); box-shadow: inset 0 1px color-mix(in srgb,var(--ev-ink) 9%,transparent),0 5px 14px color-mix(in srgb,var(--ev-ink) 5%,transparent); }
+@media (max-width: 600px) {
+ .ev-institution-draw { gap: 1rem; }
+ .ev-institution-pool { min-height: 0; }
+ .ev-draws { gap: .6rem; }
+ .ev-draw-item { height: 7.4rem; }
+ .ev-draw h3 { font-size: .8rem; }
+ .ev-draw-item strong { font-size: .88rem; }
+}
+@media (prefers-reduced-motion: reduce) { .ev-draw:hover, .ev-draw:focus-within { transform: none; } }
+@media print { .ev-lettermark { display: none; } }
 
 `

@@ -256,3 +256,27 @@ passing functional/layout checks; it is not claimed as a visual-gate pass.
 - Whole-page inspector reports remain outside the component gate: methods
   13 FAIL / 6 WARN, evidence 12 FAIL / 10 WARN. No claim of full style-gate success.
 - No vault prose rewritten; no writing exceptions added.
+
+### Typographic backdrops and compact evidence discovery
+
+- Followed the user's comparative-atlas reference with decorative, oversized type:
+  EVIDENCE and METHODS in the two hero areas, INSTITUTIONS in the institution draw,
+  EVIDENCE / NETWORK behind the graph and short category words in discovery cards.
+  Every decorative span is aria-hidden, pointer-free and omitted from print.
+- Replaced the solid warm institution/graph surfaces with neutral layered surfaces;
+  the graph adds a faint coordinate grid. Node positions, edges, link targets and
+  random-pool membership are unchanged.
+- Discovery cards now use a 7.4rem reading body with two-line titles/summaries,
+  smaller gutters and typography, restrained borders and clipped category type.
+  Card height is approximately 172px in the preview at all three widths. Complete
+  titles and summaries remain in native tooltips. The five categories remain.
+- 18 component tests pass. Preview builds 1,114 Markdown inputs into 5,821 files.
+  Browser QA at 1440/768/390 in both themes checks every candidate for vertical
+  content overflow (none), page overflow (none), compact cards, decorative-layer
+  pointer behavior, discovery refresh and graph keyboard movement. Screenshots
+  reviewed for both themes, institution surfaces, graph and discovery; methods
+  hero checked on mobile. The initial keyboard QA targeted `left` rather than the
+  graph's `--node-x` property; correcting the measurement confirmed movement.
+- Generic whole-page inspector remains non-passing (evidence 13 FAIL / 8 WARN);
+  no full-page style-gate success is claimed.
+- No vault prose changed and no writing exceptions added.

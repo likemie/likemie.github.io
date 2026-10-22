@@ -1120,6 +1120,7 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
     h(
       "header",
       { class: "knowledge-methods-hero" },
+      h("span", { class: "method-lettermark", "aria-hidden": "true" }, "METHODS"),
       h(
         "div",
         { class: "knowledge-methods-nav" },
@@ -9816,6 +9817,9 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-methods-page .knowledge-methods-tool::after { inset: 0; width: auto; height: auto; background: radial-gradient(circle,color-mix(in srgb,var(--tool-tone) 20%,transparent) .65px,transparent .9px); background-size: 7px 7px; mask-image: linear-gradient(135deg,transparent 55%,#000); opacity: .6; transform: none; pointer-events: none; }
 .knowledge-methods-page .knowledge-methods-tool:hover::after { opacity: .8; transform: none; }
 @media print { .knowledge-methods-page .knowledge-methods-tool::after { display: none; } }
+
+.knowledge-methods-page .knowledge-methods-hero > .method-lettermark { position: absolute; left: .04em; top: 18%; bottom: auto; z-index: 0; pointer-events: none; user-select: none; font-family: var(--headerFont); font-size: clamp(5.5rem,15vw,12rem); line-height: .8; font-weight: 800; letter-spacing: -.07em; color: color-mix(in srgb,var(--dark) 5%,transparent); }
+@media print { .knowledge-methods-page .method-lettermark { display: none; } }
 
 `
 
