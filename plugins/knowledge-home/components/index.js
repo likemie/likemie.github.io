@@ -462,7 +462,7 @@ function sequentialPicks(pool, seed, limit) {
   })
 }
 
-function methodsTopicData(pages, todayKey) {
+export function methodsTopicData(pages, todayKey) {
   const index = pageIndexFor(pages)
   const find = (title, prefix) => pageByTitle(index, title, prefix)
   const existing = (titles, prefix) => titles.map((title) => find(title, prefix)).filter(Boolean)
@@ -609,21 +609,12 @@ function methodsTopicData(pages, todayKey) {
     .sort(byDateThenLinks)
   const latest = latestPool.slice(0, 6)
 
-  const reserved = new Set([
-    ...fixed.map(({ page }) => page.slug),
-    ...stages.flatMap((stage) => stage.links.map((page) => page.slug)),
-    ...methods.flatMap((method) => [method.page, ...method.variantPages].map((page) => page.slug)),
-    ...latest.map((page) => page.slug),
-  ])
-
   const random = randomPools.map((pool) => {
-    const candidates = pages.filter(
-      (page) => (page.slug ?? "").startsWith(pool.prefix) && !reserved.has(page.slug),
-    )
+    const candidates = pages.filter((page) => (page.slug ?? "").startsWith(pool.prefix))
     return {
       ...pool,
       count: candidates.length,
-      pages: sequentialPicks(candidates, `${todayKey}-${pool.key}`, 8),
+      pages: sequentialPicks(candidates, `${todayKey}-${pool.key}`, candidates.length),
     }
   })
 
@@ -1243,10 +1234,11 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
                     href: hrefFor(page),
                     class: "knowledge-methods-random-item internal",
                     "data-method-random-item": group.key,
+                    title: titleFor(page),
                     hidden: index > 0 ? true : undefined,
                   },
                   h("strong", null, titleFor(page)),
-                  h("p", null, summaryFor(page)),
+                  h("p", { title: summaryFor(page) }, summaryFor(page)),
                   h("span", null, `${sectionFor(page)} · ${formatCount(linksFor(page))} 个链接`),
                 ),
               ),
@@ -1266,21 +1258,25 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
       ),
       h(
         "div",
-        { class: "knowledge-methods-latest-grid" },
+        { class: "knowledge-methods-update-list" },
         topic.latest.map((page) => {
           const date = pageDate(page)
           return h(
             "a",
-            { href: hrefFor(page), class: "knowledge-methods-latest-card internal" },
+            {
+              href: hrefFor(page),
+              class: "knowledge-methods-update internal",
+              title: titleFor(page),
+            },
+            date && h("time", { dateTime: date.toISOString() }, date.toISOString().slice(0, 10)),
             h(
-              "header",
-              null,
-              h("span", null, sectionFor(page)),
-              date && h("time", { dateTime: date.toISOString() }, formatDate(date, "zh-CN")),
+              "div",
+              { class: "knowledge-methods-update-copy" },
+              h("h3", null, titleFor(page)),
+              h("p", { title: summaryFor(page) }, summaryFor(page)),
+              h("small", null, `${sectionFor(page)} · ${formatCount(linksFor(page))} 个关联`),
             ),
-            h("h3", null, titleFor(page)),
-            h("p", null, summaryFor(page)),
-            h("small", null, `${formatCount(linksFor(page))} 个链接`),
+            h("span", { class: "knowledge-methods-update-arrow", "aria-hidden": "true" }, "↗"),
           )
         }),
       ),
@@ -3072,19 +3068,11 @@ bindKnowledgeHomeHumanDrop()
 bindKnowledgeHomeOrbitStars()
 bindKnowledgeMethodsRoadmap()
 
-function rotateMethodsRandomCards() {
-  const cards = Array.from(document.querySelectorAll("[data-method-random-card]"))
-  for (const card of cards) {
-    const items = Array.from(card.querySelectorAll("[data-method-random-item]"))
-    if (items.length < 2) continue
-    const current = items.findIndex((item) => !item.hidden)
-    let next = Math.floor(Math.random() * items.length)
-    if (next === current) next = (next + 1) % items.length
-    items.forEach((item, index) => { item.hidden = index !== next })
-  }
+function rotateMethodsRandomCards(avoidRepeat = true) {
+  rotateTopicItems("[data-method-random-card]", "[data-method-random-item]", avoidRepeat)
 }
 
-function rotateComparativeItems(selector, itemSelector, avoidRepeat = true) {
+function rotateTopicItems(selector, itemSelector, avoidRepeat = true) {
   const containers = Array.from(document.querySelectorAll(selector))
   for (const container of containers) {
     const items = Array.from(container.querySelectorAll(itemSelector))
@@ -3111,6 +3099,9 @@ function rotateComparativeCountries() {
 
 if (window.knowledgeMethodsRandomBound !== true) {
   window.knowledgeMethodsRandomBound = true
+  const drawMethodsDiscovery = () => rotateMethodsRandomCards(false)
+  document.addEventListener("nav", drawMethodsDiscovery)
+  drawMethodsDiscovery()
   document.addEventListener("click", (event) => {
     const button = event.target.closest("[data-method-random-refresh]")
     if (!button) return
@@ -3121,14 +3112,14 @@ if (window.knowledgeMethodsRandomBound !== true) {
 
 if (window.knowledgeComparativeBound !== true) {
   window.knowledgeComparativeBound = true
-  const drawComparativeDiscovery = () => rotateComparativeItems("[data-comparative-random-card]", "[data-comparative-random-item]", false)
+  const drawComparativeDiscovery = () => rotateTopicItems("[data-comparative-random-card]", "[data-comparative-random-item]", false)
   document.addEventListener("nav", drawComparativeDiscovery)
   drawComparativeDiscovery()
   document.addEventListener("click", (event) => {
     const journalButton = event.target.closest("[data-comparative-journal-refresh]")
     if (journalButton) {
       event.preventDefault()
-      rotateComparativeItems("[data-comparative-journal]", "[data-comparative-journal-item]")
+      rotateTopicItems("[data-comparative-journal]", "[data-comparative-journal-item]")
       return
     }
 
@@ -3142,7 +3133,7 @@ if (window.knowledgeComparativeBound !== true) {
     const randomButton = event.target.closest("[data-comparative-random-refresh]")
     if (randomButton) {
       event.preventDefault()
-      rotateComparativeItems("[data-comparative-random-card]", "[data-comparative-random-item]")
+      rotateTopicItems("[data-comparative-random-card]", "[data-comparative-random-item]")
     }
   })
 }
@@ -9423,6 +9414,41 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   .knowledge-home-footer a {
     align-self: flex-start;
   }
+}
+
+/* Methods discovery and update ledger: compact, readable, theme-aware. */
+.knowledge-methods-page .knowledge-methods-random-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; }
+.knowledge-methods-page .knowledge-methods-random-card { --random-tone: var(--secondary); display: flex; flex-direction: column; gap: 0.9rem; min-height: 0; padding: 1.1rem; border: 0; border-radius: 12px; background: color-mix(in srgb,var(--light) 94%,var(--secondary)); box-shadow: none; }
+.knowledge-methods-page .knowledge-methods-random-card > header { padding: 0; border: 0; gap: 0.8rem; min-height: 1.5rem; }
+.knowledge-methods-page .knowledge-methods-random-card > header span { font-size: 0.95rem; color: var(--secondary); }
+.knowledge-methods-page .knowledge-methods-random-card > header small { font-size: 0.82rem; white-space: nowrap; }
+.knowledge-methods-page .knowledge-methods-random-items { display: block; }
+.knowledge-methods-page .knowledge-methods-random-item { height: 10.8rem; padding: 0; gap: 0.6rem; }
+.knowledge-methods-page .knowledge-methods-random-item strong { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 1.1rem; line-height: 1.4; flex-shrink: 0; }
+.knowledge-methods-page .knowledge-methods-random-item p { margin: 0; font-size: 1rem; font-weight: 400; line-height: 1.6; color: var(--dark); -webkit-line-clamp: 3; flex-shrink: 0; }
+.knowledge-methods-page .knowledge-methods-random-item > span { font-size: 0.82rem; font-weight: 400; padding-top: 0.2rem; }
+.knowledge-methods-page .knowledge-methods-random-card:hover { box-shadow: none; transform: translateY(-3px); background: color-mix(in srgb,var(--light) 90%,var(--secondary)); }
+.knowledge-methods-page .knowledge-methods-random-card:focus-within { outline: 2px solid var(--secondary); outline-offset: 3px; }
+.knowledge-methods-update-list { display: grid; gap: 0.4rem; }
+.knowledge-methods-page .knowledge-methods-update { display: grid; grid-template-columns: 6rem minmax(0,1fr) 1.3rem; gap: 1.2rem; align-items: start; padding: 1rem; background: transparent; border-radius: 8px; color: var(--dark); text-decoration: none; transition: background 180ms ease, transform 180ms ease; }
+.knowledge-methods-update > time { font-weight: 400; font-size: 0.85rem; color: var(--darkgray); font-variant-numeric: tabular-nums; padding-top: 0.15rem; }
+.knowledge-methods-update-copy { min-width: 0; }
+.knowledge-methods-update-copy h3 { font-size: 1.05rem; line-height: 1.45; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.knowledge-methods-update-copy p { font-weight: 400; font-size: 1rem; line-height: 1.6; margin: 0.35rem 0; color: var(--darkgray); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.knowledge-methods-update-copy small { font-weight: 400; font-size: 0.82rem; color: var(--darkgray); }
+.knowledge-methods-update-arrow { color: var(--secondary); font-size: 1.2rem; transition: transform 180ms ease; }
+.knowledge-methods-page .knowledge-methods-update:hover, .knowledge-methods-page .knowledge-methods-update:focus-visible { background: color-mix(in srgb,var(--light) 92%,var(--secondary)); transform: translateX(3px); }
+.knowledge-methods-update:hover .knowledge-methods-update-arrow { transform: translate(2px,-2px); }
+@media (max-width: 600px) {
+  .knowledge-methods-page .knowledge-methods-random-grid { grid-template-columns: 1fr; }
+  .knowledge-methods-page .knowledge-methods-update { grid-template-columns: minmax(0,1fr) 1.3rem; gap: 0.4rem 0.8rem; padding: 0.9rem 0.4rem; }
+  .knowledge-methods-update > time { grid-column: 1; }
+  .knowledge-methods-update-copy { grid-column: 1; }
+  .knowledge-methods-update-arrow { grid-column: 2; grid-row: 1 / 3; }
+  .knowledge-methods-update-copy h3, .knowledge-methods-update-copy p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; white-space: normal; overflow-wrap: anywhere; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .knowledge-methods-page .knowledge-methods-random-card, .knowledge-methods-page .knowledge-methods-update, .knowledge-methods-update-arrow { transition: none; transform: none !important; }
 }
 `
 
