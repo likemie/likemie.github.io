@@ -491,51 +491,115 @@ export function methodsTopicData(pages, todayKey) {
     .map((item) => ({ ...item, page: find(item.title, "wiki/arguments/books/") }))
     .filter((item) => item.page)
 
+  const branch = (title, label, note, titles) => ({
+    label,
+    note,
+    page: find(title),
+    links: existing(titles),
+  })
   const stages = [
     {
       title: "选题与收窄",
-      note: "判断问题是否重要、独特且可行，再把宽泛兴趣收窄为明确边界。",
+      note: "从研究兴趣与实际问题出发，判断研究价值和可行性，明确研究范围。",
       links: existing(["Research Topic", "Research Scope", "Problem Finding"]),
     },
     {
-      title: "检索与综述",
-      note: "优先追踪第一手材料，把已有发现组织成问题背景而非资料堆积。",
+      title: "综述与研究论证",
+      note: "检索、评估并综合已有研究，说明当前研究的问题来源、研究目的与预期贡献。",
       links: existing([
         "Literature Search",
-        "Primary and Secondary Documents",
         "Literature Review",
+        "Research Purpose",
+        "Research Proposal",
       ]),
     },
     {
-      title: "课题论证",
-      note: "说明为什么值得研究、准备回答什么，以及研究成果可能贡献在哪里。",
-      links: existing(["Research Proposal", "Research Purpose", "Research Contribution"]),
+      title: "问题与操作化",
+      note: "明确研究问题和关键概念。量化研究按需要提出变量关系与假设，界定测量方式；质性问题可随研究推进修订。",
+      links: existing([
+        "Research Question",
+        "Definition of Terms",
+        "Variable",
+        "Hypothesis",
+        "Operationalization",
+      ]),
     },
     {
-      title: "变量、问题与假设",
-      note: "把问题写成可回答的关系；需要检验时，再提出方向清楚的研究假设。",
-      conditional: true,
-      links: existing(["Research Question", "Variable", "Hypothesis"]),
+      title: "研究对象与取样",
+      note: "明确研究对象、分析单位与进入现场的条件；抽样策略和样本量随研究路径调整。",
+      links: existing([
+        "Study Population and Sample",
+        "Unit of Analysis",
+        "Random Sampling",
+        "Purposeful Sampling",
+        "Sample Size Determination",
+      ]),
     },
     {
-      title: "界定与操作化",
-      note: "从概念性定义走向可观察、可测量或可编码的操作程序。",
-      links: existing(["Definition of Terms", "Operationalization", "Scale of Measurement"]),
+      title: "选择研究路径",
+      note: "根据研究问题选择研究路径与具体设计，同时规划资料来源和分析方式。对象与取样也需据此调整。",
+      links: [],
+      branches: [
+        branch("Qualitative Research", "质性", "理解经验、意义与情境，选择适合问题的具体设计。", [
+          "Case Study",
+          "Ethnography",
+        ]),
+        branch(
+          "Quantitative Research",
+          "量化",
+          "描述分布、比较差异或检验关系，选择调查或实验等设计。",
+          ["Survey Research", "Experimental Research"],
+        ),
+        branch("Mixed Methods Research", "混合", "明确两类资料的整合目的，选择聚敛或序列设计。", [
+          "Convergent Design",
+          "Explanatory Sequential Design",
+        ]),
+      ],
     },
     {
-      title: "设计与取样",
-      note: "让研究问题、方法路径与样本选择彼此一致，并提前检查可执行性。",
-      links: existing(["Quantitative Research", "Qualitative Research", "Mixed Methods Research"]),
+      title: "收集数据",
+      kind: "collection",
+      note: "按问题与设计选择资料和工具，先行试用并记录实施过程。问卷、访谈和观察可服务于不同研究路径。",
+      links: existing([
+        "Questionnaire",
+        "Qualitative Interview",
+        "Observation Method",
+        "Qualitative Documents",
+      ]),
     },
     {
-      title: "收集与分析",
-      note: "使用与设计匹配的工具取得资料，并以透明的规则完成整理与分析。",
-      links: existing(["Observation Method", "Questionnaire", "Descriptive Analysis"]),
+      title: "分析与整合",
+      note: "按研究问题和设计分析资料。分析计划需提前考虑，质性研究与序列设计中，收集和分析可往返推进。",
+      links: [],
+      branches: [
+        branch("Qualitative Research", "质性分析", "结合问题整理资料，可通过编码与范畴形成解释。", [
+          "Coding in Qualitative Research",
+          "Qualitative Content Analysis",
+        ]),
+        branch(
+          "Quantitative Research",
+          "量化分析",
+          "根据变量类型与设计选择统计方法，检查估计的不确定性。",
+          ["Descriptive Analysis", "Multiple Regression", "Confidence Interval"],
+        ),
+        branch(
+          "Mixed Methods Research",
+          "混合整合",
+          "分别分析两类资料，再按设计连接、合并或嵌入，形成整合解释。",
+          ["Integration in Mixed Methods", "Joint Display"],
+        ),
+      ],
     },
     {
-      title: "质检、推论与报告",
-      note: "核查结果能支持多强的判断、适用于何种情境，并留下可复查的研究报告。",
-      links: existing(["Internal Validity", "External Validity", "Research Writing Script"]),
+      title: "质量检查与报告",
+      kind: "report",
+      note: "检查证据质量与推论边界，解释结果如何回应研究问题，报告方法和局限。质量检查贯穿研究全过程。",
+      links: existing([
+        "Trustworthiness",
+        "Internal Validity",
+        "External Validity",
+        "Research Writing Script",
+      ]),
     },
   ]
 
@@ -1099,12 +1163,11 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
         h(
           "p",
           null,
-          "八个节点不是线性配方，而是一组需要来回校准的研究决策。",
-          topic.fixed[0]?.page &&
-            h(
-              "a",
-              { href: hrefFor(topic.fixed[0].page), class: "internal" },
-              "依据齐梅《教育研究方法》精选 ↗",
+          "按阅读顺序组织研究决策，设计、取样与分析需往返调整。",
+          topic.fixed
+            .slice(1)
+            .map((item) =>
+              h("a", { href: hrefFor(item.page), class: "internal" }, `${item.displayTitle} ↗`),
             ),
         ),
       ),
@@ -1146,7 +1209,11 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
             "li",
             {
               id: `knowledge-method-stage-${index + 1}`,
-              class: [stage.conditional ? "is-conditional" : "", index === 0 ? "is-active" : ""]
+              class: [
+                stage.branches ? "has-branches" : "",
+                stage.kind ? `stage-${stage.kind}` : "",
+                index === 0 ? "is-active" : "",
+              ]
                 .filter(Boolean)
                 .join(" "),
               "data-method-stage": String(index),
@@ -1168,13 +1235,45 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
                 stage.conditional && h("em", null, "条件步骤"),
               ),
               h("p", null, stage.note),
-              h(
-                "div",
-                { class: "knowledge-methods-stage-links" },
-                stage.links.map((page) =>
-                  h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
+              stage.links.length > 0 &&
+                h(
+                  "div",
+                  { class: "knowledge-methods-stage-links" },
+                  stage.links.map((page) =>
+                    h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
+                  ),
                 ),
-              ),
+              stage.branches &&
+                h(
+                  "div",
+                  { class: "knowledge-methods-paths" },
+                  stage.branches.map((branch) =>
+                    h(
+                      "section",
+                      { class: "knowledge-methods-path" },
+                      h(
+                        "h4",
+                        null,
+                        branch.page
+                          ? h(
+                              "a",
+                              { href: hrefFor(branch.page), class: "internal" },
+                              branch.label,
+                              " ↗",
+                            )
+                          : branch.label,
+                      ),
+                      h("p", null, branch.note),
+                      h(
+                        "div",
+                        { class: "knowledge-methods-stage-links" },
+                        branch.links.map((page) =>
+                          h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
             ),
           ),
         ),
@@ -9674,6 +9773,25 @@ body[data-slug="index"] .center > article.popover-hint + hr {
  .knowledge-methods-page .knowledge-methods-tool:nth-child(n) { padding: 1.2rem; }
  .knowledge-methods-page .method-tool-intro { min-height: 0; margin-bottom: .7rem; }
  .knowledge-methods-page .method-tool-reading { min-height: 0; }
+}
+
+/* Path selection, collection tools and analysis occupy distinct levels. */
+.knowledge-methods-page .knowledge-methods-stages > li.has-branches,
+.knowledge-methods-page .knowledge-methods-stages > li.stage-collection,
+.knowledge-methods-page .knowledge-methods-stages > li.stage-report { grid-column: 1 / -1; min-height: 0; }
+.knowledge-methods-page .knowledge-methods-paths { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .8rem; margin-top: 1rem; }
+.knowledge-methods-page .knowledge-methods-path { min-width: 0; display: flex; flex-direction: column; gap: .7rem; padding: 1rem; border: 1px solid var(--methods-panel-line); border-radius: .6rem; background: color-mix(in srgb,var(--light) 94%,var(--methods-signal)); }
+.knowledge-methods-page .knowledge-methods-path h4 { margin: 0; font-size: 1.05rem; line-height: 1.4; color: var(--methods-signal); }
+.knowledge-methods-page .knowledge-methods-path h4 a { padding: 0; background: none; color: inherit; }
+.knowledge-methods-page .knowledge-methods-path > p { margin: 0; color: var(--methods-panel-muted); font-size: .88rem; line-height: 1.65; }
+.knowledge-methods-page .knowledge-methods-path .knowledge-methods-stage-links { margin-top: auto; padding-top: .2rem; }
+.knowledge-methods-page .knowledge-methods-path a { overflow-wrap: anywhere; }
+.knowledge-methods-page .knowledge-methods-stage-body { min-width: 0; }
+.knowledge-methods-page .knowledge-methods-stages > li:hover,
+.knowledge-methods-page .knowledge-methods-stages > li.is-active { box-shadow: 0 7px 20px color-mix(in srgb,var(--dark) 7%,transparent); }
+@media (max-width: 700px) {
+ .knowledge-methods-page .knowledge-methods-paths { grid-template-columns: 1fr; }
+ .knowledge-methods-page .knowledge-methods-path { gap: .5rem; padding: .9rem; }
 }
 
 `

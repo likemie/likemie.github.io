@@ -71,3 +71,68 @@ test("featured methods keep one fixed reading and trace both directions without 
   }
   assert(methodsTopicData([...pages, added], "2026-10-23").methods[0].related.includes(added))
 })
+
+test("research roadmap separates approach, collection and analysis and merges planning decisions", () => {
+  const titles = [
+    "Literature Review",
+    "Research Proposal",
+    "Research Question",
+    "Operationalization",
+    "Study Population and Sample",
+    "Unit of Analysis",
+    "Qualitative Research",
+    "Quantitative Research",
+    "Mixed Methods Research",
+    "Questionnaire",
+    "Qualitative Interview",
+    "Observation Method",
+    "Coding in Qualitative Research",
+    "Descriptive Analysis",
+    "Integration in Mixed Methods",
+    "Joint Display",
+  ]
+  const pages = titles.map((title, i) => page(title, `wiki/methods/entry-${i}`))
+  const stages = methodsTopicData(pages, "2026-10-22").stages
+  assert.deepEqual(
+    stages.map((s) => s.title),
+    [
+      "选题与收窄",
+      "综述与研究论证",
+      "问题与操作化",
+      "研究对象与取样",
+      "选择研究路径",
+      "收集数据",
+      "分析与整合",
+      "质量检查与报告",
+    ],
+  )
+  assert(stages[1].links.some((p) => p.frontmatter.title === "Research Proposal"))
+  assert(stages[2].links.some((p) => p.frontmatter.title === "Operationalization"))
+  assert(!stages[2].conditional)
+  assert(stages[3].links.some((p) => p.frontmatter.title === "Study Population and Sample"))
+  assert.deepEqual(
+    stages[4].branches.map((b) => b.page.frontmatter.title),
+    ["Qualitative Research", "Quantitative Research", "Mixed Methods Research"],
+  )
+  assert.deepEqual(
+    stages[6].branches.map((b) => b.page),
+    stages[4].branches.map((b) => b.page),
+  )
+  assert(stages[5].links.some((p) => p.frontmatter.title === "Questionnaire"))
+  assert(
+    stages[6].branches[0].links.some(
+      (p) => p.frontmatter.title === "Coding in Qualitative Research",
+    ),
+  )
+  assert(stages[6].branches[1].links.some((p) => p.frontmatter.title === "Descriptive Analysis"))
+  assert(
+    stages[6].branches[2].links.some((p) => p.frontmatter.title === "Integration in Mixed Methods"),
+  )
+  const missing = methodsTopicData([], "2026-10-22").stages
+  assert(
+    missing.every(
+      (s) =>
+        s.links.length === 0 && (s.branches ?? []).every((b) => !b.page && b.links.length === 0),
+    ),
+  )
+})

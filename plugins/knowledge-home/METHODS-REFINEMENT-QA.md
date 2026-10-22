@@ -161,3 +161,41 @@ layout, aligned first-row reading dividers, no horizontal overflow, and working
 random refresh. All 24 section captures were reviewed, with direct close-ups of
 the desktop light roadmap and phone dark toolkit. This pass also corrects the
 legacy body theme class overriding light-mode panel colors.
+
+## Research roadmap hierarchy revision
+
+The roadmap now distinguishes eight decisions: topic; review and research
+rationale; questions and operationalization; study units and sampling; approach
+and design; data collection; analysis and integration; quality and reporting.
+Review/rationale and questions/operationalization are merged as requested.
+Approach/design and analysis each expose corresponding qualitative, quantitative
+and mixed-method branches. Collection tools occupy their own shared stage.
+
+Planning text explicitly connects the decisions: sampling follows the approach,
+analysis needs advance planning, and collection/analysis may recur during
+qualitative and sequential mixed-method studies. Hypotheses are conditional
+within the question-setting note; the entire stage is no longer labeled optional.
+Quality and ethics remain relevant throughout.
+
+Checked index-located bodies for Literature Review, Research Question,
+Operationalization, Study Population and Sample, Unit of Analysis, the three
+approach entries, qualitative coding/content analysis, quantitative descriptive
+analysis/regression, and mixed-method integration/joint display. Followed their
+Creswell (2022) Argument and Cohen et al. (2011) planning/sampling chapter Arguments.
+The header links to both planning references. This is an editorial reading route,
+not a reproduction of one book's exact sequence. No PDF verification is claimed.
+No vault prose or writing exceptions were changed.
+
+The added regression verifies the merged stages, separate sampling/approach/
+collection/analysis stages, matching three-way branches, analysis links and safe
+behavior when referenced pages are missing.
+
+Fourteen component tests pass. The 1,105-input preview builds successfully.
+Browser checks at three widths in both themes verify eight navigation targets,
+three branches in each of the two expanded decisions, distinct collection and
+analysis stages, every rendered roadmap link destination, navigation/readout
+synchronization and absence of page overflow. Eighteen section captures were
+reviewed, including direct desktop and phone close-ups.
+The full-page inspector remains unmet at 11 FAIL / 6 WARN for the retained page
+patterns and shared chrome. The inspection is recorded separately from the
+passing functional/layout checks; it is not claimed as a visual-gate pass.
