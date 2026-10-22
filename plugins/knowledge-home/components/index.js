@@ -9599,6 +9599,83 @@ body[data-slug="index"] .center > article.popover-hint + hr {
  .knowledge-methods-page .knowledge-methods-random-item, .knowledge-methods-page .method-tool-reading > a { animation: none !important; }
 }
 
+
+/* Match the evidence atlas rhythm while retaining the methods card layout. */
+:root .knowledge-methods-page {
+ --methods-signal: #a35d12;
+ --secondary: var(--methods-signal);
+ --methods-line: color-mix(in srgb,var(--dark) 13%,transparent);
+ --methods-surface: color-mix(in srgb,var(--light) 96%,var(--dark));
+ --methods-panel-bg: var(--methods-surface);
+ --methods-panel-fg: var(--dark);
+ --methods-panel-muted: var(--darkgray);
+ --methods-panel-border: var(--methods-line);
+ --methods-panel-line: var(--methods-line);
+ --methods-panel-accent: var(--methods-signal);
+ --methods-panel-accent-soft: color-mix(in srgb,var(--methods-signal) 10%,transparent);
+ --methods-panel-chip-bg: color-mix(in srgb,var(--light) 94%,var(--methods-signal));
+ --methods-panel-chip-border: color-mix(in srgb,var(--methods-signal) 22%,transparent);
+ --methods-panel-chip-fg: var(--dark);
+ gap: clamp(2.6rem,5vw,4rem);
+}
+:root[saved-theme="dark"] .knowledge-methods-page {
+ --methods-signal: #e2a35a;
+ --methods-surface: color-mix(in srgb,var(--light) 93%,var(--dark));
+ --methods-panel-bg: var(--methods-surface);
+ --methods-panel-fg: var(--dark);
+ --methods-panel-muted: var(--darkgray);
+ --methods-panel-border: var(--methods-line);
+ --methods-panel-line: var(--methods-line);
+ --methods-panel-accent: var(--methods-signal);
+ --methods-panel-accent-soft: color-mix(in srgb,var(--methods-signal) 10%,transparent);
+ --methods-panel-chip-bg: color-mix(in srgb,var(--light) 94%,var(--methods-signal));
+ --methods-panel-chip-border: color-mix(in srgb,var(--methods-signal) 22%,transparent);
+ --methods-panel-chip-fg: var(--dark);
+}
+.knowledge-methods-page .knowledge-methods-section { gap: 1.1rem; }
+.knowledge-methods-page .knowledge-methods-section-head { gap: 1rem 1.5rem; padding-bottom: .9rem; border-bottom: 1px solid var(--methods-line); }
+.knowledge-methods-page .knowledge-methods-section-head h2 { font-size: clamp(1.7rem,3vw,2.35rem); line-height: 1.15; margin-top: .35rem; }
+.knowledge-methods-page .knowledge-methods-section-head > p { font-size: .86rem; line-height: 1.6; max-width: 22rem; }
+.knowledge-methods-page .knowledge-methods-tool-grid { gap: 1rem; align-items: stretch; }
+.knowledge-methods-page .knowledge-methods-tool:nth-child(n) { box-sizing: border-box; min-height: 0; padding: 1.3rem; gap: .7rem; background: color-mix(in srgb,var(--light) 96%,var(--tool-tone)); }
+.knowledge-methods-page .knowledge-methods-tool { --tool-tone: var(--methods-signal); }
+.knowledge-methods-page .knowledge-methods-tool.tool-2 { --tool-tone: color-mix(in srgb,var(--methods-signal) 65%,#9a7264); }
+.knowledge-methods-page .knowledge-methods-tool.tool-3 { --tool-tone: color-mix(in srgb,var(--methods-signal) 50%,#77816b); }
+.knowledge-methods-page .knowledge-methods-tool.tool-4 { --tool-tone: color-mix(in srgb,var(--methods-signal) 45%,#7b8287); }
+.knowledge-methods-page .knowledge-methods-tool.tool-5 { --tool-tone: color-mix(in srgb,var(--methods-signal) 75%,#94775e); }
+.knowledge-methods-page .method-tool-intro { min-height: 10.6rem; }
+.knowledge-methods-page .method-tool-intro > span { color: var(--methods-signal); }
+.knowledge-methods-page .method-tool-intro h3 { margin: .85rem 0 .25rem; line-height: 1.3; }
+.knowledge-methods-page .method-tool-intro > small { display: block; font-size: .85rem; line-height: 1.5; }
+.knowledge-methods-page .method-tool-intro > p { margin: .85rem 0 0; font-size: .93rem; line-height: 1.65; }
+.knowledge-methods-page .knowledge-methods-tool > .method-tool-intro + .method-tool-reading { margin-top: 0; }
+.knowledge-methods-page .method-tool-reading > header { min-height: 2.1rem; margin: 0 0 .45rem; gap: .4rem; }
+.knowledge-methods-page .method-tool-reading { min-height: 5.8rem; }
+.knowledge-methods-page .method-tool-reading > a { max-width: 100%; background: color-mix(in srgb,var(--light) 92%,var(--tool-tone)) !important; }
+.knowledge-methods-page .method-tool-reading strong { line-height: 1.5; overflow-wrap: anywhere; }
+.knowledge-methods-page .method-tool-reading button { padding: .4rem .2rem .4rem .45rem; white-space: nowrap; }
+.knowledge-methods-page .knowledge-methods-book { --book-tone: var(--methods-signal); background: var(--methods-surface); border-color: var(--methods-line); }
+.knowledge-methods-page .knowledge-methods-book.book-2 { --book-tone: color-mix(in srgb,var(--methods-signal) 55%,#77816b); }
+.knowledge-methods-page .knowledge-methods-book.book-3 { --book-tone: color-mix(in srgb,var(--methods-signal) 75%,#94775e); }
+.knowledge-methods-page .knowledge-methods-roadmap { background: var(--methods-panel-bg); }
+.knowledge-methods-page .knowledge-methods-random-card { background-color: var(--methods-surface); }
+.knowledge-methods-page .knowledge-methods-random-card > header small { color: var(--methods-signal); }
+.knowledge-methods-page .knowledge-methods-random-item { height: 11rem; gap: .65rem; }
+.knowledge-methods-page .knowledge-methods-random-card > header { margin-bottom: .2rem; }
+.knowledge-methods-page .knowledge-methods-update > time { color: var(--methods-signal); }
+@media (max-width: 900px) {
+ .knowledge-methods-page .method-tool-intro { min-height: 9.3rem; }
+ .knowledge-methods-page .knowledge-methods-tool:last-child .method-tool-intro { min-height: 0; margin-bottom: .7rem; }
+}
+@media (max-width: 600px) {
+ .knowledge-methods-page { gap: 2.6rem; }
+ .knowledge-methods-page .knowledge-methods-section-head { align-items: flex-start; gap: .8rem; }
+ .knowledge-methods-page .knowledge-methods-section-head > p { text-align: left; }
+ .knowledge-methods-page .knowledge-methods-tool:nth-child(n) { padding: 1.2rem; }
+ .knowledge-methods-page .method-tool-intro { min-height: 0; margin-bottom: .7rem; }
+ .knowledge-methods-page .method-tool-reading { min-height: 0; }
+}
+
 `
 
   Component.css += evidenceCss

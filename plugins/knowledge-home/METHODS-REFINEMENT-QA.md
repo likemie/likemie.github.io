@@ -141,3 +141,23 @@ The corrected build succeeds. All 13 component tests still pass. Browser checks
 confirm the desktop 3+2 arrangement, tablet/phone layouts, both themes, no horizontal
 overflow, one visible related reading per card, fixed Classroom Observation, and
 working refresh buttons. Desktop and phone screenshots were inspected directly.
+
+### Evidence-page spacing and palette reference
+
+Keep the restored 3+2 toolkit grid. Match the evidence page's section rhythm
+(2.6–4rem), 1rem card gutters, 1.1rem heading/content spacing, and subtle heading
+rules. The shared local accent now uses the evidence page's accessible amber
+(#a35d12 in light mode, #e2a35a in dark mode). Neutral surfaces replace the strong
+blue roadmap field; the five toolkit tints stay distinct within a muted warm
+palette. Fixed/random reading regions reserve consistent space, so a two-line
+random title no longer moves the fixed-reading divider in adjacent desktop cards.
+The underlying pool rules, native links, and independent refresh are unchanged.
+No vault text or writing exceptions were edited.
+
+The expanded fixture builds successfully (1,105 inputs / 5,767 outputs). All 13
+component tests pass. Real-browser checks at 1440, 768 and 390 pixels in both
+modes confirm the expected amber values, neutral roadmap background, 3+2 desktop
+layout, aligned first-row reading dividers, no horizontal overflow, and working
+random refresh. All 24 section captures were reviewed, with direct close-ups of
+the desktop light roadmap and phone dark toolkit. This pass also corrects the
+legacy body theme class overriding light-mode panel colors.
