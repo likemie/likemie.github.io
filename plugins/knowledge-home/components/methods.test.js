@@ -28,3 +28,46 @@ test("method discovery includes every categorized candidate, including latest en
   assert.equal(rebuilt.random.find((g) => g.key === "quantitative").count, 16)
   assert(rebuilt.random.find((g) => g.key === "quantitative").pages.includes(added))
 })
+
+test("featured methods keep one fixed reading and trace both directions without a candidate cap", () => {
+  const observation = page("Observation Method", "wiki/methods/qualitative/observation")
+  const classroom = page("Classroom Observation", "wiki/methods/qualitative/classroom")
+  const variant = page("Structured Observation", "wiki/methods/qualitative/structured")
+  const outward = page("Observation Protocol", "wiki/methods/qualitative/protocol")
+  observation.links = [outward.slug]
+  const incoming = Array.from({ length: 20 }, (_, i) => ({
+    ...page(`Related ${i}`, `wiki/instruments/tool-${i}`),
+    links: [classroom.slug],
+  }))
+  const variantChild = {
+    ...page("New variant tool", "wiki/methods/qualitative/new"),
+    links: [variant.slug],
+  }
+  const unrelated = page("Unrelated", "wiki/methods/qualitative/unrelated")
+  const outside = { ...page("Person", "wiki/persons/someone"), links: [classroom.slug] }
+  const pages = [
+    observation,
+    classroom,
+    variant,
+    outward,
+    ...incoming,
+    variantChild,
+    unrelated,
+    outside,
+  ]
+  const method = methodsTopicData(pages, "2026-10-22").methods[0]
+  assert.equal(method.fixedPage, classroom)
+  assert(method.related.includes(observation))
+  assert(method.related.includes(outward))
+  assert(method.related.includes(variantChild))
+  assert(incoming.every((p) => method.related.includes(p)))
+  assert(!method.related.includes(classroom))
+  assert(!method.related.includes(unrelated))
+  assert(!method.related.includes(outside))
+  assert.equal(new Set(method.related).size, method.related.length)
+  const added = {
+    ...page("New related method", "wiki/methods/qualitative/added"),
+    links: [classroom.slug],
+  }
+  assert(methodsTopicData([...pages, added], "2026-10-23").methods[0].related.includes(added))
+})

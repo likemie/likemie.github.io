@@ -59,3 +59,70 @@ Scores: design 6.5 · usability 8.0 · creativity 6.5 · content 8.5 → overall
 Caps: unresolved generic visual gate; scores do not imply its approval.
 Top three fixes: replace narrow columns with wider cards; separate recent updates
 from the card grid; remove candidate caps and keep new/latest entries eligible.
+
+## Focused toolkit and compact ledger update (2026-10-22)
+
+The five toolkit rows now separate the method introduction, one fixed reading,
+and one independently drawn related reading. Observation fixes **Classroom
+Observation**; the other rows fix Experimental Research, Questionnaire,
+Qualitative Interview, and Action Research. Each related reading displays its
+existing vault summary. Full titles and summaries remain available as tooltips.
+Desktop latest rows measure 65px in the expanded preview fixture. Metadata moves
+beside the title/summary, and phone rows keep metadata above the copy.
+
+Discovery adds a fine CSS surface grain, inset edge, pointer light sweep and a
+short reveal when the selected entry changes. Reduced-motion preferences disable
+these effects. The surrounding Quartz typography and theme colors remain intact.
+The compact list hierarchy takes its reference from the Linear analysis in
+VoltAgent/awesome-design-md; this is a component refinement, not a theme replacement.
+
+### Tracing and automatic membership
+
+Read the vault index, method definitions and linked passages for Observation
+Method, Classroom Observation, Experimental Research, Questionnaire, Qualitative
+Interview and Action Research. Followed the corresponding Cohen et al. (2011)
+chapter Arguments on action research, questionnaires, interviews and observation.
+No original PDF verification is claimed and no vault prose was changed.
+
+Each build starts from the method plus its existing variant entries:
+
+- Observation: Classroom Observation, Participant Observation, Non-participant
+  Observation, Structured Observation; also Observation Method.
+- Experiment: True Experimental Design, Quasi-Experimental Designs,
+  Pre-Experimental Designs; also Experimental Research.
+- Questionnaire: Questionnaire Wording, Open-Ended and Closed-Ended Data,
+  Response Bias; also Questionnaire.
+- Interview: Semi-structured Interview, In-depth Interview, Group Interview;
+  also Qualitative Interview.
+- Action: Participatory Action Research, Emancipatory Action Research;
+  also Action Research.
+
+All eligible roots and their direct outgoing and incoming link neighbors enter
+the matching pool. Eligibility covers methods, instruments, and concepts under
+research-methodology, statistics and measurement. The fixed reading is excluded;
+there is no candidate limit. These are **related readings**, including tools,
+quality checks and contrasting designs, rather than a claim that every neighbor
+is a subtype. Unbounded traversal would eventually merge the five pools, so the
+traversal stops one edge from these method/variant roots. New entries linked to
+any root are included automatically on the next published vault build. Unlinked
+entries need a relevant vault link to qualify.
+
+The expanded local corpus contains 1,105 Markdown inputs and emits 5,767 files.
+Its toolkit pools contain 121 / 120 / 185 / 108 / 39 candidates respectively;
+these are preview counts, not a frozen production list.
+
+### Verification
+
+Thirteen component tests pass. The added regression covers both link directions,
+variant neighbors, new-entry inclusion, deduplication, fixed-reading exclusion,
+and more than eight candidates. Browser checks at 1440, 768 and 390 pixels in
+both themes verify one fixed and one visible random reading per method,
+independent refresh, last-candidate reachability, compact row heights, no page
+overflow, all distinct rendered reading destinations, and reduced motion.
+Section screenshots in both themes and full-page inspector sheets were reviewed.
+A final visual pass removed inherited pill backgrounds from the toolkit links.
+The generic page-wide inspector reports 12 FAIL / 8 WARN, including retained
+page/chrome patterns and the requested textured surface. Whole-component source
+style lint reports 222 FAIL / 93 WARN across this large existing multi-page file.
+These broad style gates remain unmet; no findings were suppressed or claimed to pass.
+No new writing exceptions were approved.
