@@ -1084,23 +1084,6 @@ function renderMethodStageReading(item, label) {
     h(
       "div",
       { class: "method-stage-draw" },
-      h(
-        "header",
-        null,
-        h("span", null, "随机延伸", h("small", null, `${formatCount(item.random.count)} 条`)),
-        h(
-          "button",
-          {
-            type: "button",
-            class: "method-stage-shuffle",
-            "data-method-flow-refresh": item.random.key,
-            "aria-label": `更换${label}的随机延伸`,
-            disabled: item.random.count < 2,
-          },
-          methodShuffleIcon(),
-          h("span", null, "换一条"),
-        ),
-      ),
       item.random.pages.length
         ? item.random.pages.map((page, index) =>
             h(
@@ -1110,13 +1093,24 @@ function renderMethodStageReading(item, label) {
                 href: hrefFor(page),
                 "data-method-flow-item": item.random.key,
                 hidden: index > 0 ? true : undefined,
-                title: titleFor(page),
+                title: `${titleFor(page)}\n${summaryFor(page)}`,
               },
-              h("strong", null, titleFor(page)),
-              h("p", { title: summaryFor(page) }, summaryFor(page)),
+              titleFor(page),
             ),
           )
-        : h("p", { class: "method-stage-empty" }, "暂无延伸条目"),
+        : h("small", { class: "method-stage-empty" }, "暂无延伸条目"),
+      h(
+        "button",
+        {
+          type: "button",
+          class: "method-stage-shuffle method-stage-shuffle-icon",
+          "data-method-flow-refresh": item.random.key,
+          "aria-label": `更换${label}的随机延伸（${formatCount(item.random.count)} 条候选）`,
+          title: `换一条 · ${formatCount(item.random.count)} 条候选`,
+          disabled: item.random.count < 2,
+        },
+        methodShuffleIcon(),
+      ),
     ),
   )
 }
@@ -9793,58 +9787,34 @@ body[data-slug="index"] .center > article.popover-hint + hr {
  .knowledge-methods-page .knowledge-methods-path { gap: .5rem; padding: .9rem; }
 }
 
-/* Stage-specific draws sit beside their stable reading anchors. */
+/* Random extensions use the same compact reading tags as fixed anchors. */
 .knowledge-methods-page .method-stage-reading { margin-top: .9rem; min-width: 0; }
 .knowledge-methods-page .method-stage-fixed-label { display: block; color: var(--methods-panel-muted); font-size: .73rem; margin-bottom: .45rem; }
-.knowledge-methods-page .method-stage-reading > .knowledge-methods-stage-links { min-height: 3.4rem; align-content: start; margin-top: 0; }
-.knowledge-methods-page .method-stage-draw { margin-top: .8rem; padding: .8rem; border: 1px solid color-mix(in srgb,var(--methods-signal) 22%,var(--methods-line)); border-radius: .65rem; background: color-mix(in srgb,var(--light) 96%,var(--methods-signal)); }
-.knowledge-methods-page .method-stage-draw > header { display: flex; align-items: center; justify-content: space-between; gap: .4rem; margin-bottom: .55rem; }
-.knowledge-methods-page .method-stage-draw > header > span { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem; font-size: .78rem; color: var(--methods-signal); }
-.knowledge-methods-page .method-stage-draw > header small { font-size: .7rem; color: var(--methods-panel-muted); white-space: nowrap; }
-.knowledge-methods-page .method-stage-shuffle, .knowledge-methods-page .method-tool-reading button.method-stage-shuffle { display: inline-flex; align-items: center; justify-content: center; gap: .3rem; flex-shrink: 0; min-height: 36px; padding: .35rem .55rem; border-radius: 999px; border: 1px solid color-mix(in srgb,var(--methods-signal) 32%,transparent); background: var(--light); color: var(--methods-signal); font: inherit; font-size: .74rem; cursor: pointer; transition: background 160ms ease,transform 160ms ease; }
+.knowledge-methods-page .method-stage-reading > .knowledge-methods-stage-links { margin-top: 0; }
+.knowledge-methods-page .method-stage-draw { display: flex; align-items: center; gap: .25rem; margin-top: .45rem; min-width: 0; }
+.knowledge-methods-page a.method-stage-random-item { display: inline-block; box-sizing: border-box; max-width: calc(100% - 2.5rem); padding: .3rem .65rem; border: 1px dashed var(--methods-panel-chip-border); border-radius: 999px; background: var(--methods-panel-chip-bg); color: var(--methods-panel-chip-fg); font-size: .78rem; font-weight: 600; line-height: 1.5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.knowledge-methods-page .method-stage-random-item[hidden] { display: none !important; }
+.knowledge-methods-page .method-stage-random-item:not([hidden]) { animation: method-reading-in 200ms ease both; }
+.knowledge-methods-page a.method-stage-random-item:hover { border-color: var(--methods-signal); color: var(--methods-signal); }
+.knowledge-methods-page .method-stage-shuffle, .knowledge-methods-page .method-tool-reading button.method-stage-shuffle { display: inline-flex; align-items: center; justify-content: center; gap: .3rem; flex-shrink: 0; min-height: 36px; padding: .35rem .55rem; border-radius: 999px; border: 1px solid color-mix(in srgb,var(--methods-signal) 25%,transparent); background: transparent; color: var(--methods-signal); font: inherit; font-size: .74rem; cursor: pointer; transition: background 160ms ease,transform 160ms ease; }
+.knowledge-methods-page button.method-stage-shuffle-icon { width: 36px; height: 36px; padding: 0; border-color: transparent; }
 .knowledge-methods-page .method-stage-shuffle svg { flex-shrink: 0; transition: transform 220ms ease; }
-.knowledge-methods-page .method-stage-shuffle:hover { background: color-mix(in srgb,var(--light) 88%,var(--methods-signal)); }
+.knowledge-methods-page .method-stage-shuffle:hover { background: var(--methods-panel-accent-soft); }
 .knowledge-methods-page .method-stage-shuffle:hover svg { transform: rotate(-12deg); }
 .knowledge-methods-page .method-stage-shuffle:active { transform: scale(.96); }
-.knowledge-methods-page .method-stage-shuffle:focus-visible { outline: 2px solid var(--methods-signal); outline-offset: 3px; }
+.knowledge-methods-page .method-stage-shuffle:focus-visible,
+.knowledge-methods-page .method-stage-random-item:focus-visible { outline: 2px solid var(--methods-signal); outline-offset: 3px; }
 .knowledge-methods-page .method-stage-shuffle:disabled { cursor: default; opacity: .45; }
-.knowledge-methods-page .method-stage-random-item { display: block; min-height: 5.2rem; color: var(--dark); background: none; padding: 0; }
-.knowledge-methods-page .method-stage-random-item[hidden] { display: none !important; }
-.knowledge-methods-page .method-stage-random-item:not([hidden]) { animation: method-reading-in 240ms ease both; }
-.knowledge-methods-page .method-stage-random-item strong { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-size: .9rem; line-height: 1.5; }
-.knowledge-methods-page .method-stage-random-item p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; margin: .35rem 0 0; font-size: .8rem; line-height: 1.6; font-weight: 400; color: var(--methods-panel-muted); }
-.knowledge-methods-page .method-stage-random-item:hover strong { color: var(--methods-signal); }
 .knowledge-methods-page .method-path-reading { margin-top: auto; min-width: 0; }
 .knowledge-methods-page .method-stage-empty { font-size: .8rem; color: var(--methods-panel-muted); }
-@media (max-width: 900px) { .knowledge-methods-page .method-stage-shuffle { min-height: 44px; } }
+@media (max-width: 900px) {
+ .knowledge-methods-page .method-stage-shuffle { min-height: 44px; }
+ .knowledge-methods-page button.method-stage-shuffle-icon { width: 44px; height: 44px; }
+ .knowledge-methods-page a.method-stage-random-item { max-width: calc(100% - 3rem); }
+}
 @media (prefers-reduced-motion: reduce) {
  .knowledge-methods-page .method-stage-random-item { animation: none !important; }
  .knowledge-methods-page .method-stage-shuffle, .knowledge-methods-page .method-stage-shuffle svg { transition: none; transform: none !important; }
-}
-
-
-.knowledge-methods-page .method-stage-reading > .knowledge-methods-stage-links { min-height: 5rem; }
-.knowledge-methods-page .method-stage-random-item { height: 6rem; min-height: 0; overflow: hidden; }
-.knowledge-methods-page .knowledge-methods-path > p { min-height: 4.5rem; }
-.knowledge-methods-page .knowledge-methods-path .method-stage-draw > header { min-height: 3rem; }
-.knowledge-methods-page .stage-collection .method-stage-reading,
-.knowledge-methods-page .stage-report .method-stage-reading { display: grid; grid-template-columns: minmax(0,.85fr) minmax(0,1.15fr); gap: .45rem 1.2rem; align-items: start; }
-.knowledge-methods-page .stage-collection .method-stage-fixed-label,
-.knowledge-methods-page .stage-report .method-stage-fixed-label { grid-column: 1; grid-row: 1; margin: 0; }
-.knowledge-methods-page .stage-collection .method-stage-reading > .knowledge-methods-stage-links,
-.knowledge-methods-page .stage-report .method-stage-reading > .knowledge-methods-stage-links { grid-column: 1; grid-row: 2; min-height: 0; }
-.knowledge-methods-page .stage-collection .method-stage-draw,
-.knowledge-methods-page .stage-report .method-stage-draw { grid-column: 2; grid-row: 1 / 3; margin-top: 0; }
-@media (max-width: 700px) {
- .knowledge-methods-page .method-stage-reading > .knowledge-methods-stage-links { min-height: 0; }
- .knowledge-methods-page .knowledge-methods-path > p { min-height: 0; }
- .knowledge-methods-page .knowledge-methods-path .method-stage-draw > header { min-height: 0; }
- .knowledge-methods-page .stage-collection .method-stage-reading,
- .knowledge-methods-page .stage-report .method-stage-reading { display: block; }
- .knowledge-methods-page .stage-collection .method-stage-fixed-label,
- .knowledge-methods-page .stage-report .method-stage-fixed-label { margin-bottom: .45rem; }
- .knowledge-methods-page .stage-collection .method-stage-draw,
- .knowledge-methods-page .stage-report .method-stage-draw { margin-top: .8rem; }
 }
 
 `

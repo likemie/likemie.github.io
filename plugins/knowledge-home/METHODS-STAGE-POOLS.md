@@ -13,7 +13,7 @@ control styling.
 | Review                | Literature Search; Literature Review; Research Purpose                   | Search strategies, literature mapping, research rationale and proposals          |
 | Questions             | Research Question; Variable; Operationalization                          | Research-methodology questions, hypotheses, concepts and measurement definitions |
 | Sampling              | Study Population and Sample; Unit of Analysis; Sample Size Determination | Sampling strategies, access, saturation, attrition and power planning            |
-| Qualitative design    | Case Study; Ethnography                                                  | Qualitative case, ethnographic, narrative and grounded-theory designs            |
+| Qualitative design    | Case Study; Ethnography                                                  | Case, ethnographic, narrative, grounded-theory, historical and participatory paths            |
 | Quantitative design   | Survey Research; Experimental Research                                   | Experimental, survey and longitudinal designs, allocation and design controls    |
 | Mixed design          | Convergent Design; Explanatory Sequential Design                         | Mixed-method design families, including exploratory and embedded designs         |
 | Collection            | Questionnaire; Qualitative Interview; Observation Method                 | Collection procedures, field records, protocols and measurement instruments      |
@@ -52,13 +52,25 @@ Important exclusions verified with regression tests:
 
 ## Controls and layout
 
-A compact native button combines a shuffle glyph with “换一条”, an accessible
-stage-specific label, visible keyboard focus and pressed/hover feedback. Touch
-viewports use 44px targets. Every control affects only its own pool. Fixed links
-stay stable. Summary text comes from the existing vault summary and is clamped to
-two lines with the complete text available as a tooltip. Reduced motion disables
-reveal and icon animation. Collection and reporting use side-by-side fixed/random
-reading areas on desktop, stacking on phones.
+Random readings are capsule links matching the fixed anchors, with a dashed border
+and an adjacent icon-only shuffle button. Full titles and existing summaries are
+available in the native link tooltip; long labels truncate instead of expanding
+the card. The button tooltip states the candidate count; its accessible label
+also names the stage. Touch buttons remain 44px. Each control affects only its
+own pool, while fixed links stay stable. Reduced motion disables reveal and icon
+animation.
+
+The qualitative directory currently contains 134 entries, spanning design,
+collection, sampling and analysis. The previous eight random readings were only
+the narrow design-family matches after two fixed anchors were excluded. Reading
+the definitions, method-stack sections and linked Cohen chapters identified ten
+additional related paths: Archival Research, Ethogenic Approach, Feminist Research,
+Fieldwork, Historical-Comparative Method, Participatory Research, Participatory
+Action Research, Emancipatory Action Research, Practitioner Enquiry and Process
+Tracing. This yields 18 random extensions plus the two fixed anchors. These are
+related design readings, not a claim that participatory/feminist approaches can
+only use qualitative data. Visual Research Methods remains a collection approach;
+interview and coding entries are not moved into design to inflate its count.
 
 ## Deployment error repaired in the vault
 

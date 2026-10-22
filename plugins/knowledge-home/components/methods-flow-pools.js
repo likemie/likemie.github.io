@@ -52,7 +52,7 @@ export const methodsFlowPoolRules = {
     qualitative(p) &&
     named(
       p,
-      /^(.*ethnography|.*phenomenolog.*|.*grounded theory.*|.*case study|narrative (research|inquiry)|life history|biographical research)$/i,
+      /^(.*ethnography|.*phenomenolog.*|.*grounded theory.*|.*case study|narrative (research|inquiry)|life history|biographical research|archival research|ethogenic approach|feminist research|fieldwork|historical-comparative method|participatory research|.*action research|practitioner enquiry|process tracing)$/i,
     ),
   quantitativeDesign: (p) =>
     quantitative(p) &&

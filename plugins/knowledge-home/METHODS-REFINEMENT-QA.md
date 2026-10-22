@@ -199,3 +199,22 @@ reviewed, including direct desktop and phone close-ups.
 The full-page inspector remains unmet at 11 FAIL / 6 WARN for the retained page
 patterns and shared chrome. The inspection is recorded separately from the
 passing functional/layout checks; it is not claimed as a visual-gate pass.
+
+### Compact random tags and qualitative pool audit
+
+- Replaced roadmap random summary panels with ~30px capsule links and icon-only
+  refresh controls. Long titles truncate; link tooltips retain full titles and
+  existing summaries. Button tooltips and accessible labels expose pool counts.
+- Audited the 134 indexed qualitative-method entries. Expanded qualitative path
+  extensions from 8 to 18 after reading the ten added entries' definitions and
+  scope/method-stack passages, plus the linked Cohen Chapters 1, 2 and 18. This
+  audit used vault notes and Arguments, not original PDFs. The scope is related
+  design readings; collection and coding remain in their separate pools.
+- 17 component tests pass. Preview: 1,110 inputs, 5,799 emitted files. Browser
+  checks pass at 1440/768/390 in both themes: 12 independent pools, fixed anchors,
+  all candidate reachability, destinations, no horizontal overflow, compact
+  single-line tags, summary tooltips, 18 qualitative candidates, 44px touch
+  refresh buttons and reduced motion. Screenshots reviewed in both themes.
+- Generic whole-page inspector still reports 13 FAIL / 6 WARN, unchanged from the
+  previous audit. This is not a claim that the full-page style gate passes.
+- No vault prose was changed and no writing exceptions were added.
