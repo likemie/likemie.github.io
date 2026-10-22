@@ -126,3 +126,18 @@ page/chrome patterns and the requested textured surface. Whole-component source
 style lint reports 222 FAIL / 93 WARN across this large existing multi-page file.
 These broad style gates remain unmet; no findings were suppressed or claimed to pass.
 No new writing exceptions were approved.
+
+### Toolkit appearance correction
+
+Following user feedback, restore the original colored toolkit cards: three cards
+in the first desktop row and two wider cards below. Keep the category color,
+English method name, short introduction and pill-shaped reading links. Fixed and
+random readings remain separately labeled, and each random draw stays independent.
+Inline reading summaries are hidden here to recover the original card density;
+the discovery and latest-entry summaries are unchanged. At tablet width use two
+columns; phones use one. Candidate selection and membership are unchanged.
+
+The corrected build succeeds. All 13 component tests still pass. Browser checks
+confirm the desktop 3+2 arrangement, tablet/phone layouts, both themes, no horizontal
+overflow, one visible related reading per card, fixed Classroom Observation, and
+working refresh buttons. Desktop and phone screenshots were inspected directly.

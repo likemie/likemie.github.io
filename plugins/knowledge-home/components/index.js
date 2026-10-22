@@ -1217,6 +1217,7 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
               { class: "method-tool-intro" },
               h("span", null, `Method ${String(index + 1).padStart(2, "0")}`),
               h("h3", null, method.label),
+              h("small", null, method.title),
               h("p", null, method.description),
             ),
             h(
@@ -9540,21 +9541,25 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 }
 
 /* Focused readings: one stable anchor and one independent graph draw. */
-.knowledge-methods-page .knowledge-methods-tool-grid { display: grid; grid-template-columns: 1fr; gap: .65rem; }
-.knowledge-methods-page .knowledge-methods-tool:nth-child(n) { grid-column: auto; display: grid; grid-template-columns: .9fr 1fr 1fr; gap: 1.4rem; padding: 1.2rem; min-height: 0; border-radius: 10px; border: 1px solid var(--lightgray); background: var(--light); border-top: 1px solid var(--lightgray); }
+.knowledge-methods-page .knowledge-methods-tool-grid { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 1.1rem; }
+.knowledge-methods-page .knowledge-methods-tool:nth-child(n) { grid-column: span 2; display: flex; flex-direction: column; gap: .7rem; padding: 1.2rem; min-height: 22rem; border-radius: .85rem; border: 1px solid color-mix(in srgb,var(--tool-tone) 28%,var(--lightgray)); background: radial-gradient(circle at 92% 8%,color-mix(in srgb,var(--tool-tone) 12%,transparent),transparent 36%),color-mix(in srgb,var(--light) 97%,var(--tool-tone)); }
+.knowledge-methods-page .knowledge-methods-tool:nth-last-child(-n + 2) { grid-column: span 3; }
 .knowledge-methods-page .knowledge-methods-tool > div { display: block; margin: 0; padding: 0; border: 0; min-width: 0; }
-.knowledge-methods-page .method-tool-intro > span { color: var(--secondary); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
-.knowledge-methods-page .method-tool-intro h3 { font-size: 1.35rem; margin: .35rem 0; }
-.knowledge-methods-page .method-tool-intro > p { font-size: .9rem; line-height: 1.55; margin: 0; font-weight: 400; }
+.knowledge-methods-page .method-tool-intro > span { color: var(--tool-tone); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
+.knowledge-methods-page .method-tool-intro h3 { font-size: 1.55rem; margin: 1.1rem 0 .2rem; }
+.knowledge-methods-page .method-tool-intro > small { font-size: .86rem; color: var(--darkgray); }
+.knowledge-methods-page .method-tool-intro > p { font-size: .94rem; line-height: 1.6; margin: 1rem 0 .7rem; font-weight: 400; }
+.knowledge-methods-page .knowledge-methods-tool > .method-tool-reading { padding-top: .45rem; border-top: 1px solid color-mix(in srgb,var(--tool-tone) 18%,var(--lightgray)); }
+.knowledge-methods-page .knowledge-methods-tool > .method-tool-intro + .method-tool-reading { margin-top: auto; }
 .knowledge-methods-page .method-tool-reading > header { display: flex; align-items: center; justify-content: space-between; gap: .4rem; min-height: 2.2rem; margin-bottom: .3rem; }
 .knowledge-methods-page .method-tool-reading small { font-size: .78rem; color: var(--darkgray); }
 .knowledge-methods-page .method-tool-reading button { border: 0; border-radius: 5px; padding: .4rem .5rem; color: var(--secondary); background: transparent; font: inherit; font-size: .8rem; cursor: pointer; min-height: 36px; }
 .knowledge-methods-page .method-tool-reading button:hover { background: color-mix(in srgb,var(--secondary) 10%,transparent); }
-.knowledge-methods-page .method-tool-reading > a { display: block; width: auto; background: transparent !important; border: 0; border-radius: 0; padding: 0; margin: 0; color: var(--dark); min-height: 6rem; animation: method-reading-in 280ms ease both; }
+.knowledge-methods-page .method-tool-reading > a { display: inline-block; width: fit-content; max-width: 100%; box-sizing: border-box; background: color-mix(in srgb,var(--tool-tone) 9%,transparent) !important; border: 1px solid color-mix(in srgb,var(--tool-tone) 22%,transparent); border-radius: 999px; padding: .4rem .65rem; margin: 0; color: var(--dark); min-height: 0; animation: method-reading-in 280ms ease both; }
 .knowledge-methods-page .method-tool-reading > a[hidden] { display: none !important; }
-.knowledge-methods-page .method-tool-reading strong { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 1rem; line-height: 1.4; }
-.knowledge-methods-page .method-tool-reading a p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: .88rem; line-height: 1.6; font-weight: 400; color: var(--darkgray); margin: .45rem 0 0; }
-.knowledge-methods-page .method-tool-reading > a:hover { background: transparent !important; transform: none; }
+.knowledge-methods-page .method-tool-reading strong { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: .92rem; line-height: 1.4; }
+.knowledge-methods-page .method-tool-reading a p { display: none; }
+.knowledge-methods-page .method-tool-reading > a:hover { background: color-mix(in srgb,var(--tool-tone) 17%,transparent) !important; transform: none; }
 .knowledge-methods-page .method-tool-reading a:hover strong { color: var(--secondary); }
 .knowledge-methods-page .method-tool-reading :focus-visible { outline: 2px solid var(--secondary); outline-offset: 4px; }
 .knowledge-methods-page .knowledge-methods-random-card { position: relative; overflow: hidden; isolation: isolate; background-image: repeating-linear-gradient(115deg,transparent 0 3px,color-mix(in srgb,var(--dark) 2%,transparent) 3px 4px); box-shadow: inset 0 1px color-mix(in srgb,var(--light) 75%,var(--secondary)), inset 0 0 0 1px color-mix(in srgb,var(--secondary) 16%,transparent); transition: transform 220ms ease,box-shadow 220ms ease,background-color 220ms ease; }
@@ -9569,14 +9574,17 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-methods-page .knowledge-methods-update-copy p { font-size: .88rem; line-height: 1.45; margin: .2rem 0 0; }
 .knowledge-methods-update-meta { font-size: .76rem; color: var(--darkgray); text-align: right; font-weight: 400; }
 @media (max-width: 900px) {
- .knowledge-methods-page .knowledge-methods-tool:nth-child(n) { grid-template-columns: 1fr 1fr; gap: .8rem 1.2rem; }
+ .knowledge-methods-page .knowledge-methods-tool-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+ .knowledge-methods-page .knowledge-methods-tool:nth-child(n) { grid-column: auto; }
+ .knowledge-methods-page .knowledge-methods-tool:last-child { grid-column: 1 / -1; }
  .knowledge-methods-page .method-tool-intro { grid-column: 1 / -1; }
  .knowledge-methods-page .method-tool-reading button { min-height: 44px; }
  .knowledge-methods-page .knowledge-methods-update { grid-template-columns: 5.4rem minmax(0,1fr) 1rem; }
  .knowledge-methods-update-meta { display: none; }
 }
 @media (max-width: 600px) {
- .knowledge-methods-page .knowledge-methods-tool:nth-child(n) { grid-template-columns: 1fr; padding: 1rem; }
+ .knowledge-methods-page .knowledge-methods-tool-grid { grid-template-columns: 1fr; }
+ .knowledge-methods-page .knowledge-methods-tool:nth-child(n) { grid-column: auto; padding: 1.1rem; min-height: 0; }
  .knowledge-methods-page .method-tool-intro { grid-column: auto; }
  .knowledge-methods-page .knowledge-methods-update { grid-template-columns: minmax(0,1fr) auto 1rem; gap: .2rem .5rem; padding: .65rem .2rem; }
  .knowledge-methods-page .knowledge-methods-update > time { grid-column: 1; grid-row: 1; font-size: .73rem; }
