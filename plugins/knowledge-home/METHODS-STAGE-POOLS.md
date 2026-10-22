@@ -4,8 +4,9 @@ Random discovery is integrated into the research roadmap. The standalone
 four-category section is removed. Each regular stage and each approach/analysis
 branch has two or three fixed links plus one independently drawn extension.
 **Literature Search remains fixed in the review stage.** The five featured-method
-cards retain their separate fixed/related readings and share the new shuffle
-control styling.
+cards retain their separate anchored/related readings and share the shuffle
+control styling. Reading-status headings are omitted; candidate counts remain
+in native control tooltips and accessible labels.
 
 | Reading group         | Fixed anchors                                                            | Extension family                                                                 |
 | --------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------- |

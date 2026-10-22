@@ -237,3 +237,22 @@ passing functional/layout checks; it is not claimed as a visual-gate pass.
   candidate screenshots reviewed for approach, analysis and ethics. Fixed anchors,
   native destinations, independent refresh, reachability and reduced motion pass.
 - No writing exceptions added.
+
+### Reading labels removed on both topic pages
+
+- Removed visible fixed/random/related reading-status headers and the evidence
+  chapter's fixed-plus-random badge. Counts remain in control tooltips and
+  accessible labels. Counter-reading links retain their content labels.
+- Removed the headers' reserved spacing. Evidence draws place their refresh
+  control below the entry. Featured methods place a compact control beside the
+  related tag when space permits, wrapping naturally on smaller cards.
+- Added a faint, masked dot pattern to evidence chapter bodies and the lower
+  corners of featured-method cards, preserving existing surfaces and palette.
+  Pseudo-elements cannot receive pointer events; print output omits the texture.
+- 18 component tests pass; preview builds 1,114 inputs into 5,821 files. Both pages
+  checked at 1440/768/390 in both themes: no status labels in visible text, no
+  horizontal overflow, native links and independent draws remain functional.
+  Screenshots reviewed for chapter alignment, card spacing and corner texture.
+- Whole-page inspector reports remain outside the component gate: methods
+  13 FAIL / 6 WARN, evidence 12 FAIL / 10 WARN. No claim of full style-gate success.
+- No vault prose rewritten; no writing exceptions added.

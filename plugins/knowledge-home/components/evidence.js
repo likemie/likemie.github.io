@@ -1259,8 +1259,6 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
     h(
       "li",
       props,
-      props["data-fixed-reading"] &&
-        h("h4", { class: "ev-method-label ev-method-fixed-label" }, "固定阅读"),
       h(
         "a",
         { href: hrefFor(find(title)), class: "internal ev-method-main" },
@@ -1434,7 +1432,6 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
                 h("strong", null, group.title),
                 h("span", null, group.note),
               ),
-              h("small", null, "固定 2 + 随机 1"),
               h("span", { class: "ev-chapter-toggle", "aria-hidden": "true" }, "+"),
             ),
             h(
@@ -1463,22 +1460,13 @@ export function renderEvidenceTopicPage({ pages, displayClass }) {
                     "div",
                     { class: "ev-method-random-heading" },
                     h(
-                      "h4",
-                      { class: "ev-method-label" },
-                      "随机延伸",
-                      h(
-                        "small",
-                        null,
-                        `${group.items.slice(2).filter(([title]) => find(title)).length} 条候选`,
-                      ),
-                    ),
-                    h(
                       "button",
                       {
                         type: "button",
                         class: "ev-shuffle",
                         "data-evidence-refresh": `methods-${group.key}`,
-                        "aria-label": `${group.title}：换一条随机延伸`,
+                        "aria-label": `${group.title}：换一条（${group.items.slice(2).filter(([title]) => find(title)).length} 条候选）`,
+                        title: `换一条 · ${group.items.slice(2).filter(([title]) => find(title)).length} 条候选`,
                       },
                       "换一条 ↻",
                     ),
@@ -2426,4 +2414,18 @@ a.ev-counter:hover { transform: translateX(3px); }
   .ev-draw:hover, .ev-draw:focus-within, .ev-draw:hover::before { transform: none; }
   .ev-draw::before { display: none; }
 }
+/* Remove reading-status headers without reserving their old rows. */
+.ev-method-chapter > summary { grid-template-columns: 2rem minmax(0,1fr) 1.5rem; }
+.ev-method-draw { display: flex; flex-direction: column; }
+.ev-method-random { order: 1; }
+.ev-method-random-heading { order: 2; justify-content: flex-end; min-height: 0; margin-top: .5rem; }
+.ev-method-random-heading .ev-shuffle { min-height: 36px; }
+.ev-chapter-body { position: relative; isolation: isolate; }
+.ev-chapter-body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(circle,color-mix(in srgb,var(--ev-signal) 18%,transparent) .65px,transparent .9px); background-size: 7px 7px; mask-image: linear-gradient(135deg,transparent 45%,#000); opacity: .65; }
+@media (max-width: 600px) {
+ .ev-method-chapter > summary { grid-template-columns: minmax(0,1fr) 1.2rem; }
+ .ev-method-random-heading .ev-shuffle { min-height: 44px; }
+}
+@media print { .ev-chapter-body::before { display: none; } }
+
 `

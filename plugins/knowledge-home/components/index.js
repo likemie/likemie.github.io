@@ -1068,7 +1068,6 @@ function renderMethodStageReading(item, label) {
   return h(
     "div",
     { class: "method-stage-reading", "data-method-flow-pool": item.random.key },
-    h("small", { class: "method-stage-fixed-label" }, "固定阅读"),
     h(
       "div",
       { class: "knowledge-methods-stage-links" },
@@ -1328,7 +1327,7 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
         "div",
         { class: "knowledge-methods-section-head" },
         h("div", null, h("span", null, "Field Toolkit"), h("h2", null, "五种重点方法")),
-        h("p", null, "每种方法保留一条固定阅读，再从关联库随机延伸"),
+        h("p", null, "比较适用问题与具体操作，从关联条目继续探索"),
       ),
       h(
         "div",
@@ -1351,7 +1350,6 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
             h(
               "div",
               { class: "method-tool-reading" },
-              h("header", null, h("small", null, "固定阅读")),
               h(
                 "a",
                 {
@@ -1369,7 +1367,6 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
               h(
                 "header",
                 null,
-                h("small", null, `关联延伸 · ${formatCount(method.related.length)} 条`),
                 method.related.length > 1 &&
                   h(
                     "button",
@@ -1377,7 +1374,8 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
                       type: "button",
                       "data-method-tool-refresh": String(index),
                       class: "method-stage-shuffle",
-                      "aria-label": `更换${method.label}的关联阅读`,
+                      "aria-label": `更换${method.label}的关联阅读（${formatCount(method.related.length)} 条候选）`,
+                      title: `换一条 · ${formatCount(method.related.length)} 条候选`,
                     },
                     methodShuffleIcon(),
                     h("span", null, "换一条"),
@@ -9808,6 +9806,16 @@ body[data-slug="index"] .center > article.popover-hint + hr {
  .knowledge-methods-page .method-stage-random-item { animation: none !important; }
  .knowledge-methods-page .method-stage-shuffle, .knowledge-methods-page .method-stage-shuffle svg { transition: none; transform: none !important; }
 }
+
+/* Reading links carry the hierarchy; mechanics stay in control tooltips. */
+.knowledge-methods-page .method-tool-reading { min-height: 0; }
+.knowledge-methods-page .knowledge-methods-tool > .method-tool-related { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.knowledge-methods-page .method-tool-related > a { order: 1; }
+.knowledge-methods-page .method-tool-related > header { order: 2; margin: 0; min-height: 0; }
+/* A quiet printed texture appears only at the corner of toolkit cards. */
+.knowledge-methods-page .knowledge-methods-tool::after { inset: 0; width: auto; height: auto; background: radial-gradient(circle,color-mix(in srgb,var(--tool-tone) 20%,transparent) .65px,transparent .9px); background-size: 7px 7px; mask-image: linear-gradient(135deg,transparent 55%,#000); opacity: .6; transform: none; pointer-events: none; }
+.knowledge-methods-page .knowledge-methods-tool:hover::after { opacity: .8; transform: none; }
+@media print { .knowledge-methods-page .knowledge-methods-tool::after { display: none; } }
 
 `
 
