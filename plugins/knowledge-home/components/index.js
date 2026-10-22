@@ -676,15 +676,8 @@ export function methodsTopicData(pages, todayKey) {
     })
     .filter((method) => method.page && method.fixedPage)
 
-  const ethics = existing([
-    "Research Ethics",
-    "Informed Consent",
-    "Privacy in Research",
-    "Reflexivity",
-    "Responsible Conduct of Research",
-    "Confidentiality",
-    "Anonymity in Research",
-  ])
+  const ethics = { links: existing(["Research Ethics", "Reflexivity"]) }
+  decorateReading(ethics, "ethics")
 
   const randomPools = [
     { key: "concept", label: "研究概念", prefix: "wiki/concepts/research-methodology/" },
@@ -1325,13 +1318,7 @@ function renderMethodsTopicPage({ pages, topicConfig, todayKey, displayClass }) 
         { class: "knowledge-methods-ethics" },
         h("span", null, "贯穿全过程"),
         h("strong", null, "研究伦理与研究者反思"),
-        h(
-          "div",
-          null,
-          topic.ethics.map((page) =>
-            h("a", { href: hrefFor(page), class: "internal" }, titleFor(page)),
-          ),
-        ),
+        renderMethodStageReading(topic.ethics, "研究伦理与研究者反思"),
       ),
     ),
     h(
@@ -9791,8 +9778,8 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-methods-page .method-stage-reading { margin-top: .9rem; min-width: 0; }
 .knowledge-methods-page .method-stage-fixed-label { display: block; color: var(--methods-panel-muted); font-size: .73rem; margin-bottom: .45rem; }
 .knowledge-methods-page .method-stage-reading > .knowledge-methods-stage-links { margin-top: 0; }
-.knowledge-methods-page .method-stage-draw { display: flex; align-items: center; gap: .25rem; margin-top: .45rem; min-width: 0; }
-.knowledge-methods-page a.method-stage-random-item { display: inline-block; box-sizing: border-box; max-width: calc(100% - 2.5rem); padding: .3rem .65rem; border: 1px dashed var(--methods-panel-chip-border); border-radius: 999px; background: var(--methods-panel-chip-bg); color: var(--methods-panel-chip-fg); font-size: .78rem; font-weight: 600; line-height: 1.5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.knowledge-methods-page .method-stage-draw { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: .25rem; margin-top: .45rem; min-width: 0; }
+.knowledge-methods-page a.method-stage-random-item { display: inline-block; box-sizing: border-box; justify-self: start; min-width: 0; max-width: 100%; padding: .3rem .6rem; border: 1px dashed var(--methods-panel-chip-border); border-radius: .85rem; background: var(--methods-panel-chip-bg); color: var(--methods-panel-chip-fg); font-size: .72rem; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; white-space: normal; }
 .knowledge-methods-page .method-stage-random-item[hidden] { display: none !important; }
 .knowledge-methods-page .method-stage-random-item:not([hidden]) { animation: method-reading-in 200ms ease both; }
 .knowledge-methods-page a.method-stage-random-item:hover { border-color: var(--methods-signal); color: var(--methods-signal); }
@@ -9807,10 +9794,15 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 .knowledge-methods-page .method-stage-shuffle:disabled { cursor: default; opacity: .45; }
 .knowledge-methods-page .method-path-reading { margin-top: auto; min-width: 0; }
 .knowledge-methods-page .method-stage-empty { font-size: .8rem; color: var(--methods-panel-muted); }
+.knowledge-methods-page .knowledge-methods-ethics { grid-template-columns: max-content minmax(0,1fr); }
+.knowledge-methods-page .knowledge-methods-ethics > .method-stage-reading { grid-column: 1 / -1; display: flex; justify-content: flex-start; align-items: center; flex-wrap: wrap; gap: .35rem .6rem; margin-top: .3rem; }
+.knowledge-methods-page .knowledge-methods-ethics .method-stage-fixed-label { display: none; }
+.knowledge-methods-page .knowledge-methods-ethics .method-stage-draw { margin-top: 0; max-width: 100%; }
+.knowledge-methods-page .knowledge-methods-ethics .knowledge-methods-stage-links { margin: 0; }
+
 @media (max-width: 900px) {
  .knowledge-methods-page .method-stage-shuffle { min-height: 44px; }
  .knowledge-methods-page button.method-stage-shuffle-icon { width: 44px; height: 44px; }
- .knowledge-methods-page a.method-stage-random-item { max-width: calc(100% - 3rem); }
 }
 @media (prefers-reduced-motion: reduce) {
  .knowledge-methods-page .method-stage-random-item { animation: none !important; }

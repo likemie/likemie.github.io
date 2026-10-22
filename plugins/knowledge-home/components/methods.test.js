@@ -156,3 +156,17 @@ test("stage draws keep Literature Search fixed and use role-specific uncapped po
     ),
   )
 })
+
+test("ethics keeps two fixed anchors and draws only research ethics and reflexivity extensions", () => {
+  const ethics = page("Research Ethics", "wiki/concepts/research-methodology/ethics")
+  const reflection = page("Reflexivity", "wiki/concepts/research-methodology/reflexivity")
+  const consent = page("Informed Consent", "wiki/concepts/research-methodology/consent")
+  const situated = page("Situated Ethics", "wiki/theories/research-methodology/situated")
+  const memo = page("Memos", "wiki/methods/qualitative/memos")
+  const unrelated = page("Hacker Ethic", "wiki/concepts/ethics-of-technology/hacker")
+  const t = methodsTopicData([ethics, reflection, consent, situated, memo, unrelated], "2026-10-22")
+  assert.deepEqual(t.ethics.links, [ethics, reflection])
+  assert.equal(t.ethics.random.key, "ethics")
+  assert.equal(t.ethics.random.count, 3)
+  assert.deepEqual(new Set(t.ethics.random.pages), new Set([consent, situated, memo]))
+})

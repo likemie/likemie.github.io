@@ -92,6 +92,12 @@ export const methodsFlowPoolRules = {
       p,
       /^(Integration in Mixed Methods|Integration Statement|Joint Display|Metainferences|Data Transformation|Connecting|Merging|Embedding)$/i,
     ),
+  ethics: (p) =>
+    (planningConcept(p) &&
+      named(p, /ethic|^Reflexivity$|^Informed Consent$|^Confidentiality$|^Anonymity in Research$|^Privacy in Research$|^Responsible Conduct of Research$|^Deception in Research$|^Institutional Review Board$|^Researcher as Key Instrument$/i)) ||
+    ((p.slug ?? "").startsWith("wiki/theories/research-methodology/") && named(p, /ethic/i)) ||
+    (qualitative(p) && named(p, /^Memos$/i)) ||
+    (concept(p) && named(p, /^Conflict of Interest in Research$/i)),
   quality: (p) =>
     (instrument(p) && (p.slug ?? "").startsWith("wiki/instruments/checklists/")) ||
     ((qualityConcept(p) || method(p)) &&

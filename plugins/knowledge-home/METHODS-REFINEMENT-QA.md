@@ -218,3 +218,22 @@ passing functional/layout checks; it is not claimed as a visual-gate pass.
 - Generic whole-page inspector still reports 13 FAIL / 6 WARN, unchanged from the
   previous audit. This is not a claim that the full-page style gate passes.
 - No vault prose was changed and no writing exceptions were added.
+
+### Wrapping tags and cross-cutting ethics
+
+- Removed single-line ellipses from random tags. Long titles wrap in a smaller
+  rounded label; a separate grid column reserves the shuffle target. Short labels
+  remain compact. Full summaries stay in the native tooltip.
+- Ethics/reflection now fixes Research Ethics and Reflexivity, with one independent
+  draw from 16 relevant entries. Membership follows the Research Ethics and
+  Reflexivity bodies and their links: consent, confidentiality/privacy, research
+  deception/debriefing, review, responsible conduct, researcher role, reflective
+  memos, conflicts of interest and research-ethics theories. Unrelated technology
+  ethics is excluded. No source PDF was consulted or vault note edited.
+- 18 component tests pass. The preview builds 1,114 inputs into 5,821 files.
+  Browser checks cover 13 independent reading pools in both themes at 1440/768/390.
+  Each of all 427 candidate labels was displayed at every width/theme: zero text
+  overflow, zero button overlap, no ellipsis/nowrap and no page overflow. Longest
+  candidate screenshots reviewed for approach, analysis and ethics. Fixed anchors,
+  native destinations, independent refresh, reachability and reduced motion pass.
+- No writing exceptions added.

@@ -29,6 +29,11 @@ entry. Initial page load and Quartz navigation can reach every candidate.
 
 ## Classification boundaries
 
+The cross-cutting ethics group fixes Research Ethics and Reflexivity, drawing one
+extension from research consent, privacy, confidentiality, researcher reflection,
+ethics review, conflicts of interest and research-ethics theories. It uses an
+independent pool and the same compact controls.
+
 Rules are in `components/methods-flow-pools.js`. They combine directory scope with
 reviewed title families, so new entries fitting those families join automatically
 on the next vault build. New terminology outside the families needs a rule update;
@@ -54,8 +59,7 @@ Important exclusions verified with regression tests:
 
 Random readings are capsule links matching the fixed anchors, with a dashed border
 and an adjacent icon-only shuffle button. Full titles and existing summaries are
-available in the native link tooltip; long labels truncate instead of expanding
-the card. The button tooltip states the candidate count; its accessible label
+available in the native link tooltip; long labels wrap within the available width without truncation. The button tooltip states the candidate count; its accessible label
 also names the stage. Touch buttons remain 44px. Each control affects only its
 own pool, while fixed links stay stable. Reduced motion disables reveal and icon
 animation.
