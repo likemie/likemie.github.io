@@ -113,6 +113,19 @@ plugins:
     options:
       markdownLinkResolution: shortest
     order: 60
+  - source: github:vanabel/quartz-geogebra-embed
+    enabled: true
+    order: 65
+    options:
+      height: 480
+      appName: classic
+      showToolBar: false
+      showAlgebraInput: false
+      showMenuBar: false
+      showResetIcon: true
+      enableRightClick: false
+      enableShiftDragZoom: true
+      deployScriptUrl: https://www.geogebra.org/apps/deployggb.js
   - source: github:quartz-community/description
     enabled: true
     order: 70

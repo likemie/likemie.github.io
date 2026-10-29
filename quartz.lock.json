@@ -258,6 +258,12 @@
       "resolved": "https://github.com/quartz-community/unlisted-pages.git",
       "commit": "f512d8672862c5891e63d755ba04b66277e6d760",
       "installedAt": "2026-06-03T13:32:36.647Z"
+    },
+    "quartz-geogebra-embed": {
+      "source": "github:vanabel/quartz-geogebra-embed",
+      "resolved": "https://github.com/vanabel/quartz-geogebra-embed.git",
+      "commit": "efabb4e95ce5d937036115a77595b1c568d35271",
+      "installedAt": "2026-10-29T18:26:46.508Z"
     }
   }
 }
