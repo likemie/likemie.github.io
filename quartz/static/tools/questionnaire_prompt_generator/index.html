@@ -1,0 +1,1057 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>问卷编制 Prompt 生成器</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* 布局：与研究逻辑工具同一套黑板绿视觉；左侧步骤导航 + 右侧单卡片工作区。单一浅色主题，背景与颜色全部显式设定。 */
+:root{
+ --board:#1d3a32;--board-line:#33574b;--chalk:#f3f1e6;--chalk-dim:#a9bfb5;
+ --green:#2c6e58;--green-d:#215645;--green-soft:#e5efea;--green-line:#bcd4c9;
+ --yellow:#f0bf4c;--yellow-soft:#fcf5dc;--yellow-line:#e8d48a;
+ --ink:#1b2823;--muted:#61706a;--line:#d7dfda;--bg:#f1f4f1;--paper:#fff;--red:#b3463a;--red-soft:#fbefed;
+ --serif:"Songti SC","Noto Serif CJK SC","Source Han Serif SC","STZhongsong","SimSun",serif;
+ --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+ --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"PingFang SC","Microsoft YaHei",monospace;
+ color-scheme:light
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 var(--sans)}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
+.hidden{display:none!important}
+
+header{background:var(--board);color:var(--chalk);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.hero{max-width:1120px;margin:auto;padding-block:30px 28px;padding-inline:8px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
+.hero h1{margin:0 0 8px;font:700 30px/1.25 var(--serif);letter-spacing:.02em;text-wrap:balance}
+.hero p{margin:0;color:var(--chalk-dim);font-size:14px}
+.restart{flex:none;border:1px solid var(--board-line);background:transparent;color:var(--chalk);border-radius:8px;padding:8px 13px;font-size:12px;font-weight:600;cursor:pointer}
+.restart:hover{border-color:var(--chalk-dim)}
+
+.shell{max-width:1136px;margin:22px auto 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;grid-template-columns:188px minmax(0,1fr);gap:22px;align-items:start}
+.rail{position:sticky;top:16px;display:flex;flex-direction:column;gap:2px;padding:10px;background:var(--paper);border:1px solid var(--line);border-radius:14px}
+.step{display:flex;align-items:center;gap:10px;padding:8px 10px;border:0;border-radius:9px;background:none;color:#9aa7a1;font-size:13px;font-weight:600;text-align:left;cursor:default;white-space:nowrap}
+.step .num{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;border:1.5px solid currentColor;font-size:12px;font-weight:700}
+.step.reach{color:var(--green);cursor:pointer}.step.reach:hover{background:var(--green-soft)}
+.step.active{background:var(--green);color:#fff}.step.active .num{background:var(--yellow);border-color:var(--yellow);color:var(--board)}
+.rail-div{height:1px;background:var(--line);margin:6px 4px}
+
+main{min-width:0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:28px 30px 26px}
+h2{margin:0 0 6px;font:700 22px/1.35 var(--serif);text-wrap:balance}
+.sub{margin:0 0 4px;color:var(--muted);font-size:13px;line-height:1.7}
+.zone{margin:24px 0 8px;font-size:12px;font-weight:700;color:var(--muted)}
+.field{margin:14px 0}.field>label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}
+.fields .full{grid-column:1/-1}
+
+.inp{width:100%;border:1px solid #cdd7d2;border-radius:8px;padding:9px 12px;background:var(--paper);color:inherit;font:inherit;font-size:13px;outline:none}
+textarea.inp{min-height:84px;resize:vertical;line-height:1.6}
+select.inp{padding:8px 10px}
+.inp:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(44,110,88,.14)}
+.inp:disabled{background:#f3f6f4;color:var(--muted)}
+
+.prompt{background:var(--board);border-radius:12px;padding:12px 18px 16px;color:var(--chalk)}
+.phead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid var(--board-line);font-size:12px;font-weight:700;color:var(--chalk-dim)}
+.copy{border:0;background:var(--yellow);color:var(--board);border-radius:7px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer}
+.copy:hover{background:#f5cc6a}
+.prompt pre{margin:0;max-height:380px;overflow:auto;white-space:pre-wrap;word-break:break-word;font:13px/1.75 var(--mono);scrollbar-color:#4d7164 transparent}
+
+.paste{border:1px dashed var(--green-line);background:#f7faf8;border-radius:11px;padding:12px}
+.paste textarea.inp{min-height:62px}
+.pmsg{font-size:12px;color:var(--muted)}
+
+.btns{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:18px}.paste .btns{margin-top:8px}
+.btn{border:1px solid #c5d0ca;background:var(--paper);color:var(--ink);border-radius:8px;padding:9px 15px;font-size:13px;font-weight:700;cursor:pointer}
+.btn:hover{border-color:var(--green)}
+.btn.primary{background:var(--green);border-color:var(--green);color:#fff}.btn.primary:hover{background:var(--green-d);border-color:var(--green-d)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.sm{padding:6px 12px;font-size:12px}
+.btn.spacer{margin-left:auto}
+
+.group{border:1px solid var(--line);border-radius:11px;padding:13px;margin:0 0 10px}
+.grouphead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:8px}
+.grouphead b{font-size:13px}.count{font-size:11px;color:var(--muted);text-align:right}
+.tag{flex:none;background:var(--green-soft);color:var(--green-d);border-radius:6px;padding:5px 9px;font-size:12px;font-weight:700;text-align:center}
+.remove{border:0;background:#edf1ee;border-radius:6px;width:32px;height:36px;font-size:17px;line-height:1;cursor:pointer;color:#7b8a84}
+.remove:hover{background:var(--red-soft);color:var(--red)}
+.add{margin-top:8px;border:1px solid #c5d0ca;background:var(--paper);color:var(--green-d);border-radius:7px;padding:6px 11px;font-size:12px;font-weight:700;cursor:pointer}
+.add:hover{border-color:var(--green)}.add:disabled{opacity:.4;cursor:not-allowed}
+.tog{align-self:flex-start;border:0;background:none;border-radius:7px;padding:5px 10px;font:inherit;font-size:12px;color:var(--muted);cursor:pointer;margin-top:2px}
+.tog:hover{color:var(--green-d);background:#f0f4f1}
+.capline{font-size:11px;color:var(--muted);margin-bottom:6px}
+
+/* 候选行：未选是一整行按钮；选中后变成可改写的输入框 */
+.pl{display:flex;flex-direction:column;gap:3px}
+.prow{display:flex;align-items:flex-start;gap:10px;width:100%;border:0;border-radius:9px;background:none;padding:7px 10px;font:inherit;font-size:13px;line-height:1.6;color:var(--ink);text-align:left}
+button.prow{cursor:pointer}button.prow:hover{background:#f0f4f1}
+.prow.on{background:var(--green-soft)}
+.mk{flex:none;min-width:24px;height:24px;margin-top:1px;padding:0 7px;border:1.5px solid #b7c5be;border-radius:12px;display:grid;place-items:center;font-size:11px;font-weight:700;line-height:1;color:transparent;background:var(--paper);white-space:nowrap}
+.prow.on .mk{background:var(--green);border-color:var(--green);color:#fff;cursor:pointer;margin-top:6px}
+.prow.on .mk:hover{background:var(--red);border-color:var(--red)}
+.pin{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.psub{font-size:12px;color:var(--muted);line-height:1.55}
+.meta{flex:none;max-width:36%;margin-top:2px;font-size:11px;color:var(--muted);text-align:right;line-height:1.6}
+.prow.on .meta{margin-top:8px}
+.rt{font-style:normal;font-size:11px;font-weight:700;border-radius:999px;padding:1px 8px;white-space:nowrap}
+.rt-h{background:var(--green-soft);color:var(--green-d)}.rt-m{background:var(--yellow-soft);color:#7a611a}.rt-l{background:#eceeed;color:#6d7a74}
+.prow.on .rt-h{background:var(--paper)}
+.rv{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);align-self:flex-start}
+.rv input{accent-color:var(--green);margin:0}
+.qopt{display:grid;grid-template-columns:96px minmax(0,1fr);gap:8px}
+.modes{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-size:13px}
+.modes>span{font-size:12px;font-weight:700;color:var(--muted)}.modes input{accent-color:var(--green);margin:0 5px 0 0}
+
+/* 第一步：构念编辑 */
+.con{border:1px solid var(--line);border-radius:11px;padding:11px 13px;margin-bottom:8px;display:flex;flex-direction:column;gap:8px}
+.conr{display:grid;grid-template-columns:auto minmax(0,1fr) 140px auto auto;gap:8px;align-items:center}
+.con .fold>summary{font-weight:600}.con .fold[open]{padding-top:2px}.con .dh{margin-bottom:6px}
+.cong{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:8px 12px}.cong .full{grid-column:1/-1}
+.map{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.mrow{display:grid;grid-template-columns:76px minmax(0,1fr) auto;gap:12px;align-items:start;padding:9px 14px;border-top:1px solid var(--line)}
+.mrow:first-child{border-top:0}.mrow.cur{background:var(--green-soft)}
+.mpart{font-size:12px;font-weight:700;color:var(--muted);padding-top:1px}
+.mbody{display:flex;flex-direction:column;gap:1px;min-width:0}.mbody b{font:700 14px/1.5 var(--serif)}.mbody span{font-size:12px;color:var(--muted);line-height:1.6}
+.mstep{font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px;background:#eceeed;color:#6d7a74;white-space:nowrap}
+.mrow.cur .mstep{background:var(--green);color:#fff}
+.fl{display:flex;flex-direction:column;gap:4px;min-width:0}
+.dh{display:flex;align-items:center;justify-content:space-between;gap:10px}.dh>span{font-size:12px;font-weight:700;color:var(--muted)}.dh .chk{font-weight:600;color:var(--muted)}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;align-items:center}.dl .add{margin-top:0;justify-self:start}
+.dr{display:flex;gap:6px;min-width:0}.dr .remove{flex:none;width:30px;height:auto}.fl>span{font-size:12px;font-weight:700;color:var(--muted)}
+.fold>summary{cursor:pointer;font-size:12px;font-weight:700;color:var(--green-d);padding:2px 0;list-style-position:inside}
+.fold[open]>summary{margin-bottom:8px}
+.fold.full{grid-column:1/-1;margin:6px 0 4px;border:1px dashed var(--green-line);border-radius:10px;padding:10px 12px}
+.fold.full .field{margin:8px 0 4px}
+.fold.grp{border:1px solid var(--line);border-radius:11px;padding:11px 13px;margin:0 0 10px}
+#more7{margin:14px 0 0}
+.con.off{background:#f7f9f8}.con.off .nm{color:var(--muted)}
+.chk{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--green-d);white-space:nowrap}
+.chk input{accent-color:var(--green);margin:0}
+
+/* 第四步：手风琴 */
+.cpick{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.cchip{display:flex;flex-direction:column;align-items:flex-start;gap:1px;border:1px solid #c5d0ca;background:var(--paper);color:var(--ink);border-radius:10px;padding:7px 13px;font:inherit;font-size:13px;text-align:left;cursor:pointer}
+.cchip span{font-size:11px;color:var(--muted)}.cchip:hover{border-color:var(--green)}
+.cchip.on{background:var(--green);border-color:var(--green);color:#fff}.cchip.on span{color:#d6e7df}
+.cur{border:1px solid var(--green-line);background:#f7faf8;border-radius:11px;padding:12px 14px}
+.curh{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px}.curh b{font:700 16px/1.4 var(--serif)}.curh .dims{font-size:12px;color:var(--muted)}
+.cur .modes{margin-top:8px;padding-top:8px}.cur .src{font-size:12px;color:var(--muted);font-weight:400}
+.zone .no{display:inline-grid;place-items:center;width:18px;height:18px;margin-right:7px;border-radius:50%;background:var(--board);color:var(--chalk);font-size:11px}
+.zr{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.slh{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.acc{border:1px solid var(--line);border-radius:11px;background:var(--paper)}.acc+.acc{margin-top:8px}
+.acc.open{border-color:var(--green-line)}
+.acch{display:flex;align-items:center;gap:10px;width:100%;border:0;border-radius:11px;background:none;padding:10px 12px;font:inherit;text-align:left;color:var(--ink);cursor:pointer}
+.acch .ttl{flex:1;min-width:0;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acch .st{flex:none;font-size:12px;color:var(--muted)}.acch .st.ok{color:var(--green-d);font-weight:700}
+.acch .chev{flex:none;color:var(--muted);font-size:12px}
+.accb{padding:4px 14px 14px;border-top:1px solid var(--line)}
+.qref{margin:12px 0 0;padding:8px 11px;border-radius:8px;background:#f5f8f6;font-size:12px;line-height:1.6;color:var(--muted)}
+.slot{margin-top:14px}
+.slh{margin:0 0 4px 2px;font-size:12px;color:var(--muted)}.slh b{margin-right:8px;color:var(--green-d);font-size:13px}
+
+/* 第六步：审查意见 */
+.estbar{background:var(--yellow-soft);border:1px solid var(--yellow-line);border-radius:9px;padding:9px 13px;font-size:13px;color:#6a561c;margin-bottom:12px;font-variant-numeric:tabular-nums}
+.rev{border:1px solid var(--line);border-radius:11px;padding:12px 13px;margin-bottom:9px}
+.rev.on{border-color:var(--green-line);background:#f7faf8}
+.revh{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.revh .ty{font-size:12px;font-weight:700;color:var(--ink)}
+.revo,.revn{display:grid;grid-template-columns:52px minmax(0,1fr);gap:8px;align-items:center;font-size:13px;margin-top:8px}
+.revo>span,.revn>span{font-size:12px;color:var(--muted)}
+.revo .old{color:var(--muted)}
+.rev .btns{margin-top:10px}
+.bad{color:var(--red);font-size:12px}
+.delw{color:var(--red);font-size:13px}
+.board{margin-top:16px;background:var(--board);border-radius:14px;padding:22px 20px 16px;color:var(--chalk)}
+.flow{display:flex;align-items:stretch}
+.fe{flex:0 0 74px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;text-align:center;border:1.5px dashed var(--chalk-dim);border-radius:12px;padding:10px 4px}
+.fe b{font:700 14px/1.3 var(--serif)}.fe small{font-size:11px;color:var(--chalk-dim)}
+.fa{flex:0 0 22px;align-self:center;height:2px;background:var(--chalk-dim);position:relative;margin:0 3px}
+.fa::after{content:"";position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-left:7px solid var(--chalk-dim);border-right:0}
+.fn{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:4px;border:1.5px solid var(--board-line);background:rgba(255,255,255,.04);color:var(--chalk);border-radius:12px;padding:11px 12px;font:inherit;text-align:left;cursor:pointer;transition:border-color .15s,background .15s}
+.fn:hover{border-color:var(--chalk-dim);background:rgba(255,255,255,.08)}
+.fnum{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--chalk-dim);font-size:12px;font-weight:700}
+.fn b{font:700 15px/1.35 var(--serif);text-wrap:balance}.fn small{font-size:11px;color:var(--chalk-dim)}
+.fn.on{background:var(--yellow);border-color:var(--yellow);color:var(--board)}.fn.on .fnum{border-color:var(--board);background:var(--board);color:var(--yellow)}.fn.on small{color:#5a4a16}
+.loop{position:relative;height:30px;margin:2px 37px 0;border:1.5px dashed var(--chalk-dim);border-top:0;border-radius:0 0 14px 14px}
+.loop::before{content:"";position:absolute;left:-6px;top:-6px;border:5px solid transparent;border-bottom:7px solid var(--chalk-dim);border-top:0}
+.loop span{position:absolute;left:50%;bottom:-10px;transform:translateX(-50%);background:var(--board);padding:0 10px;font-size:12px;color:var(--chalk-dim);white-space:nowrap}
+.cvdet{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:16px;align-items:center;margin-top:14px;border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--paper)}
+.cvt{display:flex;flex-direction:column;gap:7px;align-items:flex-start}
+.cvk{font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--green)}
+.cvt b{font:700 19px/1.4 var(--serif)}.cvt p{margin:0;font-size:13px;line-height:1.8;color:var(--ink)}
+.cvdet .figb{border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.imp{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;border:1px solid var(--green-line);background:var(--green-soft);border-radius:11px;padding:11px 14px;margin-bottom:10px}
+.imp ol{margin:0;padding-left:20px;font-size:13px;line-height:1.8}
+.imp .btn{text-decoration:none;background:var(--paper)}
+.step.lock{color:var(--muted);cursor:not-allowed}
+.dbs{margin:14px 0 4px;border:1px solid var(--line);border-radius:12px;padding:12px 13px}
+.dbs>b{font-size:13px}
+.dbg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:8px}
+.dbg a{display:flex;flex-direction:column;gap:3px;border:1px solid #c5d0ca;border-radius:10px;padding:10px 12px;color:var(--ink);text-decoration:none}
+.dbg a:hover{border-color:var(--green);background:#f7faf8}
+.dbg a b{color:var(--green-d);font-size:13px}.dbg a b::after{content:" ↗";font-weight:400}
+.dbg a span{font-size:12px;line-height:1.65;color:var(--muted)}
+.figs{display:flex;flex-direction:column;gap:8px;margin:14px 0 4px}.figs:empty{display:none}
+.fig{border:1px solid var(--line);border-radius:12px;background:#f7faf8;overflow:hidden}
+.fig>summary{cursor:pointer;padding:9px 13px;font-size:13px;font-weight:700;color:var(--green-d);display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.fig>summary span{font-size:12px;font-weight:400;color:var(--muted)}
+.figb{display:block;width:100%;padding:0;border:0;border-top:1px solid var(--line);background:none;cursor:zoom-in}
+.figb img{display:block;width:100%;height:auto}
+.figc{margin:0;padding:8px 13px 10px;font-size:12px;line-height:1.7;color:var(--muted)}.figc span{color:#93a09a}
+.lb{position:fixed;inset:0;z-index:50;background:rgba(15,30,25,.86);display:flex;align-items:center;justify-content:center;padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
+.lb[hidden]{display:none}.lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
+.lbx{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px));width:36px;height:36px;border:0;border-radius:50%;background:var(--paper);color:var(--ink);font-size:20px;cursor:pointer}
+.exp{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:14px 0 12px}
+.cbf{margin-top:22px}.cbf>summary{font-size:13px}
+
+.warn{background:var(--yellow-soft);border:1px solid var(--yellow-line);border-radius:9px;padding:10px 13px;font-size:13px;color:#6a561c;margin-top:16px}
+.note{background:var(--yellow-soft);border:1px solid var(--yellow-line);border-radius:9px;padding:9px 12px;font-size:12px;color:#6a561c;margin-top:10px}
+
+/* 第八步：问卷预览与编码表 */
+.ctl{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:13px;margin:16px 0 12px;align-items:center}
+.ctl label{display:inline-flex;align-items:center;gap:5px}.ctl input{accent-color:var(--green);margin:0}
+.ctl b{font-size:12px;color:var(--muted)}
+.qn{border:1px solid var(--line);border-radius:12px;padding:28px 30px;background:var(--paper);font-size:14px;line-height:1.85}
+.qn h3{margin:0 0 14px;text-align:center;font:700 20px/1.4 var(--serif);text-wrap:balance}
+.qn h4{margin:22px 0 8px;font:700 15px/1.4 var(--serif)}
+.qn h5{margin:14px 0 6px;font-size:13px;color:var(--muted)}
+.qn p{margin:4px 0}
+.qn .gd{text-indent:2em}
+.qn .qq{margin:10px 0}
+.qn .ops{display:flex;flex-wrap:wrap;gap:2px 20px;padding-left:1.8em}
+.qn .blank{height:60px;margin-left:1.8em;border-bottom:1px dashed #b7c5be}
+.qn .end{margin-top:22px;text-align:center;color:var(--muted)}
+.tw{overflow-x:auto}
+.qn table,.cb table{width:100%;border-collapse:collapse;font-size:13px}
+.qn th,.qn td,.cb th,.cb td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top;line-height:1.6}
+.qn th,.cb th{background:var(--green-soft);color:var(--green-d);font-weight:700}
+.qn td.c,.qn th.c{text-align:center;white-space:nowrap}
+.cb{margin-top:8px}
+.cb td{font-variant-numeric:tabular-nums}
+.sumh{margin:26px 0 8px;font:700 16px/1.4 var(--serif)}
+.footer{grid-column:2;color:var(--muted);font-size:12px;margin-top:-6px}
+
+@media(max-width:880px){
+ .hero{flex-direction:column;align-items:flex-start;padding-block:22px;padding-inline:0}.hero h1{font-size:23px}h2{font-size:19px}
+ .shell{grid-template-columns:minmax(0,1fr);gap:14px}
+ .rail{position:static;flex-direction:row;overflow-x:auto}.rail-div{flex:none;width:1px;height:auto;margin:4px 6px}
+ .footer{grid-column:1}
+ .card{padding:20px 16px}.qn{padding:20px 16px}
+ .fields{grid-template-columns:minmax(0,1fr)}
+ .conr{grid-template-columns:auto minmax(0,1fr) auto}.conr select{grid-column:2/-1}.conr .chk{grid-column:2}.conr .ebtn{grid-column:3}.dbg,.cvdet{grid-template-columns:minmax(0,1fr)}
+ .flow{flex-direction:column;align-items:stretch}.fe{flex-basis:auto;flex-direction:row;gap:8px;padding:8px}.fa{flex:0 0 18px;width:2px;height:18px;margin:3px 0;align-self:center}.fa::after{right:-4px;top:auto;bottom:-1px;border:5px solid transparent;border-top:7px solid var(--chalk-dim);border-bottom:0}.fn{flex-direction:row;align-items:center;gap:10px}.fn small{margin-left:auto}.loop{display:none}.cvs{grid-template-columns:repeat(2,minmax(0,1fr))}.mrow{grid-template-columns:minmax(0,1fr) auto}.mpart{grid-column:1/-1}
+ .prow{flex-wrap:wrap}.pin{flex:1 1 calc(100% - 40px)}.meta{max-width:none;text-align:left;margin:0 0 0 34px!important}
+ .qopt{grid-template-columns:minmax(0,1fr)}
+ .acch{flex-wrap:wrap}.acch .ttl{flex-basis:55%}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<header><div class="hero">
+ <div><h1>问卷编制 Prompt 生成器</h1><p>可配合“研究问题与假设 Prompt 生成器”使用：导入变量与维度，选定量表、改编题项、审查措辞，最后整理成问卷和编码表。</p></div>
+ <button class="restart" id="rst" onclick="reset(this)">重新开始</button>
+</div></header>
+
+<div class="shell">
+<nav class="rail" aria-label="步骤">
+ <button class="step" id="s0" onclick="jump(0)"><span class="num">·</span>封面</button>
+ <span class="rail-div"></span>
+ <button class="step" id="s1" onclick="jump(1)"><span class="num">1</span>研究设计</button>
+ <button class="step" id="s2" onclick="jump(2)"><span class="num">2</span>其他题目</button>
+ <button class="step" id="s3" onclick="jump(3)"><span class="num">3</span>量表来源</button>
+ <button class="step" id="s4" onclick="jump(4)"><span class="num">4</span>题项编制</button>
+ <span class="rail-div"></span>
+ <button class="step" id="s6" onclick="jump(6)"><span class="num">5</span>措辞审查</button>
+ <button class="step" id="s7" onclick="jump(7)"><span class="num">6</span>标题与指导语</button>
+ <button class="step" id="s8" onclick="jump(8)"><span class="num">7</span>问卷汇总</button>
+</nav>
+
+<main>
+<section id="p0" class="hidden"><div class="card cover">
+ <h2>问卷编制的四个环节</h2>
+ <p class="sub">问卷编制从研究问题出发，最后又回到研究问题。点击流程图中的环节，查看它要解决什么问题。</p>
+ <div class="board" id="cvs"></div>
+ <div id="cvd"></div>
+ <div class="btns"><button class="btn primary" onclick="go(1)">进入第一步：研究设计</button></div>
+</div></section>
+
+<section id="p1" class="hidden"><div class="card">
+ <h2>第一步：导入研究设计</h2>
+ <p class="sub">本工具可以配合“研究问题与假设 Prompt 生成器”使用：先在生成器里确定研究问题、假设、变量和维度，再把它的结果导入这里，题目、研究问题和变量会自动填好。没有用过生成器的，直接在下面填写。</p>
+ <div class="figs" id="fig1"></div>
+ <div class="zone">导入生成器的结果（可选）</div>
+ <div class="imp"><ol><li>打开生成器，完成到“汇总表”一步</li><li>在汇总表页点“复制 Markdown”</li><li>粘贴到下面的框里，点“读取汇总表”</li></ol><a class="btn" href="https://likemie.github.io/static/tools/research_logic_prompt_generator_v12_1.html" target="_blank" rel="noopener">打开研究问题与假设 Prompt 生成器 ↗</a></div>
+ <div class="paste"><textarea class="inp" id="md" data-path="md" oninput="onIn(this)" placeholder="粘贴“复制 Markdown”得到的全部内容"></textarea>
+  <div class="btns"><button class="btn" onclick="importMd()">读取汇总表</button><button class="btn" onclick="loadDemo()">载入示例</button><span class="pmsg" id="pm1"></span></div></div>
+ <div class="zone">研究与调查对象</div>
+ <div class="fields">
+  <div class="field full"><label for="topic">研究题目</label><input class="inp" id="topic" data-path="topic" oninput="onIn(this)" placeholder="完整研究题目"></div>
+  <div class="field"><label for="rtype">研究类型</label><select class="inp" id="rtype" data-path="rtype" onchange="onIn(this)"><option value="">请选择</option><option>干预类</option><option>相关类</option><option>现状/探索类（体验类）</option><option>现状/探索类（实践类）</option><option>现状/探索类（政策类）</option><option>其他</option></select></div>
+  <div class="field"><label for="obj">调查对象</label><input class="inp" id="obj" data-path="obj" oninput="onIn(this)" placeholder="如 某省三所师范院校的本科师范生"></div>
+  <div class="field"><label for="mode">发放方式</label><select class="inp" id="mode" data-path="mode" onchange="onIn(this)"><option>线上（问卷星等平台）</option><option>纸质</option><option>线上与纸质均可</option></select></div>
+  <div class="field"><label for="time">目标作答时间</label><select class="inp" id="time" data-path="time" onchange="onIn(this)"><option>5—10 分钟</option><option>10—15 分钟</option><option>15—20 分钟</option><option>20—30 分钟</option></select></div>
+  <div class="field full"><label for="rq">研究问题与假设</label><textarea class="inp" id="rq" data-path="rq" oninput="onIn(this)" placeholder="每行一个，如 RQ1：……"></textarea></div>
+  <details class="fold full" id="more1"><summary>补充信息（可选）：调查对象的特点、文献综述结论</summary>
+   <div class="field"><label for="objNote">调查对象的特点</label><input class="inp" id="objNote" data-path="objNote" oninput="onIn(this)" placeholder="年龄、年级、阅读水平、对研究主题的熟悉程度等，会影响题目措辞"></div>
+   <div class="field"><label for="lit">文献综述核心结论</label><textarea class="inp" id="lit" data-path="lit" oninput="onIn(this)" placeholder="有的话粘贴最重要的结论，推荐量表时会优先参考"></textarea></div>
+  </details>
+ </div>
+ <div class="zone">需要测量的构念</div>
+ <p class="sub" style="margin-bottom:10px">构念就是问卷要测的东西，一般就是你研究里的变量。默认有一个自变量和一个因变量，不够就增加。每行填名称、选变量类型；维度可选，不填就按第三步选定量表的维度。从研究逻辑工具导入的会自动填好。干预变量不测量，默认不纳入问卷；用观察、测验等其他工具测量的，取消“纳入问卷”。</p>
+ <div id="consBox"></div>
+ <button class="add" onclick="addCon()">＋ 增加构念</button>
+ <div class="warn hidden" id="w1"></div>
+ <div class="btns"><button class="btn primary" onclick="go(2)">下一步：问卷结构</button></div>
+</div></section>
+
+<section id="p2" class="hidden"></section>
+<section id="p3" class="hidden"></section>
+
+<section id="p4" class="hidden"><div class="card">
+ <h2>第四步：编制题项</h2>
+ <p class="sub">每个构念单独走一遍：在上方选中构念，按编号依次完成，再切到下一个。改编成熟量表要先粘贴原题，AI 只改编你给的题目；每个维度一般保留 3—5 题。</p>
+ <div class="figs" id="fig4"></div>
+ <div id="f4" style="margin-top:16px"></div>
+ <div class="warn hidden" id="w4"></div>
+ <div class="btns"><button class="btn" onclick="go(3)">上一步</button><button class="btn primary" onclick="go(6)">下一步：措辞审查</button></div>
+</div></section>
+
+<section id="p6" class="hidden"></section>
+<section id="p7" class="hidden"></section>
+
+<section id="p8" class="hidden"><div class="card">
+ <h2>问卷汇总</h2>
+ <p class="sub">由前面各步选定的内容自动生成。问卷全文可以直接复制到 Word 或问卷星；编码表记录每道题测什么、对应哪个研究问题，供数据分析时使用。</p>
+ <div class="figs" id="fig8"></div>
+ <div class="ctl">
+  <label><input type="checkbox" id="showCons" onchange="S.showCons=this.checked;save();render8()">在问卷里显示构念名称</label>
+ </div>
+ <div class="exp"><button class="btn primary" id="expBtn" onclick="exportDocx(this)">一键导出 Word（问卷 + 编码表）</button><span class="pmsg" id="expMsg"></span></div>
+ <div class="estbar" id="est8"></div>
+ <div class="qn" id="qnBox"></div>
+ <div class="btns"><button class="btn" onclick="cpEl('qnBox',this)">复制问卷（可粘贴到 Word）</button><button class="btn" onclick="cpMd(this)">复制 Markdown</button></div>
+ <details class="fold grp cbf"><summary>编码表（每道题对应的构念、维度和研究问题，数据分析时用）</summary>
+ <div class="cb tw" id="cbBox"></div>
+ <div class="btns"><button class="btn" onclick="cpEl('cbBox',this)">复制编码表</button></div></details>
+ <div class="btns"><button class="btn" onclick="go(7)">上一步</button></div>
+</div></section>
+</main>
+<div class="lb" id="lb" hidden onclick="closeLb()"><img id="lbImg" alt=""><button type="button" class="lbx" onclick="closeLb()" aria-label="关闭大图">×</button></div>
+<div class="footer">v2.5 · 与研究问题与假设 Prompt 生成器 v12.1 配套</div>
+</div>
+
+<script>
+const KEY='qpg_v1',LAST=8;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const KIND={B:'背景信息',C:'其他封闭题',O:'开放题'},MAX={B:10,C:6,O:3},COUNT2={B:'选3—8题',C:'选0—4题',O:'选0—3题'};
+const TYPES=['单选','多选','填空','排序','开放'],SECS={单选:10,多选:15,填空:15,排序:20,开放:60};
+const blankCon=tag=>({tag,role:'',name:'',dims:'',tool:'',on:true,src:null,mode:'',sc:[],orig:'',paste:'',resp:'',ic:[],items:[]});
+const defCons=()=>[Object.assign(blankCon(''),{auto:true,role:'自变量'}),Object.assign(blankCon(''),{auto:true,role:'因变量'})];
+const fresh=()=>({step:0,max:1,md:'',topic:'',rtype:'',obj:'',objNote:'',mode:'线上（问卷星等平台）',time:'10—15 分钟',rq:'',lit:'',
+ cons:defCons(),pa:{},c2:{B:[],C:[],O:[]},sel:{B:[],C:[],O:[]},q5c:{},q5:{},c6:[],
+ c7:{T:[],G:[],K:[],E:[]},s7:{T:null,G:null,K:[],E:null},author:'',order:'head',showCons:false,open4:0});
+let S=fresh();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(typeof paint==='function'&&$('s0'))paint()}
+function load(){try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(fresh(),JSON.parse(r))}catch(e){S=fresh()}}
+
+/* ---------- 基础数据 ---------- */
+const uid=()=>Math.random().toString(36).slice(2,10);
+const ntag=c=>String(c.tag||'').replace(/\s+/g,'');
+const dimsGiven=c=>String(c.dims||'').split(/[、，,；;\n]/).map(s=>s.trim()).filter(Boolean);
+const dimText=c=>{const g=dimsGiven(c);return !g.length?'未指定，按所选量表的维度':g[0]==='总体'?'不分维度':g.join('、')};
+const dimsOf=c=>{const a=String(c.dims||'').split(/[、，,；;\n]/).map(s=>s.trim()).filter(Boolean);return a.length?a:['总体']};
+const cons=()=>S.cons.filter(c=>c.on&&c.name.trim());
+const otherList=k=>S.sel[k].filter(o=>o.t.trim());
+const optList=s=>String(s||'').split(/[\/／]/).map(x=>x.trim()).filter(x=>x&&x!=='—'&&x!=='-');
+function codeList(ensure){
+ const a=[],oth=k=>otherList(k).forEach((o,i)=>{if(!o.type)o.type=k==='O'?'开放':'单选';if(!o.uid)o.uid=uid();a.push({id:k+(i+1),kind:k,obj:o,t:o.t,opt:o.opt||'',type:o.type,src:o})});
+ oth('B');
+ cons().forEach(c=>c.items.filter(t=>t.t.trim()).forEach((t,j)=>(t.uid||(t.uid=uid()),a.push({id:`${ntag(c)}-${j+1}`,kind:'S',obj:t,t:t.t,con:c,d:t.d}))));
+ oth('C');oth('O');return a
+}
+function est(){const l=codeList(false),s=l.reduce((n,x)=>n+(x.kind==='S'?7:SECS[x.type]||10),0);return {n:l.length,min:Math.max(1,Math.round((s+60)/60))}}
+
+/* ---------- Prompt 公共部分 ---------- */
+const ROLE='你是一位教育研究方法教师，熟悉问卷编制与量表改编。';
+const num=a=>a.filter(Boolean).map((s,i)=>`${i+1}. ${s}`).join('\n');
+const lines=a=>a.filter(Boolean).join('\n');
+const litBlock=()=>S.lit.trim()?`\n文献综述核心结论：\n${S.lit.trim()}`:'';
+const evid=()=>`依据来源：${S.lit.trim()?'优先使用上面的文献综述结论，不足处':''}联网检索，给出真实可查的来源（作者，年份）；查不到的标注“待查证”，不编造文献。`;
+const objLine=()=>`调查对象：${S.obj.trim()}${S.objNote.trim()?`（${S.objNote.trim()}）`:''}`;
+const consBlock=(list=cons())=>list.map(c=>`${ntag(c)} ${c.name.trim()}（${c.role.trim()||'构念'}；维度：${dimText(c)}${c.tool.trim()?`；已初选工具：${c.tool.trim()}`:''}）`).join('\n');
+const designBlock=list=>lines([`研究题目：${S.topic.trim()}`,S.rtype.trim()&&`研究类型：${S.rtype.trim()}`,objLine(),`发放方式：${S.mode}；目标作答时间：${S.time}`,S.rq.trim()&&`研究问题：\n${S.rq.trim()}`,`需要测量的构念：\n${consBlock(list)}`]);
+const out=(intro,item,p2)=>`输出分两部分，不输出其他内容。
+
+第一部分【候选与解释】
+写给第一次做研究的本科生，用通俗的话，少用术语。${intro}每个候选按下面的格式写，每条不超过40字：
+${item}
+最后写【怎么选】：2—3条判断提示，说明在什么情况下选哪个，不直接给出最终方案。
+
+第二部分【回填清单】
+放在代码块中，列出第一部分的全部候选，每行一个，只用下面的格式：
+${p2}`;
+
+function gen2(){
+ $('q2').textContent=`${ROLE}请为下面的研究设计问卷中量表以外的题目：背景信息、其他封闭题和开放题。
+
+${designBlock()}${litBlock()}
+
+三类题目：
+${num(['背景信息：调查对象的基本情况。','其他封闭题：量表以外、研究问题需要的事实或行为信息，如频率、经历、途径、场景；不测态度和感受。','开放题：难以量化、需要调查对象用自己的话回答的内容，答案能为后续访谈提供线索。'])}
+
+选题标准：
+${num(['每题写明用途：回答哪个研究问题，或用于描述样本、分组比较；没有用途的不列。',
+ '背景信息只列在本研究情境中有意义的项目；不列与研究无关、敏感又不必要的信息，如姓名、详细住址、家庭收入。',
+ '题目之间、题目与量表构念之间不重复。',
+ `按目标作答时间（${S.time}）控制题量。`])}
+
+题目写法：
+${num(['具体、清晰、简洁，一题只问一件事；不用诱导性、令人窘迫、超出调查对象经验或知识范围的问题；不用否定或双重否定。',
+ '不预设前提：可能有人不适用的问题，先设筛选题，或加入“不适用”类选项。',
+ '能直接问数量的直接问，不让调查对象自己推算平均数；回忆性问题写明较近的时间范围。',
+ '选项穷尽且互斥，必要时加“其他（请注明）”；选项与问题一致；有逻辑顺序的按顺序排列；不用贬义词。',
+ '多选题的选项不超过8个，写明最多选几项；敏感问题用分段区间设计。',
+ '开放题写成一个完整问句，提示调查对象写具体经历或例子。'])}
+
+任务：
+${num(['背景信息列出6—10题，学生最终选3—8题。','其他封闭题列出4—6题，学生最终选0—4题。','开放题列出3—5题，学生最终选0—3题。','每题只写一个版本。'])}
+
+${out('按背景信息、其他封闭题、开放题分组。',`题目（题型：单选/多选/填空/排序/开放；推荐程度：高/中/低）
+- 选项：……
+- 用途：对应的研究问题或分析`,'B｜题型｜题目｜选项用“/”分隔，开放题和填空题写“—”｜用途（不超过20字）｜推荐程度\nC｜题型｜题目｜选项｜用途｜推荐程度\nO｜开放｜题目｜—｜用途｜推荐程度')}`
+}
+
+function gen3(){
+ const pend=need3(),t0=pend[0]?ntag(pend[0]):'Y1';
+ $('q3').textContent=`${ROLE}请为每个构念推荐测量来源：已有的成熟量表，或者自编题项。
+
+${designBlock(pend)}${litBlock()}
+
+选择标准：
+${num(['优先推荐公开发表、报告过信效度的成熟量表；有中文修订版的优先推荐中文修订版，写明修订者和年份。',
+ '检索时可参考 EEF SPECTRUM 数据库（非学业结果）、CORC 结果测量工具目录（儿童青少年心理健康与幸福感）和中文期刊中的修订版。',
+ '量表必须真实存在，写明编制者、年份和刊载的期刊或书名；查不到的标注“待查证”，不编造量表和文献，不写出题项原文。',
+ '判断适用性：量表的维度与本研究的维度是否一致，原调查对象与本研究对象是否接近，题量是否适合目标作答时间。',
+ '没有合适的量表，或现有量表与本研究的维度差别很大时，推荐自编，写明依据哪个理论框架或哪几篇文献编制。',
+])}
+
+任务：
+${num(['每个构念列出2—4个候选来源，其中至少1个是自编方案，学生最终各选1个。',evid()])}
+
+${out('按构念分组。',`量表名称（编制者，年份）（推荐程度：高/中/低）
+- 测什么：维度和题数
+- 计分方式：如 Likert 5点
+- 是否适用：可直接用 / 需改编 / 不适用，一句理由
+- 要注意：题量或文化差异`,`${t0}｜量表名称（编制者，年份）｜推荐程度\n${t0}｜自编：依据……编制｜推荐程度\n每行用构念编号开头。`)}`
+}
+
+function gen4(c){
+ const self=c.mode==='self',tag=ntag(c),ds=dimsGiven(c).length?dimText(c):(self?'未指定，请先提出3—4个维度':'未指定，按所选量表的维度');
+ const head=lines([`研究题目：${S.topic.trim()}`,objLine(),`构念：${tag} ${c.name.trim()}（维度：${ds}）`]);
+ if(!self)return `${ROLE}请把下面的量表题项翻译并改编为适合本研究的中文题项。
+
+${head}
+所选量表：${c.src&&c.src.t.trim()?c.src.t.trim():'未选择'}
+原始题项：
+${c.orig.trim()||'（尚未粘贴原始题项）'}${litBlock()}
+
+改编标准：
+${num(['只使用上面的原始题项，不补写原量表的其他题项；为覆盖维度而新增的题项标“新增”。',
+ '先判断量表与本研究的契合度；不契合时直接说明，建议更换量表。',
+ '每个原始题项给出处理方式：保留（只翻译）、改编（调整对象、情境或技术名称）、删除（与本研究无关或与其他题重复）。',
+ '翻译忠实原意，用调查对象熟悉的日常用语；一题只说一件事，用简单句，不超过30字；不用否定或双重否定。',
+ '保留原量表的计分方式；反向题保留，处理方式注明“反向”。',
+ '每个维度保留和新增后不少于3题；原量表覆盖不到的维度新增3—4题。',
+ '原始题项是中文版的，只做改编。'])}
+
+${out('先写一段契合度判断，再按维度逐题写，删除的题也要写明理由。',`原题号 中文题项（处理方式：保留/改编/删除/新增；推荐程度：高/中/低）
+- 原题大意：……
+- 改了什么：……`,`${tag}｜维度｜处理方式｜中文题项｜推荐程度\n计分｜计分方式与各选项的文字\n删除的题不列入回填清单。`)}`;
+ return `${ROLE}请为下面的构念自编问卷题项。
+
+${head}
+编制依据：${c.src&&c.src.t.trim()?c.src.t.trim():'按维度定义自编'}${litBlock()}
+
+编写标准：
+${num(['题项是调查对象能根据自己的经验回答的陈述句；一题只说一件事，用简单句，不超过25字。',
+ '不用诱导性表述，不用否定或双重否定，不用术语和缩写；涉及行为的写明时间范围。',
+ '题项内容与所属维度的定义一致，不同维度的题项不交叉、不重复。',
+ '同一构念统一一种计分方式：测同意程度用 Likert 5点（非常不同意—非常同意），测频率用频率选项（从不—总是）。',
+ evid()])}
+
+任务：
+${num(['每个维度写5—6个候选题项，学生最终各选3—5个。'])}
+
+${out('按维度分组。',`中文题项（推荐程度：高/中/低）
+- 测的是：……
+- 依据：理论或文献（作者，年份）`,`${tag}｜维度｜中文题项｜推荐程度\n计分｜计分方式与各选项的文字`)}`
+}
+
+const RULES=['具体、清晰准确、简洁：不提一般性的或与研究无关的问题；不模棱两可，不用行话或专业术语；一题只问一个内容；不过于冗长',
+ '不用诱导性问题','不用令人窘迫的问题','不超出调查对象的经验或知识范围','能收集定量信息的直接问数量，不让调查对象推算或估计',
+ '不用否定或双重否定','不用判断性（预设前提）的表述','回忆性问题考虑时间性，时间越近越好记',
+ '选项穷尽且互斥','选项与问题一致','选项有逻辑的按逻辑排列，没有逻辑的随机排列','不用贬义词','多选题的选项数量不过多','敏感问题的选项分类设计，降低敏感性'];
+function gen6(){
+ const l=codeList(false),e=est();
+ const items=l.map(x=>x.kind==='S'?`${x.id}［${x.con.name.trim()}·${x.d||'总体'}］${x.t.trim()}${x.obj.rev?'（反向题）':''}`:`${x.id}［${KIND[x.kind]}·${x.type}］${x.t.trim()}${optList(x.opt).length?`｜选项：${optList(x.opt).join('/')}`:''}`);
+ const rs=cons().filter(c=>c.items.some(t=>t.t.trim())&&c.resp.trim()).map(c=>`${ntag(c)}：${c.resp.trim()}`);
+ $('q6').textContent=`${ROLE}请审查下面问卷题目的措辞，只指出有问题的题目并给出修改。
+
+${objLine()}
+目标作答时间：${S.time}；目前共 ${e.n} 题，预计约 ${e.min} 分钟
+题目清单（题号［所属·维度或题型］题目）：
+${items.join('\n')||'（尚无题目）'}${rs.length?`\n量表计分方式：\n${rs.join('\n')}`:''}
+
+审查标准（问题设计）：
+${RULES.slice(0,8).map((s,i)=>`${i+1}. ${s}。`).join('\n')}
+审查标准（答案设计）：
+${RULES.slice(8).map((s,i)=>`${i+9}. ${s}。`).join('\n')}
+
+另外检查：量表题之间有没有意思重复的；反向题会不会被误读；题量是否超出目标作答时间。
+
+修改要求：
+${num(['改编自成熟量表的题目保持原意，只改措辞。','建议删除的题，修改后的题目只写“删除”，选项写“—”，理由写在第一部分。','没有问题的题目不列出。'])}
+
+输出分两部分，不输出其他内容。
+
+第一部分【审查意见】
+先写总体意见（题量、重复题、整体顺序），再按题号写，每条不超过40字：
+题号（问题类型：对应上面标准的编号和名称）
+- 原表述的问题：……
+- 修改后：……
+
+第二部分【回填清单】
+放在代码块中，列出第一部分的全部修改，每行一个，只用下面的格式：
+题号｜问题类型｜修改后的题目｜修改后的选项，选项不改写“—”`
+}
+
+function gen7(){
+ const cnt=k=>otherList(k).length,sc=cons().reduce((n,c)=>n+c.items.filter(t=>t.t.trim()).length,0),e=est();
+ $('q7').textContent=`${ROLE}请为下面的问卷拟定标题、指导语和结束语。
+
+研究题目：${S.topic.trim()}
+${objLine()}
+发放方式：${S.mode}；预计作答时间：约 ${e.min} 分钟
+研究者署名：${S.author.trim()||'未提供，用“课题组”代替'}
+问卷包含：背景信息 ${cnt('B')} 题，量表题 ${sc} 题，其他封闭题 ${cnt('C')} 题，开放题 ${cnt('O')} 题
+测量的构念：${cons().map(c=>c.name.trim()).join('、')}
+
+写作要求：
+${num(['标题贴切、清晰，写明调查对象和调查内容，不超过25字；不出现“影响”“效果”等暴露研究假设的词，不用术语。',
+ '指导语引起参与兴趣，消除顾虑：说明谁在做调查、调查什么（不透露研究假设）、预计用时、匿名填写、资料只用于研究、自愿参与可以随时退出、答案没有对错之分。',
+ '指导语说明怎样作答：按真实情况回答；量表题怎样选；多选题和开放题怎样填。',
+ '只有调查对象可能不熟悉或容易误解的概念才需要说明，用通俗的话，每个不超过60字；大家都熟悉的不列。',
+ '指导语不超过250字，称呼（你/您）与调查对象的身份相称。',
+ '结束语表示感谢，不超过40字。'])}
+
+任务：
+${num(['标题列出3个候选；指导语和结束语各写1个；需要说明的关键概念列出0—4个候选。'])}
+
+${out('按标题、指导语、关键概念、结束语分组。',`候选内容（推荐程度：高/中/低）
+- 选它的理由：……`,'T｜标题｜推荐程度\nG｜指导语全文，写在一行内｜推荐程度\nK｜概念｜通俗说明｜推荐程度\nE｜结束语｜推荐程度')}`
+}
+
+/* ---------- 通用组件 ---------- */
+function getAt(p){return p.split('.').reduce((o,k)=>o==null?o:o[k],S)}
+function setAt(p,v){const ks=p.split('.'),last=ks.pop(),o=ks.reduce((o,k)=>o[k],S);if(o)o[last]=v}
+function onIn(el){
+ setAt(el.dataset.path,el.type==='checkbox'?el.checked:el.value);
+ if(el.dataset.regen==='4'){const ci=+el.dataset.path.split('.')[1],q=$('q4_'+ci);if(q)q.textContent=gen4(S.cons[ci])}
+ if(el.dataset.regen==='7')gen7();
+ if(el.dataset.redraw==='1'){save();render1();return}
+ hideWarn(S.step);save()
+}
+const RK={高:'h',中:'m',低:'l'};
+const rk=r=>r?`<i class="rt rt-${RK[r]}">${r}</i>`:'';
+const meta=(u,r)=>u||r?`<span class="meta">${u?esc(u):''}${u&&r?' ':''}${rk(r)}</span>`:'';
+const group=(title,count,body)=>`<div class="group"><div class="grouphead"><b>${title}</b><span class="count">${count}</span></div>${body}</div>`;
+const addBtn=(label,call,dis)=>`<button type="button" class="add" onclick="${call}"${dis?' disabled':''}>＋ ${label}</button>`;
+function prow(o){
+ if(o.on){
+  const inp=o.area?`<textarea class="inp" rows="5" data-path="${o.path}" oninput="onIn(this)" placeholder="${o.ph||''}">${esc(o.text)}</textarea>`
+   :`<input class="inp" data-path="${o.path}" value="${esc(o.text)}" oninput="onIn(this)" placeholder="${o.ph||''}">`;
+  return `<div class="prow on"><button type="button" class="mk" onclick="${o.call}" title="取消选用" aria-label="取消选用">${o.mark||'选'}</button><div class="pin">${inp}${o.sub?`<span class="psub">${o.sub}</span>`:''}${o.extra||''}</div>${o.meta||''}</div>`
+ }
+ return `<button type="button" class="prow" onclick="${o.call}"><span class="mk"></span><span class="pin"><span>${esc(o.text)}</span>${o.sub?`<span class="psub">${o.sub}</span>`:''}</span>${o.meta||''}</button>`
+}
+function focusPath(p){const e=document.querySelector(`[data-path="${p}"]`);if(e)e.focus()}
+function hideWarn(n){const w=$('w'+n);if(w)w.classList.add('hidden')}
+function showWarn(n,t){const w=$('w'+n);if(!w)return;w.textContent=t;w.classList.remove('hidden')}
+function parseRows(raw){
+ let t=String(raw||'').replace(/\r/g,'');const i=t.lastIndexOf('回填清单');if(i>=0)t=t.slice(i+4);
+ const res=[];
+ t.split('\n').forEach(line=>{
+  const s=line.replace(/[*`]/g,'').replace(/^[\s#>•·└]+/,'').replace(/^-\s+/,'').trim();
+  if(!/[｜|]/.test(s))return;
+  const f=s.split(/[｜|]/).map(z=>z.trim());
+  while(f.length&&!f[0])f.shift();while(f.length&&!f[f.length-1])f.pop();
+  if(f.length<2||f.includes('推荐程度')||/^[-:\s]+$/.test(f[0]))return;
+  let r='';const m=f[f.length-1].match(/^(高|中|低)(?:[（(].*)?$/);if(m){r=m[1];f.pop()}
+  if(!f.length)return;
+  res.push({k:f[0].replace(/\s+/g,''),f:f.slice(1),r})
+ });
+ return res
+}
+const uniqBy=(a,key)=>a.filter((x,i)=>key(x)&&a.findIndex(y=>key(y)===key(x))===i);
+
+/* ---------- 第一步 ---------- */
+function fill1(){document.querySelectorAll('#p1 [data-path]').forEach(e=>{if(e.closest('#consBox'))return;const v=getAt(e.dataset.path)??'';if(e.tagName==='SELECT'&&v&&![...e.options].some(o=>o.value===v))e.add(new Option(v,v));e.value=v});$('more1').open=!!(S.objNote.trim()||S.lit.trim())}
+const ROLES=['自变量','因变量','中介变量','调节变量','干预变量','关键层次','预设影响因素','其他'],PRE={自变量:'X',干预变量:'X',因变量:'Y',中介变量:'M',调节变量:'W',关键层次:'D',预设影响因素:'F'};
+function retag(){
+ const used=new Set(S.cons.filter(c=>!c.auto).map(ntag)),autos=S.cons.filter(c=>c.auto);
+ autos.forEach(c=>{const p=PRE[c.role]||'V',bare=/[MWF]/.test(p)&&autos.filter(x=>(PRE[x.role]||'V')===p).length===1&&!used.has(p);
+  let t=p;if(!bare){let k=1;while(used.has(p+k))k++;t=p+k}c.tag=t;used.add(t)})
+}
+function render1(){
+ retag();
+ $('consBox').innerHTML=S.cons.map((c,i)=>{const ro=ROLES.includes(c.role)||!c.role?ROLES:[c.role,...ROLES];ensureDl(c);const whole=c.dims.trim()==='总体',dn=dimsGiven(c).length;
+  return `<div class="con${c.on?'':' off'}">
+  <div class="conr"><span class="tag">${esc(c.tag||'—')}</span>
+   <input class="inp" data-path="cons.${i}.name" value="${esc(c.name)}" oninput="onIn(this)" placeholder="变量名称，如 学习投入" aria-label="构念 ${i+1} 名称">
+   <select class="inp" onchange="setRole(${i},this.value)" aria-label="构念 ${i+1} 的变量类型"><option value="">变量类型</option>${ro.map(r=>`<option${r===c.role?' selected':''}>${r}</option>`).join('')}</select>
+   <label class="chk"><input type="checkbox" data-path="cons.${i}.on" data-redraw="1" ${c.on?'checked':''} onchange="onIn(this)">纳入问卷</label>
+   <button type="button" class="ebtn" onclick="rmCon(${i})">删除</button></div>
+  <details class="fold"${dn?' open':''}><summary>维度（可选${dn?`，${whole?'不分维度':'已填 '+dn+' 个'}`:'，不填则按所选量表的维度'}）</summary>
+   <div class="dh"><span class="psub">每个框填一个维度</span><label class="chk"><input type="checkbox" ${whole?'checked':''} onchange="setWhole(${i},this.checked)">不分维度，只测总分</label></div>
+   ${whole?'':`<div class="dl">${c.dl.map((d,j)=>`<div class="dr"><input class="inp" id="d${i}_${j}" value="${esc(d)}" oninput="dimIn(${i},${j},this)" onchange="dimSplit(${i},${j},this)" placeholder="${['如 行为投入','如 认知投入','如 情感投入'][j]||'维度名称'}" aria-label="维度 ${j+1}">${c.dl.length>1?`<button type="button" class="remove" onclick="rmDim(${i},${j})" title="删除这个维度" aria-label="删除这个维度">×</button>`:''}</div>`).join('')}<button type="button" class="add" onclick="addDim(${i})">＋ 增加维度</button></div>`}
+  </details>
+ </div>`}).join('')||'<p class="sub">还没有构念。读取汇总表，或点下面的按钮增加。</p>'
+}
+const DSEP=/[、，,；;\n]/;
+function ensureDl(c){const a=String(c.dims||'').split(DSEP).map(x=>x.trim()).filter(x=>x&&x!=='总体');
+ if(!Array.isArray(c.dl)||c.dl.map(x=>x.trim()).filter(Boolean).join('、')!==a.join('、'))c.dl=a.length?a:[''];}
+function syncDims(c){c.dims=c.dl.map(x=>x.trim()).filter(Boolean).join('、')}
+function dimIn(i,j,el){const c=S.cons[i];c.dl[j]=el.value;syncDims(c);save()}
+function dimSplit(i,j,el){const c=S.cons[i],parts=el.value.split(DSEP).map(x=>x.trim()).filter(Boolean);if(parts.length<2)return;c.dl.splice(j,1,...parts);syncDims(c);save();render1()}
+function addDim(i){const c=S.cons[i];c.dl.push('');save();render1();const e=$(`d${i}_${c.dl.length-1}`);if(e)e.focus()}
+function rmDim(i,j){const c=S.cons[i];c.dl.splice(j,1);if(!c.dl.length)c.dl=[''];syncDims(c);save();render1()}
+function setWhole(i,on){const c=S.cons[i];if(on){c.dims='总体';c.dl=[]}else{c.dims='';c.dl=['']}save();render1()}
+function setRole(i,v){const c=S.cons[i];c.role=v;if(v==='干预变量')c.on=false;save();render1()}
+function addCon(){S.cons.push(Object.assign(blankCon(''),{auto:true}));save();render1();focusPath(`cons.${S.cons.length-1}.name`)}
+function rmCon(i){S.cons.splice(i,1);save();render1()}
+function splitRow(s){return s.replace(/^\|/,'').replace(/\|$/,'').split(/(?<!\\)\|/).map(c=>c.trim().replace(/\\\|/g,'|').replace(/<br\s*\/?>/g,'；'))}
+function parseSummary(md){
+ const meta={},tables={},L=String(md).replace(/\r/g,'').split('\n'),sep=s=>/^\|[\s:|-]+\|?$/.test(s);let cur=null;
+ for(let i=0;i<L.length;i++){
+  const s=L[i].trim(),m=s.match(/^\*\*(.+?)[：:]\*\*\s*(.*)$/);if(m){meta[m[1].trim()]=m[2].trim();continue}
+  const h=s.match(/^#{2,4}\s*(.+)$/);if(h){cur=h[1].trim();tables[cur]=[];continue}
+  if(cur&&s.startsWith('|')){if(sep(s)||sep((L[i+1]||'').trim()))continue;tables[cur].push(splitRow(s))}
+ }
+ const list=[],T=n=>tables[n]||[];
+ T('变量与操作化').forEach(r=>{const [role='',name='',dims='']=r,m=role.match(/^(.*?)\s*([A-Z]\d*)$/),iv=/干预/.test(role);
+  list.push({tag:m?m[2]:'V'+(list.length+1),role:m?m[1].trim():role,name,dims:iv?'':dims,tool:'',on:!iv})});
+ T('分析框架').forEach(r=>{const [a='',dims='',tool='']=r,m=a.match(/^([A-Z]\d*)\s+(.*)$/);
+  list.push({tag:m?m[1]:'D'+(list.length+1),role:'关键层次',name:m?m[2]:a,dims,tool:tool&&tool!=='—'?tool:'',on:true})});
+ if(meta['预设影响因素']){const v=meta['预设影响因素'],tm=v.match(/（([^）]*)）\s*$/);list.push({tag:'F',role:'预设影响因素',name:'预设影响因素',dims:v.replace(/（[^）]*）\s*$/,''),tool:tm?tm[1]:'',on:true})}
+ T('假设、变量与测量工具').forEach(r=>{const name=(r[1]||'').replace(/（(中介|调节)变量）$/,'').trim(),tool=r[3]||'',c=list.find(x=>x.name===name);
+  if(c&&tool&&tool!=='—'&&!/^不测量/.test(tool)){c.tool=tool;if(/^(观察|测验|量规|访谈)/.test(tool))c.on=false}});
+ const rq=[];
+ T('研究问题与假设').forEach(r=>{const [id='',q='',h='']=r,hv=h&&h!=='不设假设'?h:'';if(!q||q==='—'){if(hv)rq.push('  '+hv);return}rq.push(`${id.replace(/^└\s*/,'')}：${q}${hv?`（${hv}）`:''}`)});
+ T('研究问题').forEach(r=>{if(r[1])rq.push(`${r[0]}：${r[1]}`)});
+ return {topic:meta['研究题目']||'',type:meta['研究类型']||'',list,rq}
+}
+function importMd(){
+ const p=parseSummary(S.md);
+ if(!p.topic&&!p.list.length){$('pm1').textContent='没有读到汇总表的内容，请确认粘贴的是生成器汇总表页“复制 Markdown”的结果。';return}
+ if(p.topic)S.topic=p.topic;if(p.type)S.rtype=p.type;if(p.rq.length)S.rq=p.rq.join('\n');
+ if(p.list.length)S.cons=p.list.map(x=>{const old=S.cons.find(c=>c.name.trim()===x.name.trim());return old?Object.assign(old,{tag:x.tag,role:x.role,dims:x.dims||old.dims,tool:x.tool||old.tool,on:x.on}):Object.assign(blankCon(x.tag),x)});
+ save();fill1();render1();
+ $('pm1').textContent=`已读取：题目、${p.rq.length} 行研究问题、${p.list.length} 个构念（${p.list.filter(x=>x.on).length} 个纳入问卷）。请补充调查对象。`
+}
+function loadDemo(){
+ S.topic='师范生对ChatGPT的认知、态度与使用行为研究';S.rtype='相关类';S.obj='某省两所师范院校的本科师范生';
+ S.objNote='大一至大四，多数用过生成式人工智能，但对其原理了解不多';
+ S.rq='RQ1：师范生的ChatGPT素养能否预测其ChatGPT使用行为？\nRQ2：技术焦虑与师范生的ChatGPT使用行为是否相关？\nRQ3：技术接纳是否在ChatGPT素养与使用行为之间起中介作用？';
+ S.cons=[Object.assign(blankCon('X1'),{role:'自变量',name:'ChatGPT素养',dims:'基础知识、操作技能、评价能力、伦理意识'}),
+  Object.assign(blankCon('X2'),{role:'自变量',name:'技术焦虑',dims:'总体'}),
+  Object.assign(blankCon('M'),{role:'中介变量',name:'技术接纳',dims:'感知有用性、感知易用性、使用意向'}),
+  Object.assign(blankCon('Y1'),{role:'因变量',name:'ChatGPT使用行为',dims:'使用频率、使用场景、使用方式'})];
+ save();fill1();render1();$('pm1').textContent='已载入示例（师范生与 ChatGPT），可以直接改写。'
+}
+
+/* ---------- 第二步 ---------- */
+const qExtra=(k,at,o)=>`<div class="qopt"><select class="inp" data-path="sel.${k}.${at}.type" onchange="onIn(this)" aria-label="题型">${TYPES.map(t=>`<option${t===o.type?' selected':''}>${t}</option>`).join('')}</select><input class="inp" data-path="sel.${k}.${at}.opt" value="${esc(o.opt||'')}" oninput="onIn(this)" placeholder="选项，用“/”分隔；开放题、填空题留空" aria-label="选项"></div>`;
+function map2(){
+ const n=k=>otherList(k).length,cs=cons(),cur=k=>n(k)?`已选 ${n(k)} 题`:'',
+ B=['第一部分','基本信息',cur('B')||'性别、年级、专业等，用于描述样本和分组比较','本步',1],
+ SC=['第二部分','量表',cs.length?cs.map(c=>`${ntag(c)} ${c.name.trim()}（${!dimsGiven(c).length?'维度由量表决定':dimsGiven(c)[0]==='总体'?'不分维度':dimsGiven(c).length+' 个维度'}）`).join('；'):'第一步填写的构念','第 3—4 步',0],
+ rows=[['开头','标题与指导语','说明调查目的、匿名、用时和作答方式','第 6 步',0]];
+ if(S.order==='head')rows.push(B);rows.push(SC,['第三部分','其他封闭题',cur('C')||'量表以外的事实和行为，如使用频率、经历、途径','本步',1],['第四部分','开放题',cur('O')||'让调查对象用自己的话回答，答案可为后续访谈提供线索','本步',1]);
+ if(S.order==='tail')rows.push(B);rows.push(['结尾','结束语','感谢参与','第 6 步',0]);
+ let k=0;rows.forEach(r=>{if(/部分/.test(r[0]))r[0]=`第${CN[k++]}部分`});
+ $('map2').innerHTML=`<div class="map">${rows.map(r=>`<div class="mrow${r[4]?' cur':''}"><span class="mpart">${r[0]}</span><div class="mbody"><b>${r[1]}</b><span>${esc(r[2])}</span></div><span class="mstep">${r[3]}</span></div>`).join('')}</div><p class="sub" style="margin-top:6px">全部题目写好后，第 5 步统一检查措辞，第 7 步按这个顺序生成问卷。</p>`
+}
+function render2(){
+ gen2();map2();
+ $('f2').innerHTML=['B','C','O'].map(k=>{
+  const sel=S.sel[k],cand=S.c2[k],pos=o=>{const p=sel.filter(x=>x.t.trim()).indexOf(o);return p>=0?k+(p+1):'选'};
+  let rows=cand.map((c,i)=>{const at=sel.findIndex(o=>o.ci===i),o=sel[at];
+   return prow({on:at>=0,mark:o?pos(o):'',text:o?o.t:c.t,sub:o?'':esc([optList(c.opt).join(' / '),c.u&&'用途：'+c.u].filter(Boolean).join('　')),meta:meta(c.type,c.r),call:`pick2('${k}',${i})`,path:`sel.${k}.${at}.t`,ph:'题目',extra:o?qExtra(k,at,o):''})}).join('');
+  sel.forEach((o,at)=>{if(o.ci!=null&&cand[o.ci])return;
+   rows+=prow({on:true,mark:pos(o),text:o.t,meta:meta('自己写的',''),call:`rm2('${k}',${at})`,path:`sel.${k}.${at}.t`,ph:'题目',extra:qExtra(k,at,o)})});
+  return group(KIND[k],`${COUNT2[k]} · 已选 ${sel.filter(o=>o.t.trim()).length}`,(rows?`<div class="pl">${rows}</div>`:'<p class="sub">读取 AI 的回复后，候选会显示在这里。</p>')+addBtn('自己写一题',`add2('${k}')`,sel.length>=MAX[k]))
+ }).join('')
+}
+function pick2(k,i){
+ const sel=S.sel[k],at=sel.findIndex(o=>o.ci===i);
+ if(at>=0)sel.splice(at,1);
+ else{if(sel.length>=MAX[k]){showWarn(2,`${KIND[k]}最多选 ${MAX[k]} 题，先取消一题再选。`);return}const c=S.c2[k][i];sel.push({t:c.t,type:c.type,opt:c.opt,u:c.u,ci:i});sel.sort((a,b)=>(a.ci??999)-(b.ci??999))}
+ hideWarn(2);save();render2()
+}
+function add2(k){S.sel[k].push({t:'',type:k==='O'?'开放':'单选',opt:'',u:''});save();render2();focusPath(`sel.${k}.${S.sel[k].length-1}.t`)}
+function rm2(k,at){S.sel[k].splice(at,1);save();render2()}
+
+/* ---------- 第三步 ---------- */
+const need3=()=>cons().filter(c=>!c.src||c.src.ci!==-2);
+function applyTools(){cons().forEach(c=>{const t=c.tool.trim();if(t&&t!==c.toolUsed){c.toolUsed=t;if(!c.src||c.src.ci===-2){c.src={t:t.replace(/^问卷[：:]\s*/,''),ci:-2};c.mode=/自编/.test(t)?'self':'scale'}}})}
+function render3(){
+ gen3();const pend=need3(),pre=cons().length-pend.length;
+ $('bf3').classList.toggle('hidden',!pend.length);
+ const nt=$('nt3');nt.classList.toggle('hidden',!pre);
+ nt.textContent=!pend.length?'所有构念在研究设计中都已选定测量工具，可以直接进入下一步。想更换的，点该工具前的圆点取消，页面会为它生成 Prompt。':`${pre} 个构念在研究设计中已选定测量工具，Prompt 只包含其余 ${pend.length} 个。`;
+ $('f3').innerHTML=cons().map(c=>{const ci=S.cons.indexOf(c);
+  let rows=c.sc.map((s,i)=>{const on=!!c.src&&c.src.ci===i;
+   return prow({on,text:on?c.src.t:s.t,meta:meta(/^自编/.test(s.t)?'自编':'',s.r),call:`pick3(${ci},${i})`,path:`cons.${ci}.src.t`})}).join('');
+  if(c.src&&c.src.ci===-2)rows=prow({on:true,text:c.src.t,meta:meta('研究设计中已选定',''),call:`unsrc(${ci})`,path:`cons.${ci}.src.t`})+rows;
+  if(c.src&&c.src.ci===-1)rows+=prow({on:true,text:c.src.t,meta:meta('自己填写',''),call:`unsrc(${ci})`,path:`cons.${ci}.src.t`,ph:'量表名称（编制者，年份），或“自编：依据……”'});
+  const md=c.src?`<div class="modes"><span>编制方式</span><label><input type="radio" name="md${ci}" ${c.mode!=='self'?'checked':''} onchange="setMode(${ci},'scale')">改编成熟量表（需要取得原始题项）</label><label><input type="radio" name="md${ci}" ${c.mode==='self'?'checked':''} onchange="setMode(${ci},'self')">自编题项</label></div>`:'';
+  return group(`${esc(ntag(c))} ${esc(c.name)}`,`${esc(c.role||'构念')} · 维度：${esc(dimText(c))}`,(rows?`<div class="pl">${rows}</div>`:'')+(c.src?'':addBtn('自己填写来源',`ownSrc(${ci})`))+md)
+ }).join('')
+}
+function pick3(ci,i){const c=S.cons[ci],s=c.sc[i];
+ if(c.src&&c.src.ci===i)c.src=null;
+ else{c.src={t:s.t,ci:i};c.mode=/^自编/.test(s.t)?'self':'scale'}
+ hideWarn(3);save();render3()}
+function ownSrc(ci){const c=S.cons[ci];c.src={t:'',ci:-1};c.mode=c.mode||'scale';save();render3();focusPath(`cons.${ci}.src.t`)}
+function unsrc(ci){S.cons[ci].src=null;save();render3()}
+function setMode(ci,m){S.cons[ci].mode=m;save();if(S.step===4)render4()}
+
+/* ---------- 第四步 ---------- */
+function groups4(c){const g=[...dimsGiven(c)];c.ic.forEach(x=>{if(x.d&&!g.includes(x.d))g.push(x.d)});c.items.forEach(t=>{if(t.d&&!g.includes(t.d))g.push(t.d)});return g.length?g:['总体']}
+function sort4(c){const g=groups4(c),o=t=>t.ci>=0?t.ci:999;c.items.sort((a,b)=>(g.indexOf(a.d)-g.indexOf(b.d))||(o(a)-o(b)))}
+const revBox=(ci,k,t)=>`<label class="rv"><input type="checkbox" ${t.rev?'checked':''} onchange="S.cons[${ci}].items[${k}].rev=this.checked;save()">反向题</label>`;
+const allOn4=(c,js)=>js.length&&js.every(j=>c.items.some(t=>t.ci===j));
+function body4(c,ci,n,list){
+ const self=c.mode==='self',codes=new Map(),tag=ntag(c);let k=0;const z=t=>`<div class="zone"><span class="no">${++k}</span>${t}</div>`;
+ c.items.filter(t=>t.t.trim()).forEach((t,i)=>codes.set(t,`${tag}-${i+1}`));
+ let h=`<div class="cur"><div class="curh"><span class="tag">${esc(tag)}</span><b>${esc(c.name)}</b><span class="dims">维度：${esc(dimText(c))}</span></div>
+ <div class="modes"><span>编制方式</span><label><input type="radio" name="m4" ${self?'':'checked'} onchange="setMode(${ci},'scale')">改编成熟量表</label><label><input type="radio" name="m4" ${self?'checked':''} onchange="setMode(${ci},'self')">自编题项</label><span class="src">来源：${c.src&&c.src.t.trim()?esc(c.src.t):'未选择（回第三步）'}</span></div></div>`;
+ if(!self)h+=z('粘贴原始题项')+`<textarea class="inp" data-path="cons.${ci}.orig" data-regen="4" oninput="onIn(this)" placeholder="从原始论文或量表附录中复制 ${esc(c.name)} 的题项，每行一题，保留原题号；有中文版的粘贴中文版">${esc(c.orig)}</textarea>`;
+ h+=z('复制 Prompt 发给 AI')+`<div class="prompt"><div class="phead"><span>${esc(tag)} ${esc(c.name)} · ${self?'自编题项':'翻译与改编'}</span><button class="copy" onclick="cp(this)">复制</button></div><pre id="q4_${ci}"></pre></div>`;
+ h+=z('粘贴 AI 回复')+`<div class="paste"><textarea class="inp" data-path="cons.${ci}.paste" oninput="onIn(this)" placeholder="只粘贴 ${esc(tag)} ${esc(c.name)} 这一次的回复">${esc(c.paste)}</textarea><div class="btns"><button class="btn" onclick="autofill4(${ci})">读取候选</button><span class="pmsg" id="pm4_${ci}"></span></div></div>`;
+ const allJ=c.ic.map((x,j)=>j);
+ h+=`<div class="zone zr"><span><span class="no">${++k}</span>选定题项</span>${allJ.length?`<button type="button" class="tog" onclick="all4(${ci},-1)">${allOn4(c,allJ)?'全部取消':'全选全部候选'}</button>`:''}</div>`;
+ h+=`<div class="field" style="margin-top:0"><label for="rs${ci}">计分方式</label><input class="inp" id="rs${ci}" data-path="cons.${ci}.resp" value="${esc(c.resp)}" oninput="onIn(this)" placeholder="如 Likert 5点：1=非常不符合，2=比较不符合，3=不确定，4=比较符合，5=非常符合"></div>`;
+ groups4(c).forEach((d,gi)=>{
+  const js=c.ic.map((x,j)=>x.d===d?j:-1).filter(j=>j>=0);
+  let rows=js.map(j=>{const x=c.ic[j],i=c.items.findIndex(t=>t.ci===j),t=c.items[i];
+   return prow({on:i>=0,mark:t?codes.get(t)||'选':'',text:t?t.t:x.t,sub:self?'':esc(x.act),meta:meta('',x.r),call:`pick4(${ci},${j})`,path:`cons.${ci}.items.${i}.t`,extra:t?revBox(ci,i,t):''})}).join('');
+  c.items.forEach((t,i)=>{if(t.d!==d||(t.ci>=0&&c.ic[t.ci]))return;
+   rows+=prow({on:true,mark:codes.get(t)||'选',text:t.t,meta:meta('自己写的',''),call:`rm4(${ci},${i})`,path:`cons.${ci}.items.${i}.t`,ph:'题项',extra:revBox(ci,i,t)})});
+  h+=`<div class="slot"><div class="slh"><span><b>${esc(d)}</b>已选 ${c.items.filter(t=>t.d===d&&t.t.trim()).length} 题</span>${js.length?`<button type="button" class="tog" onclick="all4(${ci},${gi})">${allOn4(c,js)?'取消全选':'全选'}</button>`:''}</div><div class="pl">${rows}<button type="button" class="tog" onclick="add4(${ci},${gi})">＋ 自己写一个题项</button></div></div>`
+ });
+ if(n<list.length-1){const nx=list[n+1];h+=`<div class="btns"><button type="button" class="btn" onclick="tog4(${n+1})">下一个构念：${esc(ntag(nx))} ${esc(nx.name)}</button></div>`}
+ return h
+}
+function render4(){
+ const list=cons();if(!(S.open4>=0&&S.open4<list.length))S.open4=0;
+ const c=list[S.open4];
+ $('f4').innerHTML=list.length?`<div class="cpick" role="tablist" aria-label="构念">${list.map((x,n)=>{const its=x.items.filter(t=>t.t.trim()).length;
+  return `<button type="button" role="tab" class="cchip${n===S.open4?' on':''}" aria-selected="${n===S.open4}" onclick="tog4(${n})"><b>${esc(ntag(x))} ${esc(x.name)}</b><span>${x.mode==='self'?'自编':'改编'} · ${its?`已选 ${its} 题`:'未选'}</span></button>`}).join('')}</div>`+body4(c,S.cons.indexOf(c),S.open4,list)
+  :'<p class="sub">还没有需要测量的构念，回第一步添加。</p>';
+ if(c){const q=$('q4_'+S.cons.indexOf(c));if(q)q.textContent=gen4(c)}
+}
+function tog4(n){S.open4=n;save();render4();const e=$('f4');if(e)e.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}
+function pick4(ci,j){const c=S.cons[ci],k=c.items.findIndex(t=>t.ci===j);
+ if(k>=0)c.items.splice(k,1);else{const x=c.ic[j];c.items.push({t:x.t,d:x.d,act:x.act,rev:/反向/.test(x.act),ci:j});sort4(c)}
+ hideWarn(4);save();render4()}
+function all4(ci,gi){const c=S.cons[ci],g=groups4(c),js=c.ic.map((x,j)=>gi<0||x.d===g[gi]?j:-1).filter(j=>j>=0);
+ if(allOn4(c,js))c.items=c.items.filter(t=>!js.includes(t.ci));
+ else js.forEach(j=>{if(!c.items.some(t=>t.ci===j)){const x=c.ic[j];c.items.push({t:x.t,d:x.d,act:x.act,rev:/反向/.test(x.act),ci:j})}});
+ sort4(c);hideWarn(4);save();render4()}
+function add4(ci,gi){const c=S.cons[ci],d=groups4(c)[gi],t={t:'',d,act:'自编',rev:false,ci:-1};c.items.push(t);sort4(c);save();render4();focusPath(`cons.${ci}.items.${c.items.indexOf(t)}.t`)}
+function rm4(ci,k){S.cons[ci].items.splice(k,1);save();render4()}
+function autofill4(ci){
+ const c=S.cons[ci],tag=ntag(c),ic=[],rows=parseRows(c.paste),tags=new Set(cons().map(ntag));let resp='',other='';
+ rows.forEach(x=>{
+  if(x.k==='计分'){const v=(x.f.length>1&&tags.has(x.f[0].replace(/\s+/g,''))?x.f.slice(1):x.f).join('，');if(v)resp=v;return}
+  if(x.k!==tag){if(tags.has(x.k))other=x.k;return}
+  const f=x.f,it=f.length>=4?{d:f[0],act:f[2],t:f.slice(3).join('｜')}:f.length===3?{d:f[0],act:f[1],t:f[2]}:f.length===2?{d:f[0],act:'自编',t:f[1]}:null;
+  if(!it||/删除/.test(it.act))return;it.r=x.r;if(!ic.some(o=>o.t===it.t))ic.push(it)});
+ if(ic.length){c.ic=ic;c.items.forEach(t=>{t.ci=ic.findIndex(o=>o.t===t.t.trim())});sort4(c)}
+ if(resp)c.resp=resp;
+ save();render4();
+ const m=$('pm4_'+ci);if(m)m.textContent=ic.length?`已读取 ${ic.length} 个题项候选，点击选用，或用“全选”。`:other?`这段回复是 ${other} 的，当前构念是 ${tag}。请切换到 ${other}，或重新粘贴。`:`没有读到 ${tag} 开头的回填行，请确认粘贴的是 AI 的完整回复。`
+}
+
+/* ---------- 第六步 ---------- */
+const isDel=s=>/^删除/.test(String(s.t||'').trim());
+function render6(){
+ gen6();const e=est(),list=codeList(false),byUid=new Map(list.map(x=>[x.obj.uid,x]));
+ let h=`<div class="estbar">目前共 ${e.n} 题，预计作答约 ${e.min} 分钟；目标 ${S.time}。</div>`;
+ if(!S.c6.length)h+='<p class="sub">读取 AI 的审查意见后，在这里逐条决定是否采用。</p>';
+ else h+=S.c6.map((s,n)=>{const x=byUid.get(s.uid),del=isDel(s),gone=del&&s.on,old=gone?s.rm.obj.t:s.on&&s.prev?s.prev.t:(x?x.t:s.orig||'');
+  const idl=gone?`${esc(s.id)}（已删除）`:x&&x.id!==s.id?`${esc(x.id)}（原 ${esc(s.id)}）`:esc(s.id),ok=gone||!!x;
+  return `<div class="rev${s.on?' on':''}"><div class="revh"><span class="tag">${idl}</span><span class="ty">${esc(s.kind)}</span>${ok?'':'<span class="bad">这道题已经不在问卷里了</span>'}</div>
+  <div class="revo"><span>原表述</span><span class="old">${esc(old)}</span></div>
+  ${del?`<div class="revn"><span>建议</span><b class="delw">删除这道题</b></div>`:`<div class="revn"><span>修改后</span><input class="inp" data-path="c6.${n}.t" value="${esc(s.t)}" oninput="onIn(this)"${s.on?' disabled':''} aria-label="修改后的题目"></div>
+  ${s.opt?`<div class="revn"><span>选项</span><input class="inp" data-path="c6.${n}.opt" value="${esc(s.opt)}" oninput="onIn(this)"${s.on?' disabled':''} aria-label="修改后的选项"></div>`:''}`}
+  <div class="btns"><button class="btn sm${s.on?'':' primary'}" onclick="adopt6(${n})"${ok?'':' disabled'}>${s.on?(del?'撤销删除':'撤销采用'):(del?'删除这道题':'采用修改')}</button></div></div>`}).join('');
+ $('f6').innerHTML=h
+}
+function adopt6(n){
+ const s=S.c6[n];
+ if(isDel(s)){
+  if(!s.on){const x=codeList(true).find(o=>o.obj.uid===s.uid);if(!x)return;
+   if(x.kind==='S'){const ci=S.cons.indexOf(x.con),idx=x.con.items.indexOf(x.obj);x.con.items.splice(idx,1);s.rm={k:'S',ci,idx,obj:x.obj}}
+   else{const arr=S.sel[x.kind],idx=arr.indexOf(x.obj);arr.splice(idx,1);s.rm={k:x.kind,idx,obj:x.obj}}
+   s.on=true}
+  else if(s.rm){const arr=s.rm.k==='S'?S.cons[s.rm.ci].items:S.sel[s.rm.k];arr.splice(Math.min(s.rm.idx,arr.length),0,s.rm.obj);s.rm=null;s.on=false}
+  save();render6();return
+ }
+ const x=codeList(true).find(o=>o.obj.uid===s.uid);if(!x)return;
+ if(!s.on){s.prev={t:x.obj.t,opt:x.obj.opt||''};x.obj.t=s.t;if(s.opt&&x.kind!=='S')x.obj.opt=s.opt;s.on=true}
+ else{if(s.prev){x.obj.t=s.prev.t;if(x.kind!=='S')x.obj.opt=s.prev.opt}s.on=false}
+ save();render6()
+}
+
+/* ---------- 第七步 ---------- */
+function render7(){
+ gen7();
+ const one=(k,label,area)=>{const cs=S.c7[k],sel=S.s7[k];
+  let rows=cs.map((x,j)=>{const on=!!sel&&sel.ci===j;return prow({on,text:on?sel.t:x.t,meta:meta('',x.r),call:`pick7('${k}',${j})`,path:`s7.${k}.t`,area})}).join('');
+  if(sel&&(sel.ci===-1||!cs[sel.ci]))rows+=prow({on:true,text:sel.t,meta:meta('自己写的',''),call:`un7('${k}')`,path:`s7.${k}.t`,area,ph:label});
+  return group(label,k==='T'?'选1个':'可直接改写',(rows?`<div class="pl">${rows}</div>`:'')+(sel?'':addBtn('自己写',`own7('${k}')`)))};
+ const K=S.s7.K;
+ let kr=S.c7.K.map((x,j)=>{const at=K.findIndex(o=>o.ci===j),o=K[at];
+  return prow({on:at>=0,text:o?o.t:x.t,sub:o?'':esc(x.n),meta:meta('',x.r),call:`pick7('K',${j})`,path:`s7.K.${at}.t`,ph:'概念',extra:o?`<input class="inp" data-path="s7.K.${at}.n" value="${esc(o.n)}" oninput="onIn(this)" placeholder="通俗说明，不超过60字" aria-label="通俗说明">`:''})}).join('');
+ K.forEach((o,at)=>{if(o.ci>=0&&S.c7.K[o.ci])return;kr+=prow({on:true,text:o.t,meta:meta('自己写的',''),call:`rmK(${at})`,path:`s7.K.${at}.t`,ph:'概念',extra:`<input class="inp" data-path="s7.K.${at}.n" value="${esc(o.n)}" oninput="onIn(this)" placeholder="通俗说明，不超过60字" aria-label="通俗说明">`})});
+ $('f7').innerHTML=one('T','问卷标题')+one('G','指导语',true)
+  +`<details class="fold grp" ontoggle="S.foldK=this.open;save()"${S.foldK||K.length?' open':''}><summary>关键概念说明（可选，${K.length?`已选 ${K.length} 个`:'调查对象都熟悉的就不用说明'}）</summary>${kr?`<div class="pl">${kr}</div>`:'<p class="sub">AI 认为需要说明的概念会显示在这里。</p>'}${addBtn('自己写一个','addK()',K.length>=4)}</details>`+one('E','结束语')
+}
+function pick7(k,j){
+ if(k==='K'){const K=S.s7.K,at=K.findIndex(o=>o.ci===j);if(at>=0)K.splice(at,1);else{if(K.length>=4){showWarn(7,'关键概念最多选 4 个。');return}const x=S.c7.K[j];K.push({t:x.t,n:x.n,ci:j});K.sort((a,b)=>(a.ci<0?99:a.ci)-(b.ci<0?99:b.ci))}}
+ else{const s=S.s7[k];S.s7[k]=s&&s.ci===j?null:{t:S.c7[k][j].t,ci:j}}
+ hideWarn(7);save();render7()}
+function own7(k){S.s7[k]={t:'',ci:-1};save();render7();focusPath(`s7.${k}.t`)}
+function un7(k){S.s7[k]=null;save();render7()}
+function addK(){S.s7.K.push({t:'',n:'',ci:-1});save();render7();focusPath(`s7.K.${S.s7.K.length-1}.t`)}
+function rmK(at){S.s7.K.splice(at,1);save();render7()}
+
+/* ---------- 读取候选（第 2、3、5、6、7 步） ---------- */
+function autofill(n){
+ const rows=parseRows(S.pa[n]);let c=0,msg='';
+ if(n===2){['B','C','O'].forEach(k=>{const a=uniqBy(rows.filter(x=>x.k===k&&x.f.length>=2).map(x=>{const f=x.f,ty=TYPES.includes(f[0])?f[0]:(k==='O'?'开放':'单选');return {type:ty,t:f[1],opt:optList(f[2]).join('/'),u:f[3]||'',r:x.r}}),x=>x.t);
+  if(a.length){S.c2[k]=a;c+=a.length;S.sel[k].forEach(o=>{const i=a.findIndex(x=>x.t===o.t.trim());if(i>=0)o.ci=i;else delete o.ci})}})}
+ else if(n===3){cons().forEach(cn=>{const a=uniqBy(rows.filter(x=>x.k===ntag(cn)).map(x=>({t:x.f[0],r:x.r})),x=>x.t);
+  if(a.length){cn.sc=a;c+=a.length;if(cn.src&&cn.src.ci!==-1){cn.src.ci=a.findIndex(x=>x.t===cn.src.t.trim())}}})}
+ else if(n===6){const l=codeList(true),byId=new Map(l.map(x=>[x.id,x]));let miss=0;const a=[];
+  rows.forEach(x=>{const t=byId.get(x.k);if(!t){if(/^([A-Z]\w*-\d+|[BCO]\d+)$/.test(x.k))miss++;return}if(x.f.length<2)return;const opt=x.f[2]&&!/^[—\-–]+$/.test(x.f[2])?x.f[2]:'';a.push({id:x.k,uid:t.obj.uid,orig:t.t,kind:x.f[0],t:x.f[1],opt,on:false})});
+  if(a.length){S.c6=a;c=a.length}if(miss)msg=`另有 ${miss} 条的题号对不上现在的题目，没有显示。`}
+ else if(n===7){['T','G','E'].forEach(k=>{const a=uniqBy(rows.filter(x=>x.k===k).map(x=>({t:x.f.join('｜'),r:x.r})),x=>x.t);if(a.length){S.c7[k]=a;c+=a.length;const s=S.s7[k];if(s&&s.ci!==-1)s.ci=a.findIndex(x=>x.t===s.t.trim());if(k!=='T'&&!S.s7[k])S.s7[k]={t:a[0].t,ci:0}}});
+  const K=uniqBy(rows.filter(x=>x.k==='K').map(x=>({t:x.f[0],n:x.f.slice(1).join('｜'),r:x.r})),x=>x.t);if(K.length){S.c7.K=K;c+=K.length;S.s7.K.forEach(o=>{if(o.ci!==-1)o.ci=K.findIndex(x=>x.t===o.t.trim())})}}
+ save();renderStep(n);hideWarn(n);
+ $('pm'+n).textContent=c?`已读取 ${c} 个${n===6?'修改建议':'候选'}。${msg}读取后不会自动选入：先看 AI 的解释，再在下面${n===6?'逐条决定是否采用':'点击选用，选中后可以改写'}。`:'没有读到【回填清单】，请确认粘贴的是 AI 的完整回复。'
+}
+
+/* ---------- 第八步：问卷与编码表 ---------- */
+function scaleCols(resp){
+ const pm=String(resp).match(/(\d+)\s*[点级]/),ms=[...String(resp).matchAll(/(\d+)\s*[=＝:：]\s*([^，,；;、\/\s（）()=＝…—~～-]+)/g)];
+ let n=pm?+pm[1]:ms.length?Math.max(...ms.map(x=>+x[1])):5;if(!(n>=2&&n<=11))n=5;
+ const L=Array.from({length:n},(_,i)=>({k:String(i+1),t:''}));ms.forEach(x=>{const i=+x[1]-1;if(i>=0&&i<n)L[i].t=x[2]});return L
+}
+function qnModel(){
+ const title=(S.s7.T&&S.s7.T.t.trim())||`${S.topic.trim()||'研究'}调查问卷`,guide=(S.s7.G&&S.s7.G.t.trim())||'',ks=S.s7.K.filter(x=>x.t.trim()),end=(S.s7.E&&S.s7.E.t.trim())||'问卷到此结束，感谢你的参与！';
+ const oth=k=>otherList(k).map((o,i)=>({id:k+(i+1),k,o,q:Object.assign({type:k==='O'?'开放':'单选',opt:''},o)}));
+ const B=oth('B'),C=oth('C'),O=oth('O'),SC=cons().map(c=>({c,items:c.items.filter(t=>t.t.trim())})).filter(x=>x.items.length);
+ const secs=[],add=(name,intro,kind,list)=>{if(list.length)secs.push({name,intro,kind,list})};
+ const sB=()=>add('基本信息','','q',B),sS=()=>add('你的情况与看法',`下面每一句话描述一种情况，请根据你的实际情况，${S.mode.startsWith('纸')?'在最符合的选项下打“√”':'选择最符合的一项'}。`,'s',SC);
+ if(S.order==='head')sB();sS();add('其他情况','','q',C);add('开放题','请用自己的话回答，尽量写下具体的经历或例子。','q',O);if(S.order==='tail')sB();
+ let no=0;secs.forEach(s=>{if(s.kind==='q')s.list.forEach(x=>x.no=++no);else s.list.forEach(g=>g.rows=g.items.map((t,j)=>({no:++no,id:`${ntag(g.c)}-${j+1}`,t})))});
+ return {title,guide,ks,end,secs}
+}
+const CN='一二三四五六七八';
+function qHtml(x){
+ const q=x.q,ops=optList(q.opt),multi=q.type==='多选'&&!/多选/.test(q.t)?'（可多选）':'',rank=q.type==='排序'&&!/排序/.test(q.t)?'（请排序）':'';
+ let body='';
+ if(q.type==='开放')body='<div class="blank"></div>';
+ else if(q.type==='填空'&&!ops.length)body='<div class="ops"><span>＿＿＿＿＿＿＿＿</span></div>';
+ else if(ops.length)body=`<div class="ops">${ops.map(o=>`<span>□ ${esc(o)}</span>`).join('')}</div>`;
+ return `<div class="qq"><p><b>${x.no}.</b> ${esc(q.t)}${multi}${rank}</p>${body}</div>`
+}
+function render8(){
+ const m=qnModel(),e=est();
+ $('showCons').checked=!!S.showCons;
+ $('est8').textContent=`共 ${e.n} 题，预计作答约 ${e.min} 分钟；目标 ${S.time}。`;
+ let h=`<h3>${esc(m.title)}</h3>`;
+ if(m.guide)h+=m.guide.split(/\n+/).map(p=>`<p class="gd">${esc(p)}</p>`).join('');
+ if(m.ks.length)h+=`<p><b>名词解释</b></p>`+m.ks.map(k=>`<p>${esc(k.t)}：${esc(k.n)}</p>`).join('');
+ m.secs.forEach((s,i)=>{
+  h+=`<h4>第${CN[i]}部分　${s.name}</h4>${s.intro?`<p>${esc(s.intro)}</p>`:''}`;
+  if(s.kind==='q')h+=s.list.map(qHtml).join('');
+  else s.list.forEach(g=>{const cols=scaleCols(g.c.resp);
+   h+=`${S.showCons?`<h5>${esc(g.c.name)}</h5>`:''}<div class="tw"><table border="1" cellspacing="0" cellpadding="6"><thead><tr><th class="c">题号</th><th>题目</th>${cols.map(c=>`<th class="c">${c.k}${c.t?`<br>${esc(c.t)}`:''}</th>`).join('')}</tr></thead><tbody>${g.rows.map(r=>`<tr><td class="c">${r.no}</td><td>${esc(r.t.t)}</td>${cols.map(()=>'<td class="c">○</td>').join('')}</tr>`).join('')}</tbody></table></div>`})
+ });
+ h+=`<p class="end">${esc(m.end)}</p>`;
+ $('qnBox').innerHTML=h;
+ $('cbBox').innerHTML=`<table border="1" cellspacing="0" cellpadding="6"><thead><tr>${['题号','编码','题目','所属','维度 / 内容','来源','反向','对应研究问题或用途'].map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${cbRows(m).map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`
+}
+function rqFor(name){const a=[];String(S.rq).split('\n').forEach(l=>{if(name&&l.includes(name)){const m=l.match(/RQ\d+[a-h]?/);if(m&&!a.includes(m[0]))a.push(m[0])}});return a.join('、')||'—'}
+function cbRows(m){
+ const rows=[];
+ m.secs.forEach(s=>{
+  if(s.kind==='q')s.list.forEach(x=>rows.push([x.no,x.id,x.q.t,KIND[x.k],'—','自编','',x.o.u||'—']));
+  else s.list.forEach(g=>g.rows.forEach(r=>rows.push([r.no,r.id,r.t.t,`${ntag(g.c)} ${g.c.name}`,r.t.d||'总体',g.c.mode==='self'?'自编':`${g.c.src?g.c.src.t:'成熟量表'}（${r.t.act||'改编'}）`,r.t.rev?'是':'',rqFor(g.c.name)])))
+ });
+ return rows
+}
+function sumMd(){
+ const m=qnModel(),cell=s=>String(s).replace(/\|/g,'\\|').replace(/\n/g,'<br>');
+ let t=`# ${m.title}\n\n${m.guide?m.guide+'\n\n':''}`;
+ if(m.ks.length)t+='**名词解释**\n\n'+m.ks.map(k=>`- ${k.t}：${k.n}`).join('\n')+'\n\n';
+ m.secs.forEach((s,i)=>{
+  t+=`## 第${CN[i]}部分　${s.name}\n\n${s.intro?s.intro+'\n\n':''}`;
+  if(s.kind==='q')s.list.forEach(x=>{const ops=optList(x.q.opt);t+=`${x.no}. ${x.q.t}${x.q.type==='多选'&&!/多选/.test(x.q.t)?'（可多选）':''}\n${ops.length?'\n   '+ops.map(o=>'□ '+o).join('　')+'\n':''}\n`});
+  else s.list.forEach(g=>{const cols=scaleCols(g.c.resp);if(S.showCons)t+=`**${g.c.name}**\n\n`;
+   t+=`| 题号 | 题目 | ${cols.map(c=>c.k+(c.t?' '+c.t:'')).join(' | ')} |\n| --- | --- |${cols.map(()=>' --- |').join('')}\n${g.rows.map(r=>`| ${r.no} | ${cell(r.t.t)} |${cols.map(()=>' ○ |').join('')}`).join('\n')}\n\n`})
+ });
+ t+=`${m.end}\n\n---\n\n## 编码表\n\n| 题号 | 编码 | 题目 | 所属 | 维度 / 内容 | 来源 | 反向 | 对应研究问题或用途 |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n`;
+ t+=cbRows(m).map(r=>`| ${r.map(cell).join(' | ')} |`).join('\n')+'\n';
+ return t
+}
+/* ---------- 一键导出 Word ---------- */
+function loadDocx(){if(window.docx)return Promise.resolve(window.docx);return new Promise((res,rej)=>{const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js';sc.onload=()=>window.docx?res(window.docx):rej(new Error('load'));sc.onerror=()=>rej(new Error('load'));document.head.appendChild(sc)})}
+function buildDoc(D){
+ const {Document,Paragraph,TextRun,Table,TableRow,TableCell,WidthType,AlignmentType,PageBreak}=D,m=qnModel();
+ const P=(text,o={})=>new Paragraph({alignment:o.center?AlignmentType.CENTER:AlignmentType.LEFT,indent:o.indent?{firstLine:420}:undefined,spacing:{before:o.before||0,after:o.after??60,line:340},children:[new TextRun({text:String(text),bold:!!o.bold,size:o.size})]});
+ const cell=(t,o={})=>new TableCell({shading:o.h?{fill:'E5EFEA'}:undefined,margins:{top:50,bottom:50,left:80,right:80},children:[new Paragraph({alignment:o.c?AlignmentType.CENTER:AlignmentType.LEFT,children:[new TextRun({text:String(t),bold:!!o.h,size:o.size||20})]})]});
+ const table=(head,rows,cw,center,size)=>new Table({width:{size:100,type:WidthType.PERCENTAGE},columnWidths:cw,rows:[new TableRow({tableHeader:true,children:head.map((h,i)=>cell(h,{h:1,c:center(i),size}))}),...rows.map(r=>new TableRow({children:r.map((c,i)=>cell(c,{c:center(i),size}))}))]});
+ const ch=[P(m.title,{center:1,bold:1,size:32,after:200})];
+ if(m.guide)m.guide.split(/\n+/).forEach(g=>ch.push(P(g,{indent:1})));
+ if(m.ks.length){ch.push(P('名词解释',{bold:1,before:120}));m.ks.forEach(k=>ch.push(P(`${k.t}：${k.n}`)))}
+ m.secs.forEach((sec,i)=>{
+  ch.push(P(`第${CN[i]}部分　${sec.name}`,{bold:1,size:24,before:240,after:100}));
+  if(sec.intro)ch.push(P(sec.intro));
+  if(sec.kind==='q')sec.list.forEach(x=>{const q=x.q,ops=optList(q.opt);
+   ch.push(P(`${x.no}. ${q.t}${q.type==='多选'&&!/多选/.test(q.t)?'（可多选）':''}${q.type==='排序'&&!/排序/.test(q.t)?'（请排序）':''}`,{before:80}));
+   if(q.type==='开放')ch.push(P(''),P(''),P(''));
+   else if(ops.length)ch.push(P('　　'+ops.map(o=>'□ '+o).join('　　')));
+   else if(q.type==='填空')ch.push(P('　　＿＿＿＿＿＿＿＿'))});
+  else sec.list.forEach(g=>{const cols=scaleCols(g.c.resp),w=Math.max(600,Math.floor(4200/cols.length));
+   if(S.showCons)ch.push(P(g.c.name,{bold:1,before:120}));
+   ch.push(table(['题号','题目',...cols.map(c=>c.t?`${c.k} ${c.t}`:c.k)],g.rows.map(r=>[r.no,r.t.t,...cols.map(()=>'○')]),[700,9000-700-w*cols.length,...cols.map(()=>w)],i=>i!==1));
+   ch.push(P('',{after:60}))})
+ });
+ ch.push(P(m.end,{center:1,before:300}));
+ ch.push(new Paragraph({children:[new PageBreak()]}),P('附：编码表',{bold:1,size:24,after:120}));
+ ch.push(table(['题号','编码','题目','所属','维度 / 内容','来源','反向','对应研究问题或用途'],cbRows(m),[560,760,2700,1300,1000,1400,500,1180],i=>i===0||i===1||i===6,18));
+ return new Document({styles:{default:{document:{run:{font:{ascii:'Times New Roman',hAnsi:'Times New Roman',eastAsia:'宋体'},size:21}}}},sections:[{properties:{},children:ch}]})
+}
+async function exportDocx(btn){
+ const msg=$('expMsg'),say=t=>{msg.textContent=t};
+ btn.disabled=true;say('正在生成……');
+ try{
+  const dl=window.claude&&window.claude.use?await window.claude.use('downloads'):null;
+  if(!dl){say('这个页面视图不支持下载。请用下面的“复制问卷”粘贴到 Word。');return}
+  const D=await loadDocx(),blob=await D.Packer.toBlob(buildDoc(D)),name=(qnModel().title.replace(/[\\/:*?"<>|]/g,'').slice(0,60)||'问卷')+'.docx';
+  await dl.save({filename:name,data:blob});say(`已导出：${name}`)
+ }catch(e){const c=e&&e.code;say(c==='declined'?'已取消导出。':c==='rate_limited'?'已有一个保存窗口在等待确认，请先处理它。':e&&e.message==='load'?'Word 生成组件没有加载成功，请检查网络后重试。':'导出没有完成，请稍后重试，或用“复制问卷”。')}
+ finally{btn.disabled=false}
+}
+function setOrd(o){S.order=o;save();render8()}
+
+/* ---------- 导航 ---------- */
+function validate(k){
+ if(k===1)return !S.topic.trim()?'请填写研究题目。':!S.obj.trim()?'请填写调查对象。':!cons().length?'请至少保留 1 个纳入问卷、填写了名称的构念。':'';
+ if(k===2)return otherList('B').length?'':'请至少选定 1 道背景信息题。';
+ if(k===7)return S.s7.T&&S.s7.T.t.trim()?'':'请选定或写一个问卷标题。';
+ if(k===3){const miss=cons().filter(c=>!c.src||!c.src.t.trim()).map(ntag);return miss.length?`这些构念还没有选定来源：${miss.join('、')}。`:''}
+ if(k===4){const miss=cons().filter(c=>!c.items.some(t=>t.t.trim())).map(ntag);return miss.length?`这些构念还没有选定题项：${miss.join('、')}。`:''}
+ return ''
+}
+function compact(){
+ ['B','C','O'].forEach(k=>S.sel[k]=S.sel[k].filter(o=>o.t.trim()));
+ S.cons.forEach(c=>c.items=c.items.filter(t=>t.t.trim()));
+ S.s7.K=S.s7.K.filter(o=>o.t.trim());
+}
+const ORDER=[1,2,3,4,6,7,8];
+function reachable(i){if(i===0)return true;if(i>S.max)return false;for(const k of ORDER){if(k>=i)break;if(validate(k))return false}return true}
+function paint(){for(let i=0;i<=LAST;i++){if(!$('p'+i))continue;$('p'+i).classList.toggle('hidden',i!==S.step);const s=$('s'+i),ok=reachable(i);s.classList.toggle('active',i===S.step);s.classList.toggle('reach',ok&&i!==S.step);s.classList.toggle('lock',!ok);s.title=ok?'':'完成前面的步骤后解锁';if(i===S.step)s.setAttribute('aria-current','step');else s.removeAttribute('aria-current')}}
+const RENDER={0:renderCover,1:render1,2:render2,3:render3,4:render4,6:render6,7:render7,8:render8};
+function renderStep(n){RENDER[n]()}
+function show(n){
+ S.step=n;if(n>S.max)S.max=n;for(let i=0;i<=LAST;i++)hideWarn(i);
+ paint();renderStep(n);save();
+ window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})
+}
+function go(n){for(let k=1;k<n;k++){const e=validate(k);if(e){if(k!==S.step)show(k);showWarn(k,e);return}}retag();applyTools();compact();show(n)}
+function jump(n){if(n!==S.step&&reachable(n))go(n)}
+
+/* ---------- 复制与重置 ---------- */
+function flash(btn,txt){const x=btn.dataset.t||(btn.dataset.t=btn.textContent);btn.textContent=txt;setTimeout(()=>btn.textContent=x,1200)}
+function copyText(text,btn){
+ const fb=()=>{const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}ta.remove();flash(btn,ok?'已复制':'复制失败，请手动选中')};
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text).then(()=>flash(btn,'已复制'),fb);else fb()
+}
+function cp(btn){copyText(btn.closest('.prompt').querySelector('pre').textContent,btn)}
+function cpMd(btn){copyText(sumMd(),btn)}
+function cpEl(id,btn){const r=document.createRange();r.selectNodeContents($(id));const s=getSelection();s.removeAllRanges();s.addRange(r);let ok=false;try{ok=document.execCommand('copy')}catch(e){}s.removeAllRanges();flash(btn,ok?'已复制':'复制失败，请手动选中')}
+let armed=0;
+function reset(btn){
+ if(!armed){armed=1;btn.textContent='再点一次，清空全部内容';setTimeout(()=>{armed=0;btn.textContent='重新开始'},3000);return}
+ armed=0;btn.textContent='重新开始';S=fresh();try{localStorage.removeItem(KEY)}catch(e){}
+ Object.keys(SEC).forEach(n=>{$('pa'+n).value='';$('pm'+n).textContent=''});$('pm1').textContent='';fill1();renderFigs();show(0)
+}
+
+/* ---------- 页面骨架 ---------- */
+const SEC={
+ 2:{t:'第二步：其他题目',name:'其他题目',sub:'先看下面的问卷总体结构：问卷由几部分组成，每部分在哪一步完成。这一步只做绿色的三部分：背景信息、其他封闭题和开放题，AI 直接给出题目和选项。每题都要有用途，没有用途的不放进问卷；选中后可以改写题目、题型和选项。',prev:1,next:[3,'下一步：量表来源'],pre:'<div class="zone">问卷的总体结构</div><div id="map2"></div>'},
+ 3:{t:'第三步：选择量表来源',name:'量表来源',sub:'每个构念选 1 个来源。优先用成熟量表，有中文修订版的用中文版。AI 推荐的量表要自己到知网或 Google Scholar 核实确实存在，再下载原始文献取得题项。',prev:2,next:[4,'下一步：题项编制'],pre:'<div class="dbs"><b>查找量表的在线数据库</b><div class="dbg"><a href="https://educationendowmentfoundation.org.uk/spectrum-essential-skills-and-non-academic-outcomes/spectrum-database" target="_blank" rel="noopener"><b>EEF SPECTRUM 数据库</b><span>英国教育捐赠基金会（EEF）整理的测量工具库，聚焦社会性、心理、情绪、自我概念与心理韧性等非学业结果。</span></a><a href="https://www.corc.uk.net/outcome-measures-guidance/directory-of-outcome-measures/" target="_blank" rel="noopener"><b>CORC 结果测量工具目录</b><span>儿童结果研究联盟（CORC）的儿童青少年心理健康、幸福感与功能测量目录，可按年龄段和填答者筛选，列出研究依据和计分方法。CORC 多数不是版权方，使用前要确认授权。</span></a></div></div>'},
+ 6:{t:'第五步：措辞审查',name:'措辞审查',sub:'AI 按问题设计和答案设计的 14 条标准逐题审查，只列出有问题的题目。逐条决定是否采用；采用后会直接替换原题，可以撤销。',prev:4,next:[7,'下一步：标题与指导语']},
+ 7:{t:'第六步：标题与指导语',name:'标题与指导语',sub:'标题和指导语决定调查对象愿不愿意认真填。标题不要暴露研究假设；指导语要说明匿名、用途、用时和作答方式，并澄清容易误解的概念。',prev:6,next:[8,'生成问卷'],
+  pre:'<details class="fold" id="more7"><summary>研究者署名（可选）</summary><input class="inp" id="author" data-path="author" data-regen="7" oninput="onIn(this)" placeholder="如 XX大学教育学院课题组" aria-label="研究者署名"></details>'}
+};
+Object.entries(SEC).forEach(([n,c])=>{
+ $('p'+n).innerHTML=`<div class="card">
+ <h2>${c.t}</h2><p class="sub">${c.sub}</p><div class="figs" id="fig${n}"></div>${c.pre||''}
+ <div id="bf${n}"><div class="zone">发给 AI 的 Prompt</div>
+ <div class="prompt"><div class="phead"><span>${c.name}</span><button class="copy" onclick="cp(this)">复制</button></div><pre id="q${n}"></pre></div>
+ <div class="zone">粘贴 AI 回复</div>
+ <div class="paste"><textarea class="inp" id="pa${n}" data-path="pa.${n}" oninput="onIn(this)" aria-label="粘贴 AI 回复" placeholder="粘贴完整回复即可，页面只读取第二部分【回填清单】"></textarea><div class="btns"><button class="btn" onclick="autofill(${n})">读取${n==='6'?'修改建议':'候选'}</button><span class="pmsg" id="pm${n}"></span></div></div></div>
+ <div class="note hidden" id="nt${n}"></div>
+ <div class="zone">${n==='6'?'逐条决定是否采用':'从候选中选定'}</div>
+ <div id="f${n}"></div>
+ <div class="warn hidden" id="w${n}"></div>
+ <div class="btns"><button class="btn" onclick="go(${c.prev})">上一步</button><button class="btn primary" onclick="go(${c.next[0]})">${c.next[1]}</button></div>
+</div>`});
+
+const FIGS={
+ overview:['img/overview.jpg','问卷编制流程总览','五个环节：明确每道题的依据 → 设计问卷结构 → 保证测量可靠 → 保障如实作答 → 编码、检验与发放，数据最后回到研究问题。'],
+ s1:['img/step1.jpg','问卷编制的第一步：从概念到题目','构念不能直接观察，要经过概念化和操作化变成题目；理论规定构念之间的关系，每道题都要能追溯到构念、维度、理论与研究问题。'],
+ s2:['img/step2.jpg','问卷编制的第二步：搭建问卷结构','标题、指导语、基本信息、量表、其他封闭题、开放题、结束语各有用途；排序由易到难、同类集中、敏感题后置，题量匹配作答时间。'],
+ s3:['img/step3.jpg','问卷编制的第三步：确保测量可靠有效','多题测量降低误差，优先使用成熟量表，改编要守住等值，自编按规范开发，统一计分并处理反向题。'],
+ s4:['img/step4.jpg','问卷编制的第四步：让调查对象如实作答','作答要经过理解、提取、判断、作答四个阶段；题目与选项的规则、标题指导语、编码表和预测试都用来控制误差。']};
+const FIGMAP={1:[['s1','第一步对应这张图',1]],2:[['s2','这一步对应这张图',1]],3:[['s3','第三、四步对应这张图',1]],4:[['s3','这一步仍对应“第三步：确保测量可靠有效”',0]],6:[['s4','这一步对应这张图',1]],7:[['s4','标题与指导语属于“第四步：让调查对象如实作答”',0]],8:[['overview','回顾整个流程：编码、检验与发放',0]]};
+function renderFigs(){Object.entries(FIGMAP).forEach(([n,list])=>{const box=$('fig'+n);if(!box)return;
+ box.innerHTML=list.map(([k,note,open],i)=>{const f=FIGS[k],key='f'+n+'_'+k,on=S.fig&&key in S.fig?S.fig[key]:!!open;
+  return `<details class="fig"${on?' open':''} ontoggle="(S.fig=S.fig||{})['${key}']=this.open;save()"><summary>图解　${esc(f[1])}<span>${esc(note)}</span></summary><button type="button" class="figb" onclick="openLb('${f[0]}','${esc(f[1])}')" aria-label="查看大图：${esc(f[1])}"><img src="${f[0]}" alt="${esc(f[1])}。${esc(f[2])}" loading="lazy" width="1600" height="${k==='overview'?800:900}"></button><p class="figc">${esc(f[2])}　<span>点击图片可放大</span></p></details>`}).join('')})}
+const STAGES=[['明确每道题的依据','s1',1,'第 1 步','每道题都要能说清：测哪个变量的哪个维度、服务哪个研究问题、依据什么理论或量表。'],
+ ['设计问卷结构','s2',2,'第 2 步','标题、指导语、基本信息、量表、其他封闭题、开放题、结束语各有用途；由易到难、同类集中，题量匹配作答时间。'],
+ ['保证测量可靠','s3',3,'第 3—4 步','优先使用成熟量表，改编只调整对象、情境或技术名称，原题要能追溯到原始文献；每个维度至少 3 题，统一计分。'],
+ ['保障如实作答','s4',6,'第 5—7 步','作答要经过理解、回忆、判断、选择四个环节；措辞和选项的规则、指导语、编码表和预测试都为了避免这四个环节出错。']];
+function renderCover(){
+ const cur=S.cv>=0&&S.cv<4?S.cv:0,arr='<span class="fa" aria-hidden="true"></span>';
+ $('cvs').innerHTML=`<div class="flow"><div class="fe"><b>研究问题</b><small>变量与维度</small></div>${arr}${STAGES.map((x,i)=>`<button type="button" class="fn${i===cur?' on':''}" aria-pressed="${i===cur}" onclick="S.cv=${i};save();renderCover()"><span class="fnum">${i+1}</span><b>${x[0]}</b><small>${x[3]}</small></button>${arr}`).join('')}<div class="fe"><b>问卷</b><small>＋ 编码表</small></div></div><div class="loop" aria-hidden="true"><span>数据收回后按编码表计分，回答研究问题</span></div>`;
+ const x=STAGES[cur],f=FIGS[x[1]],ok=reachable(x[2]);
+ $('cvd').innerHTML=`<div class="cvdet"><div class="cvt"><span class="cvk">环节 ${cur+1} · 工具${x[3]}</span><b>${x[0]}</b><p>${x[4]}</p>${ok&&x[2]!==1?`<button type="button" class="btn sm" onclick="go(${x[2]})">进入${x[3]}</button>`:''}</div><button type="button" class="figb" onclick="openLb('${f[0]}','${esc(f[1])}')" aria-label="查看大图：${esc(f[1])}"><img src="${f[0]}" alt="${esc(f[1])}。${esc(f[2])}" width="1600" height="900"></button></div>`
+}
+function openLb(src,alt){const i=$('lbImg');i.src=src;i.alt=alt;$('lb').hidden=false}
+function closeLb(){$('lb').hidden=true}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb()});
+load();if(!S.cons.length)S.cons=defCons();if(S.step===5)S.step=6;S.order='head';renderFigs();
+Object.keys(SEC).forEach(n=>{$('pa'+n).value=S.pa[n]||''});
+$('author').value=S.author||'';$('more7').open=!!S.author.trim();
+fill1();show(S.step===0?0:Math.min(S.step,S.max));
+</script>
+
+</body></html>

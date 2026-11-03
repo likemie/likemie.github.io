@@ -2103,6 +2103,14 @@ function KnowledgeHome(userOpts = {}) {
         action: "开始设计",
         tone: "logic",
       },
+      {
+        eyebrow: "问卷编制",
+        title: "问卷编制 Prompt 生成器",
+        body: "导入变量与维度，逐步选定量表、编制题项、审查措辞，并整理问卷与编码表。",
+        href: "/static/tools/questionnaire_prompt_generator/",
+        action: "开始编制",
+        tone: "questionnaire",
+      },
     ]
 
     if (currentRouteKey) {
@@ -8740,10 +8748,6 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   grid-column: span 2;
 }
 
-.knowledge-home-tool:nth-child(n + 4) {
-  grid-column: span 3;
-}
-
 .knowledge-home-tool::before {
   background: linear-gradient(
     105deg,
@@ -8806,6 +8810,15 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 
 .knowledge-home-tool.logic::after {
   animation-duration: 20s;
+}
+
+.knowledge-home-tool.questionnaire {
+  --tool-tone: color-mix(in srgb, var(--home-accent) 58%, #78a88f);
+}
+
+.knowledge-home-tool.questionnaire::after {
+  animation-direction: reverse;
+  animation-duration: 22s;
 }
 
 .knowledge-home-tool:hover {
