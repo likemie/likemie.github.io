@@ -2108,6 +2108,8 @@ function KnowledgeHome(userOpts = {}) {
         title: "问卷编制 Prompt 生成器",
         body: "导入变量与维度，逐步选定量表、编制题项、审查措辞，并整理问卷与编码表。",
         href: "/static/tools/questionnaire_prompt_generator/",
+        image: "/static/tools/questionnaire_prompt_generator/img/overview.jpg",
+        imageAlt: "问卷编制流程总览：从明确题目依据到设计结构、保证测量可靠、保障如实作答，再形成问卷和编码表。",
         action: "开始编制",
         tone: "questionnaire",
       },
@@ -2423,6 +2425,15 @@ function KnowledgeHome(userOpts = {}) {
               h("strong", null, tool.title),
               h("p", null, tool.body),
               h("em", null, tool.action),
+              tool.image
+                ? h("img", {
+                    src: tool.image,
+                    alt: tool.imageAlt,
+                    loading: "lazy",
+                    width: "1600",
+                    height: "800",
+                  })
+                : null,
             ),
           ),
         ),
@@ -8748,6 +8759,11 @@ body[data-slug="index"] .center > article.popover-hint + hr {
   grid-column: span 2;
 }
 
+.knowledge-home-tool:nth-child(4),
+.knowledge-home-tool:nth-child(5) {
+  grid-column: span 3;
+}
+
 .knowledge-home-tool::before {
   background: linear-gradient(
     105deg,
@@ -8814,11 +8830,35 @@ body[data-slug="index"] .center > article.popover-hint + hr {
 
 .knowledge-home-tool.questionnaire {
   --tool-tone: color-mix(in srgb, var(--home-accent) 58%, #78a88f);
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(15rem, 0.82fr) minmax(0, 1.18fr);
+  min-height: 13rem;
 }
 
 .knowledge-home-tool.questionnaire::after {
   animation-direction: reverse;
   animation-duration: 22s;
+}
+
+.knowledge-home-tool.questionnaire > span,
+.knowledge-home-tool.questionnaire > strong,
+.knowledge-home-tool.questionnaire > p,
+.knowledge-home-tool.questionnaire > em {
+  grid-column: 1;
+}
+
+.knowledge-home-tool.questionnaire > img {
+  align-self: center;
+  aspect-ratio: 2 / 1;
+  border-radius: 0.55rem;
+  grid-column: 2;
+  grid-row: 1 / 5;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  position: relative;
+  width: 100%;
+  z-index: 1;
 }
 
 .knowledge-home-tool:hover {
@@ -9495,7 +9535,8 @@ body[data-slug="index"] .center > article.popover-hint + hr {
     grid-column: auto;
   }
 
-  .knowledge-home-tool:last-child:nth-child(odd) {
+  .knowledge-home-tool:nth-child(5),
+  .knowledge-home-tool.questionnaire {
     grid-column: 1 / -1;
   }
 
@@ -9530,8 +9571,27 @@ body[data-slug="index"] .center > article.popover-hint + hr {
     grid-template-columns: 1fr;
   }
 
-  .knowledge-home-tool:last-child:nth-child(odd) {
+  .knowledge-home-tool:nth-child(n),
+  .knowledge-home-tool.questionnaire {
     grid-column: auto;
+  }
+
+  .knowledge-home-tool.questionnaire {
+    grid-template-columns: 1fr;
+  }
+
+  .knowledge-home-tool.questionnaire > span,
+  .knowledge-home-tool.questionnaire > strong,
+  .knowledge-home-tool.questionnaire > p,
+  .knowledge-home-tool.questionnaire > em,
+  .knowledge-home-tool.questionnaire > img {
+    grid-column: 1;
+  }
+
+  .knowledge-home-tool.questionnaire > img {
+    grid-row: auto;
+    height: auto;
+    max-height: none;
   }
 
   .knowledge-home-type:nth-child(n) {
