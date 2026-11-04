@@ -196,6 +196,7 @@ button.prow{cursor:pointer}button.prow:hover{background:#f0f4f1}
 .fig>summary span{font-size:12px;font-weight:400;color:var(--muted)}
 .figb{display:block;width:100%;padding:0;border:0;border-top:1px solid var(--line);background:none;cursor:zoom-in}
 .figb img{display:block;width:100%;height:auto}
+.cvhero{margin-top:14px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .figc{margin:0;padding:8px 13px 10px;font-size:12px;line-height:1.7;color:var(--muted)}.figc span{color:#93a09a}
 .lb{position:fixed;inset:0;z-index:50;background:rgba(15,30,25,.86);display:flex;align-items:center;justify-content:center;padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
 .lb[hidden]{display:none}.lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
@@ -269,6 +270,7 @@ button.prow{cursor:pointer}button.prow:hover{background:#f0f4f1}
 <section id="p0" class="hidden"><div class="card cover">
  <h2>问卷编制的四个环节</h2>
  <p class="sub">问卷编制从研究问题出发，最后又回到研究问题。点击流程图中的环节，查看它要解决什么问题。</p>
+ <button type="button" class="figb cvhero" onclick="openLb('img/overview.jpg','问卷编制流程总览')" aria-label="查看大图：问卷编制流程总览"><img src="img/overview.jpg" alt="问卷编制流程总览：明确每道题的依据、设计问卷结构、保证测量可靠、保障如实作答，再编码、检验与发放，数据最后回到研究问题。" width="1600" height="800"></button>
  <div class="board" id="cvs"></div>
  <div id="cvd"></div>
  <div class="btns"><button class="btn primary" onclick="go(1)">进入第一步：研究设计</button></div>
