@@ -183,6 +183,23 @@ document.documentElement.setAttribute("saved-theme", currentTheme);`,
                 >
                   <div class="callout-icon"></div>`,
   },
+  // Obsidian parses numbered sub-claim titles as lists; Quartz otherwise keeps
+  // "1. ..." in a paragraph, so the snippet's marker colour never applies.
+  ...[
+    ".quartz/plugins/obsidian-flavored-markdown/src/transformer.ts",
+    ".quartz/plugins/obsidian-flavored-markdown/dist/index.js",
+  ].map((file) => ({
+    file,
+    find: "const title = mdastToHtml(titleNode);",
+    replace: `const numberedSubClaim = calloutType === "sub-claim" && titleContent.match(/^(\\d+)[.)]\\s+/);
+                if (numberedSubClaim && titleNode.children[0]?.type === "text") {
+                  titleNode.children[0].value = titleNode.children[0].value.slice(numberedSubClaim[0].length);
+                }
+                const title = mdastToHtml(numberedSubClaim ? {
+                  type: "list", ordered: true, start: Number(numberedSubClaim[1]), spread: false,
+                  children: [{ type: "listItem", spread: false, children: [titleNode] }],
+                } : titleNode);`,
+  })),
 ]
 
 function resolvePatchFile(patch) {
