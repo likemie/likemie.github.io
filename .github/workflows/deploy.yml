@@ -68,6 +68,9 @@ jobs:
       - name: Refresh vault indexes
         run: python3 content/scripts/vault_index.py
 
+      - name: Test Obsidian style adaptation
+        run: node --test scripts/sync-obsidian-styles.test.mjs
+
       - name: Sync Obsidian styles
         run: node scripts/sync-obsidian-styles.mjs content
 
