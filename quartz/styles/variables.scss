@@ -25,7 +25,8 @@ $normalWeight: 400;
 
 $mobileGrid: (
   templateRows: "auto auto auto auto auto",
-  templateColumns: "auto",
+  // Keep wide callout content from setting the mobile column width.
+  templateColumns: "minmax(0, 1fr)",
   rowGap: "5px",
   columnGap: "5px",
   templateAreas:

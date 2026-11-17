@@ -36,6 +36,15 @@ test("inline link colours, hover and focus use Quartz classes", () => {
   assert.equal(adaptObsidianCss(".internal-link-extra {}"), ".internal-link-extra {}")
 })
 
+test("Obsidian table wrappers match Quartz without touching longer class names", () => {
+  assert.equal(
+    adaptObsidianCss(
+      ".callout-content:has(> .table-wrapper th:nth-child(6)) > .table-wrapper, .bases-table-wrapper {}",
+    ),
+    ".callout-content:has(> .table-container th:nth-child(6)) > .table-container, .bases-table-wrapper {}",
+  )
+})
+
 import { mkdtemp, mkdir, writeFile, rm } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
