@@ -169,8 +169,16 @@ body:where(
     line-height: 1.5;
 
     > .markdown-rendered {
-      :is(p, li, tbody):not(:where(.callout *)) {
+      :is(p, li, thead, tbody):not(:where(.callout *)) {
         line-height: inherit;
+      }
+
+      thead:not(:where(.callout *)) {
+        font-family: var(--font-text);
+      }
+
+      th:not(:where(.callout *)) {
+        font-weight: 600;
       }
 
       > :is(h1, h2, h4, h5, h6) {
