@@ -113,6 +113,9 @@ plugins:
     options:
       markdownLinkResolution: shortest
     order: 60
+  - source: ./plugins/vault-callouts
+    enabled: true
+    order: 62
   - source: github:vanabel/quartz-geogebra-embed
     enabled: true
     order: 65

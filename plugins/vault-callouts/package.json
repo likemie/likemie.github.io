@@ -1,0 +1,17 @@
+{
+  "name": "vault-callouts",
+  "version": "0.1.0",
+  "description": "Render vault callout decorations in Quartz.",
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
+  "quartz": {
+    "name": "vault-callouts",
+    "displayName": "Vault Callouts",
+    "category": "transformer",
+    "version": "1.0.0",
+    "quartzVersion": ">=5.0.0"
+  }
+}

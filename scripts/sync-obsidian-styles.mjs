@@ -18,6 +18,8 @@ export function adaptObsidianCss(source) {
       )
       .replace(/\.internal-link(?![\w-])/g, ".internal")
       .replace(/\.external-link(?![\w-])/g, ".external")
+      .replace(/\[data-href\^="Argument_"\]/g, '[data-slug^="argument_" i]')
+      .replace(/\[data-href\*="\/Argument_"\]/g, '[data-slug*="/argument_" i]')
       // Quartz wraps rendered Markdown tables in .table-container.
       .replace(/\.table-wrapper(?![\w-])/g, ".table-container")
       .replace(/\.markdown-preview-view\b|\.markdown-rendered\b/g, "article")
