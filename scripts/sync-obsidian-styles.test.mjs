@@ -80,3 +80,10 @@ test("enabled companion snippets are synced in Obsidian order; disabled snippets
     await rm(vault, { recursive: true, force: true })
   }
 })
+
+test("metadata tables keep their first-child rules through the Quartz table wrapper", () => {
+  assert.equal(
+    adaptObsidianCss(".callout > .callout-content > table:first-child td { padding: 1em }"),
+    ".callout > .callout-content > :is(table:first-child, .table-container:first-child > table) td { padding: 1em }",
+  )
+})

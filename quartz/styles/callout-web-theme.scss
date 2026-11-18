@@ -404,3 +404,35 @@ body[data-slug="wiki/methods/quantitative/time-series-design"]
     }
   }
 }
+
+/* Clipping grid children leaves their margins and borders visible when folded.
+ * Hide the content as a whole, including nested cards and their decorations. */
+article .callout.is-collapsible.is-collapsed > .callout-content {
+  display: none !important;
+}
+
+/* Protocols contain headings, lists, tables and nested cards in document order.
+ * A single animated grid track stretches the first section and clips headings. */
+article
+  .callout:is(
+    [data-callout="questionnaire"],
+    [data-callout="survey-protocol"],
+    [data-callout="questionnaire-form"],
+    [data-callout="survey-form"],
+    [data-callout="interview"],
+    [data-callout="interview-protocol"]
+  ) {
+  &:not(.is-collapsed) > .callout-content {
+    display: block;
+  }
+
+  &.is-collapsed > .callout-title {
+    margin-bottom: 0 !important;
+  }
+
+  > .callout-content > .table-container:first-child {
+    margin: 0.4rem 0 0.85rem;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}

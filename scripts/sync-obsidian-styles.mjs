@@ -20,6 +20,11 @@ export function adaptObsidianCss(source) {
       .replace(/\.external-link(?![\w-])/g, ".external")
       .replace(/\[data-href\^="Argument_"\]/g, '[data-slug^="argument_" i]')
       .replace(/\[data-href\*="\/Argument_"\]/g, '[data-slug*="/argument_" i]')
+      // Preserve first-child metadata-table styling through Quartz's wrapper.
+      .replace(
+        /> \.callout-content > table:first-child/g,
+        "> .callout-content > :is(table:first-child, .table-container:first-child > table)",
+      )
       // Quartz wraps rendered Markdown tables in .table-container.
       .replace(/\.table-wrapper(?![\w-])/g, ".table-container")
       .replace(/\.markdown-preview-view\b|\.markdown-rendered\b/g, "article")
