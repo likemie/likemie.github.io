@@ -1,7 +1,71 @@
 import fs from "node:fs"
 import path from "node:path"
+import { buildSync } from "esbuild"
+
+const mermaidPlugin = ".quartz/plugins/obsidian-flavored-markdown"
+const mermaidScript = `${mermaidPlugin}/src/scripts/mermaid.inline.ts`
 
 const patches = [
+  {
+    file: mermaidScript,
+    find: `let mermaidImport = undefined;`,
+    replace: `let mermaidImport = undefined;
+let nextDiagramId = 0;`,
+  },
+  {
+    file: mermaidScript,
+    find: `    textMapping.set(node, node.innerText);`,
+    replace: `    textMapping.set(node, node.textContent ?? "");`,
+  },
+  {
+    file: mermaidScript,
+    find: `    // de-init any other diagrams
+    for (const node of nodes) {
+      node.removeAttribute("data-processed");
+      const oldText = textMapping.get(node);
+      if (oldText) {
+        node.innerHTML = oldText;
+      }
+    }
+
+`,
+    replace: "",
+  },
+  {
+    file: mermaidScript,
+    find: `    await mermaid.run({ nodes });`,
+    replace: `    // Let Mermaid measure in its own document-level container. The reading
+    // node may be inside a collapsed callout, where SVG bounds are zero.
+    for (const node of nodes) {
+      if (!node.isConnected) continue;
+      const id = "quartz-mermaid-" + ++nextDiagramId;
+      try {
+        const { svg, bindFunctions } = await mermaid.render(id, textMapping.get(node) ?? "");
+        if (!node.isConnected) continue;
+        node.innerHTML = svg;
+        const diagram = node.querySelector("svg");
+        const width = diagram?.viewBox.baseVal.width ?? 0;
+        if (width > 0) diagram?.style.setProperty("--mermaid-natural-width", width + "px");
+        bindFunctions?.(node);
+      } catch (error) {
+        document.getElementById("d" + id)?.remove();
+        console.error("Could not render Mermaid diagram", error);
+      }
+    }`,
+  },
+  {
+    file: mermaidScript,
+    find: `      if (!content) return;
+      removeAllChildren(content);
+
+      // Clone the mermaid content
+      const mermaidContent = codeBlock.querySelector("svg")!.cloneNode(true) as SVGElement;`,
+    replace: `      const diagram = codeBlock.querySelector("svg");
+      if (!content || !diagram) return;
+      removeAllChildren(content);
+
+      const mermaidContent = diagram.cloneNode(true) as SVGElement;`,
+  },
   {
     file: ".quartz/plugins/note-properties/src/transformer.ts",
     find: `function getVisibleProperties(
@@ -241,6 +305,30 @@ for (const patch of patches) {
   }
 
   fs.writeFileSync(patchFile, original.replace(anchor, patch.replace))
+}
+
+// Quartz loads the installed plugin's bundled entry point. Rebuild only the
+// inline client script so the rest of the pinned plugin stays as shipped.
+const mermaidBundle = buildSync({
+  entryPoints: [mermaidScript],
+  bundle: true,
+  write: false,
+  minify: true,
+  platform: "browser",
+  target: "es2022",
+}).outputFiles[0].text
+const mermaidDist = `${mermaidPlugin}/dist/index.js`
+const originalMermaidDist = fs.readFileSync(mermaidDist, "utf8")
+const mermaidInlineExport = /^var mermaid_inline_default = .*;$/m
+if (!mermaidInlineExport.test(originalMermaidDist)) {
+  throw new Error(`Mermaid client script not found in ${mermaidDist}`)
+}
+const patchedMermaidDist = originalMermaidDist.replace(
+  mermaidInlineExport,
+  () => `var mermaid_inline_default = ${JSON.stringify(mermaidBundle)};`,
+)
+if (patchedMermaidDist !== originalMermaidDist) {
+  fs.writeFileSync(mermaidDist, patchedMermaidDist)
 }
 
 console.log("Patched Quartz plugins.")

@@ -384,3 +384,10 @@
   overflow-x: auto;
   overflow-y: hidden;
 }
+
+/* Keep narrow diagrams at their drawn size and let wide ones scroll in the card. */
+#quartz-body article .callout[data-callout="logic-map"] code.mermaid > svg {
+  width: var(--mermaid-natural-width, auto) !important;
+  min-width: 0 !important;
+  margin-inline: auto;
+}
