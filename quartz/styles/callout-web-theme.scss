@@ -351,3 +351,56 @@ body[data-slug="wiki/methods/quantitative/time-series-design"]
   overflow-y: hidden;
   vertical-align: middle;
 }
+
+/* The vault uses charcoal for these cards even in Obsidian's light theme.
+ * Give the same designs a slate paper palette on the web, where visitors can
+ * switch the whole reading area to light. Set ink and paper together. */
+@media screen {
+  :root:not([saved-theme="dark"]) body[data-slug^="wiki/"] #quartz-body article {
+    .callout:is([data-callout="citation-card"], [data-callout="case"], [data-callout="warrant"]) {
+      --ac-paper: #f3f6f8;
+      --ac-hair: #cbd6de;
+      --ac-edge: #718593;
+      --background-modifier-border: var(--ac-hair);
+      --text-normal: #27343d;
+      --text-muted: #50616e;
+      --text-accent: #36566b;
+      --web-callout-prose: var(--text-normal);
+      --web-callout-strong: var(--text-normal);
+    }
+
+    .callout[data-callout="citation-card"] {
+      --fdc-accent: #647d8d;
+      --fdc-ink: var(--text-accent);
+
+      > .callout-content > :is(blockquote, p:has(> em:only-child)) {
+        color: var(--text-accent) !important;
+      }
+    }
+
+    .callout[data-callout="case"] {
+      --ccl-accent: #647d8d;
+      --ccl-ink: var(--text-accent);
+    }
+
+    .callout[data-callout="warrant"] {
+      --wr-accent: #647d8d;
+      --wr-ink: var(--text-accent);
+      --wr-steel: #627988;
+    }
+
+    &.method-manual .callout[data-callout="formula"] {
+      --mm-code-bg: #f3f6fa;
+      --mm-code-ink: #26384b;
+
+      > .callout-title {
+        background: #e8edf4 !important;
+        border-bottom-color: #ccd6e2 !important;
+
+        .callout-title-inner {
+          color: #475c71 !important;
+        }
+      }
+    }
+  }
+}
