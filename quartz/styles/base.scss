@@ -317,6 +317,36 @@ a {
 // Page Frame Overrides
 // ============================================================================
 
+.page[data-frame="default"] > #quartz-body:not(:has(> .sidebar.right)) {
+  grid-template:
+    "grid-sidebar-left grid-center" auto
+    "grid-sidebar-left grid-footer" auto / $sidePanelWidth minmax(0, 1fr);
+
+  > .center {
+    grid-area: grid-center;
+  }
+
+  .page-header {
+    overflow-wrap: anywhere;
+  }
+
+  @media all and ($desktop) {
+    padding-inline-end: 2rem;
+  }
+
+  @media all and ($mobile) {
+    grid-template:
+      "grid-sidebar-left" auto
+      "grid-center" auto
+      "grid-footer" auto / minmax(0, 1fr);
+
+    // Align the full-viewport explorer with the edge outside the page padding.
+    > .sidebar.left .explorer .explorer-content {
+      inset-inline-start: -1rem;
+    }
+  }
+}
+
 // Full-width frame: no sidebars, center content spans full width
 .page[data-frame="full-width"] > #quartz-body {
   grid-template-columns: auto;
