@@ -1,0 +1,133 @@
+@use "./variables.scss" as *;
+
+.reading-tools {
+  --reading-tools-edge: max(1rem, calc((100vw - var(--page-max-width)) / 2 + 1rem));
+  display: flex;
+  gap: 0.5rem;
+  margin-block-start: 0.75rem;
+
+  @media all and ($desktop) {
+    position: fixed;
+    z-index: 2;
+    inset-inline-end: var(--reading-tools-edge);
+    inset-block-start: 50%;
+    translate: 0 -50%;
+    flex-direction: column;
+    margin: 0;
+  }
+}
+
+.reading-tools-button,
+.reading-tools-panel-heading button {
+  appearance: none;
+  cursor: pointer;
+  border: 1px solid var(--lightgray);
+  border-radius: 0.5rem;
+  background: var(--light);
+  color: var(--dark);
+  font:
+    600 0.875rem/1.2 var(--bodyFont),
+    sans-serif;
+
+  &:hover {
+    background: var(--highlight);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--secondary);
+    outline-offset: 3px;
+  }
+}
+
+.reading-tools-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  min-block-size: 2.75rem;
+  padding: 0.4rem 0.65rem;
+
+  @media all and ($desktop) {
+    inline-size: 2.75rem;
+    min-block-size: 3.25rem;
+    flex-direction: column;
+    padding: 0.25rem;
+  }
+}
+
+.reading-tools-count {
+  color: var(--darkgray);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.reading-tools-panel {
+  box-sizing: border-box;
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  inline-size: min(22rem, calc(100vw - 2rem));
+  max-block-size: min(27rem, calc(100dvh - 3rem));
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--lightgray);
+  border-radius: 0.625rem;
+  background: var(--light);
+  color: var(--dark);
+  padding: 0 0.875rem 0.75rem;
+
+  @media all and ($desktop) {
+    inset: 50% auto auto auto;
+    inset-inline-end: calc(var(--reading-tools-edge) + 3.25rem);
+    translate: 0 -50%;
+    margin: 0;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+    line-height: 1.35;
+  }
+
+  a.internal {
+    background: none;
+    padding: 0.25rem 0;
+    overflow-wrap: anywhere;
+  }
+
+  time {
+    font-size: 0.75rem;
+    color: var(--darkgray);
+  }
+}
+
+.reading-tools-panel-heading {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background: var(--light);
+  padding-block: 0.625rem;
+
+  h2 {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  button {
+    font-size: 1.125rem;
+    inline-size: 2rem;
+    block-size: 2rem;
+  }
+}

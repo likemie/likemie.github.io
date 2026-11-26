@@ -3,6 +3,7 @@
 @use "./variables.scss" as *;
 @use "./syntax.scss";
 @use "./callouts.scss";
+@use "./reading-tools.scss";
 
 html {
   scroll-behavior: smooth;
@@ -160,7 +161,8 @@ a {
 }
 
 .page {
-  max-width: calc(#{map.get($breakpoints, desktop)} + 300px);
+  --page-max-width: calc(#{map.get($breakpoints, desktop)} + 300px);
+  max-width: var(--page-max-width);
   margin: 0 auto;
   & article {
     & > h1 {
@@ -332,6 +334,10 @@ a {
 
   @media all and ($desktop) {
     padding-inline-end: 2rem;
+
+    &:has(.reading-tools) {
+      padding-inline-end: 5rem;
+    }
   }
 
   @media all and ($mobile) {

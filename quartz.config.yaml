@@ -116,6 +116,12 @@ plugins:
     options:
       markdownLinkResolution: shortest
     order: 60
+  - source: ./plugins/reading-tools
+    enabled: true
+    order: 61
+    layout:
+      position: beforeBody
+      priority: 45
   - source: ./plugins/vault-callouts
     enabled: true
     order: 62
@@ -195,11 +201,6 @@ plugins:
       group: toolbar
       groupOptions:
         grow: true
-  - source: github:quartz-community/backlinks
-    enabled: true
-    layout:
-      position: afterBody
-      priority: 1
   - source: github:quartz-community/article-title
     enabled: true
     layout:
@@ -351,7 +352,6 @@ layout:
   byPageType:
     "404":
       exclude:
-        - backlinks
         - graph
       positions:
         beforeBody: []
@@ -361,18 +361,18 @@ layout:
       exclude:
         - reader-mode
         - table-of-contents
-        - backlinks
+        - reading-tools
         - graph
     tag:
       exclude:
         - reader-mode
         - table-of-contents
-        - backlinks
+        - reading-tools
         - graph
     canvas: {}
     bases:
       exclude:
         - table-of-contents
-        - backlinks
+        - reading-tools
         - graph
       template: full-width

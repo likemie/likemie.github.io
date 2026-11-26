@@ -13,12 +13,6 @@
       "commit": "e608ca815e137e22b598094f735bcd8a481dafaa",
       "installedAt": "2026-06-03T13:32:35.204Z"
     },
-    "backlinks": {
-      "source": "github:quartz-community/backlinks",
-      "resolved": "https://github.com/quartz-community/backlinks.git",
-      "commit": "7490f921b7bd974c3f2f985ad3744b06160827d6",
-      "installedAt": "2026-06-03T13:32:35.225Z"
-    },
     "bases-page": {
       "source": "github:quartz-community/bases-page",
       "resolved": "https://github.com/quartz-community/bases-page.git",
