@@ -391,3 +391,14 @@
   min-width: 0 !important;
   margin-inline: auto;
 }
+
+/* Keep the original sequence badge gutter after the shared cell padding reset. */
+.callout[data-callout="seq-table"]
+  > .callout-content
+  > .table-container
+  > table
+  > tbody
+  > tr
+  > td:first-child {
+  padding-left: 2.5rem !important;
+}
