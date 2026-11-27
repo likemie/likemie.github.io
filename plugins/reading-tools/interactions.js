@@ -1,31 +1,44 @@
 export function installReadingTools() {
-  const desktopHover = matchMedia("(min-width: 1200px) and (hover: hover) and (pointer: fine)")
+  const desktop = matchMedia("(min-width: 1200px)")
+  const hoverPointer = matchMedia("(hover: hover) and (pointer: fine)")
   let openTimer
   let closeTimer
   let hoveredPanel
 
-  function selectType(button) {
-    if (button.getAttribute("aria-pressed") === "true") return
-    const previous = button.parentElement.querySelector('[aria-pressed="true"]')
-    const previousItems = document.getElementById(previous.getAttribute("aria-controls"))
-    const nextItems = document.getElementById(button.getAttribute("aria-controls"))
-    if (previousItems.contains(document.activeElement)) button.focus({ preventScroll: true })
-    previous.setAttribute("aria-pressed", "false")
-    button.setAttribute("aria-pressed", "true")
-    previousItems.hidden = true
-    nextItems.hidden = false
-    nextItems.parentElement.scrollTop = 0
+  function positionOpenPanel() {
+    if (!desktop.matches) return
+    const panel = document.querySelector(".reading-tools-panel:popover-open")
+    if (!panel) return
+    const triggerTop = panel.previousElementSibling.getBoundingClientRect().top
+    const top = Math.max(16, Math.min(triggerTop, window.innerHeight - panel.offsetHeight - 16))
+    panel.style.setProperty("--reading-tools-top", `${Math.round(top)}px`)
   }
 
+  document.addEventListener(
+    "toggle",
+    (event) => {
+      if (event.newState === "open" && event.target.matches(".reading-tools-panel")) {
+        positionOpenPanel()
+      }
+    },
+    true,
+  )
+  window.addEventListener("resize", positionOpenPanel)
+  document.addEventListener(
+    "scroll",
+    (event) => {
+      if (event.target instanceof Element && event.target.matches(".reading-tools"))
+        positionOpenPanel()
+    },
+    true,
+  )
+
   document.addEventListener("pointerover", (event) => {
-    if (event.pointerType !== "mouse" || !desktopHover.matches) return
+    if (event.pointerType !== "mouse" || !desktop.matches || !hoverPointer.matches) return
     const dock = event.target.closest(".reading-tools")
     if (!dock) return
 
     clearTimeout(closeTimer)
-    const type = event.target.closest(".reading-tools-type")
-    if (type) selectType(type)
-
     const trigger = event.target.closest(".reading-tools-button")
     if (!trigger || trigger.contains(event.relatedTarget)) return
     clearTimeout(openTimer)
@@ -34,12 +47,13 @@ export function installReadingTools() {
       if (trigger.matches(":hover") && !panel.matches(":popover-open")) {
         panel.showPopover({ source: trigger })
         hoveredPanel = panel
+        positionOpenPanel()
       }
     }, 125)
   })
 
   document.addEventListener("pointerout", (event) => {
-    if (event.pointerType !== "mouse" || !desktopHover.matches) return
+    if (event.pointerType !== "mouse" || !desktop.matches || !hoverPointer.matches) return
     const dock = event.target.closest(".reading-tools")
     if (!dock) return
 
@@ -57,9 +71,6 @@ export function installReadingTools() {
   })
 
   document.addEventListener("click", (event) => {
-    const type = event.target.closest(".reading-tools-type")
-    if (type) selectType(type)
-
     const trigger = event.target.closest(".reading-tools-button")
     if (!trigger) return
     clearTimeout(openTimer)

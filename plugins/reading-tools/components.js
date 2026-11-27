@@ -85,70 +85,24 @@ function noteList(notes, slug) {
   )
 }
 
-function groupedLinks(notes, slug) {
+function renderLinkTools(notes, slug) {
   const groups = new Map()
   for (const note of notes) {
     if (!groups.has(note.type)) groups.set(note.type, [])
     groups.get(note.type).push(note)
   }
 
-  const types = [...linkTypes].filter(([type]) => groups.has(type))
-  return h("div", { class: "reading-tools-type-browser" }, [
-    h(
-      "div",
-      { class: "reading-tools-types", role: "group", "aria-label": "链接类型" },
-      types.map(([type, label], index) =>
-        h(
-          "button",
-          {
-            key: type,
-            type: "button",
-            class: "reading-tools-type",
-            id: `reading-tools-type-${type}`,
-            "aria-controls": `reading-tools-items-${type}`,
-            "aria-pressed": index === 0 ? "true" : "false",
-          },
-          label,
-          h("span", { class: "reading-tools-count" }, groups.get(type).length),
-        ),
-      ),
-    ),
-    h(
-      "div",
-      { class: "reading-tools-type-content" },
-      types.map(([type], index) =>
-        h(
-          "section",
-          {
-            key: type,
-            id: `reading-tools-items-${type}`,
-            "aria-labelledby": `reading-tools-type-${type}`,
-            hidden: index !== 0,
-          },
-          noteList(groups.get(type), slug),
-        ),
-      ),
-    ),
-  ])
-}
-
-function toolIcon(id) {
-  const path =
-    id === "links"
-      ? "M10 13a4 4 0 0 0 6 .4l3-3a4 4 0 0 0-5.7-5.7l-1.7 1.7M14 11a4 4 0 0 0-6-.4l-3 3a4 4 0 0 0 5.7 5.7l1.7-1.7"
-      : "M5 6h14M5 12h14M5 18h9"
-  return h(
-    "svg",
-    {
-      viewBox: "0 0 24 24",
-      fill: "none",
-      stroke: "currentColor",
-      "stroke-width": 1.7,
-      "stroke-linecap": "round",
-      "aria-hidden": "true",
-    },
-    h("path", { d: path }),
-  )
+  return Array.from(linkTypes).flatMap(([type, label]) => {
+    const items = groups.get(type)
+    if (!items) return []
+    return renderTool({
+      id: `type-${type}`,
+      label,
+      title: `本页链接 · ${label}`,
+      body: noteList(items, slug),
+      count: items.length,
+    })
+  })
 }
 
 function renderTool({ id, label, title, body, count }) {
@@ -157,14 +111,24 @@ function renderTool({ id, label, title, body, count }) {
   return [
     h(
       "button",
-      { type: "button", class: "reading-tools-button", popovertarget: panelId, title },
-      toolIcon(id),
+      {
+        key: `${id}-trigger`,
+        type: "button",
+        class: "reading-tools-button",
+        popovertarget: panelId,
+      },
       h("span", null, label),
       count !== undefined && h("span", { class: "reading-tools-count" }, count),
     ),
     h(
       "nav",
-      { id: panelId, class: "reading-tools-panel", popover: "auto", "aria-labelledby": titleId },
+      {
+        key: id,
+        id: panelId,
+        class: "reading-tools-panel",
+        popover: "auto",
+        "aria-labelledby": titleId,
+      },
       h(
         "div",
         { class: "reading-tools-panel-heading" },
@@ -197,18 +161,10 @@ function ReadingTools() {
     return h(
       "div",
       { class: "reading-tools", role: "group", "aria-label": "阅读工具", "data-ui": "" },
-      renderTool({
-        id: "links",
-        label: "链接",
-        title: "本页链接",
-        body: outgoing.length
-          ? groupedLinks(outgoing, fileData.slug)
-          : h("p", null, "本页没有可打开的笔记链接。"),
-        count: outgoing.length,
-      }),
+      renderLinkTools(outgoing, fileData.slug),
       renderTool({
         id: "arguments",
-        label: "论证",
+        label: "最新论证",
         title: "最新论证",
         body: recent.length ? noteList(recent, fileData.slug) : h("p", null, "暂无论证。"),
       }),
