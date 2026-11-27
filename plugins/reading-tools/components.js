@@ -3,6 +3,25 @@ import { h } from "preact"
 
 const recentLimit = 20
 const catalogs = new WeakMap()
+const linkTypes = new Map([
+  ["concepts", "概念"],
+  ["theories", "理论"],
+  ["methods", "方法"],
+  ["instruments", "测量工具"],
+  ["persons", "人物"],
+  ["facts", "事实"],
+  ["arguments", "论证"],
+  ["sources", "文献来源"],
+  ["other", "其他页面"],
+])
+
+function linkType(slug) {
+  const [root, folder, entry] = slug.split("/")
+  if (slug.endsWith("/index")) return "other"
+  if (root === "wiki" && entry && linkTypes.has(folder)) return folder
+  if ((root === "sources" || root === "books") && folder) return "sources"
+  return "other"
+}
 
 function noteDate(page) {
   const { created, processed_date: processedDate } = page.frontmatter ?? {}
@@ -28,7 +47,7 @@ function readingCatalog(allFiles) {
     if (!page.slug || page.unlisted || page.encrypted) continue
     const filename = page.slug.split("/").at(-1)
     const title = page.frontmatter?.argument_display_title || page.frontmatter?.title || filename
-    const note = { slug: page.slug, title, created: noteDate(page) }
+    const note = { slug: page.slug, title, created: noteDate(page), type: linkType(page.slug) }
     notes.set(note.slug, note)
     if (page.slug.startsWith("wiki/arguments/") && /^argument_/i.test(filename)) {
       argumentsByDate.push(note)
@@ -41,15 +60,82 @@ function readingCatalog(allFiles) {
   return catalog
 }
 
-function renderTool({ id, label, title, notes, slug, empty, showCount = false }) {
+function noteList(notes, slug) {
+  return h(
+    "ul",
+    { class: "reading-tools-list" },
+    notes.map((note) => {
+      const date = note.created ? new Date(note.created).toISOString().slice(0, 10) : null
+      return h(
+        "li",
+        { key: note.slug },
+        h(
+          "a",
+          {
+            class: "internal",
+            href: resolveRelative(slug, note.slug),
+            "data-no-popover": "true",
+          },
+          h("span", null, note.title),
+          date && h("time", { dateTime: date }, date),
+        ),
+      )
+    }),
+  )
+}
+
+function groupedLinks(notes, slug) {
+  const groups = new Map()
+  for (const note of notes) {
+    if (!groups.has(note.type)) groups.set(note.type, [])
+    groups.get(note.type).push(note)
+  }
+
+  return h(
+    "div",
+    { class: "reading-tools-groups" },
+    Array.from(linkTypes, ([type, label]) => {
+      const items = groups.get(type)
+      if (!items) return null
+      return h(
+        "details",
+        { key: type, class: "reading-tools-group", open: groups.size === 1 },
+        h("summary", null, label, h("span", { class: "reading-tools-count" }, items.length)),
+        noteList(items, slug),
+      )
+    }),
+  )
+}
+
+function toolIcon(id) {
+  const path =
+    id === "links"
+      ? "M10 13a4 4 0 0 0 6 .4l3-3a4 4 0 0 0-5.7-5.7l-1.7 1.7M14 11a4 4 0 0 0-6-.4l-3 3a4 4 0 0 0 5.7 5.7l1.7-1.7"
+      : "M5 6h14M5 12h14M5 18h9"
+  return h(
+    "svg",
+    {
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      "stroke-width": 1.7,
+      "stroke-linecap": "round",
+      "aria-hidden": "true",
+    },
+    h("path", { d: path }),
+  )
+}
+
+function renderTool({ id, label, title, body, count }) {
   const panelId = `reading-tools-${id}`
   const titleId = `${panelId}-title`
   return [
     h(
       "button",
       { type: "button", class: "reading-tools-button", popovertarget: panelId, title },
-      label,
-      showCount && h("span", { class: "reading-tools-count" }, notes.length),
+      toolIcon(id),
+      h("span", null, label),
+      count !== undefined && h("span", { class: "reading-tools-count" }, count),
     ),
     h(
       "nav",
@@ -69,30 +155,7 @@ function renderTool({ id, label, title, notes, slug, empty, showCount = false })
           "×",
         ),
       ),
-      notes.length
-        ? h(
-            "ul",
-            null,
-            notes.map((note) =>
-              h(
-                "li",
-                { key: note.slug },
-                h(
-                  "a",
-                  {
-                    class: "internal",
-                    href: resolveRelative(slug, note.slug),
-                    "data-no-popover": "true",
-                  },
-                  note.title,
-                ),
-                note.created
-                  ? h("time", null, new Date(note.created).toISOString().slice(0, 10))
-                  : null,
-              ),
-            ),
-          )
-        : h("p", null, empty),
+      h("div", { class: "reading-tools-panel-body" }, body),
     ),
   ]
 }
@@ -113,18 +176,16 @@ function ReadingTools() {
         id: "links",
         label: "链接",
         title: "本页链接",
-        notes: outgoing,
-        slug: fileData.slug,
-        empty: "本页没有可打开的笔记链接。",
-        showCount: true,
+        body: outgoing.length
+          ? groupedLinks(outgoing, fileData.slug)
+          : h("p", null, "本页没有可打开的笔记链接。"),
+        count: outgoing.length,
       }),
       renderTool({
         id: "arguments",
         label: "论证",
         title: "最新论证",
-        notes: recent,
-        slug: fileData.slug,
-        empty: "暂无论证。",
+        body: recent.length ? noteList(recent, fileData.slug) : h("p", null, "暂无论证。"),
       }),
     )
   }
