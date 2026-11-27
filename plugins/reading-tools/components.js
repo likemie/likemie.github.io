@@ -1,5 +1,6 @@
 import { resolveRelative } from "@quartz-community/utils"
 import { h } from "preact"
+import { installReadingTools } from "./interactions.js"
 
 const recentLimit = 20
 const catalogs = new WeakMap()
@@ -91,20 +92,44 @@ function groupedLinks(notes, slug) {
     groups.get(note.type).push(note)
   }
 
-  return h(
-    "div",
-    { class: "reading-tools-groups" },
-    Array.from(linkTypes, ([type, label]) => {
-      const items = groups.get(type)
-      if (!items) return null
-      return h(
-        "details",
-        { key: type, class: "reading-tools-group", open: groups.size === 1 },
-        h("summary", null, label, h("span", { class: "reading-tools-count" }, items.length)),
-        noteList(items, slug),
-      )
-    }),
-  )
+  const types = [...linkTypes].filter(([type]) => groups.has(type))
+  return h("div", { class: "reading-tools-type-browser" }, [
+    h(
+      "div",
+      { class: "reading-tools-types", role: "group", "aria-label": "链接类型" },
+      types.map(([type, label], index) =>
+        h(
+          "button",
+          {
+            key: type,
+            type: "button",
+            class: "reading-tools-type",
+            id: `reading-tools-type-${type}`,
+            "aria-controls": `reading-tools-items-${type}`,
+            "aria-pressed": index === 0 ? "true" : "false",
+          },
+          label,
+          h("span", { class: "reading-tools-count" }, groups.get(type).length),
+        ),
+      ),
+    ),
+    h(
+      "div",
+      { class: "reading-tools-type-content" },
+      types.map(([type], index) =>
+        h(
+          "section",
+          {
+            key: type,
+            id: `reading-tools-items-${type}`,
+            "aria-labelledby": `reading-tools-type-${type}`,
+            hidden: index !== 0,
+          },
+          noteList(groups.get(type), slug),
+        ),
+      ),
+    ),
+  ])
 }
 
 function toolIcon(id) {
@@ -190,11 +215,7 @@ function ReadingTools() {
     )
   }
 
-  Component.afterDOMLoaded = `
-    document.addEventListener("prenav", () => {
-      document.querySelector(".reading-tools-panel:popover-open")?.hidePopover();
-    });
-  `
+  Component.afterDOMLoaded = `(${installReadingTools.toString()})();`
 
   return Component
 }
