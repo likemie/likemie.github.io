@@ -8,20 +8,26 @@ const linkTypes = new Map([
   ["concepts", "概念"],
   ["theories", "理论"],
   ["methods", "方法"],
-  ["instruments", "测量工具"],
   ["persons", "人物"],
   ["facts", "事实"],
-  ["arguments", "论证"],
+  ["instruments", "测量工具"],
+  ["arguments", "关联论证"],
   ["sources", "文献来源"],
-  ["other", "其他页面"],
 ])
 
 function linkType(slug) {
   const [root, folder, entry] = slug.split("/")
-  if (slug.endsWith("/index")) return "other"
-  if (root === "wiki" && entry && linkTypes.has(folder)) return folder
-  if ((root === "sources" || root === "books") && folder) return "sources"
-  return "other"
+  if (
+    root === "wiki" &&
+    entry &&
+    entry !== "index" &&
+    !slug.endsWith("/index") &&
+    linkTypes.has(folder)
+  ) {
+    return folder
+  }
+  if ((root === "sources" || root === "books") && folder && folder !== "index") return "sources"
+  return null
 }
 
 function noteDate(page) {
@@ -88,6 +94,7 @@ function noteList(notes, slug) {
 function renderLinkTools(notes, slug) {
   const groups = new Map()
   for (const note of notes) {
+    if (!note.type) continue
     if (!groups.has(note.type)) groups.set(note.type, [])
     groups.get(note.type).push(note)
   }
